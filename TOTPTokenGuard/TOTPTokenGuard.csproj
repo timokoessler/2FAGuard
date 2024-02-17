@@ -14,10 +14,12 @@
     <RepositoryUrl>https://github.com/timokoessler/totp-token-guard</RepositoryUrl>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <ApplicationIcon>totp.ico</ApplicationIcon>
+    <AssemblyVersion>0.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\logo-256.png" />
+    <None Remove="Assets\logo-512.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,11 +27,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LiteDB" Version="5.0.17" />
     <PackageReference Include="WPF-UI" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Assets\logo-256.png" />
+    <Resource Include="Assets\logo-512.png" />
   </ItemGroup>
 
   <ItemGroup>

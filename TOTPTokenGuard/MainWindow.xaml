@@ -50,6 +50,7 @@
                     TargetPageType="{x:Type pages:Settings}" />
             </ui:NavigationView.FooterMenuItems>
         </ui:NavigationView>
+        <Frame x:Name="FullContentFrame" />
         <ContentPresenter x:Name="RootContentDialogPresenter" Grid.Row="0" />
     </Grid>
 </ui:FluentWindow>

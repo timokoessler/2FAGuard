@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.Collections;
+using System.Windows;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Views.Pages;
+using TOTPTokenGuard.Views.Pages.Start;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
@@ -21,12 +23,19 @@ namespace TOTPTokenGuard
             InitializeComponent();
             Loaded += (s, e) => onWindowLoaded();
             RootNavigation.SelectionChanged += OnNavigationSelectionChanged;
+            contentDialogService = new ContentDialogService();
         }
 
         private void onWindowLoaded()
         {
-            contentDialogService = new ContentDialogService();
             contentDialogService.SetContentPresenter(RootContentDialogPresenter);
+
+            if (!Database.FileExists())
+            {
+                HideNavigation();
+                FullContentFrame.Content = new Welcome();
+                return;
+            }
             RootNavigation.Navigate(typeof(Home));
         }
 
@@ -65,6 +74,16 @@ namespace TOTPTokenGuard
         public ContentDialogService GetContentDialogService()
         {
             return contentDialogService;
+        }
+
+        public void HideNavigation()
+        {
+            RootNavigation.Visibility = Visibility.Collapsed;
+        }
+
+        public void ShowNavigation()
+        {
+            RootNavigation.Visibility = Visibility.Visible;
         }
     }
 }

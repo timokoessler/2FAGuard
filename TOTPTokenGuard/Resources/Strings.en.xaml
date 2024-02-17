@@ -15,5 +15,14 @@
 
     <system:String x:Key="i.win.hello.request">The application TOTP Token Guard wants to prove your identity</system:String>
 
+
+    <system:String x:Key="i.welcome.hello">Windows Hello (Recommended)</system:String>
+    <system:String x:Key="i.welcome.hello.description">Simple and secure login</system:String>
+    <system:String x:Key="i.welcome.hello.notavailable">Windows Hello is not available</system:String>
+    <system:String x:Key="i.welcome.hello.notavailable.content">Please configure Windows Hello in the Windows system settings to be able to use this function.</system:String>
+    <system:String x:Key="i.welcome.pass">Password</system:String>
+    <system:String x:Key="i.welcome.pass.description">Secure your tokens with a password</system:String>
+    <system:String x:Key="i.welcome.skip">Skip</system:String>
+
     <system:String x:Key="i.dialog.close">Close</system:String>
 </ResourceDictionary>
