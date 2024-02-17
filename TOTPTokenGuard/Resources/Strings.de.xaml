@@ -1,0 +1,17 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="i.title">TOTP Token Guard</system:String>
+    <system:String x:Key="i.page.home">Deine Tokens</system:String>
+    <system:String x:Key="i.page.settings">Einstellungen</system:String>
+    <system:String x:Key="i.settings.personalisation">Personalisierung</system:String>
+    <system:String x:Key="i.language">Sprache</system:String>
+    <system:String x:Key="i.settings.about">Über diese Software</system:String>
+    <system:String x:Key="i.settings.issue">Melde einen Fehler</system:String>
+    <system:String x:Key="i.settings.myweb">Meine Website</system:String>
+    <system:String x:Key="i.toggleTheme">Theme wechseln</system:String>
+
+    <system:String x:Key="i.dialog.close">Schließen</system:String>
+</ResourceDictionary>
