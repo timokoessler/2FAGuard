@@ -13,5 +13,7 @@
     <system:String x:Key="i.settings.myweb">Meine Website</system:String>
     <system:String x:Key="i.toggleTheme">Theme wechseln</system:String>
 
+    <system:String x:Key="i.win.hello.request">Die Anwendung TOTP Token Guard möchte Ihre Identität bestätigen.</system:String>
+
     <system:String x:Key="i.dialog.close">Schließen</system:String>
 </ResourceDictionary>

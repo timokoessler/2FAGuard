@@ -13,5 +13,7 @@
     <system:String x:Key="i.settings.myweb">My website</system:String>
     <system:String x:Key="i.toggleTheme">Toggle theme</system:String>
 
+    <system:String x:Key="i.win.hello.request">The application TOTP Token Guard wants to prove your identity</system:String>
+
     <system:String x:Key="i.dialog.close">Close</system:String>
 </ResourceDictionary>
