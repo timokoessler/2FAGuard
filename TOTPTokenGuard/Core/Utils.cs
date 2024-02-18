@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TOTPTokenGuard.Core
+﻿namespace TOTPTokenGuard.Core
 {
     class Utils
     {
@@ -12,6 +6,14 @@ namespace TOTPTokenGuard.Core
         {
             return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString()
                 ?? String.Empty;
+        }
+
+        public static string GetAppDataFolderPath()
+        {
+            return System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "TOTPTokenGuard"
+            );
         }
     }
 }

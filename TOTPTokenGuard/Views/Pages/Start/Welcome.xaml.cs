@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using TOTPTokenGuard.Core;
+using TOTPTokenGuard.Core.Security;
 using Wpf.Ui;
 using Wpf.Ui.Extensions;
 
@@ -36,9 +37,13 @@ namespace TOTPTokenGuard.Views.Pages.Start
                     );
                 return;
             }
+            mainWindow.FullContentFrame.Content = new SetupPassword(true);
         }
 
-        private void CardAction_Password_Click(object sender, RoutedEventArgs e) { }
+        private void CardAction_Password_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.FullContentFrame.Content = new SetupPassword(true);
+        }
 
         private void Button_Skip_Click(object sender, RoutedEventArgs e) { }
     }

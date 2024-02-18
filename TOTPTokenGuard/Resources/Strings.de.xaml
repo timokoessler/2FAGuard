@@ -15,13 +15,18 @@
 
     <system:String x:Key="i.win.hello.request">Die Anwendung TOTP Token Guard möchte Ihre Identität bestätigen.</system:String>
 
-    <system:String x:Key="i.welcome.hello">Windows Hello (Empfohlen)</system:String>
-    <system:String x:Key="i.welcome.hello.description">Einfach und sicher</system:String>
+    <system:String x:Key="i.welcome.hello">Windows Hello oder Passwort</system:String>
+    <system:String x:Key="i.welcome.hello.description">Einfach und sicher, Passwort als Backup</system:String>
     <system:String x:Key="i.welcome.hello.notavailable">Windows Hello ist nicht verfügbar</system:String>
     <system:String x:Key="i.welcome.hello.notavailable.content">Bitte konfiguriere Windows Hello in den Systemeinstellungen von Windows, um diese Funktion verwenden zu können.</system:String>
-    <system:String x:Key="i.welcome.pass">Passwort</system:String>
+    <system:String x:Key="i.welcome.pass">Nur Passwort</system:String>
     <system:String x:Key="i.welcome.pass.description">Schütze deine Tokens mit einem Passwort</system:String>
     <system:String x:Key="i.welcome.skip">Überspringen</system:String>
+    <system:String x:Key="i.welcome.pass.title">Passwort festlegen</system:String>
+    <system:String x:Key="i.welcome.pass.subtext">Bitte gebe ein sicheres Passwort ein, mit dem deine Tokens verschlüsselt werden. Wenn du das Passwort vergisst, kannst du deine Tokens nicht wiederherstellen.</system:String>
+    <system:String x:Key="i.welcome.pass.box">Sicheres Passwort eingeben</system:String>
+    <system:String x:Key="i.welcome.pass.box.repeat">Passwort wiederholen</system:String>
 
+    <system:String x:Key="i.save">Speichern</system:String>
     <system:String x:Key="i.dialog.close">Schließen</system:String>
 </ResourceDictionary>

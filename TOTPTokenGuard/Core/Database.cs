@@ -8,11 +8,7 @@ namespace TOTPTokenGuard.Core
 
         private static string GetDBPath()
         {
-            return System.IO.Path.Combine(
-                System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "TOTPTokenGuard",
-                "TOTPTokenGuard.db"
-            );
+            return System.IO.Path.Combine(Utils.GetAppDataFolderPath(), "TOTPTokenGuard.db");
         }
 
         public static void InitDB(String encryptionKey)

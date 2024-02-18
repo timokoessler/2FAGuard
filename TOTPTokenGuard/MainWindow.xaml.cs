@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Windows;
 using TOTPTokenGuard.Core;
+using TOTPTokenGuard.Core.Security;
 using TOTPTokenGuard.Views.Pages;
 using TOTPTokenGuard.Views.Pages.Start;
 using Wpf.Ui;
@@ -19,6 +20,7 @@ namespace TOTPTokenGuard
         public MainWindow()
         {
             I18n.InitI18n();
+            Auth.Init();
             SystemThemeWatcher.Watch(this);
             InitializeComponent();
             Loaded += (s, e) => onWindowLoaded();
@@ -30,7 +32,7 @@ namespace TOTPTokenGuard
         {
             contentDialogService.SetContentPresenter(RootContentDialogPresenter);
 
-            if (!Database.FileExists())
+            if (!Auth.FileExists())
             {
                 HideNavigation();
                 FullContentFrame.Content = new Welcome();
