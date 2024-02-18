@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TOTPTokenGuard.Core.Models
+﻿namespace TOTPTokenGuard.Core.Models
 {
     internal class AuthFileData
     {
@@ -12,5 +6,6 @@ namespace TOTPTokenGuard.Core.Models
         public string? WindowsHelloChallenge { get; set; }
         public string? PasswordProtectedKey { get; set; }
         public string? ProtectedDbKey { get; set; }
+        public string? InsecureMainKey { get; set; }
     }
 }

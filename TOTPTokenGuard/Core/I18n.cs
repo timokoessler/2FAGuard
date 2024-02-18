@@ -12,7 +12,7 @@ namespace TOTPTokenGuard.Core
         };
         private static string defaultLanguage = "en";
         private static string currentLanguage = defaultLanguage;
-        private static ResourceDictionary dict;
+        private static ResourceDictionary? dict;
 
         public static string GetLanguage()
         {
@@ -37,17 +37,20 @@ namespace TOTPTokenGuard.Core
 
         public static void InitI18n()
         {
-            dict = new ResourceDictionary();
-            dict.Source = new Uri(
-                @"Resources/Strings." + GetLanguage() + ".xaml",
-                UriKind.Relative
-            );
+            dict = new ResourceDictionary
+            {
+                Source = new Uri(@"Resources/Strings." + GetLanguage() + ".xaml", UriKind.Relative)
+            };
             Application.Current.Resources.MergedDictionaries.Add(dict);
             currentLanguage = GetLanguage();
         }
 
         public static bool ChangeLanguage(string lang)
         {
+            if (dict == null)
+            {
+                return false;
+            }
             if (supportedLanguages.Contains(lang))
             {
                 dict.Source = new Uri(@"Resources/Strings." + lang + ".xaml", UriKind.Relative);
@@ -66,6 +69,10 @@ namespace TOTPTokenGuard.Core
 
         public static string GetString(string key)
         {
+            if (dict == null)
+            {
+                return "Error!";
+            }
             string? content = dict[$"i.{key.ToLower()}"] as string;
             if (content == null)
             {

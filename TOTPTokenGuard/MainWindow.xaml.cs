@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Runtime.ExceptionServices;
+using System.Web;
 using System.Windows;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Security;
@@ -109,14 +111,25 @@ namespace TOTPTokenGuard
                 string windowsVersion;
                 if (Environment.OSVersion.Version.Build >= 22000)
                 {
-                    windowsVersion = "Windows 11 " + Environment.OSVersion.Version.Build;
+                    windowsVersion = HttpUtility.UrlEncode(
+                        "Windows 11 " + Environment.OSVersion.Version.Build
+                    );
                 }
                 else
                 {
-                    windowsVersion = "Windows 10 " + Environment.OSVersion.Version.Build;
+                    windowsVersion = HttpUtility.UrlEncode(
+                        "Windows 10 " + Environment.OSVersion.Version.Build
+                    );
                 }
-                // Todo
-                Environment.Exit(1);
+                string errorMessage = HttpUtility.UrlEncode(e.Message + "\n\n" + e.StackTrace);
+                Process.Start(
+                    new ProcessStartInfo(
+                        $"https://github.com/timokoessler/totp-token-guard/issues/new?template=bug.yml&title=%5BBug%5D%3A+&error-message={errorMessage}&win-version={windowsVersion}&app-version={Utils.GetVersionString()}"
+                    )
+                    {
+                        UseShellExecute = true
+                    }
+                );
             }
             Environment.Exit(1);
         }

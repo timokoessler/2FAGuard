@@ -150,6 +150,11 @@ namespace TOTPTokenGuard.Core.Security
             return mainEncryptionKey != null && dbEncryptionKey != null;
         }
 
+        public static bool isLoginEnabled()
+        {
+            return authData?.InsecureMainKey == null;
+        }
+
         public static bool IsWindowsHelloRegistered()
         {
             return authData?.WindowsHelloProtectedKey != null;
@@ -210,6 +215,63 @@ namespace TOTPTokenGuard.Core.Security
                     authData.PasswordProtectedKey,
                     password
                 );
+                dbEncryptionKey = EncryptionHelper.DecryptString(
+                    authData.ProtectedDbKey,
+                    mainEncryptionKey
+                );
+            }
+            catch
+            {
+                throw new Exception("Failed to decrypt keys");
+            }
+            if (mainEncryptionKey == null || dbEncryptionKey == null)
+            {
+                throw new Exception("Failed to decrypt keys");
+            }
+        }
+
+        public static async Task RegisterInsecure()
+        {
+            if (authData == null)
+            {
+                throw new Exception("Auth data not initialized");
+            }
+            if (
+                authData.PasswordProtectedKey != null
+                || authData.ProtectedDbKey != null
+                || mainEncryptionKey != null
+            )
+            {
+                throw new Exception("Already registered");
+            }
+            mainEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
+            dbEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
+            authData.ProtectedDbKey = EncryptionHelper.EncryptString(
+                dbEncryptionKey,
+                mainEncryptionKey
+            );
+
+            authData.InsecureMainKey = mainEncryptionKey;
+            await SaveFile();
+        }
+
+        public static void LoginInsecure()
+        {
+            if (authData == null)
+            {
+                throw new Exception("Auth data not initialized");
+            }
+            if (authData.InsecureMainKey == null)
+            {
+                throw new Exception("Insecure main key not set");
+            }
+            if (authData.ProtectedDbKey == null)
+            {
+                throw new Exception("Emergency: DB encryption key is not set");
+            }
+            try
+            {
+                mainEncryptionKey = authData.InsecureMainKey;
                 dbEncryptionKey = EncryptionHelper.DecryptString(
                     authData.ProtectedDbKey,
                     mainEncryptionKey

@@ -45,9 +45,41 @@ namespace TOTPTokenGuard.Views.Pages.Start
             mainWindow.FullContentFrame.Content = new SetupPassword(true);
         }
 
-        private void Button_Skip_Click(object sender, RoutedEventArgs e)
+        private async void Button_Skip_Click(object sender, RoutedEventArgs e)
         {
-            //Todo Implement
+            var dialogResult = await mainWindow
+                .GetContentDialogService()
+                .ShowSimpleDialogAsync(
+                    new SimpleContentDialogCreateOptions()
+                    {
+                        Title = I18n.GetString("welcome.insecure.dialog.title"),
+                        Content = I18n.GetString("welcome.insecure.dialog.content"),
+                        CloseButtonText = I18n.GetString("dialog.close"),
+                        PrimaryButtonText = I18n.GetString("welcome.insecure.dialog.continue")
+                    }
+                );
+            if (dialogResult == Wpf.Ui.Controls.ContentDialogResult.Primary)
+            {
+                try
+                {
+                    await Auth.Init();
+                    await Auth.RegisterInsecure();
+                    mainWindow.FullContentFrame.Content = new SetupCompleted();
+                }
+                catch (Exception ex)
+                {
+                    await mainWindow
+                        .GetContentDialogService()
+                        .ShowSimpleDialogAsync(
+                            new SimpleContentDialogCreateOptions()
+                            {
+                                Title = "Error",
+                                Content = ex.Message,
+                                CloseButtonText = I18n.GetString("dialog.close"),
+                            }
+                        );
+                }
+            }
         }
     }
 }

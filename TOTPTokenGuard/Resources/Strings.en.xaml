@@ -37,6 +37,9 @@
     <system:String x:Key="i.setup.finished.action.token.description">Add the first token to your collection</system:String>
     <system:String x:Key="i.setup.finished.action.settings">Settings</system:String>
     <system:String x:Key="i.setup.finished.action.settings.description">Change the application settings</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.title">Are you sure?</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.content">You have chosen to use TOTP Token Guard without any security. This means that your tokens are not encrypted and can be accessed by anyone who has access to your computer. Are you sure you want to continue?</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.continue">Continue (not recommended)</system:String>
 
     <!--  Login  -->
     <system:String x:Key="i.login.subtext">Please prove your identity to access your tokens</system:String>

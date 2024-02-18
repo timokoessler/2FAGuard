@@ -17,7 +17,7 @@ body:
       placeholder: What is the bug and what did you expect to happen? How can we reproduce the problem?
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: error-message
     attributes:
       label: Provide the error message / stack trace

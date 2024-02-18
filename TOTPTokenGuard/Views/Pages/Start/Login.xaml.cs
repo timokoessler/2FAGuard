@@ -25,6 +25,13 @@ namespace TOTPTokenGuard.Views.Pages.Start
             try
             {
                 await Auth.Init();
+                if (!Auth.isLoginEnabled())
+                {
+                    LoginButton.IsEnabled = false;
+                    PasswordBox.IsEnabled = false;
+                    Auth.LoginInsecure();
+                    OnLoggedIn();
+                }
                 if (Auth.IsWindowsHelloRegistered())
                 {
                     await Auth.LoginWithWindowsHello();
@@ -84,6 +91,7 @@ namespace TOTPTokenGuard.Views.Pages.Start
             {
                 return;
             }
+            Database.Init();
             mainWindow.FullContentFrame.Content = null;
             mainWindow.FullContentFrame.Visibility = Visibility.Collapsed;
             mainWindow.ShowNavigation();
