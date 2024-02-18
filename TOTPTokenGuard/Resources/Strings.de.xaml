@@ -15,6 +15,8 @@
 
     <system:String x:Key="i.win.hello.request">Die Anwendung TOTP Token Guard möchte Ihre Identität bestätigen.</system:String>
 
+    <!--  Application setup  -->
+    <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wählen Sie, wie Sie Ihre Token sichern möchten.</system:String>
     <system:String x:Key="i.welcome.hello">Windows Hello oder Passwort</system:String>
     <system:String x:Key="i.welcome.hello.description">Einfach und sicher, Passwort als Backup</system:String>
     <system:String x:Key="i.welcome.hello.notavailable">Windows Hello ist nicht verfügbar</system:String>
@@ -26,6 +28,21 @@
     <system:String x:Key="i.welcome.pass.subtext">Bitte gebe ein sicheres Passwort ein, mit dem deine Tokens verschlüsselt werden. Wenn du das Passwort vergisst, kannst du deine Tokens nicht wiederherstellen.</system:String>
     <system:String x:Key="i.welcome.pass.box">Sicheres Passwort eingeben</system:String>
     <system:String x:Key="i.welcome.pass.box.repeat">Passwort wiederholen</system:String>
+    <system:String x:Key="i.welcome.pass.notempty">Das Passwort darf nicht leer sein</system:String>
+    <system:String x:Key="i.welcome.pass.notmatch">Die Passwörter stimmen nicht überein</system:String>
+    <system:String x:Key="i.welcome.pass.length">Das Passwort muss mindestens 8 und maximal 128 Zeichen lang sein</system:String>
+    <system:String x:Key="i.setup.finished.title">Einrichtung abgeschlossen</system:String>
+    <system:String x:Key="i.setup.finished.subtext">Die Einrichtung wurde erfolgreich abgeschlossen. Du kannst jetzt deine Tokens hinzufügen.</system:String>
+    <system:String x:Key="i.setup.finished.action.token">Token hinzufügen</system:String>
+    <system:String x:Key="i.setup.finished.action.token.description">Füge den ersten TOTP Token hinzu</system:String>
+    <system:String x:Key="i.setup.finished.action.settings">Einstellungen</system:String>
+    <system:String x:Key="i.setup.finished.action.settings.description">Passe die Einstellungen an</system:String>
+
+    <!--  Login  -->
+    <system:String x:Key="i.login.subtext">Bitte melde dich an, um fortzufahren</system:String>
+    <system:String x:Key="i.login.passbox">Gib dein Passwort ein</system:String>
+    <system:String x:Key="i.login.button">Anmelden</system:String>
+    <system:String x:Key="i.login.pass.error">Das Passwort ist nicht korrekt</system:String>
 
     <system:String x:Key="i.save">Speichern</system:String>
     <system:String x:Key="i.dialog.close">Schließen</system:String>

@@ -36,7 +36,7 @@ namespace TOTPTokenGuard.Core.Security
         /// https://github.com/bitwarden/clients/blob/1f8e6ea6f8a736a8a766e5e0643c7106adfa8433/apps/desktop/desktop_native/src/biometric/windows.rs#L69
         /// </summary>
         /// <returns>A string used as AES key</returns>
-        public static async Task<string> GetEncryptionKey()
+        public static async Task<string> GetSignedChallenge()
         {
             var openKeyResult = await KeyCredentialManager.OpenAsync(accountName);
             if (openKeyResult.Status != KeyCredentialStatus.Success)
@@ -57,6 +57,10 @@ namespace TOTPTokenGuard.Core.Security
 
         public static async Task<string> SignChallenge(KeyCredential credential, string challenge)
         {
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             var buffer = CryptographicBuffer.ConvertStringToBinary(
                 challenge,
                 BinaryStringEncoding.Utf8
@@ -67,6 +71,11 @@ namespace TOTPTokenGuard.Core.Security
                 throw new Exception($"Failed to sign Windows Hello challenge: {result.Status}");
             }
             return CryptographicBuffer.EncodeToBase64String(result.Result);
+        }
+
+        public static async Task Unregister()
+        {
+            await KeyCredentialManager.DeleteAsync(accountName);
         }
     }
 }

@@ -7,20 +7,29 @@ namespace TOTPTokenGuard.Core.Security
     {
         private static readonly string authFilePath = System.IO.Path.Combine(
             Utils.GetAppDataFolderPath(),
-            "auth-keys.bin"
+            "auth-keys"
         );
         public static AuthFileData? authData;
         public static string? mainEncryptionKey;
         public static string? dbEncryptionKey;
 
-        public static void Init()
+        public static async Task Init()
         {
+            if (authData != null)
+            {
+                // Already initialized
+                return;
+            }
             if (FileExists())
             {
-                LoadFile();
+                await LoadFile();
             }
             else
             {
+                if (!System.IO.Directory.Exists(Utils.GetAppDataFolderPath()))
+                {
+                    System.IO.Directory.CreateDirectory(Utils.GetAppDataFolderPath());
+                }
                 authData = new AuthFileData();
             }
         }
@@ -30,18 +39,18 @@ namespace TOTPTokenGuard.Core.Security
             return System.IO.File.Exists(authFilePath);
         }
 
-        public static void LoadFile()
+        public static async Task LoadFile()
         {
-            byte[] fileData = System.IO.File.ReadAllBytes(authFilePath);
+            byte[] fileData = await System.IO.File.ReadAllBytesAsync(authFilePath);
             string fileContent = System.Text.Encoding.UTF8.GetString(fileData);
             authData = JsonSerializer.Deserialize<AuthFileData>(fileContent);
         }
 
-        public static void SaveFile()
+        public static async Task SaveFile()
         {
             string fileContent = JsonSerializer.Serialize(authData);
             byte[] fileData = System.Text.Encoding.UTF8.GetBytes(fileContent);
-            System.IO.File.WriteAllBytes(authFilePath, fileData);
+            await System.IO.File.WriteAllBytesAsync(authFilePath, fileData);
         }
 
         public static async Task Register(string password, bool enableWindowsHello)
@@ -59,7 +68,7 @@ namespace TOTPTokenGuard.Core.Security
                 throw new Exception("Already registered");
             }
             mainEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
-            dbEncryptionKey = EncryptionHelper.GetRandomBase64String(64);
+            dbEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
 
             authData.PasswordProtectedKey = EncryptionHelper.EncryptString(
                 mainEncryptionKey,
@@ -74,7 +83,7 @@ namespace TOTPTokenGuard.Core.Security
             {
                 await RegisterWindowsHello();
             }
-            SaveFile();
+            await SaveFile();
         }
 
         private static async Task RegisterWindowsHello()
@@ -91,13 +100,35 @@ namespace TOTPTokenGuard.Core.Security
             var windowsHelloResult = await WindowsHello.Register();
             if (
                 windowsHelloResult.Status
-                != Windows.Security.Credentials.KeyCredentialStatus.Success
+                    != Windows.Security.Credentials.KeyCredentialStatus.Success
+                && windowsHelloResult.Status
+                    != Windows.Security.Credentials.KeyCredentialStatus.CredentialAlreadyExists
             )
             {
                 throw new Exception(
                     $"Failed to register Windows Hello: {windowsHelloResult.Status}"
                 );
             }
+
+            // If registration failed before this can happen
+            if (
+                windowsHelloResult.Status
+                == Windows.Security.Credentials.KeyCredentialStatus.CredentialAlreadyExists
+            )
+            {
+                await WindowsHello.Unregister();
+                windowsHelloResult = await WindowsHello.Register();
+                if (
+                    windowsHelloResult.Status
+                    != Windows.Security.Credentials.KeyCredentialStatus.Success
+                )
+                {
+                    throw new Exception(
+                        $"Failed to register Windows Hello: {windowsHelloResult.Status}"
+                    );
+                }
+            }
+
             string? signedChallenge = await WindowsHello.SignChallenge(
                 windowsHelloResult.Credential,
                 authData.WindowsHelloChallenge
@@ -105,18 +136,93 @@ namespace TOTPTokenGuard.Core.Security
             if (signedChallenge == null || signedChallenge.Length == 0)
             {
                 throw new Exception(
-                    "Failed to sign Windows Hello challenge because the signed challenge is empty"
+                    "Failed to register with Windows Hello because the signed challenge is empty"
                 );
             }
             authData.WindowsHelloProtectedKey = EncryptionHelper.EncryptString(
-                signedChallenge,
-                mainEncryptionKey
+                mainEncryptionKey,
+                signedChallenge
             );
         }
 
         public static bool IsLoggedIn()
         {
             return mainEncryptionKey != null && dbEncryptionKey != null;
+        }
+
+        public static bool IsWindowsHelloRegistered()
+        {
+            return authData?.WindowsHelloProtectedKey != null;
+        }
+
+        public static async Task LoginWithWindowsHello()
+        {
+            if (authData == null)
+            {
+                throw new Exception("Auth data not initialized");
+            }
+            if (authData.WindowsHelloProtectedKey == null)
+            {
+                throw new Exception("Windows Hello not registered");
+            }
+            if (authData.ProtectedDbKey == null)
+            {
+                throw new Exception("Emergency: DB encryption key is not set");
+            }
+            string signedChallenge = await WindowsHello.GetSignedChallenge();
+            if (signedChallenge == null || signedChallenge.Length == 0)
+            {
+                throw new Exception(
+                    "Failed to login with Windows Hello because the signed challenge is empty"
+                );
+            }
+            mainEncryptionKey = EncryptionHelper.DecryptString(
+                authData.WindowsHelloProtectedKey,
+                signedChallenge
+            );
+            dbEncryptionKey = EncryptionHelper.DecryptString(
+                authData.ProtectedDbKey,
+                mainEncryptionKey
+            );
+            if (mainEncryptionKey == null || dbEncryptionKey == null)
+            {
+                throw new Exception("Failed to decrypt encryption keys");
+            }
+        }
+
+        public static void LoginWithPassword(string password)
+        {
+            if (authData == null)
+            {
+                throw new Exception("Auth data not initialized");
+            }
+            if (authData.PasswordProtectedKey == null)
+            {
+                throw new Exception("Password not set");
+            }
+            if (authData.ProtectedDbKey == null)
+            {
+                throw new Exception("Emergency: DB encryption key is not set");
+            }
+            try
+            {
+                mainEncryptionKey = EncryptionHelper.DecryptString(
+                    authData.PasswordProtectedKey,
+                    password
+                );
+                dbEncryptionKey = EncryptionHelper.DecryptString(
+                    authData.ProtectedDbKey,
+                    mainEncryptionKey
+                );
+            }
+            catch
+            {
+                throw new Exception("Failed to decrypt keys");
+            }
+            if (mainEncryptionKey == null || dbEncryptionKey == null)
+            {
+                throw new Exception("Failed to decrypt keys");
+            }
         }
     }
 }

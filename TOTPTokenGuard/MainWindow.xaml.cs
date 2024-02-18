@@ -20,7 +20,6 @@ namespace TOTPTokenGuard
         public MainWindow()
         {
             I18n.InitI18n();
-            Auth.Init();
             SystemThemeWatcher.Watch(this);
             InitializeComponent();
             Loaded += (s, e) => onWindowLoaded();
@@ -31,14 +30,14 @@ namespace TOTPTokenGuard
         private void onWindowLoaded()
         {
             contentDialogService.SetContentPresenter(RootContentDialogPresenter);
-
+            HideNavigation();
             if (!Auth.FileExists())
             {
-                HideNavigation();
                 FullContentFrame.Content = new Welcome();
                 return;
             }
-            RootNavigation.Navigate(typeof(Home));
+
+            FullContentFrame.Content = new Login();
         }
 
         private void OnNavigationSelectionChanged(object sender, RoutedEventArgs e)

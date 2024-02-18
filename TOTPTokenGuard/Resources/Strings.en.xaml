@@ -15,6 +15,8 @@
 
     <system:String x:Key="i.win.hello.request">The application TOTP Token Guard wants to prove your identity</system:String>
 
+    <!--  Application setup  -->
+    <system:String x:Key="i.welcome.subtext">Thanks for downloading! Please choose how you would like to secure your tokens.</system:String>
     <system:String x:Key="i.welcome.hello">Windows Hello or Password</system:String>
     <system:String x:Key="i.welcome.hello.description">Simple and secure, Password as a fallback</system:String>
     <system:String x:Key="i.welcome.hello.notavailable">Windows Hello is not available</system:String>
@@ -26,6 +28,21 @@
     <system:String x:Key="i.welcome.pass.subtext">Please enter a secure password that will be used to encrypt your tokens. If you forget this password, you will not be able to access your tokens anymore.</system:String>
     <system:String x:Key="i.welcome.pass.box">Enter a secure password</system:String>
     <system:String x:Key="i.welcome.pass.box.repeat">Repeat the password</system:String>
+    <system:String x:Key="i.welcome.pass.notempty">The password cannot be empty</system:String>
+    <system:String x:Key="i.welcome.pass.notmatch">The passwords do not match</system:String>
+    <system:String x:Key="i.welcome.pass.length">The password must be at least 8 and at most 128 characters long</system:String>
+    <system:String x:Key="i.setup.finished.title">Setup finished</system:String>
+    <system:String x:Key="i.setup.finished.subtext">You have successfully set up TOTP Token Guard. You can now start adding your tokens.</system:String>
+    <system:String x:Key="i.setup.finished.action.token">Add a token</system:String>
+    <system:String x:Key="i.setup.finished.action.token.description">Add the first token to your collection</system:String>
+    <system:String x:Key="i.setup.finished.action.settings">Settings</system:String>
+    <system:String x:Key="i.setup.finished.action.settings.description">Change the application settings</system:String>
+
+    <!--  Login  -->
+    <system:String x:Key="i.login.subtext">Please prove your identity to access your tokens</system:String>
+    <system:String x:Key="i.login.passbox">Enter your password</system:String>
+    <system:String x:Key="i.login.button">Login</system:String>
+    <system:String x:Key="i.login.pass.error">The password is incorrect</system:String>
 
     <system:String x:Key="i.save">Save</system:String>
     <system:String x:Key="i.dialog.close">Close</system:String>

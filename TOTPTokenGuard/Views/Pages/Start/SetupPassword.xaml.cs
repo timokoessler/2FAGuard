@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TOTPTokenGuard.Core;
+using TOTPTokenGuard.Core.Security;
 
 namespace TOTPTokenGuard.Views.Pages.Start
 {
@@ -21,22 +11,50 @@ namespace TOTPTokenGuard.Views.Pages.Start
     public partial class SetupPassword : Page
     {
         private readonly bool enableWinHello;
+        private readonly MainWindow mainWindow;
 
         public SetupPassword(bool enableWinHello)
         {
             this.enableWinHello = enableWinHello;
             InitializeComponent();
+            PasswordBox.Focus();
+            mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             InfoBar.IsOpen = false;
             if (string.IsNullOrWhiteSpace(PasswordBox.Password))
             {
-                ShowEror("Error", "Password cannot be empty");
+                ShowEror("Error", I18n.GetString("welcome.pass.notempty"));
                 return;
             }
-            ShowEror("Error", "Not implemented yet");
+            if (PasswordBox.Password.Length < 8 || PasswordBox.Password.Length > 128)
+            {
+                ShowEror("Error", I18n.GetString("welcome.pass.length"));
+                return;
+            }
+            if (PasswordBox.Password != PasswordBoxRepeat.Password)
+            {
+                ShowEror("Error", I18n.GetString("welcome.pass.notmatch"));
+                return;
+            }
+
+            SaveButton.IsEnabled = false;
+            RegisterProgressBar.Visibility = Visibility.Visible;
+
+            try
+            {
+                await Auth.Init();
+                await Auth.Register(PasswordBox.Password, enableWinHello);
+                mainWindow.FullContentFrame.Content = new SetupCompleted();
+            }
+            catch (Exception ex)
+            {
+                RegisterProgressBar.Visibility = Visibility.Collapsed;
+                ShowEror("Error", ex.Message);
+                SaveButton.IsEnabled = true;
+            }
         }
 
         private void ShowEror(string title, string message)

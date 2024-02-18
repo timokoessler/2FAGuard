@@ -45,6 +45,9 @@ namespace TOTPTokenGuard.Views.Pages.Start
             mainWindow.FullContentFrame.Content = new SetupPassword(true);
         }
 
-        private void Button_Skip_Click(object sender, RoutedEventArgs e) { }
+        private void Button_Skip_Click(object sender, RoutedEventArgs e)
+        {
+            //Todo Implement
+        }
     }
 }
