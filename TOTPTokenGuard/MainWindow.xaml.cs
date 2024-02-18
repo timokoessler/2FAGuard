@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Runtime.ExceptionServices;
 using System.Windows;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Security;
@@ -25,6 +27,9 @@ namespace TOTPTokenGuard
             Loaded += (s, e) => onWindowLoaded();
             RootNavigation.SelectionChanged += OnNavigationSelectionChanged;
             contentDialogService = new ContentDialogService();
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(
+                OnUnhandledException
+            );
         }
 
         private void onWindowLoaded()
@@ -85,6 +90,35 @@ namespace TOTPTokenGuard
         public void ShowNavigation()
         {
             RootNavigation.Visibility = Visibility.Visible;
+        }
+
+        public async void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception e = (Exception)args.ExceptionObject;
+            var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+            {
+                Title = "Unhandled Exception",
+                Content = e.Message + "\n\n" + e.StackTrace,
+                IsPrimaryButtonEnabled = true,
+                PrimaryButtonText = "Open Bug Report",
+            };
+
+            var result = await uiMessageBox.ShowDialogAsync();
+            if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
+            {
+                string windowsVersion;
+                if (Environment.OSVersion.Version.Build >= 22000)
+                {
+                    windowsVersion = "Windows 11 " + Environment.OSVersion.Version.Build;
+                }
+                else
+                {
+                    windowsVersion = "Windows 10 " + Environment.OSVersion.Version.Build;
+                }
+                // Todo
+                Environment.Exit(1);
+            }
+            Environment.Exit(1);
         }
     }
 }
