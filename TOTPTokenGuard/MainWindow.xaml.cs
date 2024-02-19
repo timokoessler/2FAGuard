@@ -5,6 +5,7 @@ using System.Runtime.ExceptionServices;
 using System.Web;
 using System.Windows;
 using TOTPTokenGuard.Core;
+using TOTPTokenGuard.Core.Aptabase;
 using TOTPTokenGuard.Core.Security;
 using TOTPTokenGuard.Views.Pages;
 using TOTPTokenGuard.Views.Pages.Start;
@@ -19,24 +20,30 @@ namespace TOTPTokenGuard
     /// </summary>
     public partial class MainWindow : FluentWindow
     {
-        private ContentDialogService contentDialogService;
+        private readonly ContentDialogService ContentDialogService;
+        private readonly AptabaseClient StatsClient;
 
         public MainWindow()
         {
             I18n.InitI18n();
             SystemThemeWatcher.Watch(this);
             InitializeComponent();
-            Loaded += (s, e) => onWindowLoaded();
+            Loaded += (s, e) => OnWindowLoaded();
             RootNavigation.SelectionChanged += OnNavigationSelectionChanged;
-            contentDialogService = new ContentDialogService();
+            ContentDialogService = new ContentDialogService();
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(
                 OnUnhandledException
             );
+
+            StatsClient = new(
+                "A-SH-2619747927",
+                new InitOptions { Host = "https://aptabase.tkoessler.de" }
+            );
         }
 
-        private void onWindowLoaded()
+        private void OnWindowLoaded()
         {
-            contentDialogService.SetContentPresenter(RootContentDialogPresenter);
+            ContentDialogService.SetContentPresenter(RootContentDialogPresenter);
             HideNavigation();
             if (!Auth.FileExists())
             {
@@ -45,6 +52,8 @@ namespace TOTPTokenGuard
             }
 
             FullContentFrame.Content = new Login();
+
+            StatsClient.TrackEvent("AppOpened");
         }
 
         private void OnNavigationSelectionChanged(object sender, RoutedEventArgs e)
@@ -81,7 +90,7 @@ namespace TOTPTokenGuard
 
         public ContentDialogService GetContentDialogService()
         {
-            return contentDialogService;
+            return ContentDialogService;
         }
 
         public void HideNavigation()
@@ -108,19 +117,7 @@ namespace TOTPTokenGuard
             var result = await uiMessageBox.ShowDialogAsync();
             if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
             {
-                string windowsVersion;
-                if (Environment.OSVersion.Version.Build >= 22000)
-                {
-                    windowsVersion = HttpUtility.UrlEncode(
-                        "Windows 11 " + Environment.OSVersion.Version.Build
-                    );
-                }
-                else
-                {
-                    windowsVersion = HttpUtility.UrlEncode(
-                        "Windows 10 " + Environment.OSVersion.Version.Build
-                    );
-                }
+                string windowsVersion = HttpUtility.UrlEncode(SystemInfo.GetOsVersion());
                 string errorMessage = HttpUtility.UrlEncode(e.Message + "\n\n" + e.StackTrace);
                 Process.Start(
                     new ProcessStartInfo(
