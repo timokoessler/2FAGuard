@@ -5,15 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:TOTPTokenGuard.Views.UIComponents"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    Width="350"
-    Height="150"
+    Width="360"
+    Height="125"
+    Margin="5"
     d:Background="White"
     mc:Ignorable="d">
-    <Border
-        x:Name="Card"
-        Margin="10"
-        CornerRadius="10">
+    <Border x:Name="Card" CornerRadius="10">
         <Border.Style>
             <Style TargetType="Border">
                 <Setter Property="Background" Value="{DynamicResource CardBackground}" />
@@ -34,10 +33,10 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Image
+            <svgc:SvgViewbox
                 Width="45"
                 Margin="24,0,0,0"
-                Source="pack://application:,,,/Assets/key-256.png" />
+                Source="pack://application:,,,/Assets/key.svg" />
 
             <StackPanel
                 Grid.Column="1"
@@ -54,16 +53,18 @@
                     Text="info@example.com"
                     TextWrapping="WrapWithOverflow" />
                 <ui:TextBlock
+                    x:Name="TokenTextBlock"
                     FontSize="32"
                     FontWeight="Bold"
-                    Text="123 456" />
+                    Text="??? ???" />
+                <!--<ui:Button Icon="{ui:SymbolIcon Copy24, Filled=True}" />
+                <ui:Button Margin="0,10,0,0" Icon="{ui:SymbolIcon Edit24, Filled=True}" />-->
             </StackPanel>
             <StackPanel
                 Grid.Column="2"
                 Margin="24"
                 VerticalAlignment="Center">
-                <ui:Button Icon="{ui:SymbolIcon Copy24, Filled=True}" />
-                <ui:Button Margin="0,10,0,0" Icon="{ui:SymbolIcon Edit24, Filled=True}" />
+                <ui:ProgressRing x:Name="TimeProgressRing" Progress="100" />
             </StackPanel>
         </Grid>
     </Border>
