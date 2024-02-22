@@ -45,13 +45,9 @@ namespace TOTPTokenGuard.Core.Security
                     $"Failed to authenticate with Windows Hello: {openKeyResult.Status}"
                 );
             }
-            if (Auth.authData == null || Auth.authData.WindowsHelloChallenge == null)
-            {
-                throw new Exception("Windows Hello challenge not set");
-            }
             return await SignChallenge(
                 openKeyResult.Credential,
-                Auth.authData.WindowsHelloChallenge
+                Auth.GetWindowsHelloChallenge()
             );
         }
 

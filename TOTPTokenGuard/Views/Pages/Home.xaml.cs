@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System.Security.Cryptography;
+using System.Windows;
 using System.Windows.Controls;
+using TOTPTokenGuard.Core.Models;
+using TOTPTokenGuard.Core.Security;
 using TOTPTokenGuard.Views.UIComponents;
 
 namespace TOTPTokenGuard.Views.Pages
@@ -16,16 +19,65 @@ namespace TOTPTokenGuard.Views.Pages
             InitializeComponent();
             mainWindow = (MainWindow)Application.Current.MainWindow;
 
-            TOTPTokenContainer.Children.Add(
-                new TokenCard(
-                    new Core.Models.TOTPToken
+            Loaded += async (sender, e) => await LoadDataInBackground();
+        }
+        private async Task LoadDataInBackground()
+        {
+            try
+            {
+                List<TOTPTokenHelper> tokenHelpers = [];
+                await Task.Run(() => {
+
+                    List<string> companies = new List<string>
                     {
-                        Id = 1,
-                        Issuer = "Test",
-                        EncryptedSecret = "JBSWY3"
-                    }
-                )
-            );
+                        "Google",
+                        "Apple",
+                        "Microsoft",
+                        "Amazon",
+                        "Facebook",
+                        "Tesla",
+                        "Netflix",
+                        "Intel",
+                        "IBM",
+                        "Samsung",
+                        "Sony",
+                        "Oracle",
+                        "Cisco",
+                        "HP",
+                        "Dell"
+                    };
+
+                    string secret = Auth.GetMainEncryptionHelper().EncryptString("TEST");
+
+                    for (int i = 0; i < 30; i++)
+                    {
+                        Random rand = new Random();
+                        int index = rand.Next(companies.Count);
+                        string randomCompany = companies[index];
+                        DBTOTPToken test = new DBTOTPToken
+                        {
+                            Id = 1,
+                            Issuer = randomCompany,
+                            EncryptedSecret = secret,
+                        };
+                        tokenHelpers.Add(new TOTPTokenHelper(test));
+                    }                    
+
+                });
+
+                foreach (var token in tokenHelpers)
+                {
+                    TokenCard card = new TokenCard(token);
+                    TOTPTokenContainer.Children.Add(card);
+                }
+
+                LoadingInfo.Visibility = Visibility.Collapsed;
+                TOTPTokenContainer.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading data: {ex.Message}");
+            }
         }
     }
 }

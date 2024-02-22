@@ -1,4 +1,6 @@
-﻿namespace TOTPTokenGuard.Core.Models
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace TOTPTokenGuard.Core.Models
 {
     internal enum TOTPAlgorithm
     {
@@ -7,8 +9,9 @@
         SHA512
     }
 
-    internal class TOTPToken
+    internal class DBTOTPToken
     {
+
         public required int Id { get; set; }
         public required string Issuer { get; set; }
         public string? Username { get; set; }

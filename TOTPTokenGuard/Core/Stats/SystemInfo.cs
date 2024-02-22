@@ -11,7 +11,9 @@ internal class SystemInfo
 #if DEBUG
         return true;
 #endif
+#pragma warning disable CS0162 // Unerreichbarer Code wurde entdeckt.
         return false;
+#pragma warning restore CS0162 // Unerreichbarer Code wurde entdeckt.
     }
 
     public static string GetOsName()

@@ -8,8 +8,48 @@ namespace TOTPTokenGuard.Core.Security
         private const int Iterations = 600000;
         private const int SaltSize = 16;
         private const int KeySize = 32; // 256 bit
+        private Aes aes;
 
-        public static string EncryptString(string plainText, string password)
+        public EncryptionHelper(string password, string saltStr)
+        {
+            byte[] salt = Convert.FromBase64String(saltStr);
+            using var deriveBytes = DeriveKey(password, salt);
+            aes = Aes.Create();
+            aes.Key = deriveBytes.GetBytes(KeySize);
+            aes.IV =
+                aes.BlockSize == 128
+                    ? deriveBytes.GetBytes(aes.BlockSize / 8)
+                    : deriveBytes.GetBytes(aes.BlockSize / 8);
+            aes.Mode = CipherMode.CBC;
+        }
+
+        public string EncryptString(string plainText)
+        {
+            using var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+            using var msEncrypt = new MemoryStream();
+            using (
+                var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write)
+            )
+            using (var swEncrypt = new StreamWriter(csEncrypt))
+            {
+                swEncrypt.Write(plainText);
+            }
+            byte[] encryptedBytes = msEncrypt.ToArray();
+            return Convert.ToBase64String(encryptedBytes);
+        }
+
+        public string DecryptString(string encryptedText)
+        {
+            byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
+
+            using var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+            using var msDecrypt = new MemoryStream(encryptedBytes);
+            using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
+            using var srDecrypt = new StreamReader(csDecrypt);
+            return srDecrypt.ReadToEnd();
+        }
+
+        public static string GenerateSalt()
         {
             byte[] salt;
             using (var rng = RandomNumberGenerator.Create())
@@ -17,69 +57,7 @@ namespace TOTPTokenGuard.Core.Security
                 salt = new byte[SaltSize];
                 rng.GetBytes(salt);
             }
-
-            using var deriveBytes = DeriveKey(password, salt);
-            using var aes = Aes.Create();
-            aes.Key = deriveBytes.GetBytes(KeySize);
-            aes.IV =
-                aes.BlockSize == 128
-                    ? deriveBytes.GetBytes(aes.BlockSize / 8)
-                    : deriveBytes.GetBytes(aes.BlockSize / 8);
-            aes.Mode = CipherMode.CBC;
-
-            using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
-            using (var msEncrypt = new MemoryStream())
-            {
-                using (
-                    var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write)
-                )
-                using (var swEncrypt = new StreamWriter(csEncrypt))
-                {
-                    swEncrypt.Write(plainText);
-                }
-                byte[] encryptedBytes = msEncrypt.ToArray();
-                byte[] resultBytes = new byte[salt.Length + encryptedBytes.Length];
-                Buffer.BlockCopy(salt, 0, resultBytes, 0, salt.Length);
-                Buffer.BlockCopy(
-                    encryptedBytes,
-                    0,
-                    resultBytes,
-                    salt.Length,
-                    encryptedBytes.Length
-                );
-                return Convert.ToBase64String(resultBytes);
-            }
-        }
-
-        public static string DecryptString(string cipherText, string password)
-        {
-            byte[] cipherBytes = Convert.FromBase64String(cipherText);
-            byte[] salt = new byte[SaltSize];
-            byte[] encryptedBytes = new byte[cipherBytes.Length - salt.Length];
-
-            Buffer.BlockCopy(cipherBytes, 0, salt, 0, salt.Length);
-            Buffer.BlockCopy(cipherBytes, salt.Length, encryptedBytes, 0, encryptedBytes.Length);
-
-            using var deriveBytes = DeriveKey(password, salt);
-            using (var aes = Aes.Create())
-            {
-                aes.Key = deriveBytes.GetBytes(KeySize);
-                aes.IV =
-                    aes.BlockSize == 128
-                        ? deriveBytes.GetBytes(aes.BlockSize / 8)
-                        : deriveBytes.GetBytes(aes.BlockSize / 8);
-                aes.Mode = CipherMode.CBC;
-
-                using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
-                using (var msDecrypt = new MemoryStream(encryptedBytes))
-                using (
-                    var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read)
-                )
-                using (var srDecrypt = new StreamReader(csDecrypt))
-                {
-                    return srDecrypt.ReadToEnd();
-                }
-            }
+            return Convert.ToBase64String(salt);
         }
 
         private static Rfc2898DeriveBytes DeriveKey(string password, byte[] salt)

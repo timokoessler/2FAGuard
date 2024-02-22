@@ -64,7 +64,7 @@
                 Grid.Column="2"
                 Margin="24"
                 VerticalAlignment="Center">
-                <ui:ProgressRing x:Name="TimeProgressRing" Progress="100" />
+                <ui:ProgressRing x:Name="TimeProgressRing" Progress="0" />
             </StackPanel>
         </Grid>
     </Border>

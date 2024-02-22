@@ -47,6 +47,9 @@
     <system:String x:Key="i.login.button">Login</system:String>
     <system:String x:Key="i.login.pass.error">The password is incorrect</system:String>
 
+    <!-- Home -->
+    <system:String x:Key="i.home.loading">Loading...</system:String>
+
     <system:String x:Key="i.save">Save</system:String>
     <system:String x:Key="i.dialog.close">Close</system:String>
 </ResourceDictionary>

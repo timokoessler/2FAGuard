@@ -1,6 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using OtpNet;
 using TOTPTokenGuard.Core.Models;
+using Wpf.Ui.Controls;
 
 namespace TOTPTokenGuard.Views.UIComponents
 {
@@ -9,31 +12,54 @@ namespace TOTPTokenGuard.Views.UIComponents
     /// </summary>
     partial class TokenCard : UserControl
     {
-        private TOTPToken tToken;
-        private Totp totp;
+        private readonly TOTPTokenHelper token;
 
-        internal TokenCard(TOTPToken tToken)
+        internal TokenCard(TOTPTokenHelper token)
         {
             InitializeComponent();
+            this.token = token;
 
-            this.tToken = tToken;
-            // Todo decrypt secret
-            byte[] secret = Base32Encoding.ToBytes(tToken.EncryptedSecret);
-            totp = new Totp(secret);
-
-            updateTokenText();
+            Update();
+            ScheduleUpdates();
         }
 
-        private void updateTokenText()
+        private void Update()
         {
-            string tokenStr = totp.ComputeTotp();
+            UpdateProgressRing();
+            UpdateTokenText();
+        }
+
+        private async Task ScheduleUpdates()
+        {
+            while (true)
+            {
+                await Task.Delay(token.GetRemainingSeconds() * 1000);
+                Update();
+            }
+        }
+
+        private void UpdateProgressRing()
+        {
+            int totalSeconds = token.getInfo().Period ?? 30;
+            int remainingSeconds = token.GetRemainingSeconds();
+
+            TimeProgressRing.Progress = (double)remainingSeconds / totalSeconds * 100;
+
+            Duration duration = new(TimeSpan.FromSeconds(remainingSeconds));
+            DoubleAnimation doubleanimation = new(TimeProgressRing.Progress + (1 - TimeProgressRing.Progress), duration);
+            TimeProgressRing.BeginAnimation(ProgressRing.ProgressProperty, doubleanimation);
+        }
+
+        private void UpdateTokenText()
+        {
+            string tokenStr = token.GenerateToken();
             if (tokenStr.Length == 6)
             {
-                tokenStr = tokenStr.Substring(0, 3) + " " + tokenStr.Substring(3);
+                tokenStr = tokenStr[..3] + " " + tokenStr[3..];
             }
             else if (tokenStr.Length == 8)
             {
-                tokenStr = tokenStr.Substring(0, 4) + " " + tokenStr.Substring(4);
+                tokenStr = tokenStr[..4] + " " + tokenStr[4..];
             }
             TokenTextBlock.Text = tokenStr;
         }

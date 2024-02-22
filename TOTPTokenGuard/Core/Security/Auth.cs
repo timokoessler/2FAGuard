@@ -9,9 +9,9 @@ namespace TOTPTokenGuard.Core.Security
             Utils.GetAppDataFolderPath(),
             "auth-keys"
         );
-        public static AuthFileData? authData;
-        public static string? mainEncryptionKey;
-        public static string? dbEncryptionKey;
+        private static AuthFileData? authData;
+        private static string? mainEncryptionKey;
+        private static EncryptionHelper? mainEncryptionHelper;
 
         public static async Task Init()
         {
@@ -61,23 +61,22 @@ namespace TOTPTokenGuard.Core.Security
             }
             if (
                 authData.PasswordProtectedKey != null
-                || authData.ProtectedDbKey != null
+                || authData.WindowsHelloProtectedKey != null
+                || authData.InsecureMainKey != null
                 || mainEncryptionKey != null
             )
             {
                 throw new Exception("Already registered");
             }
             mainEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
-            dbEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
+            authData.KeySalt = EncryptionHelper.GenerateSalt();
 
-            authData.PasswordProtectedKey = EncryptionHelper.EncryptString(
-                mainEncryptionKey,
-                password
-            );
-            authData.ProtectedDbKey = EncryptionHelper.EncryptString(
-                dbEncryptionKey,
-                mainEncryptionKey
-            );
+            string loginSalt = EncryptionHelper.GenerateSalt();
+            authData.LoginSalt = loginSalt;
+
+            EncryptionHelper encryptionHelper = new EncryptionHelper(password, loginSalt);
+
+            authData.PasswordProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
 
             if (enableWindowsHello)
             {
@@ -88,7 +87,7 @@ namespace TOTPTokenGuard.Core.Security
 
         private static async Task RegisterWindowsHello()
         {
-            if (authData == null || mainEncryptionKey == null)
+            if (authData == null || mainEncryptionKey == null || authData.LoginSalt == null)
             {
                 throw new Exception("Auth data not initialized");
             }
@@ -139,18 +138,16 @@ namespace TOTPTokenGuard.Core.Security
                     "Failed to register with Windows Hello because the signed challenge is empty"
                 );
             }
-            authData.WindowsHelloProtectedKey = EncryptionHelper.EncryptString(
-                mainEncryptionKey,
-                signedChallenge
-            );
+            EncryptionHelper encryptionHelper = new EncryptionHelper(signedChallenge, authData.LoginSalt);
+            authData.WindowsHelloProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
         }
 
         public static bool IsLoggedIn()
         {
-            return mainEncryptionKey != null && dbEncryptionKey != null;
+            return mainEncryptionKey != null;
         }
 
-        public static bool isLoginEnabled()
+        public static bool IsLoginEnabled()
         {
             return authData?.InsecureMainKey == null;
         }
@@ -162,17 +159,13 @@ namespace TOTPTokenGuard.Core.Security
 
         public static async Task LoginWithWindowsHello()
         {
-            if (authData == null)
+            if (authData == null || authData.LoginSalt == null)
             {
                 throw new Exception("Auth data not initialized");
             }
             if (authData.WindowsHelloProtectedKey == null)
             {
                 throw new Exception("Windows Hello not registered");
-            }
-            if (authData.ProtectedDbKey == null)
-            {
-                throw new Exception("Emergency: DB encryption key is not set");
             }
             string signedChallenge = await WindowsHello.GetSignedChallenge();
             if (signedChallenge == null || signedChallenge.Length == 0)
@@ -181,15 +174,10 @@ namespace TOTPTokenGuard.Core.Security
                     "Failed to login with Windows Hello because the signed challenge is empty"
                 );
             }
-            mainEncryptionKey = EncryptionHelper.DecryptString(
-                authData.WindowsHelloProtectedKey,
-                signedChallenge
-            );
-            dbEncryptionKey = EncryptionHelper.DecryptString(
-                authData.ProtectedDbKey,
-                mainEncryptionKey
-            );
-            if (mainEncryptionKey == null || dbEncryptionKey == null)
+            EncryptionHelper encryptionHelper = new EncryptionHelper(signedChallenge, authData.LoginSalt);
+            mainEncryptionKey = encryptionHelper.DecryptString(authData.WindowsHelloProtectedKey);
+ 
+            if (mainEncryptionKey == null)
             {
                 throw new Exception("Failed to decrypt encryption keys");
             }
@@ -197,7 +185,7 @@ namespace TOTPTokenGuard.Core.Security
 
         public static void LoginWithPassword(string password)
         {
-            if (authData == null)
+            if (authData == null || authData.LoginSalt == null)
             {
                 throw new Exception("Auth data not initialized");
             }
@@ -205,26 +193,16 @@ namespace TOTPTokenGuard.Core.Security
             {
                 throw new Exception("Password not set");
             }
-            if (authData.ProtectedDbKey == null)
-            {
-                throw new Exception("Emergency: DB encryption key is not set");
-            }
             try
             {
-                mainEncryptionKey = EncryptionHelper.DecryptString(
-                    authData.PasswordProtectedKey,
-                    password
-                );
-                dbEncryptionKey = EncryptionHelper.DecryptString(
-                    authData.ProtectedDbKey,
-                    mainEncryptionKey
-                );
+                EncryptionHelper encryptionHelper = new EncryptionHelper(password, authData.LoginSalt);
+                mainEncryptionKey = encryptionHelper.DecryptString(authData.PasswordProtectedKey);
             }
             catch
             {
                 throw new Exception("Failed to decrypt keys");
             }
-            if (mainEncryptionKey == null || dbEncryptionKey == null)
+            if (mainEncryptionKey == null)
             {
                 throw new Exception("Failed to decrypt keys");
             }
@@ -238,18 +216,13 @@ namespace TOTPTokenGuard.Core.Security
             }
             if (
                 authData.PasswordProtectedKey != null
-                || authData.ProtectedDbKey != null
+                || authData.WindowsHelloProtectedKey != null
                 || mainEncryptionKey != null
             )
             {
                 throw new Exception("Already registered");
             }
             mainEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
-            dbEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
-            authData.ProtectedDbKey = EncryptionHelper.EncryptString(
-                dbEncryptionKey,
-                mainEncryptionKey
-            );
 
             authData.InsecureMainKey = mainEncryptionKey;
             await SaveFile();
@@ -265,26 +238,33 @@ namespace TOTPTokenGuard.Core.Security
             {
                 throw new Exception("Insecure main key not set");
             }
-            if (authData.ProtectedDbKey == null)
+            mainEncryptionKey = authData.InsecureMainKey;
+        }
+
+        public static EncryptionHelper GetMainEncryptionHelper()
+        {
+            if(mainEncryptionKey == null)
             {
-                throw new Exception("Emergency: DB encryption key is not set");
+                throw new Exception("Main encryption key not set");
             }
-            try
+            if(authData == null || authData.KeySalt == null)
             {
-                mainEncryptionKey = authData.InsecureMainKey;
-                dbEncryptionKey = EncryptionHelper.DecryptString(
-                    authData.ProtectedDbKey,
-                    mainEncryptionKey
-                );
+                throw new Exception("Key salt not set");
             }
-            catch
+            if (mainEncryptionHelper == null)
             {
-                throw new Exception("Failed to decrypt keys");
+                mainEncryptionHelper = new EncryptionHelper(mainEncryptionKey, authData.KeySalt);
             }
-            if (mainEncryptionKey == null || dbEncryptionKey == null)
+            return mainEncryptionHelper;
+        }
+
+        public static string GetWindowsHelloChallenge()
+        {
+            if (authData == null || authData.WindowsHelloChallenge == null)
             {
-                throw new Exception("Failed to decrypt keys");
+                throw new Exception("Windows Hello challenge not set");
             }
+            return authData.WindowsHelloChallenge;
         }
     }
 }

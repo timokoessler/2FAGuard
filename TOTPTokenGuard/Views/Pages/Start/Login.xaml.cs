@@ -25,7 +25,7 @@ namespace TOTPTokenGuard.Views.Pages.Start
             try
             {
                 await Auth.Init();
-                if (!Auth.isLoginEnabled())
+                if (!Auth.IsLoginEnabled())
                 {
                     LoginButton.IsEnabled = false;
                     PasswordBox.IsEnabled = false;

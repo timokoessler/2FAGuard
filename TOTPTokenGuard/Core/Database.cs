@@ -1,6 +1,4 @@
 ﻿using LiteDB;
-using TOTPTokenGuard.Core.Models;
-using TOTPTokenGuard.Core.Security;
 
 namespace TOTPTokenGuard.Core
 {
@@ -15,12 +13,7 @@ namespace TOTPTokenGuard.Core
 
         public static void Init()
         {
-            if (Auth.authData == null || Auth.dbEncryptionKey == null)
-            {
-                throw new System.Exception("Can not initialize database without AuthData");
-            }
-
-            db = new LiteDatabase($"Filename={GetDBPath()};Password={Auth.dbEncryptionKey}");
+            db = new LiteDatabase($"Filename={GetDBPath()}");
 
             //var tokens = db.GetCollection<TOTPToken>("tokens");
         }
