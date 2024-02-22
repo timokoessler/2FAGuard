@@ -26,43 +26,22 @@ namespace TOTPTokenGuard.Views.Pages
             try
             {
                 List<TOTPTokenHelper> tokenHelpers = [];
-                await Task.Run(() => {
 
-                    List<string> companies = new List<string>
-                    {
-                        "Google",
-                        "Apple",
-                        "Microsoft",
-                        "Amazon",
-                        "Facebook",
-                        "Tesla",
-                        "Netflix",
-                        "Intel",
-                        "IBM",
-                        "Samsung",
-                        "Sony",
-                        "Oracle",
-                        "Cisco",
-                        "HP",
-                        "Dell"
-                    };
-
+                await Task.Run(() =>
+                {
                     string secret = Auth.GetMainEncryptionHelper().EncryptString("TEST");
 
-                    for (int i = 0; i < 30; i++)
+                    for (int i = 0; i < 10; i++)
                     {
                         Random rand = new Random();
-                        int index = rand.Next(companies.Count);
-                        string randomCompany = companies[index];
                         DBTOTPToken test = new DBTOTPToken
                         {
                             Id = 1,
-                            Issuer = randomCompany,
+                            Issuer = "ACME",
                             EncryptedSecret = secret,
                         };
                         tokenHelpers.Add(new TOTPTokenHelper(test));
-                    }                    
-
+                    }
                 });
 
                 foreach (var token in tokenHelpers)
