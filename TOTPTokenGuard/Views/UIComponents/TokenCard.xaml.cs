@@ -21,9 +21,8 @@ namespace TOTPTokenGuard.Views.UIComponents
 
             UpdateTokenText();
             InitProgressRing();
-            ScheduleUpdates();
+            _ = ScheduleUpdates();
         }
-
 
         private async Task ScheduleUpdates()
         {
@@ -31,10 +30,12 @@ namespace TOTPTokenGuard.Views.UIComponents
             {
                 await Task.Delay(token.GetRemainingSeconds() * 1000);
                 UpdateTokenText();
-                TimeProgressRing.BeginAnimation(ProgressRing.ProgressProperty, null);
-                TimeProgressRing.Progress = 100;
-                doubleAnimation.Duration = TimeSpan.FromSeconds(token.getInfo().Period ?? 30);
-                TimeProgressRing.BeginAnimation(ProgressRing.ProgressProperty, doubleAnimation);
+                if (doubleAnimation != null)
+                {
+                    doubleAnimation.From = 100;
+                    doubleAnimation.Duration = TimeSpan.FromSeconds(token.getInfo().Period ?? 30);
+                    TimeProgressRing.BeginAnimation(ProgressRing.ProgressProperty, doubleAnimation);
+                }
             }
         }
 
@@ -43,11 +44,13 @@ namespace TOTPTokenGuard.Views.UIComponents
             int totalSeconds = token.getInfo().Period ?? 30;
             int remainingSeconds = token.GetRemainingSeconds();
 
-            TimeProgressRing.Progress = (double)remainingSeconds / totalSeconds * 100;
+            int start = (int)((double)remainingSeconds / (double)totalSeconds * 100);
 
-            doubleAnimation = new(TimeProgressRing.Progress - (100/totalSeconds), new Duration(TimeSpan.FromSeconds(remainingSeconds)))
+            doubleAnimation = new()
             {
-                RepeatBehavior = RepeatBehavior.Forever
+                From = start,
+                To = 0,
+                Duration = TimeSpan.FromSeconds(remainingSeconds),
             };
             TimeProgressRing.BeginAnimation(ProgressRing.ProgressProperty, doubleAnimation);
         }
