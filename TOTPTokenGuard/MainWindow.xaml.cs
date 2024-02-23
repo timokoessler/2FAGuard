@@ -21,56 +21,96 @@ namespace TOTPTokenGuard
     public partial class MainWindow : FluentWindow
     {
         private readonly ContentDialogService ContentDialogService;
-        private readonly AptabaseClient StatsClient;
+        private AptabaseClient? StatsClient;
 
         public MainWindow()
         {
             I18n.InitI18n();
-            SystemThemeWatcher.Watch(this);
+
             InitializeComponent();
             Loaded += (s, e) => OnWindowLoaded();
+
             RootNavigation.SelectionChanged += OnNavigationSelectionChanged;
             ContentDialogService = new ContentDialogService();
+
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(
                 OnUnhandledException
             );
-
-            StatsClient = new(
-                "A-SH-2619747927",
-                new InitOptions { Host = "https://aptabase.tkoessler.de" }
-            );
         }
 
-        private void OnWindowLoaded()
+        private async void OnWindowLoaded()
         {
             ContentDialogService.SetContentPresenter(RootContentDialogPresenter);
             HideNavigation();
+
+            await SettingsManager.Init();
+            ApplyTheme(SettingsManager.Settings.Theme);
+            
             if (!Auth.FileExists())
             {
                 FullContentFrame.Content = new Welcome();
                 return;
             }
-
             FullContentFrame.Content = new Login();
 
+            StatsClient = new(
+                "A-SH-2619747927",
+                new InitOptions { Host = "https://aptabase.tkoessler.de" }
+            );
             StatsClient.TrackEvent("AppOpened");
+        }
+
+        internal void ApplyTheme(Core.Models.ThemeSetting theme)
+        {
+            if (theme == Core.Models.ThemeSetting.System)
+            {
+                SystemThemeWatcher.Watch(this);
+                ApplicationTheme appTheme = ApplicationThemeManager.GetSystemTheme() == SystemTheme.Dark
+                    ? ApplicationTheme.Dark
+                    : ApplicationTheme.Light;
+                if(ApplicationThemeManager.GetAppTheme() != appTheme)
+                {
+                    ApplicationThemeManager.Apply(appTheme, WindowBackdropType.Mica);
+                }
+            }
+            else if (theme == Core.Models.ThemeSetting.Dark)
+            {
+                SystemThemeWatcher.UnWatch(this);
+                if(ApplicationThemeManager.GetAppTheme() != ApplicationTheme.Dark)
+                {
+                    ApplicationThemeManager.Apply(ApplicationTheme.Dark, WindowBackdropType.Mica);
+                }
+            }
+            else
+            {
+                SystemThemeWatcher.UnWatch(this);
+                if (ApplicationThemeManager.GetAppTheme() != ApplicationTheme.Light)
+                {
+                    ApplicationThemeManager.Apply(ApplicationTheme.Light, WindowBackdropType.Mica);
+                }
+            }
         }
 
         private void OnNavigationSelectionChanged(object sender, RoutedEventArgs e)
         {
-            if (sender is not Wpf.Ui.Controls.NavigationView navigationView)
+            if (sender is not NavigationView navigationView)
             {
                 return;
             }
 
-            string? pageName = navigationView.SelectedItem?.TargetPageType?.Name;
+            UpdatePageTitle();
+        }
+
+        internal void UpdatePageTitle()
+        {
+            string? pageName = RootNavigation.SelectedItem?.TargetPageType?.Name;
             if (pageName != null)
             {
                 PageTitle.Text = I18n.GetString("page." + pageName.ToLower());
             }
         }
 
-        public void Navigate(Type page)
+        internal void Navigate(Type page)
         {
             RootNavigation.Navigate(page);
         }
@@ -80,30 +120,30 @@ namespace TOTPTokenGuard
         {
             if (ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Dark)
             {
-                ApplicationThemeManager.Apply(ApplicationTheme.Light, WindowBackdropType.Mica);
+                ApplyTheme(Core.Models.ThemeSetting.Light);
             }
             else
             {
-                ApplicationThemeManager.Apply(ApplicationTheme.Dark, WindowBackdropType.Mica);
+                ApplyTheme(Core.Models.ThemeSetting.Dark);
             }
         }
 
-        public ContentDialogService GetContentDialogService()
+        internal ContentDialogService GetContentDialogService()
         {
             return ContentDialogService;
         }
 
-        public void HideNavigation()
+        internal void HideNavigation()
         {
             RootNavigation.Visibility = Visibility.Collapsed;
         }
 
-        public void ShowNavigation()
+        internal void ShowNavigation()
         {
             RootNavigation.Visibility = Visibility.Visible;
         }
 
-        public async void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
+        private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
             Exception e = (Exception)args.ExceptionObject;
             var uiMessageBox = new Wpf.Ui.Controls.MessageBox

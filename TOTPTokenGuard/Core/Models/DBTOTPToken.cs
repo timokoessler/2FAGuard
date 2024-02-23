@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace TOTPTokenGuard.Core.Models
+﻿namespace TOTPTokenGuard.Core.Models
 {
     internal enum TOTPAlgorithm
     {

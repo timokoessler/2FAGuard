@@ -3,15 +3,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
+    <!--  Nav  -->
     <system:String x:Key="i.title">TOTP Token Guard</system:String>
     <system:String x:Key="i.page.home">Your tokens</system:String>
     <system:String x:Key="i.page.settings">Settings</system:String>
-    <system:String x:Key="i.settings.personalisation">Personalisation</system:String>
     <system:String x:Key="i.language">Language</system:String>
+    <system:String x:Key="i.nav.add">Add token</system:String>
+
+    <!--  Settings  -->
+    <system:String x:Key="i.settings.personalisation">Personalisation</system:String>
     <system:String x:Key="i.settings.about">About this software</system:String>
     <system:String x:Key="i.settings.issue">Report an issue</system:String>
     <system:String x:Key="i.settings.myweb">My website</system:String>
-    <system:String x:Key="i.toggleTheme">Toggle theme</system:String>
 
     <system:String x:Key="i.win.hello.request">The application TOTP Token Guard wants to prove your identity</system:String>
 
@@ -47,9 +50,12 @@
     <system:String x:Key="i.login.button">Login</system:String>
     <system:String x:Key="i.login.pass.error">The password is incorrect</system:String>
 
-    <!-- Home -->
+    <!--  Home  -->
     <system:String x:Key="i.home.loading">Loading...</system:String>
 
     <system:String x:Key="i.save">Save</system:String>
     <system:String x:Key="i.dialog.close">Close</system:String>
+
+    <!--  Add  -->
+    <system:String x:Key="i.page.addoverview">Token hinzufügen</system:String>
 </ResourceDictionary>

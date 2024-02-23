@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:TOTPTokenGuard"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:TOTPTokenGuard.Views.Pages"
+    xmlns:pagesadd="clr-namespace:TOTPTokenGuard.Views.Pages.Add"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="TOTP Token Guard"
     Width="1200"
@@ -43,6 +44,11 @@
                     Content="{DynamicResource i.page.home}"
                     Icon="{ui:SymbolIcon Key24}"
                     TargetPageType="{x:Type pages:Home}" />
+                <ui:NavigationViewItem
+                    Content="{DynamicResource i.nav.add}"
+                    Icon="{ui:SymbolIcon Add24}"
+                    TargetPageType="{x:Type pagesadd:AddOverview}" />
+                <ui:NavigationViewItemSeparator />
                 <ui:NavigationViewItem Click="ToggleThemeClicked" Icon="{ui:SymbolIcon DarkTheme24}" />
                 <ui:NavigationViewItem
                     Content="{DynamicResource i.page.settings}"

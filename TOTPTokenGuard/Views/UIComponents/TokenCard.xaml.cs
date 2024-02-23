@@ -1,7 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using TOTPTokenGuard.Core.Models;
+using Wpf.Ui;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
 namespace TOTPTokenGuard.Views.UIComponents
@@ -28,8 +31,16 @@ namespace TOTPTokenGuard.Views.UIComponents
         {
             while (true)
             {
+                int remainingSeconds = token.GetRemainingSeconds();
+                if(remainingSeconds > 6)
+                {
+                    await Task.Delay((token.GetRemainingSeconds() - 5) * 1000);
+                }
+                TimeProgressRing.Foreground = Brushes.Red;
+                
                 await Task.Delay(token.GetRemainingSeconds() * 1000);
                 UpdateTokenText();
+                TimeProgressRing.Foreground = ApplicationAccentColorManager.PrimaryAccentBrush;
                 if (doubleAnimation != null)
                 {
                     doubleAnimation.From = 100;

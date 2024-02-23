@@ -13,14 +13,21 @@ namespace TOTPTokenGuard.Views.Pages
     /// </summary>
     public partial class Settings : Page
     {
+        private readonly MainWindow mainWindow;
         public Settings()
         {
             InitializeComponent();
 
+            mainWindow = (MainWindow)Application.Current.MainWindow;
+
             AppInfoTextBlock.Text =
                 $"Copyright © {DateTime.Now.Year} Timo Kössler and Open Source Contributors\n";
             AppInfoTextBlock.Text += $"Version {Utils.GetVersionString()}";
-            if (ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Dark)
+            if (SettingsManager.Settings.Theme == ThemeSetting.System)
+            {
+                SystemThemeRadioButton.IsChecked = true;
+            }
+            else if (SettingsManager.Settings.Theme == ThemeSetting.Dark)
             {
                 DarkThemeRadioButton.IsChecked = true;
             }
@@ -70,27 +77,30 @@ namespace TOTPTokenGuard.Views.Pages
                 if (Enum.TryParse<LanguageSetting>(lang, true, out LanguageSetting result))
                 {
                     I18n.ChangeLanguage(result);
+                    mainWindow.UpdatePageTitle();
                 }
             }
         }
 
         private void OnSystemThemeRadioButtonChecked(object sender, RoutedEventArgs e)
         {
-            ApplicationTheme theme =
-                ApplicationThemeManager.GetSystemTheme() == SystemTheme.Dark
-                    ? ApplicationTheme.Dark
-                    : ApplicationTheme.Light;
-            ApplicationThemeManager.Apply(theme, WindowBackdropType.Mica);
+            mainWindow.ApplyTheme(ThemeSetting.System);
+            SettingsManager.Settings.Theme = ThemeSetting.System;
+            _ = SettingsManager.Save();
         }
 
         private void OnLightThemeRadioButtonChecked(object sender, RoutedEventArgs e)
         {
-            ApplicationThemeManager.Apply(ApplicationTheme.Light, WindowBackdropType.Mica);
+            mainWindow.ApplyTheme(ThemeSetting.Light);
+            SettingsManager.Settings.Theme = ThemeSetting.Light;
+            _ = SettingsManager.Save();
         }
 
         private void OnDarkThemeRadioButtonChecked(object sender, RoutedEventArgs e)
         {
-            ApplicationThemeManager.Apply(ApplicationTheme.Dark, WindowBackdropType.Mica);
+            mainWindow.ApplyTheme(ThemeSetting.Dark);
+            SettingsManager.Settings.Theme = ThemeSetting.Dark;
+            _ = SettingsManager.Save();
         }
     }
 }
