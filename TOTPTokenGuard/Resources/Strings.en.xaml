@@ -5,7 +5,7 @@
 
     <!--  Nav  -->
     <system:String x:Key="i.title">TOTP Token Guard</system:String>
-    <system:String x:Key="i.page.home">Your tokens</system:String>
+    <system:String x:Key="i.page.home">Tokens</system:String>
     <system:String x:Key="i.page.settings">Settings</system:String>
     <system:String x:Key="i.language">Language</system:String>
     <system:String x:Key="i.nav.add">Add token</system:String>
@@ -58,4 +58,17 @@
 
     <!--  Add  -->
     <system:String x:Key="i.page.addoverview">Token hinzufügen</system:String>
+    <system:String x:Key="i.add.manual">Manual input</system:String>
+    <system:String x:Key="i.add.manual.description">Enter the secret key and further information</system:String>
+    <system:String x:Key="i.add.qr">Import QR code</system:String>
+    <system:String x:Key="i.add.qr.description">Scan a QR code by importing an image file</system:String>
+    <system:String x:Key="i.add.qrscreen">Scan QR code from the screen</system:String>
+    <system:String x:Key="i.add.qrscreen.description">Select a screen area to scan the QR code</system:String>
+    <system:String x:Key="i.add.import">Import</system:String>
+    <system:String x:Key="i.import.backup">Backup</system:String>
+    <system:String x:Key="i.import.backup.description">Import a backup file that was created with TOTP Token Guard</system:String>
+    <system:String x:Key="i.import.uri">Uri list</system:String>
+    <system:String x:Key="i.import.uri.description">Import a list of TOTP URIs</system:String>
+    <system:String x:Key="i.import.bitwarden">Bitwarden</system:String>
+    <system:String x:Key="i.import.bitwarden.description">Import tokens from the password manager Bitwarden</system:String>
 </ResourceDictionary>

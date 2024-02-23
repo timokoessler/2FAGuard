@@ -16,9 +16,11 @@
     <ApplicationIcon>totp.ico</ApplicationIcon>
     <AssemblyVersion>0.1.0</AssemblyVersion>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\bitwarden.svg" />
     <None Remove="Assets\check.svg" />
     <None Remove="Assets\key.svg" />
     <None Remove="Assets\logo-256.png" />
@@ -39,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\bitwarden.svg" />
     <Resource Include="Assets\check.svg" />
     <Resource Include="Assets\key.svg" />
     <Resource Include="Assets\logo-256.png" />
