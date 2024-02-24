@@ -2,6 +2,7 @@
 {
     internal class AuthFileData
     {
+        public int? Version { get; set; }
         public string? WindowsHelloProtectedKey { get; set; }
         public string? WindowsHelloChallenge { get; set; }
         public string? PasswordProtectedKey { get; set; }

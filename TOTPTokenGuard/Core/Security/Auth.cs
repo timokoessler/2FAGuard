@@ -12,6 +12,7 @@ namespace TOTPTokenGuard.Core.Security
         private static AuthFileData? authData;
         private static string? mainEncryptionKey;
         private static EncryptionHelper? mainEncryptionHelper;
+        private static readonly int currentVersion = 1;
 
         public static async Task Init()
         {
@@ -53,6 +54,12 @@ namespace TOTPTokenGuard.Core.Security
             await System.IO.File.WriteAllBytesAsync(authFilePath, fileData);
         }
 
+        /// <summary>
+        /// Create a new encryption key and encrypt it with the password
+        /// Also generate a salt
+        /// </summary>
+        /// <param name="password">The user chosen password to encrypt the key with</param>
+        /// <param name="enableWindowsHello">If Windows Hello should be enabled</param>
         public static async Task Register(string password, bool enableWindowsHello)
         {
             if (authData == null)
@@ -74,9 +81,10 @@ namespace TOTPTokenGuard.Core.Security
             string loginSalt = EncryptionHelper.GenerateSalt();
             authData.LoginSalt = loginSalt;
 
-            EncryptionHelper encryptionHelper = new EncryptionHelper(password, loginSalt);
+            EncryptionHelper encryptionHelper = new(password, loginSalt);
 
             authData.PasswordProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
+            authData.Version = currentVersion;
 
             if (enableWindowsHello)
             {
@@ -138,8 +146,30 @@ namespace TOTPTokenGuard.Core.Security
                     "Failed to register with Windows Hello because the signed challenge is empty"
                 );
             }
-            EncryptionHelper encryptionHelper = new EncryptionHelper(signedChallenge, authData.LoginSalt);
+            EncryptionHelper encryptionHelper = new(signedChallenge, authData.LoginSalt);
             authData.WindowsHelloProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
+        }
+
+        public static async Task RegisterInsecure()
+        {
+            if (authData == null)
+            {
+                throw new Exception("Auth data not initialized");
+            }
+            if (
+                authData.PasswordProtectedKey != null
+                || authData.WindowsHelloProtectedKey != null
+                || mainEncryptionKey != null
+            )
+            {
+                throw new Exception("Already registered");
+            }
+            mainEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
+
+            authData.InsecureMainKey = mainEncryptionKey;
+            authData.KeySalt = EncryptionHelper.GenerateSalt();
+            authData.Version = currentVersion;
+            await SaveFile();
         }
 
         public static bool IsLoggedIn()
@@ -174,9 +204,9 @@ namespace TOTPTokenGuard.Core.Security
                     "Failed to login with Windows Hello because the signed challenge is empty"
                 );
             }
-            EncryptionHelper encryptionHelper = new EncryptionHelper(signedChallenge, authData.LoginSalt);
+            EncryptionHelper encryptionHelper = new(signedChallenge, authData.LoginSalt);
             mainEncryptionKey = encryptionHelper.DecryptString(authData.WindowsHelloProtectedKey);
- 
+
             if (mainEncryptionKey == null)
             {
                 throw new Exception("Failed to decrypt encryption keys");
@@ -195,7 +225,7 @@ namespace TOTPTokenGuard.Core.Security
             }
             try
             {
-                EncryptionHelper encryptionHelper = new EncryptionHelper(password, authData.LoginSalt);
+                EncryptionHelper encryptionHelper = new(password, authData.LoginSalt);
                 mainEncryptionKey = encryptionHelper.DecryptString(authData.PasswordProtectedKey);
             }
             catch
@@ -206,26 +236,6 @@ namespace TOTPTokenGuard.Core.Security
             {
                 throw new Exception("Failed to decrypt keys");
             }
-        }
-
-        public static async Task RegisterInsecure()
-        {
-            if (authData == null)
-            {
-                throw new Exception("Auth data not initialized");
-            }
-            if (
-                authData.PasswordProtectedKey != null
-                || authData.WindowsHelloProtectedKey != null
-                || mainEncryptionKey != null
-            )
-            {
-                throw new Exception("Already registered");
-            }
-            mainEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
-
-            authData.InsecureMainKey = mainEncryptionKey;
-            await SaveFile();
         }
 
         public static void LoginInsecure()
@@ -243,11 +253,11 @@ namespace TOTPTokenGuard.Core.Security
 
         public static EncryptionHelper GetMainEncryptionHelper()
         {
-            if(mainEncryptionKey == null)
+            if (mainEncryptionKey == null)
             {
                 throw new Exception("Main encryption key not set");
             }
-            if(authData == null || authData.KeySalt == null)
+            if (authData == null || authData.KeySalt == null)
             {
                 throw new Exception("Key salt not set");
             }
