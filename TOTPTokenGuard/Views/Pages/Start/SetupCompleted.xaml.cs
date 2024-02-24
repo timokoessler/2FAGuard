@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using TOTPTokenGuard.Core;
+using TOTPTokenGuard.Views.Pages.Add;
 
 namespace TOTPTokenGuard.Views.Pages.Start
 {
@@ -23,7 +24,7 @@ namespace TOTPTokenGuard.Views.Pages.Start
             mainWindow.FullContentFrame.Content = null;
             mainWindow.FullContentFrame.Visibility = Visibility.Collapsed;
             mainWindow.ShowNavigation();
-            mainWindow.Navigate(typeof(Home));
+            mainWindow.Navigate(typeof(AddOverview));
         }
 
         private void CardAction_Click_Settings(object sender, RoutedEventArgs e)

@@ -47,8 +47,9 @@
     <!--  Login  -->
     <system:String x:Key="i.login.subtext">Bitte melde dich an, um fortzufahren</system:String>
     <system:String x:Key="i.login.passbox">Gib dein Passwort ein</system:String>
-    <system:String x:Key="i.login.button">Anmelden</system:String>
+    <system:String x:Key="i.login.button">Mit Passwort anmelden</system:String>
     <system:String x:Key="i.login.pass.error">Das Passwort ist nicht korrekt</system:String>
+    <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
 
     <!--  Home  -->
     <system:String x:Key="i.home.loading">Lade Daten...</system:String>

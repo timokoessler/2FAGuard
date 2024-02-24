@@ -49,6 +49,14 @@
                 Icon="{ui:SymbolIcon ArrowCircleRight24,
                                      Filled=True}"
                 IsDefault="True" />
+            <ui:Button
+                x:Name="WinHelloButton"
+                Margin="0,15,0,0"
+                HorizontalAlignment="Center"
+                Click="WinHelloButton_Click"
+                Content="{DynamicResource i.login.winhellobutton}"
+                Icon="{ui:SymbolIcon FingerPrint24,
+                                     Filled=True}" />
             <ui:InfoBar
                 x:Name="InfoBar"
                 Margin="0,20,0,0"

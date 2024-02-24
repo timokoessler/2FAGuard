@@ -10,17 +10,25 @@ namespace TOTPTokenGuard.Views.Pages.Start
     /// </summary>
     public partial class Login : Page
     {
-        private MainWindow mainWindow;
+        private readonly MainWindow mainWindow;
 
         public Login()
         {
             InitializeComponent();
             PasswordBox.Focus();
             mainWindow = (MainWindow)Application.Current.MainWindow;
-            _ = Setup();
+            _ = Setup(true);
         }
 
-        private async Task Setup()
+        public Login(bool promptWinHello)
+        {
+            InitializeComponent();
+            PasswordBox.Focus();
+            mainWindow = (MainWindow)Application.Current.MainWindow;
+            _ = Setup(promptWinHello);
+        }
+
+        private async Task Setup(bool promptWinHello)
         {
             try
             {
@@ -31,15 +39,22 @@ namespace TOTPTokenGuard.Views.Pages.Start
                     PasswordBox.IsEnabled = false;
                     Auth.LoginInsecure();
                     OnLoggedIn();
+                    return;
                 }
-                if (Auth.IsWindowsHelloRegistered())
+                if (promptWinHello && Auth.IsWindowsHelloRegistered())
                 {
+                    LoginButton.IsEnabled = false;
+                    WinHelloButton.IsEnabled = false;
+                    LoginProgressBar.Visibility = Visibility.Visible;
                     await Auth.LoginWithWindowsHello();
                     OnLoggedIn();
                 }
             }
             catch (Exception ex)
             {
+                LoginButton.IsEnabled = true;
+                WinHelloButton.IsEnabled = true;
+                LoginProgressBar.Visibility = Visibility.Hidden;
                 if (ex.Message.Contains("UserCanceled"))
                 {
                     return;
@@ -70,6 +85,7 @@ namespace TOTPTokenGuard.Views.Pages.Start
             }
 
             LoginButton.IsEnabled = false;
+            WinHelloButton.IsEnabled = false;
             LoginProgressBar.Visibility = Visibility.Visible;
 
             try
@@ -82,6 +98,7 @@ namespace TOTPTokenGuard.Views.Pages.Start
                 LoginProgressBar.Visibility = Visibility.Collapsed;
                 ShowEror("Error", ex.Message);
                 LoginButton.IsEnabled = true;
+                WinHelloButton.IsEnabled = true;
             }
         }
 
@@ -96,6 +113,32 @@ namespace TOTPTokenGuard.Views.Pages.Start
             mainWindow.FullContentFrame.Visibility = Visibility.Collapsed;
             mainWindow.ShowNavigation();
             mainWindow.Navigate(typeof(Home));
+        }
+
+        private async void WinHelloButton_Click(object sender, RoutedEventArgs e)
+        {
+            InfoBar.IsOpen = false;
+            LoginButton.IsEnabled = false;
+            WinHelloButton.IsEnabled = false;
+            LoginProgressBar.Visibility = Visibility.Visible;
+
+            try
+            {
+                await Auth.LoginWithWindowsHello();
+                OnLoggedIn();
+            }
+            catch (Exception ex)
+            {
+                LoginProgressBar.Visibility = Visibility.Collapsed;
+                LoginButton.IsEnabled = true;
+                WinHelloButton.IsEnabled = true;
+
+                if (ex.Message.Contains("UserCanceled"))
+                {
+                    return;
+                }
+                ShowEror("Error", ex.Message);
+            }
         }
     }
 }

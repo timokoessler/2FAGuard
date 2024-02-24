@@ -49,6 +49,10 @@
                     Icon="{ui:SymbolIcon Add24}"
                     TargetPageType="{x:Type pagesadd:AddOverview}" />
                 <ui:NavigationViewItemSeparator />
+                <ui:NavigationViewItem
+                    x:Name="NavLock"
+                    Click="NavLockClicked"
+                    Icon="{ui:SymbolIcon LockClosed24}" />
                 <ui:NavigationViewItem Click="ToggleThemeClicked" Icon="{ui:SymbolIcon DarkTheme24}" />
                 <ui:NavigationViewItem
                     Content="{DynamicResource i.page.settings}"

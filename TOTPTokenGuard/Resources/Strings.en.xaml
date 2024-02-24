@@ -47,8 +47,9 @@
     <!--  Login  -->
     <system:String x:Key="i.login.subtext">Please prove your identity to access your tokens</system:String>
     <system:String x:Key="i.login.passbox">Enter your password</system:String>
-    <system:String x:Key="i.login.button">Login</system:String>
+    <system:String x:Key="i.login.button">Login with Password</system:String>
     <system:String x:Key="i.login.pass.error">The password is incorrect</system:String>
+    <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
 
     <!--  Home  -->
     <system:String x:Key="i.home.loading">Loading...</system:String>

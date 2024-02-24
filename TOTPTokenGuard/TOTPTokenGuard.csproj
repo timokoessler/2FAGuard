@@ -22,6 +22,7 @@
   <ItemGroup>
     <None Remove="Assets\bitwarden.svg" />
     <None Remove="Assets\check.svg" />
+    <None Remove="Assets\Icons\si.json" />
     <None Remove="Assets\key.svg" />
     <None Remove="Assets\logo-256.png" />
     <None Remove="Assets\logo-512.png" />
@@ -44,6 +45,7 @@
   <ItemGroup>
     <Resource Include="Assets\bitwarden.svg" />
     <Resource Include="Assets\check.svg" />
+    <EmbeddedResource Include="Assets\Icons\si.json" />
     <Resource Include="Assets\key.svg" />
     <Resource Include="Assets\logo-256.png" />
     <Resource Include="Assets\logo-512.png" />

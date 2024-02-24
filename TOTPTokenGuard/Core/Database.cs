@@ -13,6 +13,10 @@ namespace TOTPTokenGuard.Core
 
         public static void Init()
         {
+            if (db != null)
+            {
+                return;
+            }
             db = new LiteDatabase($"Filename={GetDBPath()}");
 
             //var tokens = db.GetCollection<TOTPToken>("tokens");

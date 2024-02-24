@@ -66,12 +66,11 @@ public class AptabaseClient : IAptabaseClient
         if (baseUrl is null)
             return;
 
-        _http = new();
-        _http.BaseAddress = new Uri(baseUrl);
+        _http = new() { BaseAddress = new Uri(baseUrl) };
         _http.DefaultRequestHeaders.Add("App-Key", appKey);
     }
 
-    private string? GetBaseUrl(string region, InitOptions? options)
+    private static string? GetBaseUrl(string region, InitOptions? options)
     {
         if (region == "SH")
         {

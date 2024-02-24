@@ -261,10 +261,7 @@ namespace TOTPTokenGuard.Core.Security
             {
                 throw new Exception("Key salt not set");
             }
-            if (mainEncryptionHelper == null)
-            {
-                mainEncryptionHelper = new EncryptionHelper(mainEncryptionKey, authData.KeySalt);
-            }
+            mainEncryptionHelper ??= new EncryptionHelper(mainEncryptionKey, authData.KeySalt);
             return mainEncryptionHelper;
         }
 
@@ -275,6 +272,13 @@ namespace TOTPTokenGuard.Core.Security
                 throw new Exception("Windows Hello challenge not set");
             }
             return authData.WindowsHelloChallenge;
+        }
+
+        public static void Logout()
+        {
+            mainEncryptionKey = null;
+            mainEncryptionHelper = null;
+            TokenManager.ClearTokens();
         }
     }
 }

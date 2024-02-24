@@ -6,6 +6,7 @@ using System.Web;
 using System.Windows;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Aptabase;
+using TOTPTokenGuard.Core.Icons;
 using TOTPTokenGuard.Core.Security;
 using TOTPTokenGuard.Views.Pages;
 using TOTPTokenGuard.Views.Pages.Start;
@@ -45,19 +46,22 @@ namespace TOTPTokenGuard
 
             await SettingsManager.Init();
             ApplyTheme(SettingsManager.Settings.Theme);
-            
-            if (!Auth.FileExists())
-            {
-                FullContentFrame.Content = new Welcome();
-                return;
-            }
-            FullContentFrame.Content = new Login();
+            SimpleIconsManager.LoadIcons();
 
             StatsClient = new(
                 "A-SH-2619747927",
                 new InitOptions { Host = "https://aptabase.tkoessler.de" }
             );
+
+            if (!Auth.FileExists())
+            {
+                StatsClient.TrackEvent("AppSetup");
+                FullContentFrame.Content = new Welcome();
+                return;
+            }
+
             StatsClient.TrackEvent("AppOpened");
+            FullContentFrame.Content = new Login();
         }
 
         internal void ApplyTheme(Core.Models.ThemeSetting theme)
@@ -65,10 +69,11 @@ namespace TOTPTokenGuard
             if (theme == Core.Models.ThemeSetting.System)
             {
                 SystemThemeWatcher.Watch(this);
-                ApplicationTheme appTheme = ApplicationThemeManager.GetSystemTheme() == SystemTheme.Dark
-                    ? ApplicationTheme.Dark
-                    : ApplicationTheme.Light;
-                if(ApplicationThemeManager.GetAppTheme() != appTheme)
+                ApplicationTheme appTheme =
+                    ApplicationThemeManager.GetSystemTheme() == SystemTheme.Dark
+                        ? ApplicationTheme.Dark
+                        : ApplicationTheme.Light;
+                if (ApplicationThemeManager.GetAppTheme() != appTheme)
                 {
                     ApplicationThemeManager.Apply(appTheme, WindowBackdropType.Mica);
                 }
@@ -76,7 +81,7 @@ namespace TOTPTokenGuard
             else if (theme == Core.Models.ThemeSetting.Dark)
             {
                 SystemThemeWatcher.UnWatch(this);
-                if(ApplicationThemeManager.GetAppTheme() != ApplicationTheme.Dark)
+                if (ApplicationThemeManager.GetAppTheme() != ApplicationTheme.Dark)
                 {
                     ApplicationThemeManager.Apply(ApplicationTheme.Dark, WindowBackdropType.Mica);
                 }
@@ -93,7 +98,7 @@ namespace TOTPTokenGuard
 
         private void OnNavigationSelectionChanged(object sender, RoutedEventArgs e)
         {
-            if (sender is not NavigationView navigationView)
+            if (sender is not NavigationView)
             {
                 return;
             }
@@ -128,6 +133,19 @@ namespace TOTPTokenGuard
             }
         }
 
+        private void NavLockClicked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Logout();
+        }
+
+        public void Logout()
+        {
+            HideNavigation();
+            Auth.Logout();
+            FullContentFrame.Visibility = Visibility.Visible;
+            FullContentFrame.Content = new Login(false);
+        }
+
         internal ContentDialogService GetContentDialogService()
         {
             return ContentDialogService;
@@ -140,6 +158,10 @@ namespace TOTPTokenGuard
 
         internal void ShowNavigation()
         {
+            if (!Auth.IsLoginEnabled())
+            {
+                NavLock.Visibility = Visibility.Collapsed;
+            }
             RootNavigation.Visibility = Visibility.Visible;
         }
 

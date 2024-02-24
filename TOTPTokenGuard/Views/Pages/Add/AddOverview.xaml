@@ -21,7 +21,8 @@
             <ui:CardAction
                 Width="350"
                 Height="90"
-                Margin="0,15,15,0">
+                Margin="0,15,15,0"
+                Click="Manual_Click">
                 <ui:CardAction.Icon>
                     <ui:SymbolIcon FontSize="32px" Symbol="Password24" />
                 </ui:CardAction.Icon>
