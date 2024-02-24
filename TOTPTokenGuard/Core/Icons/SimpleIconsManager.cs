@@ -25,11 +25,13 @@ namespace TOTPTokenGuard.Core.Icons
     {
         private static SimpleIcon[]? icons;
         private static string? version;
+        private static string? license;
 
         private class SimpleIconJSON
         {
             public required string Version { get; set; }
             public required SimpleIcon[] Icons { get; set; }
+            public required string License { get; set; }
         }
 
         public static void LoadIcons()
@@ -46,6 +48,7 @@ namespace TOTPTokenGuard.Core.Icons
                 ?? throw new Exception("Can not parse internal SimpleIcon JSON file");
             version = parsedJson.Version;
             icons = parsedJson.Icons;
+            license = parsedJson.License;
         }
 
         public static SimpleIcon[]? GetIcons()
@@ -65,6 +68,11 @@ namespace TOTPTokenGuard.Core.Icons
         public static SimpleIcon? GetIcon(string name)
         {
             return icons?.FirstOrDefault(icon => icon.T == name);
+        }
+
+        public static string? GetLicense()
+        {
+            return license;
         }
     }
 }

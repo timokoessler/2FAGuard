@@ -72,4 +72,22 @@
     <system:String x:Key="i.import.uri.description">Import a list of TOTP URIs</system:String>
     <system:String x:Key="i.import.bitwarden">Bitwarden</system:String>
     <system:String x:Key="i.import.bitwarden.description">Import tokens from the password manager Bitwarden</system:String>
+
+    <!--  Token Details  -->
+    <system:String x:Key="i.td.general">General information</system:String>
+    <system:String x:Key="i.td.issuer">Name of the issuer</system:String>
+    <system:String x:Key="i.td.issuer.placeholder">For example: Google or Apple</system:String>
+    <system:String x:Key="i.td.username">Username</system:String>
+    <system:String x:Key="i.td.username.placeholder">Usally your email address</system:String>
+    <system:String x:Key="i.td.secret">Secret key</system:String>
+    <system:String x:Key="i.td.secret.placeholder">Paste or enter the secret key</system:String>
+    <system:String x:Key="i.td.expert">Expert settings</system:String>
+    <system:String x:Key="i.td.expert.warning.title">Warning</system:String>
+    <system:String x:Key="i.td.expert.warning.text">Only change these settings if you know what you are doing</system:String>
+    <system:String x:Key="i.td.expert.algorithm">Algorithm</system:String>
+    <system:String x:Key="i.td.expert.digits">Digits</system:String>
+    <system:String x:Key="i.td.expert.digits.placeholder">6 is the standard</system:String>
+    <system:String x:Key="i.td.expert.period">Validity in seconds</system:String>
+    <system:String x:Key="i.td.expert.period.placeholder">30s is the standard</system:String>
+    <system:String x:Key="i.td.icon.text">Enter a issuer name to get a matching icon</system:String>
 </ResourceDictionary>

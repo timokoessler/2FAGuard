@@ -73,4 +73,22 @@
     <system:String x:Key="i.import.bitwarden">Bitwarden</system:String>
     <system:String x:Key="i.import.bitwarden.description">Tokens vom Passwort-Manager Bitwarden importieren</system:String>
 
+    <!--  Token Details  -->
+    <system:String x:Key="i.td.general">Allgemeine Informationen</system:String>
+    <system:String x:Key="i.td.issuer">Name des Ausstellers</system:String>
+    <system:String x:Key="i.td.issuer.placeholder">Zum Beispiel: Google oder Apple</system:String>
+    <system:String x:Key="i.td.username">Benutzername</system:String>
+    <system:String x:Key="i.td.username.placeholder">Meistens die E-Mail Adresse</system:String>
+    <system:String x:Key="i.td.secret">Geheimer Schlüssel</system:String>
+    <system:String x:Key="i.td.secret.placeholder">Den Schlüssel einfügen oder eingeben</system:String>
+    <system:String x:Key="i.td.expert">Experten-Einstellungen</system:String>
+    <system:String x:Key="i.td.expert.warning.title">Warnung</system:String>
+    <system:String x:Key="i.td.expert.warning.text">Ändern Sie diese Einstellungen nur, wenn Sie wissen, was Sie tun</system:String>
+    <system:String x:Key="i.td.expert.algorithm">Algorithmus</system:String>
+    <system:String x:Key="i.td.expert.digits">Anzahl Ziffern</system:String>
+    <system:String x:Key="i.td.expert.digits.placeholder">6 ist der Standard</system:String>
+    <system:String x:Key="i.td.expert.period">Gültigkeitsdauer in Sekunden</system:String>
+    <system:String x:Key="i.td.expert.period.placeholder">30s ist der Standard</system:String>
+    <system:String x:Key="i.td.icon.text">Geben Sie einen Namen ein, um ein passendes Logo anzuzeigen</system:String>
+
 </ResourceDictionary>
