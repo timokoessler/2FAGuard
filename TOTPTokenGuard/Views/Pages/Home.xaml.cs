@@ -13,12 +13,9 @@ namespace TOTPTokenGuard.Views.Pages
     /// </summary>
     public partial class Home : Page
     {
-        private readonly MainWindow mainWindow;
-
         public Home()
         {
             InitializeComponent();
-            mainWindow = (MainWindow)Application.Current.MainWindow;
 
             Loaded += async (sender, e) => await LoadTokens();
         }
@@ -27,20 +24,21 @@ namespace TOTPTokenGuard.Views.Pages
         {
             try
             {
-                List<TOTPTokenHelper>? tokenHelpers = await TokenManager.GetAllTokens();
-                if (tokenHelpers == null)
-                {
-                    LoadingInfo.Visibility = Visibility.Visible;
-                    TOTPTokenContainer.Visibility = Visibility.Collapsed;
-
-                    // Show no tokens message
-                    return;
-                }
-
+                List<TOTPTokenHelper>? tokenHelpers =
+                    await TokenManager.GetAllTokens()
+                    ?? throw new Exception("Error loading tokens (tokenHelpers is null)");
                 foreach (var token in tokenHelpers)
                 {
                     TokenCard card = new(token);
                     TOTPTokenContainer.Children.Add(card);
+                }
+
+                if (tokenHelpers.Count == 0)
+                {
+                    LoadingText.Visibility = Visibility.Collapsed;
+                    LoadingProgressBar.Visibility = Visibility.Collapsed;
+                    NoTokensText.Visibility = Visibility.Visible;
+                    return;
                 }
 
                 LoadingInfo.Visibility = Visibility.Collapsed;

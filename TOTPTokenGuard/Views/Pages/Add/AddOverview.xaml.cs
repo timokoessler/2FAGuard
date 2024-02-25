@@ -18,7 +18,7 @@ namespace TOTPTokenGuard.Views.Pages.Add
 
         private void Manual_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            mainWindow.Navigate(typeof(TokenDetails));
+            mainWindow.Navigate(typeof(TokenSettings));
         }
     }
 }

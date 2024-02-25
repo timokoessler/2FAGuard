@@ -16,9 +16,6 @@
     <system:String x:Key="i.settings.issue">Melde einen Fehler</system:String>
     <system:String x:Key="i.settings.myweb">Meine Website</system:String>
 
-    <system:String x:Key="i.win.hello.request">Die Anwendung TOTP Token Guard möchte Ihre Identität bestätigen.</system:String>
-    <system:String x:Key="i.error">Fehler</system:String>
-
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wählen Sie, wie Sie Ihre Token sichern möchten.</system:String>
     <system:String x:Key="i.welcome.hello">Windows Hello oder Passwort</system:String>
@@ -54,9 +51,7 @@
 
     <!--  Home  -->
     <system:String x:Key="i.home.loading">Lade Daten...</system:String>
-
-    <system:String x:Key="i.save">Speichern</system:String>
-    <system:String x:Key="i.dialog.close">Schließen</system:String>
+    <system:String x:Key="i.home.notokens">Keine Tokens vorhanden</system:String>
 
     <!--  Add  -->
     <system:String x:Key="i.page.addoverview">Token hinzufügen</system:String>
@@ -84,7 +79,7 @@
     <system:String x:Key="i.td.secret.placeholder">Den Schlüssel einfügen oder eingeben</system:String>
     <system:String x:Key="i.td.expert">Experten-Einstellungen</system:String>
     <system:String x:Key="i.td.expert.warning.title">Warnung</system:String>
-    <system:String x:Key="i.td.expert.warning.text">Ändern Sie diese Einstellungen nur, wenn Sie wissen, was Sie tun</system:String>
+    <system:String x:Key="i.td.expert.warning.text">Ändere diese Einstellungen nur, wenn du weißt, was du tust.</system:String>
     <system:String x:Key="i.td.expert.algorithm">Algorithmus</system:String>
     <system:String x:Key="i.td.expert.digits">Anzahl Ziffern</system:String>
     <system:String x:Key="i.td.expert.digits.placeholder">6 ist der Standard</system:String>
@@ -99,7 +94,21 @@
     <system:String x:Key="i.td.invaliddigits">Die Anzahl der Ziffern ist ungültig</system:String>
     <system:String x:Key="i.td.invalidperiod">Die Gültigkeitsdauer ist ungültig</system:String>
 
+    <!--  Single token page  -->
+    <system:String x:Key="i.page.singletokenpage">Token</system:String>
+    <system:String x:Key="i.stp.added">Token hinzugefügt</system:String>
+    <system:String x:Key="i.stp.home">Alle Tokens anzeigen</system:String>
+
     <!--  Text Formatting Dialog  -->
     <system:String x:Key="i.txtfd.title">Text formatieren</system:String>
     <system:String x:Key="i.txtfd.content">Strg+B: Fett@nStrg+I: Kursiv@nStrg+U: Unterstrichen@nStrg+Shift+L: Stichpunkte@nStrg+Shift+N: Nummerierung@nStrg+E: Text zentrieren@nStrg+L: Text Links@nStrg+R: Text Rechts</system:String>
+
+    <!--  Other  -->
+    <system:String x:Key="i.win.hello.request">Die Anwendung TOTP Token Guard möchte Ihre Identität bestätigen.</system:String>
+    <system:String x:Key="i.error">Fehler</system:String>
+    <system:String x:Key="i.save">Speichern</system:String>
+    <system:String x:Key="i.dialog.close">Schließen</system:String>
+    <system:String x:Key="i.error.unhandled.title">Unbehandelte Ausnahme</system:String>
+    <system:String x:Key="i.error.unhandled.openbug">Fehler melden</system:String>
+
 </ResourceDictionary>

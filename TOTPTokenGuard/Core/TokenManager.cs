@@ -6,12 +6,12 @@ namespace TOTPTokenGuard.Core
     {
         private static List<TOTPTokenHelper>? tokenHelpers;
 
-        public static async Task LoadDataInBackground()
+        internal static async Task LoadDataInBackground()
         {
             await Task.Run(() =>
             {
                 List<DBTOTPToken> dbTokens = Database.GetAllTokens();
-                tokenHelpers = new List<TOTPTokenHelper>();
+                tokenHelpers = [];
                 foreach (DBTOTPToken dbToken in dbTokens)
                 {
                     tokenHelpers.Add(new TOTPTokenHelper(dbToken));
@@ -19,7 +19,7 @@ namespace TOTPTokenGuard.Core
             });
         }
 
-        public static async Task<List<TOTPTokenHelper>?> GetAllTokens()
+        internal static async Task<List<TOTPTokenHelper>?> GetAllTokens()
         {
             if (tokenHelpers == null)
             {
@@ -28,7 +28,7 @@ namespace TOTPTokenGuard.Core
             return tokenHelpers;
         }
 
-        public static int GetNextId()
+        internal static int GetNextId()
         {
             if (tokenHelpers == null)
             {
@@ -37,7 +37,7 @@ namespace TOTPTokenGuard.Core
             return tokenHelpers.Count + 1;
         }
 
-        public static void AddToken(DBTOTPToken dbToken)
+        internal static void AddToken(DBTOTPToken dbToken)
         {
             if (tokenHelpers == null)
             {
@@ -47,9 +47,18 @@ namespace TOTPTokenGuard.Core
             Database.AddToken(dbToken);
         }
 
-        public static void ClearTokens()
+        internal static void ClearTokens()
         {
             tokenHelpers = null;
+        }
+
+        internal static TOTPTokenHelper? GetTokenById(int id)
+        {
+            if (tokenHelpers == null)
+            {
+                throw new Exception("TokenHelpers not loaded");
+            }
+            return tokenHelpers.Find(token => token.dBToken.Id == id);
         }
     }
 }

@@ -5,8 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:TOTPTokenGuard.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:totpui="clr-namespace:TOTPTokenGuard.Views.UIComponents"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="Home"
     d:Background="White"
     d:DesignHeight="700"
@@ -20,14 +21,25 @@
                 HorizontalAlignment="Center"
                 Source="pack://application:,,,/Assets/padlock-gradient.svg" />
             <ui:TextBlock
-                Margin="0,25,0,0"
-                FontSize="26"
+                x:Name="LoadingText"
+                Margin="0,30,0,0"
                 VerticalAlignment="Center"
+                FontSize="26"
                 FontWeight="SemiBold"
                 Opacity="0.75"
                 Text="{DynamicResource i.home.loading}"
                 TextAlignment="Center" />
+            <ui:TextBlock
+                x:Name="NoTokensText"
+                Margin="0,30,0,0"
+                VerticalAlignment="Center"
+                FontSize="18"
+                Opacity="0.75"
+                Text="{DynamicResource i.home.notokens}"
+                TextAlignment="Center"
+                Visibility="Collapsed" />
             <ProgressBar
+                x:Name="LoadingProgressBar"
                 Margin="0,40,0,0"
                 IsIndeterminate="True" />
         </StackPanel>
@@ -36,6 +48,6 @@
             Margin="0,20,0,0"
             VerticalAlignment="Top"
             Orientation="Horizontal"
-            Visibility="Collapsed"/>
+            Visibility="Collapsed" />
     </Grid>
 </Page>

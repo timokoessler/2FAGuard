@@ -16,9 +16,6 @@
     <system:String x:Key="i.settings.issue">Report an issue</system:String>
     <system:String x:Key="i.settings.myweb">My website</system:String>
 
-    <system:String x:Key="i.win.hello.request">The application TOTP Token Guard wants to prove your identity</system:String>
-    <system:String x:Key="i.error">Error</system:String>
-
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Thanks for downloading! Please choose how you would like to secure your tokens.</system:String>
     <system:String x:Key="i.welcome.hello">Windows Hello or Password</system:String>
@@ -54,9 +51,7 @@
 
     <!--  Home  -->
     <system:String x:Key="i.home.loading">Loading...</system:String>
-
-    <system:String x:Key="i.save">Save</system:String>
-    <system:String x:Key="i.dialog.close">Close</system:String>
+    <system:String x:Key="i.home.notokens">Keine Tokens vorhanden</system:String>
 
     <!--  Add  -->
     <system:String x:Key="i.page.addoverview">Token hinzufügen</system:String>
@@ -99,8 +94,20 @@
     <system:String x:Key="i.td.invaliddigits">The number of digits is invalid</system:String>
     <system:String x:Key="i.td.invalidperiod">The validity period is invalid</system:String>
 
+    <!--  Single token page  -->
+    <system:String x:Key="i.page.singletokenpage">Token</system:String>
+    <system:String x:Key="i.stp.added">Token added</system:String>
+    <system:String x:Key="i.stp.home">View all tokens</system:String>
+
     <!--  Text Formatting Dialog  -->
     <system:String x:Key="i.txtfd.title">Format text</system:String>
     <system:String x:Key="i.txtfd.content">Ctrl+B: Bold@nCtrl+I: Italic@nCtrl+U: Underline@nCtrl+Shift+L: Bullet points@nCtrl+Shift+N: Numbering@nCtrl+E: Center text@nCtrl+L: Text left@nCtrl+R: Text right</system:String>
 
+    <!--  Other  -->
+    <system:String x:Key="i.win.hello.request">The application TOTP Token Guard wants to prove your identity</system:String>
+    <system:String x:Key="i.error">Error</system:String>
+    <system:String x:Key="i.save">Save</system:String>
+    <system:String x:Key="i.dialog.close">Close</system:String>
+    <system:String x:Key="i.error.unhandled.title">Unhandled exception</system:String>
+    <system:String x:Key="i.error.unhandled.openbug">Report bug</system:String>
 </ResourceDictionary>

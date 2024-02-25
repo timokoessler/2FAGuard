@@ -14,12 +14,13 @@ namespace TOTPTokenGuard.Views.Pages.Add
     /// <summary>
     /// Interaktionslogik für TokenDetails.xaml
     /// </summary>
-    public partial class TokenDetails : Page
+    public partial class TokenSettings : Page
     {
         private IconManager.TotpIcon? selectedIcon;
-        private IconManager.TotpIcon defaultIcon;
+        private readonly IconManager.TotpIcon defaultIcon;
+        private readonly MainWindow mainWindow;
 
-        public TokenDetails()
+        public TokenSettings()
         {
             InitializeComponent();
             defaultIcon = IconManager.GetIcon(
@@ -42,6 +43,8 @@ namespace TOTPTokenGuard.Views.Pages.Add
 
             Issuer.SuggestionChosen += AutoSuggestBoxOnSuggestionChosen;
             Issuer.TextChanged += AutoSuggestBoxOnTextChanged;
+
+            mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
         private void AutoSuggestBoxOnSuggestionChosen(
@@ -108,7 +111,7 @@ namespace TOTPTokenGuard.Views.Pages.Add
                 return;
             }
             // Validate digits
-            if (!int.TryParse(DigitsBox.Text, out int digits) || digits < 4 || digits > 10)
+            if (!int.TryParse(DigitsBox.Text, out int digits) || digits < 4 || digits > 9)
             {
                 ShowEror(I18n.GetString("td.invaliddigits"));
                 return;
@@ -169,6 +172,12 @@ namespace TOTPTokenGuard.Views.Pages.Add
                 }
 
                 TokenManager.AddToken(dbToken);
+
+                mainWindow.GetStatsClient()?.TrackEvent("TokenAddedManually");
+
+                NavigationContextManager.CurrentContext["tokenID"] = dbToken.Id;
+                NavigationContextManager.CurrentContext["type"] = "added";
+                mainWindow.Navigate(typeof(TokenSuccessPage));
             }
             catch (Exception ex)
             {

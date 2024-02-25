@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using TOTPTokenGuard.Core.Icons;
@@ -18,14 +19,26 @@ namespace TOTPTokenGuard.Views.UIComponents
         private readonly TOTPTokenHelper token;
         private DoubleAnimation? doubleAnimation;
 
+        private readonly IconManager.TotpIcon? icon;
+
         internal TokenCard(TOTPTokenHelper token)
         {
             InitializeComponent();
             this.token = token;
 
+            Issuer.Text = token.dBToken.Issuer;
+            if (token.dBToken.Username != null)
+            {
+                Username.Text = token.dBToken.Username;
+            }
+            else
+            {
+                Username.Visibility = Visibility.Collapsed;
+            }
+
             if (token.dBToken.Icon != null && token.dBToken.IconType != null)
             {
-                IconManager.TotpIcon icon = IconManager.GetIcon(
+                icon = IconManager.GetIcon(
                     token.dBToken.Icon,
                     IconManager.IconColor.Colored,
                     (IconManager.IconType)token.dBToken.IconType
@@ -33,10 +46,32 @@ namespace TOTPTokenGuard.Views.UIComponents
 
                 SvgIconView.SvgSource = icon.Svg;
             }
+            else
+            {
+                icon = IconManager.GetIcon(
+                    "default",
+                    IconManager.IconColor.Colored,
+                    IconManager.IconType.Default
+                );
+                SvgIconView.SvgSource = icon.Svg;
+            }
 
             UpdateTokenText();
             InitProgressRing();
             _ = ScheduleUpdates();
+
+            // Add Click event to copy token to clipboard
+            MouseLeftButtonUp += async (sender, e) =>
+            {
+                Clipboard.SetText(token.GenerateToken());
+                TimeProgressRing.Visibility = Visibility.Collapsed;
+                SvgIconRingView.Visibility = Visibility.Visible;
+                await Task.Delay(1000);
+                SvgIconRingView.Visibility = Visibility.Collapsed;
+                TimeProgressRing.Visibility = Visibility.Visible;
+            };
+
+            Cursor = Cursors.Hand;
         }
 
         private async Task ScheduleUpdates()

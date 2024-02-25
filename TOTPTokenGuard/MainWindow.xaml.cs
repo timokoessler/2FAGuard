@@ -115,6 +115,11 @@ namespace TOTPTokenGuard
             }
         }
 
+        internal void SetPageTitle(string title)
+        {
+            PageTitle.Text = title;
+        }
+
         internal void Navigate(Type page)
         {
             RootNavigation.Navigate(page);
@@ -138,7 +143,7 @@ namespace TOTPTokenGuard
             Logout();
         }
 
-        public void Logout()
+        internal void Logout()
         {
             HideNavigation();
             Auth.Logout();
@@ -170,10 +175,12 @@ namespace TOTPTokenGuard
             Exception e = (Exception)args.ExceptionObject;
             var uiMessageBox = new Wpf.Ui.Controls.MessageBox
             {
-                Title = "Unhandled Exception",
+                Title = I18n.GetString("error.unhandled.title"),
                 Content = e.Message + "\n\n" + e.StackTrace,
                 IsPrimaryButtonEnabled = true,
-                PrimaryButtonText = "Open Bug Report",
+                PrimaryButtonText = I18n.GetString("error.unhandled.openbug"),
+                CloseButtonText = I18n.GetString("dialog.close"),
+                MaxWidth = 1000
             };
 
             var result = await uiMessageBox.ShowDialogAsync();
@@ -191,6 +198,11 @@ namespace TOTPTokenGuard
                 );
             }
             Environment.Exit(1);
+        }
+
+        internal AptabaseClient? GetStatsClient()
+        {
+            return StatsClient;
         }
     }
 }
