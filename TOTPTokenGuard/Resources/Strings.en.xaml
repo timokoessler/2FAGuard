@@ -99,6 +99,11 @@
     <system:String x:Key="i.stp.added">Token added</system:String>
     <system:String x:Key="i.stp.home">View all tokens</system:String>
 
+    <!--  Token card  -->
+    <system:String x:Key="i.tokencard.copy">Copy</system:String>
+    <system:String x:Key="i.tokencard.edit">Edit</system:String>
+    <system:String x:Key="i.tokencard.delete">Delete</system:String>
+
     <!--  Text Formatting Dialog  -->
     <system:String x:Key="i.txtfd.title">Format text</system:String>
     <system:String x:Key="i.txtfd.content">Ctrl+B: Bold@nCtrl+I: Italic@nCtrl+U: Underline@nCtrl+Shift+L: Bullet points@nCtrl+Shift+N: Numbering@nCtrl+E: Center text@nCtrl+L: Text left@nCtrl+R: Text right</system:String>

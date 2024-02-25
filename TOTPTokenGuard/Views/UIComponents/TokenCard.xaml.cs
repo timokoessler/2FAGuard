@@ -3,8 +3,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Icons;
 using TOTPTokenGuard.Core.Models;
+using TOTPTokenGuard.Views.Pages.Add;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
@@ -18,6 +20,7 @@ namespace TOTPTokenGuard.Views.UIComponents
     {
         private readonly TOTPTokenHelper token;
         private DoubleAnimation? doubleAnimation;
+        private readonly MainWindow mainWindow;
 
         private readonly IconManager.TotpIcon? icon;
 
@@ -25,6 +28,8 @@ namespace TOTPTokenGuard.Views.UIComponents
         {
             InitializeComponent();
             this.token = token;
+
+            mainWindow = (MainWindow)Application.Current.MainWindow;
 
             Issuer.Text = token.dBToken.Issuer;
             if (token.dBToken.Username != null)
@@ -61,14 +66,9 @@ namespace TOTPTokenGuard.Views.UIComponents
             _ = ScheduleUpdates();
 
             // Add Click event to copy token to clipboard
-            MouseLeftButtonUp += async (sender, e) =>
+            MouseLeftButtonUp += (sender, e) =>
             {
-                Clipboard.SetText(token.GenerateToken());
-                TimeProgressRing.Visibility = Visibility.Collapsed;
-                SvgIconRingView.Visibility = Visibility.Visible;
-                await Task.Delay(1000);
-                SvgIconRingView.Visibility = Visibility.Collapsed;
-                TimeProgressRing.Visibility = Visibility.Visible;
+                CopyToken();
             };
 
             Cursor = Cursors.Hand;
@@ -126,5 +126,29 @@ namespace TOTPTokenGuard.Views.UIComponents
             }
             TokenTextBlock.Text = tokenStr;
         }
+
+        private async void CopyToken()
+        {
+            Clipboard.SetText(token.GenerateToken());
+            TimeProgressRing.Visibility = Visibility.Collapsed;
+            SvgIconRingView.Visibility = Visibility.Visible;
+            await Task.Delay(1000);
+            SvgIconRingView.Visibility = Visibility.Collapsed;
+            TimeProgressRing.Visibility = Visibility.Visible;
+        }
+
+        private void MenuItem_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            CopyToken();
+        }
+
+        private void MenuItem_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationContextManager.CurrentContext["tokenID"] = token.dBToken.Id;
+            NavigationContextManager.CurrentContext["action"] = "edit";
+            mainWindow.Navigate(typeof(TokenSettings));
+        }
+
+        private void MenuItem_Delete_Click(object sender, RoutedEventArgs e) { }
     }
 }

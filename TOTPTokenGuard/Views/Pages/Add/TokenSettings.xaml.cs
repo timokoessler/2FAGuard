@@ -19,10 +19,29 @@ namespace TOTPTokenGuard.Views.Pages.Add
         private IconManager.TotpIcon? selectedIcon;
         private readonly IconManager.TotpIcon defaultIcon;
         private readonly MainWindow mainWindow;
+        private readonly string action;
+        private readonly TOTPTokenHelper? existingToken;
 
         public TokenSettings()
         {
             InitializeComponent();
+
+            action =
+                NavigationContextManager.CurrentContext["action"] as string
+                ?? throw new System.Exception("No action specified for TokenSettings");
+
+            if (action != "add" && action != "edit")
+            {
+                throw new System.Exception("Invalid action specified for TokenSettings");
+            }
+
+            if (action.Equals("edit"))
+            {
+                int tokenID = (int)NavigationContextManager.CurrentContext["tokenID"];
+                existingToken = TokenManager.GetTokenById(tokenID);
+            }
+            NavigationContextManager.ClearContext();
+
             defaultIcon = IconManager.GetIcon(
                 "default",
                 IconManager.IconColor.Colored,
@@ -40,6 +59,58 @@ namespace TOTPTokenGuard.Views.Pages.Add
             AlgorithmComboBox.SelectedItem = AlgorithmComboBox
                 .Items.OfType<ComboBoxItem>()
                 .FirstOrDefault(x => (string)x.Tag == "SHA1");
+
+            // Set values if action is edit
+            if (existingToken != null)
+            {
+                EncryptionHelper encryptionHelper = Auth.GetMainEncryptionHelper();
+                Issuer.Text = existingToken.dBToken.Issuer;
+                Secret.Password = encryptionHelper.DecryptString(
+                    existingToken.dBToken.EncryptedSecret
+                );
+                if (existingToken.dBToken.Icon != null)
+                {
+                    selectedIcon = IconManager.GetIcon(
+                        existingToken.dBToken.Icon,
+                        IconManager.IconColor.Colored,
+                        existingToken.dBToken.IconType ?? IconManager.IconType.Any
+                    );
+                    IconSvgView.SvgSource = selectedIcon.Svg;
+                    ImageLicense.Text = IconManager.GetLicense(selectedIcon);
+                    NoIconText.Visibility = Visibility.Collapsed;
+                }
+                if (existingToken.dBToken.Username != null)
+                {
+                    Username.Text = existingToken.dBToken.Username;
+                }
+                if (existingToken.dBToken.EncryptedNotes != null)
+                {
+                    Notes.Document.Blocks.Clear();
+                    Notes.Document.Blocks.Add(
+                        new Paragraph(
+                            new Run(
+                                encryptionHelper.DecryptString(existingToken.dBToken.EncryptedNotes)
+                            )
+                        )
+                    );
+                }
+                if (existingToken.dBToken.Algorithm != null)
+                {
+                    AlgorithmComboBox.SelectedItem = AlgorithmComboBox
+                        .Items.OfType<ComboBoxItem>()
+                        .FirstOrDefault(x =>
+                            (string)x.Tag == existingToken.dBToken.Algorithm.ToString()
+                        );
+                }
+                if (existingToken.dBToken.Digits != null)
+                {
+                    DigitsBox.Text = existingToken.dBToken.Digits.ToString();
+                }
+                if (existingToken.dBToken.Period != null)
+                {
+                    PeriodBox.Text = existingToken.dBToken.Period.ToString();
+                }
+            }
 
             Issuer.SuggestionChosen += AutoSuggestBoxOnSuggestionChosen;
             Issuer.TextChanged += AutoSuggestBoxOnTextChanged;
@@ -122,6 +193,8 @@ namespace TOTPTokenGuard.Views.Pages.Add
                 ShowEror(I18n.GetString("td.invalidperiod"));
                 return;
             }
+
+            // If action is not edit, check for duplicate
 
             SaveButton.IsEnabled = false;
 

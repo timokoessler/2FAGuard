@@ -26,6 +26,13 @@
                 </Style.Triggers>
             </Style>
         </Border.Style>
+        <Border.ContextMenu>
+            <ContextMenu>
+                <MenuItem Click="MenuItem_Copy_Click" Header="{DynamicResource i.tokencard.copy}" />
+                <MenuItem Click="MenuItem_Edit_Click" Header="{DynamicResource i.tokencard.edit}" />
+                <MenuItem Click="MenuItem_Delete_Click" Header="{DynamicResource i.tokencard.delete}" />
+            </ContextMenu>
+        </Border.ContextMenu>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />

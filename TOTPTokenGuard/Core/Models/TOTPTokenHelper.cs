@@ -10,8 +10,8 @@ namespace TOTPTokenGuard.Core.Models
 {
     internal class TOTPTokenHelper
     {
-        private string decryptedSecret;
-        private Totp totp;
+        private readonly string decryptedSecret;
+        private readonly Totp totp;
         internal readonly DBTOTPToken dBToken;
 
         public TOTPTokenHelper(DBTOTPToken dBToken)

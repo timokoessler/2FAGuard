@@ -12,7 +12,6 @@
     d:DesignHeight="700"
     d:DesignWidth="1150"
     mc:Ignorable="d">
-
     <StackPanel>
         <WrapPanel
             Margin="0,30"

@@ -103,6 +103,11 @@
     <system:String x:Key="i.txtfd.title">Text formatieren</system:String>
     <system:String x:Key="i.txtfd.content">Strg+B: Fett@nStrg+I: Kursiv@nStrg+U: Unterstrichen@nStrg+Shift+L: Stichpunkte@nStrg+Shift+N: Nummerierung@nStrg+E: Text zentrieren@nStrg+L: Text Links@nStrg+R: Text Rechts</system:String>
 
+    <!--  Token card  -->
+    <system:String x:Key="i.tokencard.copy">Kopieren</system:String>
+    <system:String x:Key="i.tokencard.edit">Bearbeiten</system:String>
+    <system:String x:Key="i.tokencard.delete">Löschen</system:String>
+
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">Die Anwendung TOTP Token Guard möchte Ihre Identität bestätigen.</system:String>
     <system:String x:Key="i.error">Fehler</system:String>

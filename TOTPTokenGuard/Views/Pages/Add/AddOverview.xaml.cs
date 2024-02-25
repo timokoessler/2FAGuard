@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using TOTPTokenGuard.Core;
 
 namespace TOTPTokenGuard.Views.Pages.Add
 {
@@ -18,6 +19,7 @@ namespace TOTPTokenGuard.Views.Pages.Add
 
         private void Manual_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            NavigationContextManager.CurrentContext["action"] = "add";
             mainWindow.Navigate(typeof(TokenSettings));
         }
     }
