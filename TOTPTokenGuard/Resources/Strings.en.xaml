@@ -17,6 +17,7 @@
     <system:String x:Key="i.settings.myweb">My website</system:String>
 
     <system:String x:Key="i.win.hello.request">The application TOTP Token Guard wants to prove your identity</system:String>
+    <system:String x:Key="i.error">Error</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Thanks for downloading! Please choose how you would like to secure your tokens.</system:String>
@@ -90,4 +91,16 @@
     <system:String x:Key="i.td.expert.period">Validity in seconds</system:String>
     <system:String x:Key="i.td.expert.period.placeholder">30s is the standard</system:String>
     <system:String x:Key="i.td.icon.text">Enter a issuer name to get a matching icon</system:String>
+    <system:String x:Key="i.td.note">Note (optional)</system:String>
+    <system:String x:Key="i.td.format">Format</system:String>
+    <system:String x:Key="i.td.noissuer">Please enter the name of the issuer</system:String>
+    <system:String x:Key="i.td.nosecret">Please enter the secret key</system:String>
+    <system:String x:Key="i.td.invalidsecret">The secret key is invalid</system:String>
+    <system:String x:Key="i.td.invaliddigits">The number of digits is invalid</system:String>
+    <system:String x:Key="i.td.invalidperiod">The validity period is invalid</system:String>
+
+    <!--  Text Formatting Dialog  -->
+    <system:String x:Key="i.txtfd.title">Format text</system:String>
+    <system:String x:Key="i.txtfd.content">Ctrl+B: Bold@nCtrl+I: Italic@nCtrl+U: Underline@nCtrl+Shift+L: Bullet points@nCtrl+Shift+N: Numbering@nCtrl+E: Center text@nCtrl+L: Text left@nCtrl+R: Text right</system:String>
+
 </ResourceDictionary>

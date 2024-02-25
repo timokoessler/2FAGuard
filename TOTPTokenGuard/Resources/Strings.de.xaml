@@ -17,6 +17,7 @@
     <system:String x:Key="i.settings.myweb">Meine Website</system:String>
 
     <system:String x:Key="i.win.hello.request">Die Anwendung TOTP Token Guard möchte Ihre Identität bestätigen.</system:String>
+    <system:String x:Key="i.error">Fehler</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wählen Sie, wie Sie Ihre Token sichern möchten.</system:String>
@@ -90,5 +91,15 @@
     <system:String x:Key="i.td.expert.period">Gültigkeitsdauer in Sekunden</system:String>
     <system:String x:Key="i.td.expert.period.placeholder">30s ist der Standard</system:String>
     <system:String x:Key="i.td.icon.text">Geben Sie einen Namen ein, um ein passendes Logo anzuzeigen</system:String>
+    <system:String x:Key="i.td.note">Notiz (optional)</system:String>
+    <system:String x:Key="i.td.format">Formatieren</system:String>
+    <system:String x:Key="i.td.noissuer">Bitte geben Sie den Namen des Ausstellers ein</system:String>
+    <system:String x:Key="i.td.nosecret">Bitte geben Sie den geheimen Schlüssel ein</system:String>
+    <system:String x:Key="i.td.invalidsecret">Der geheime Schlüssel ist ungültig</system:String>
+    <system:String x:Key="i.td.invaliddigits">Die Anzahl der Ziffern ist ungültig</system:String>
+    <system:String x:Key="i.td.invalidperiod">Die Gültigkeitsdauer ist ungültig</system:String>
 
+    <!--  Text Formatting Dialog  -->
+    <system:String x:Key="i.txtfd.title">Text formatieren</system:String>
+    <system:String x:Key="i.txtfd.content">Strg+B: Fett@nStrg+I: Kursiv@nStrg+U: Unterstrichen@nStrg+Shift+L: Stichpunkte@nStrg+Shift+N: Nummerierung@nStrg+E: Text zentrieren@nStrg+L: Text Links@nStrg+R: Text Rechts</system:String>
 </ResourceDictionary>

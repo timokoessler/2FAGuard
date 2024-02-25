@@ -1,4 +1,6 @@
-﻿namespace TOTPTokenGuard.Core.Models
+﻿using TOTPTokenGuard.Core.Icons;
+
+namespace TOTPTokenGuard.Core.Models
 {
     internal enum TOTPAlgorithm
     {
@@ -9,7 +11,6 @@
 
     internal class DBTOTPToken
     {
-
         public required int Id { get; set; }
         public required string Issuer { get; set; }
         public string? Username { get; set; }
@@ -17,5 +18,8 @@
         public TOTPAlgorithm? Algorithm { get; set; }
         public int? Digits { get; set; }
         public int? Period { get; set; }
+        public string? Icon { get; set; }
+        public IconManager.IconType? IconType { get; set; }
+        public string? EncryptedNotes { get; set; }
     }
 }

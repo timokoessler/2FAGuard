@@ -13,7 +13,7 @@
     d:DesignWidth="1150"
     mc:Ignorable="d">
 
-    <Grid Margin="0,30" HorizontalAlignment="Center">
+    <Grid Margin="0,20" HorizontalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -77,14 +77,34 @@
                 Icon="{ui:SymbolIcon Password24}"
                 PlaceholderEnabled="True"
                 PlaceholderText="{DynamicResource i.td.secret.placeholder}" />
+            <Label
+                Margin="0,15,0,0"
+                Content="{DynamicResource i.td.note}"
+                Target="{Binding ElementName=Notes}" />
+            <ui:RichTextBox
+                x:Name="Notes"
+                Height="90"
+                Margin="0,2,0,0" />
+            <ui:Button
+                x:Name="FormatButton"
+                Margin="0,5,0,0"
+                Click="FormatButton_Click"
+                Content="{DynamicResource i.td.format}"
+                Icon="{ui:SymbolIcon TextFont24}" />
             <ui:Button
                 x:Name="SaveButton"
-                Margin="0,120,0,0"
+                Margin="0,20,0,0"
                 HorizontalAlignment="Center"
                 Appearance="Primary"
+                Click="SaveButton_Click"
                 Content="{DynamicResource i.save}"
                 Icon="{ui:SymbolIcon ArrowCircleRight24,
-                                     Filled=True}" />
+                                     Filled=True}"
+                IsDefault="True" />
+            <ui:InfoBar
+                x:Name="InfoBar"
+                Margin="0,20,0,0"
+                IsOpen="False" />
         </StackPanel>
         <StackPanel Grid.Column="2" Margin="50,0,0,0">
             <TextBlock

@@ -10,18 +10,12 @@ namespace TOTPTokenGuard.Core
         {
             await Task.Run(() =>
             {
-                //Todo  Load data from database and create TOTPTokenHelper objects
-                tokenHelpers = [];
-                DBTOTPToken test =
-                    new()
-                    {
-                        Id = 1,
-                        Issuer = "ACME",
-                        EncryptedSecret = Security
-                            .Auth.GetMainEncryptionHelper()
-                            .EncryptString("ABCDEFGH")
-                    };
-                tokenHelpers.Add(new TOTPTokenHelper(test));
+                List<DBTOTPToken> dbTokens = Database.GetAllTokens();
+                tokenHelpers = new List<TOTPTokenHelper>();
+                foreach (DBTOTPToken dbToken in dbTokens)
+                {
+                    tokenHelpers.Add(new TOTPTokenHelper(dbToken));
+                }
             });
         }
 
@@ -34,12 +28,23 @@ namespace TOTPTokenGuard.Core
             return tokenHelpers;
         }
 
-        public static void AddToken(TOTPTokenHelper token)
+        public static int GetNextId()
         {
-            tokenHelpers ??= [];
-            tokenHelpers.Add(token);
+            if (tokenHelpers == null)
+            {
+                throw new Exception("TokenHelpers not loaded");
+            }
+            return tokenHelpers.Count + 1;
+        }
 
-            // Todo: Save to database
+        public static void AddToken(DBTOTPToken dbToken)
+        {
+            if (tokenHelpers == null)
+            {
+                throw new Exception("TokenHelpers not loaded");
+            }
+            tokenHelpers.Add(new TOTPTokenHelper(dbToken));
+            Database.AddToken(dbToken);
         }
 
         public static void ClearTokens()

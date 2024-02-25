@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using TOTPTokenGuard.Core.Icons;
 using TOTPTokenGuard.Core.Models;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
@@ -22,6 +23,17 @@ namespace TOTPTokenGuard.Views.UIComponents
             InitializeComponent();
             this.token = token;
 
+            if (token.dBToken.Icon != null && token.dBToken.IconType != null)
+            {
+                IconManager.TotpIcon icon = IconManager.GetIcon(
+                    token.dBToken.Icon,
+                    IconManager.IconColor.Colored,
+                    (IconManager.IconType)token.dBToken.IconType
+                );
+
+                SvgIconView.SvgSource = icon.Svg;
+            }
+
             UpdateTokenText();
             InitProgressRing();
             _ = ScheduleUpdates();
@@ -32,19 +44,19 @@ namespace TOTPTokenGuard.Views.UIComponents
             while (true)
             {
                 int remainingSeconds = token.GetRemainingSeconds();
-                if(remainingSeconds > 6)
+                if (remainingSeconds > 6)
                 {
                     await Task.Delay((token.GetRemainingSeconds() - 5) * 1000);
                 }
                 TimeProgressRing.Foreground = Brushes.Red;
-                
+
                 await Task.Delay(token.GetRemainingSeconds() * 1000);
                 UpdateTokenText();
                 TimeProgressRing.Foreground = ApplicationAccentColorManager.PrimaryAccentBrush;
                 if (doubleAnimation != null)
                 {
                     doubleAnimation.From = 100;
-                    doubleAnimation.Duration = TimeSpan.FromSeconds(token.getInfo().Period ?? 30);
+                    doubleAnimation.Duration = TimeSpan.FromSeconds(token.dBToken.Period ?? 30);
                     TimeProgressRing.BeginAnimation(ProgressRing.ProgressProperty, doubleAnimation);
                 }
             }
@@ -52,7 +64,7 @@ namespace TOTPTokenGuard.Views.UIComponents
 
         private void InitProgressRing()
         {
-            int totalSeconds = token.getInfo().Period ?? 30;
+            int totalSeconds = token.dBToken.Period ?? 30;
             int remainingSeconds = token.GetRemainingSeconds();
 
             int start = (int)((double)remainingSeconds / (double)totalSeconds * 100);

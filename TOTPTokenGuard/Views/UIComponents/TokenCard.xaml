@@ -34,10 +34,10 @@
             </Grid.ColumnDefinitions>
 
             <svgc:SvgViewbox
+                x:Name="SvgIconView"
                 Grid.Column="0"
                 Width="45"
-                Margin="24,0,0,0"
-                Source="pack://application:,,,/Assets/key.svg" />
+                Margin="24,0,0,0" />
 
             <StackPanel
                 Grid.Column="1"

@@ -1,10 +1,12 @@
 ﻿using LiteDB;
+using TOTPTokenGuard.Core.Models;
 
 namespace TOTPTokenGuard.Core
 {
     class Database
     {
         private static LiteDatabase? db;
+        private static ILiteCollection<DBTOTPToken>? tokens;
 
         private static string GetDBPath()
         {
@@ -17,14 +19,32 @@ namespace TOTPTokenGuard.Core
             {
                 return;
             }
-            db = new LiteDatabase($"Filename={GetDBPath()}");
+            db = new LiteDatabase($"Filename={GetDBPath()}") { UserVersion = 1 };
 
-            //var tokens = db.GetCollection<TOTPToken>("tokens");
+            tokens = db.GetCollection<DBTOTPToken>("tokens");
         }
 
         public static bool FileExists()
         {
             return System.IO.File.Exists(GetDBPath());
+        }
+
+        public static List<DBTOTPToken> GetAllTokens()
+        {
+            if (tokens == null)
+            {
+                throw new Exception("Database not initialized");
+            }
+            return tokens.FindAll().ToList();
+        }
+
+        public static void AddToken(DBTOTPToken token)
+        {
+            if (tokens == null)
+            {
+                throw new Exception("Database not initialized");
+            }
+            tokens.Insert(token);
         }
     }
 }
