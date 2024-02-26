@@ -1,7 +1,7 @@
 ﻿using LiteDB;
 using TOTPTokenGuard.Core.Models;
 
-namespace TOTPTokenGuard.Core
+namespace TOTPTokenGuard.Core.Storage
 {
     class Database
     {

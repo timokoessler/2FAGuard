@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:TOTPTokenGuard.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="Settings"
     d:Background="White"
@@ -18,10 +19,17 @@
             FontSize="20"
             FontWeight="Medium"
             Text="{DynamicResource i.settings.personalisation}" />
-        <WrapPanel Margin="0,20" Orientation="Horizontal">
-            <ui:CardControl Margin="0,0,0,15" Icon="{ui:SymbolIcon Color24}">
+        <Grid Margin="0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ui:CardControl
+                Grid.Column="0"
+                Margin="0,0,0,15"
+                Icon="{ui:SymbolIcon DarkTheme24}">
                 <ui:CardControl.Header>
-                    <Grid Margin="0,0,25,0">
+                    <Grid Margin="0,0,35,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -29,70 +37,107 @@
                         <ui:TextBlock
                             Grid.Row="0"
                             FontTypography="Body"
-                            Text="App theme" />
+                            Text="{DynamicResource i.settings.theme}" />
                         <ui:TextBlock
                             Grid.Row="1"
                             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                            Text="Select the theme to display" />
+                            Text="{DynamicResource i.settings.theme.description}" />
                     </Grid>
                 </ui:CardControl.Header>
-                <ComboBox Grid.Column="1" MinWidth="150">
-                    <ComboBoxItem Content="Light" />
-                    <ComboBoxItem Content="Dark" />
-                    <ComboBoxItem Content="High Contrast" />
+                <ComboBox
+                    x:Name="ThemeComboBox"
+                    Grid.Column="1"
+                    MinWidth="125">
+                    <ComboBoxItem Content="{DynamicResource i.settings.theme.system}" Tag="System" />
+                    <ComboBoxItem Content="{DynamicResource i.settings.theme.light}" Tag="Light" />
+                    <ComboBoxItem Content="{DynamicResource i.settings.theme.dark}" Tag="Dark" />
                 </ComboBox>
             </ui:CardControl>
-        </WrapPanel>
-        <StackPanel Margin="0,12,0,0" Orientation="Horizontal">
-            <StackPanel>
-                <TextBlock Text="Theme" />
-                <RadioButton
-                    x:Name="SystemThemeRadioButton"
-                    Margin="0,12,0,0"
-                    Content="System"
-                    GroupName="themeSelect" />
-                <RadioButton
-                    x:Name="LightThemeRadioButton"
-                    Margin="0,8,0,0"
-                    Content="Light"
-                    GroupName="themeSelect" />
-                <RadioButton
-                    x:Name="DarkThemeRadioButton"
-                    Margin="0,8,0,0"
-                    Content="Dark"
-                    GroupName="themeSelect" />
-            </StackPanel>
-            <StackPanel Margin="40,0,0,0">
-                <TextBlock Text="{DynamicResource i.language}" />
-                <ComboBox x:Name="LanguagesComboBox" Margin="0,12,0,0" />
-            </StackPanel>
-        </StackPanel>
+            <ui:CardControl
+                Grid.Column="1"
+                Margin="15,0,0,15"
+                Icon="{ui:SymbolIcon LocalLanguage24}">
+                <ui:CardControl.Header>
+                    <Grid Margin="0,0,35,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="{DynamicResource i.settings.language}" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{DynamicResource i.settings.language.description}" />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ComboBox
+                    x:Name="LanguagesComboBox"
+                    Grid.Column="1"
+                    MinWidth="125" />
+            </ui:CardControl>
+        </Grid>
 
         <TextBlock
-            Margin="0,24,0,0"
+            Margin="0,20,0,0"
             FontSize="20"
             FontWeight="Medium"
             Text="{DynamicResource i.settings.about}" />
 
-        <TextBlock
-            x:Name="AppInfoTextBlock"
-            Margin="0,2,0,0"
-            LineHeight="25"
-            LineStackingStrategy="BlockLineHeight" />
+        <ui:CardExpander Margin="0,20,0,0" ContentPadding="0">
+            <ui:CardExpander.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <svgc:SvgViewbox
+                            Height="32"
+                            Margin="5,0,15,0"
+                            VerticalAlignment="Center"
+                            Source="pack://application:,,,/Assets/logo.svg" />
+                        <StackPanel VerticalAlignment="Center">
+                            <ui:TextBlock
+                                VerticalAlignment="Center"
+                                FontTypography="Body"
+                                Text="TOTP Token Guard - 2FA Authenticator" />
+                            <ui:TextBlock
+                                x:Name="AppCopyrightText"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <TextBlock
+                        x:Name="AppVersionText"
+                        Grid.Column="1"
+                        Margin="0,0,16,0"
+                        VerticalAlignment="Center"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                </Grid>
+            </ui:CardExpander.Header>
+            <StackPanel>
 
-        <StackPanel Margin="0,15" Orientation="Horizontal">
-            <ui:HyperlinkButton
-                Content="GitHub"
-                Icon="{ui:SymbolIcon Link24}"
-                NavigateUri="https://github.com/timokoessler/totp-token-guard" />
-            <ui:HyperlinkButton
-                Content="{DynamicResource i.settings.issue}"
-                Icon="{ui:SymbolIcon Link24}"
-                NavigateUri="https://github.com/timokoessler/totp-token-guard/issues/new/choose" />
-            <ui:HyperlinkButton
-                Content="{DynamicResource i.settings.myweb}"
-                Icon="{ui:SymbolIcon Link24}"
-                NavigateUri="https://timokoessler.de" />
-        </StackPanel>
+                <StackPanel Margin="15" Orientation="Horizontal">
+                    <ui:HyperlinkButton
+                        Content="GitHub"
+                        Icon="{ui:SymbolIcon Link24}"
+                        NavigateUri="https://github.com/timokoessler/totp-token-guard" />
+                    <ui:HyperlinkButton
+                        Content="{DynamicResource i.settings.issue}"
+                        Icon="{ui:SymbolIcon Link24}"
+                        NavigateUri="https://github.com/timokoessler/totp-token-guard/issues/new/choose" />
+                    <ui:HyperlinkButton
+                        Content="{DynamicResource i.settings.myweb}"
+                        Icon="{ui:SymbolIcon Link24}"
+                        NavigateUri="https://timokoessler.de" />
+                </StackPanel>
+            </StackPanel>
+        </ui:CardExpander>
     </StackPanel>
 </Page>

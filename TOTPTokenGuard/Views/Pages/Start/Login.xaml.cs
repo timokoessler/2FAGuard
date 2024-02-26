@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Security;
+using TOTPTokenGuard.Core.Storage;
 
 namespace TOTPTokenGuard.Views.Pages.Start
 {

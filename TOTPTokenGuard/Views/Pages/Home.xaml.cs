@@ -1,9 +1,7 @@
-﻿using System.Security.Cryptography;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Models;
-using TOTPTokenGuard.Core.Security;
 using TOTPTokenGuard.Views.UIComponents;
 
 namespace TOTPTokenGuard.Views.Pages
@@ -18,6 +16,7 @@ namespace TOTPTokenGuard.Views.Pages
             InitializeComponent();
 
             Loaded += async (sender, e) => await LoadTokens();
+            Core.EventManager.TokenUpdated += OnTokenUpdated;
         }
 
         private async Task LoadTokens()
@@ -48,6 +47,14 @@ namespace TOTPTokenGuard.Views.Pages
             {
                 MessageBox.Show($"Error loading data: {ex.Message}");
             }
+        }
+
+        private void OnTokenUpdated(object? sender, int tokenId)
+        {
+            LoadingInfo.Visibility = Visibility.Visible;
+            TOTPTokenContainer.Visibility = Visibility.Collapsed;
+            TOTPTokenContainer.Children.Clear();
+            _ = LoadTokens();
         }
     }
 }

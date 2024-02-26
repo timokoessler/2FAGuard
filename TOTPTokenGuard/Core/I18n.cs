@@ -1,17 +1,19 @@
 ﻿using System.Windows;
 using TOTPTokenGuard.Core.Models;
+using TOTPTokenGuard.Core.Storage;
 
 namespace TOTPTokenGuard.Core
 {
     class I18n
     {
         // Define supported languages in AppSettings enum too
-        private static Dictionary<string, string> fullLanguageNames = new Dictionary<string, string>
-        {
-            { "system", "System" },
-            { "en", "English" },
-            { "de", "Deutsch" }
-        };
+        private static readonly Dictionary<string, string> fullLanguageNames =
+            new()
+            {
+                { "system", "System" },
+                { "en", "English" },
+                { "de", "Deutsch" }
+            };
         private static readonly LanguageSetting defaultLanguage = LanguageSetting.EN;
         private static LanguageSetting currentLanguage = defaultLanguage;
         private static ResourceDictionary? dict;
@@ -94,8 +96,7 @@ namespace TOTPTokenGuard.Core
             {
                 return "Error!";
             }
-            string? content = dict[$"i.{key.ToLower()}"] as string;
-            if (content == null)
+            if (dict[$"i.{key.ToLower()}"] is not string content)
             {
                 return $"??? {key} ???";
             }

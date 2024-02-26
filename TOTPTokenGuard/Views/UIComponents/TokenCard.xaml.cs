@@ -8,7 +8,6 @@ using TOTPTokenGuard.Core.Icons;
 using TOTPTokenGuard.Core.Models;
 using TOTPTokenGuard.Views.Pages;
 using TOTPTokenGuard.Views.Pages.Add;
-using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -138,7 +137,9 @@ namespace TOTPTokenGuard.Views.UIComponents
                 await Task.Delay(1000);
                 SvgIconRingView.Visibility = Visibility.Collapsed;
                 TimeProgressRing.Visibility = Visibility.Visible;
-            } catch {
+            }
+            catch
+            {
                 // Can happen if user makes really fast clicks
             }
         }
@@ -160,7 +161,8 @@ namespace TOTPTokenGuard.Views.UIComponents
             var deleteMessageBox = new Wpf.Ui.Controls.MessageBox
             {
                 Title = I18n.GetString("tokencard.delete.modal.title"),
-                Content = I18n.GetString("tokencard.delete.modal.content").Replace("@Name", token.dBToken.Issuer),
+                Content = I18n.GetString("tokencard.delete.modal.content")
+                    .Replace("@Name", token.dBToken.Issuer),
                 IsPrimaryButtonEnabled = true,
                 PrimaryButtonText = I18n.GetString("tokencard.delete.modal.yes"),
                 CloseButtonText = I18n.GetString("dialog.close"),
@@ -171,12 +173,12 @@ namespace TOTPTokenGuard.Views.UIComponents
             if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
             {
                 TokenManager.DeleteTokenById(token.dBToken.Id);
-                if(mainWindow.GetActivePage()?.Name != "Home")
+                if (mainWindow.GetActivePage()?.Name != "Home")
                 {
                     mainWindow.Navigate(typeof(Home));
                     return;
                 }
-                // Todo
+                Core.EventManager.EmitTokenUpdated(token.dBToken.Id);
             }
         }
     }

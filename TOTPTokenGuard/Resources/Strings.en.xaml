@@ -12,6 +12,13 @@
 
     <!--  Settings  -->
     <system:String x:Key="i.settings.personalisation">Personalisation</system:String>
+    <system:String x:Key="i.settings.theme">App theme</system:String>
+    <system:String x:Key="i.settings.theme.description">Choose a theme for the app</system:String>
+    <system:String x:Key="i.settings.theme.system">System</system:String>
+    <system:String x:Key="i.settings.theme.light">Light</system:String>
+    <system:String x:Key="i.settings.theme.dark">Dark</system:String>
+    <system:String x:Key="i.settings.language">Language</system:String>
+    <system:String x:Key="i.settings.language.description">Select the language for the app</system:String>
     <system:String x:Key="i.settings.about">About this software</system:String>
     <system:String x:Key="i.settings.issue">Report an issue</system:String>
     <system:String x:Key="i.settings.myweb">My website</system:String>

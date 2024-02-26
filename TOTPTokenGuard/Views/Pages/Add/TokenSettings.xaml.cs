@@ -91,11 +91,20 @@ namespace TOTPTokenGuard.Views.Pages.Add
                 {
                     try
                     {
-                        MemoryStream notesStream = new(Encoding.Default.GetBytes(encryptionHelper.DecryptString(existingToken.dBToken.EncryptedNotes)));
-                        TextRange notesRange = new(Notes.Document.ContentStart, Notes.Document.ContentEnd);
+                        MemoryStream notesStream =
+                            new(
+                                Encoding.Default.GetBytes(
+                                    encryptionHelper.DecryptString(
+                                        existingToken.dBToken.EncryptedNotes
+                                    )
+                                )
+                            );
+                        TextRange notesRange =
+                            new(Notes.Document.ContentStart, Notes.Document.ContentEnd);
                         notesRange.Load(notesStream, DataFormats.Xaml);
                         notesStream.Close();
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         ShowEror(ex.Message);
                     }
@@ -213,7 +222,10 @@ namespace TOTPTokenGuard.Views.Pages.Add
                 DBTOTPToken dbToken =
                     new()
                     {
-                        Id = existingToken != null ? existingToken.dBToken.Id : TokenManager.GetNextId(),
+                        Id =
+                            existingToken != null
+                                ? existingToken.dBToken.Id
+                                : TokenManager.GetNextId(),
                         Issuer = Issuer.Text,
                         EncryptedSecret = encryptionHelper.EncryptString(Secret.Password),
                     };
@@ -243,12 +255,13 @@ namespace TOTPTokenGuard.Views.Pages.Add
                     dbToken.Username = Username.Text;
                 }
 
-                TextRange notesTextRange = new TextRange(
-                    Notes.Document.ContentStart,
-                    Notes.Document.ContentEnd
-                );
+                TextRange notesTextRange =
+                    new(Notes.Document.ContentStart, Notes.Document.ContentEnd);
 
-                if (!string.IsNullOrWhiteSpace(notesTextRange.Text) && !notesTextRange.Text.Equals("\r\n"))
+                if (
+                    !string.IsNullOrWhiteSpace(notesTextRange.Text)
+                    && !notesTextRange.Text.Equals("\r\n")
+                )
                 {
                     MemoryStream notesStream = new();
                     notesTextRange.Save(notesStream, DataFormats.Xaml);
@@ -257,7 +270,7 @@ namespace TOTPTokenGuard.Views.Pages.Add
                     dbToken.EncryptedNotes = encryptionHelper.EncryptString(notesXamlString);
                 }
 
-                if(existingToken != null)
+                if (existingToken != null)
                 {
                     TokenManager.DeleteTokenById(dbToken.Id);
                     TokenManager.AddToken(dbToken);

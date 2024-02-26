@@ -45,18 +45,12 @@ namespace TOTPTokenGuard.Core.Security
                     $"Failed to authenticate with Windows Hello: {openKeyResult.Status}"
                 );
             }
-            return await SignChallenge(
-                openKeyResult.Credential,
-                Auth.GetWindowsHelloChallenge()
-            );
+            return await SignChallenge(openKeyResult.Credential, Auth.GetWindowsHelloChallenge());
         }
 
         public static async Task<string> SignChallenge(KeyCredential credential, string challenge)
         {
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            ArgumentNullException.ThrowIfNull(credential);
             var buffer = CryptographicBuffer.ConvertStringToBinary(
                 challenge,
                 BinaryStringEncoding.Utf8

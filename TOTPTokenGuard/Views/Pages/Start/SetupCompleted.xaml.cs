@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using TOTPTokenGuard.Core;
+using TOTPTokenGuard.Core.Storage;
 using TOTPTokenGuard.Views.Pages.Add;
 
 namespace TOTPTokenGuard.Views.Pages.Start

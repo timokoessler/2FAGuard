@@ -7,7 +7,9 @@ using System.Windows;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Aptabase;
 using TOTPTokenGuard.Core.Icons;
+using TOTPTokenGuard.Core.Models;
 using TOTPTokenGuard.Core.Security;
+using TOTPTokenGuard.Core.Storage;
 using TOTPTokenGuard.Views.Pages;
 using TOTPTokenGuard.Views.Pages.Start;
 using Wpf.Ui;
@@ -128,14 +130,18 @@ namespace TOTPTokenGuard
         // TODO: Bug: Mica Backdrop is not visible after Theme change
         private void ToggleThemeClicked(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Dark)
-            {
-                ApplyTheme(Core.Models.ThemeSetting.Light);
-            }
-            else
-            {
-                ApplyTheme(Core.Models.ThemeSetting.Dark);
-            }
+            ThemeSetting targetTheme =
+                ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Dark
+                    ? ThemeSetting.Light
+                    : ThemeSetting.Dark;
+
+            ApplyTheme(targetTheme);
+            SettingsManager.Settings.Theme = targetTheme;
+            Core.EventManager.EmitAppThemeChanged(
+                targetTheme,
+                Core.EventManager.AppThemeChangedEventArgs.EventSource.Navigation
+            );
+            _ = SettingsManager.Save();
         }
 
         private void NavLockClicked(object sender, System.Windows.RoutedEventArgs e)

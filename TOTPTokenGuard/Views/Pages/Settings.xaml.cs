@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Models;
+using TOTPTokenGuard.Core.Storage;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -14,31 +15,18 @@ namespace TOTPTokenGuard.Views.Pages
     public partial class Settings : Page
     {
         private readonly MainWindow mainWindow;
+
         public Settings()
         {
             InitializeComponent();
 
             mainWindow = (MainWindow)Application.Current.MainWindow;
 
-            AppInfoTextBlock.Text =
+            AppCopyrightText.Text =
                 $"Copyright © {DateTime.Now.Year} Timo Kössler and Open Source Contributors\n";
-            AppInfoTextBlock.Text += $"Version {Utils.GetVersionString()}";
-            if (SettingsManager.Settings.Theme == ThemeSetting.System)
-            {
-                SystemThemeRadioButton.IsChecked = true;
-            }
-            else if (SettingsManager.Settings.Theme == ThemeSetting.Dark)
-            {
-                DarkThemeRadioButton.IsChecked = true;
-            }
-            else
-            {
-                LightThemeRadioButton.IsChecked = true;
-            }
+            AppVersionText.Text = $"Version {Utils.GetVersionString()}";
 
-            SystemThemeRadioButton.Checked += OnSystemThemeRadioButtonChecked;
-            LightThemeRadioButton.Checked += OnLightThemeRadioButtonChecked;
-            DarkThemeRadioButton.Checked += OnDarkThemeRadioButtonChecked;
+            SetSelectedTheme(SettingsManager.Settings.Theme);
 
             string[] supportedLanguages = Enum.GetNames(typeof(LanguageSetting));
             foreach (string lang in supportedLanguages)
@@ -59,13 +47,33 @@ namespace TOTPTokenGuard.Views.Pages
             );
 
             LanguagesComboBox.SelectionChanged += OnLanguageSelectionChanged;
+            ThemeComboBox.SelectionChanged += OnThemeSelectionChanged;
+
+            Core.EventManager.AppThemeChanged += OnAppThemeChanged;
         }
 
         private void SetSelectedLanguage(LanguageSetting lang)
         {
             LanguagesComboBox.SelectedItem = LanguagesComboBox
                 .Items.OfType<ComboBoxItem>()
-                .FirstOrDefault(x => (string)x.Tag == lang.ToString().ToLower());
+                .FirstOrDefault(x =>
+                    ((string)x.Tag).Equals(
+                        lang.ToString(),
+                        StringComparison.CurrentCultureIgnoreCase
+                    )
+                );
+        }
+
+        private void SetSelectedTheme(ThemeSetting theme)
+        {
+            ThemeComboBox.SelectedItem = ThemeComboBox
+                .Items.OfType<ComboBoxItem>()
+                .FirstOrDefault(x =>
+                    ((string)x.Tag).Equals(
+                        theme.ToString(),
+                        StringComparison.CurrentCultureIgnoreCase
+                    )
+                );
         }
 
         private void OnLanguageSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -82,25 +90,31 @@ namespace TOTPTokenGuard.Views.Pages
             }
         }
 
-        private void OnSystemThemeRadioButtonChecked(object sender, RoutedEventArgs e)
+        private void OnThemeSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
-            mainWindow.ApplyTheme(ThemeSetting.System);
-            SettingsManager.Settings.Theme = ThemeSetting.System;
-            _ = SettingsManager.Save();
+            if (ThemeComboBox.SelectedItem != null)
+            {
+                string theme = (string)((ComboBoxItem)ThemeComboBox.SelectedItem).Tag;
+
+                if (Enum.TryParse<ThemeSetting>(theme, true, out ThemeSetting result))
+                {
+                    mainWindow.ApplyTheme(result);
+                    SettingsManager.Settings.Theme = result;
+                    Core.EventManager.EmitAppThemeChanged(
+                        result,
+                        Core.EventManager.AppThemeChangedEventArgs.EventSource.Settings
+                    );
+                    _ = SettingsManager.Save();
+                }
+            }
         }
 
-        private void OnLightThemeRadioButtonChecked(object sender, RoutedEventArgs e)
+        private void OnAppThemeChanged(object? sender, Core.EventManager.AppThemeChangedEventArgs e)
         {
-            mainWindow.ApplyTheme(ThemeSetting.Light);
-            SettingsManager.Settings.Theme = ThemeSetting.Light;
-            _ = SettingsManager.Save();
-        }
-
-        private void OnDarkThemeRadioButtonChecked(object sender, RoutedEventArgs e)
-        {
-            mainWindow.ApplyTheme(ThemeSetting.Dark);
-            SettingsManager.Settings.Theme = ThemeSetting.Dark;
-            _ = SettingsManager.Save();
+            if (e.Source != Core.EventManager.AppThemeChangedEventArgs.EventSource.Settings)
+            {
+                SetSelectedTheme(e.Theme);
+            }
         }
     }
 }

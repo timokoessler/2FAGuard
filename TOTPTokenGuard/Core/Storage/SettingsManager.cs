@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using TOTPTokenGuard.Core.Models;
 
-namespace TOTPTokenGuard.Core
+namespace TOTPTokenGuard.Core.Storage
 {
     internal class SettingsManager
     {

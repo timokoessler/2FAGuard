@@ -1,4 +1,5 @@
 ﻿using TOTPTokenGuard.Core.Models;
+using TOTPTokenGuard.Core.Storage;
 
 namespace TOTPTokenGuard.Core
 {
