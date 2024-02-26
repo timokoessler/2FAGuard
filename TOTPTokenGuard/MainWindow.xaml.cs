@@ -204,5 +204,10 @@ namespace TOTPTokenGuard
         {
             return StatsClient;
         }
+
+        public Type? GetActivePage()
+        {
+            return RootNavigation?.SelectedItem?.TargetPageType;
+        }
     }
 }

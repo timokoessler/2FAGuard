@@ -25,6 +25,9 @@ namespace TOTPTokenGuard.Views.Pages
             if (type.Equals("added"))
             {
                 mainWindow.SetPageTitle(I18n.GetString("stp.added"));
+            } else if (type.Equals("edited"))
+            {
+                mainWindow.SetPageTitle(I18n.GetString("stp.edited"));
             }
 
             TOTPTokenHelper? token = TokenManager.GetTokenById(tokenID);

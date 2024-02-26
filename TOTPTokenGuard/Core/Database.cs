@@ -46,5 +46,14 @@ namespace TOTPTokenGuard.Core
             }
             tokens.Insert(token);
         }
+
+        public static void DeleteTokenById(int id)
+        {
+            if (tokens == null)
+            {
+                throw new Exception("Database not initialized");
+            }
+            tokens.Delete(id);
+        }
     }
 }

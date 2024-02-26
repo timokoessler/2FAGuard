@@ -98,6 +98,7 @@
     <system:String x:Key="i.page.singletokenpage">Token</system:String>
     <system:String x:Key="i.stp.added">Token hinzugefügt</system:String>
     <system:String x:Key="i.stp.home">Alle Tokens anzeigen</system:String>
+    <system:String x:Key="i.stp.edited">Token bearbeitet</system:String>
 
     <!--  Text Formatting Dialog  -->
     <system:String x:Key="i.txtfd.title">Text formatieren</system:String>
@@ -107,6 +108,9 @@
     <system:String x:Key="i.tokencard.copy">Kopieren</system:String>
     <system:String x:Key="i.tokencard.edit">Bearbeiten</system:String>
     <system:String x:Key="i.tokencard.delete">Löschen</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.title">Token löschen</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.content">Möchtest du den Token @Name wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.yes">Löschen</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">Die Anwendung TOTP Token Guard möchte Ihre Identität bestätigen.</system:String>

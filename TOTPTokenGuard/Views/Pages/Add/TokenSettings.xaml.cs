@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Markup;
 using OtpNet;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Icons;
@@ -25,6 +28,7 @@ namespace TOTPTokenGuard.Views.Pages.Add
         public TokenSettings()
         {
             InitializeComponent();
+            mainWindow = (MainWindow)Application.Current.MainWindow;
 
             action =
                 NavigationContextManager.CurrentContext["action"] as string
@@ -85,14 +89,16 @@ namespace TOTPTokenGuard.Views.Pages.Add
                 }
                 if (existingToken.dBToken.EncryptedNotes != null)
                 {
-                    Notes.Document.Blocks.Clear();
-                    Notes.Document.Blocks.Add(
-                        new Paragraph(
-                            new Run(
-                                encryptionHelper.DecryptString(existingToken.dBToken.EncryptedNotes)
-                            )
-                        )
-                    );
+                    try
+                    {
+                        MemoryStream notesStream = new(Encoding.Default.GetBytes(encryptionHelper.DecryptString(existingToken.dBToken.EncryptedNotes)));
+                        TextRange notesRange = new(Notes.Document.ContentStart, Notes.Document.ContentEnd);
+                        notesRange.Load(notesStream, DataFormats.Xaml);
+                        notesStream.Close();
+                    } catch (Exception ex)
+                    {
+                        ShowEror(ex.Message);
+                    }
                 }
                 if (existingToken.dBToken.Algorithm != null)
                 {
@@ -110,12 +116,15 @@ namespace TOTPTokenGuard.Views.Pages.Add
                 {
                     PeriodBox.Text = existingToken.dBToken.Period.ToString();
                 }
+
+                Loaded += (sender, e) =>
+                {
+                    Issuer.Text = existingToken.dBToken.Issuer;
+                };
             }
 
             Issuer.SuggestionChosen += AutoSuggestBoxOnSuggestionChosen;
             Issuer.TextChanged += AutoSuggestBoxOnTextChanged;
-
-            mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
         private void AutoSuggestBoxOnSuggestionChosen(
@@ -204,7 +213,7 @@ namespace TOTPTokenGuard.Views.Pages.Add
                 DBTOTPToken dbToken =
                     new()
                     {
-                        Id = TokenManager.GetNextId(),
+                        Id = existingToken != null ? existingToken.dBToken.Id : TokenManager.GetNextId(),
                         Issuer = Issuer.Text,
                         EncryptedSecret = encryptionHelper.EncryptString(Secret.Password),
                     };
@@ -234,14 +243,30 @@ namespace TOTPTokenGuard.Views.Pages.Add
                     dbToken.Username = Username.Text;
                 }
 
-                string notes = new TextRange(
+                TextRange notesTextRange = new TextRange(
                     Notes.Document.ContentStart,
                     Notes.Document.ContentEnd
-                ).Text;
+                );
 
-                if (!string.IsNullOrWhiteSpace(notes) && !notes.Equals("\r\n"))
+                if (!string.IsNullOrWhiteSpace(notesTextRange.Text) && !notesTextRange.Text.Equals("\r\n"))
                 {
-                    dbToken.EncryptedNotes = encryptionHelper.EncryptString(notes);
+                    MemoryStream notesStream = new();
+                    notesTextRange.Save(notesStream, DataFormats.Xaml);
+                    string notesXamlString = Encoding.Default.GetString(notesStream.ToArray());
+                    notesStream.Close();
+                    dbToken.EncryptedNotes = encryptionHelper.EncryptString(notesXamlString);
+                }
+
+                if(existingToken != null)
+                {
+                    TokenManager.DeleteTokenById(dbToken.Id);
+                    TokenManager.AddToken(dbToken);
+                    mainWindow.GetStatsClient()?.TrackEvent("TokenEdited");
+
+                    NavigationContextManager.CurrentContext["tokenID"] = dbToken.Id;
+                    NavigationContextManager.CurrentContext["type"] = "edited";
+                    mainWindow.Navigate(typeof(TokenSuccessPage));
+                    return;
                 }
 
                 TokenManager.AddToken(dbToken);

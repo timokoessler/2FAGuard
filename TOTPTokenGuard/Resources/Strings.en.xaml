@@ -98,11 +98,15 @@
     <system:String x:Key="i.page.singletokenpage">Token</system:String>
     <system:String x:Key="i.stp.added">Token added</system:String>
     <system:String x:Key="i.stp.home">View all tokens</system:String>
+    <system:String x:Key="i.stp.edited">Token edited</system:String>
 
     <!--  Token card  -->
     <system:String x:Key="i.tokencard.copy">Copy</system:String>
     <system:String x:Key="i.tokencard.edit">Edit</system:String>
     <system:String x:Key="i.tokencard.delete">Delete</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.title">Delete token</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.content">Are you sure you want to delete the token @Name? This action cannot be undone.</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.yes">Delete</system:String>
 
     <!--  Text Formatting Dialog  -->
     <system:String x:Key="i.txtfd.title">Format text</system:String>

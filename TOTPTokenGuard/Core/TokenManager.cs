@@ -60,5 +60,19 @@ namespace TOTPTokenGuard.Core
             }
             return tokenHelpers.Find(token => token.dBToken.Id == id);
         }
+
+        internal static void DeleteTokenById(int id)
+        {
+            if (tokenHelpers == null)
+            {
+                throw new Exception("TokenHelpers not loaded");
+            }
+            TOTPTokenHelper? token = tokenHelpers.Find(token => token.dBToken.Id == id);
+            if (token != null)
+            {
+                tokenHelpers.Remove(token);
+                Database.DeleteTokenById(id);
+            }
+        }
     }
 }

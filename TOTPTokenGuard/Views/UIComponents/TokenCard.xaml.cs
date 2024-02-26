@@ -6,6 +6,7 @@ using System.Windows.Media.Animation;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Icons;
 using TOTPTokenGuard.Core.Models;
+using TOTPTokenGuard.Views.Pages;
 using TOTPTokenGuard.Views.Pages.Add;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
@@ -129,12 +130,17 @@ namespace TOTPTokenGuard.Views.UIComponents
 
         private async void CopyToken()
         {
-            Clipboard.SetText(token.GenerateToken());
-            TimeProgressRing.Visibility = Visibility.Collapsed;
-            SvgIconRingView.Visibility = Visibility.Visible;
-            await Task.Delay(1000);
-            SvgIconRingView.Visibility = Visibility.Collapsed;
-            TimeProgressRing.Visibility = Visibility.Visible;
+            try
+            {
+                Clipboard.SetText(token.GenerateToken());
+                TimeProgressRing.Visibility = Visibility.Collapsed;
+                SvgIconRingView.Visibility = Visibility.Visible;
+                await Task.Delay(1000);
+                SvgIconRingView.Visibility = Visibility.Collapsed;
+                TimeProgressRing.Visibility = Visibility.Visible;
+            } catch {
+                // Can happen if user makes really fast clicks
+            }
         }
 
         private void MenuItem_Copy_Click(object sender, RoutedEventArgs e)
@@ -149,6 +155,29 @@ namespace TOTPTokenGuard.Views.UIComponents
             mainWindow.Navigate(typeof(TokenSettings));
         }
 
-        private void MenuItem_Delete_Click(object sender, RoutedEventArgs e) { }
+        private async void MenuItem_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            var deleteMessageBox = new Wpf.Ui.Controls.MessageBox
+            {
+                Title = I18n.GetString("tokencard.delete.modal.title"),
+                Content = I18n.GetString("tokencard.delete.modal.content").Replace("@Name", token.dBToken.Issuer),
+                IsPrimaryButtonEnabled = true,
+                PrimaryButtonText = I18n.GetString("tokencard.delete.modal.yes"),
+                CloseButtonText = I18n.GetString("dialog.close"),
+                MaxWidth = 400
+            };
+
+            var result = await deleteMessageBox.ShowDialogAsync();
+            if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
+            {
+                TokenManager.DeleteTokenById(token.dBToken.Id);
+                if(mainWindow.GetActivePage()?.Name != "Home")
+                {
+                    mainWindow.Navigate(typeof(Home));
+                    return;
+                }
+                // Todo
+            }
+        }
     }
 }
