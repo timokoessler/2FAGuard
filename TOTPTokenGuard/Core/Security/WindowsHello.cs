@@ -1,15 +1,17 @@
-﻿using Windows.Security.Credentials;
+﻿using System.Runtime.InteropServices;
+using Windows.Security.Credentials;
 using Windows.Security.Credentials.UI;
 using Windows.Security.Cryptography;
 
 namespace TOTPTokenGuard.Core.Security
 {
-    internal class WindowsHello
+    internal partial class WindowsHello
     {
         private static readonly string accountName = "TOTPTokenGuard";
 
         public static async Task<KeyCredentialRetrievalResult> Register()
         {
+            _ = FocusSecurityPrompt();
             return await KeyCredentialManager.RequestCreateAsync(
                 accountName,
                 KeyCredentialCreationOption.FailIfExists
@@ -23,6 +25,7 @@ namespace TOTPTokenGuard.Core.Security
 
         public static async Task<bool> RequestSimpleVerification()
         {
+            _ = FocusSecurityPrompt();
             UserConsentVerificationResult consentResult =
                 await UserConsentVerifier.RequestVerificationAsync(
                     I18n.GetString("win.hello.request")
@@ -35,9 +38,10 @@ namespace TOTPTokenGuard.Core.Security
         /// Strategy is based on Bitwarden's Windows Hello implementation:
         /// https://github.com/bitwarden/clients/blob/1f8e6ea6f8a736a8a766e5e0643c7106adfa8433/apps/desktop/desktop_native/src/biometric/windows.rs#L69
         /// </summary>
-        /// <returns>A string used as AES key</returns>
+        /// <returns>A string used as AES key with argon2id</returns>
         public static async Task<string> GetSignedChallenge()
         {
+            _ = FocusSecurityPrompt();
             var openKeyResult = await KeyCredentialManager.OpenAsync(accountName);
             if (openKeyResult.Status != KeyCredentialStatus.Success)
             {
@@ -67,5 +71,35 @@ namespace TOTPTokenGuard.Core.Security
         {
             await KeyCredentialManager.DeleteAsync(accountName);
         }
+
+        public static async Task FocusSecurityPrompt()
+        {
+            const string className = "Credential Dialog Xaml Host";
+            const int maxTries = 3;
+
+            try
+            {
+                for (int currentTry = 0; currentTry < maxTries; currentTry++)
+                {
+                    IntPtr hwnd = FindWindow(className, IntPtr.Zero);
+                    if (hwnd != IntPtr.Zero)
+                    {
+                        SetForegroundWindow(hwnd);
+                        return; // Exit the loop if successfully found and focused the window
+                    }
+                    await Task.Delay(500); // Retry after a delay if the window is not found
+                }
+            } catch
+            {
+                //
+            }
+        }
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr FindWindow(string lpClassName, IntPtr ZeroOnly);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
     }
 }
