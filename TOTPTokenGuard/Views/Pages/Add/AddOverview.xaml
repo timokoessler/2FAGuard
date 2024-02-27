@@ -40,7 +40,7 @@
                 Width="350"
                 Height="90"
                 Margin="0,15,15,0"
-                IsEnabled="False">
+                Click="Qr_Import_Click">
                 <ui:CardAction.Icon>
                     <ui:SymbolIcon FontSize="32px" Symbol="QrCode24" />
                 </ui:CardAction.Icon>

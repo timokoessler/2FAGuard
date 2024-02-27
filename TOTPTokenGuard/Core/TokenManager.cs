@@ -35,7 +35,7 @@ namespace TOTPTokenGuard.Core
             {
                 throw new Exception("TokenHelpers not loaded");
             }
-            return tokenHelpers.Count + 1;
+            return tokenHelpers.Max(token => token.dBToken.Id) + 1;
         }
 
         internal static void AddToken(DBTOTPToken dbToken)

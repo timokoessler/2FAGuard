@@ -282,6 +282,8 @@ namespace TOTPTokenGuard.Views.Pages.Add
                     return;
                 }
 
+                dbToken.CreationTime = DateTimeOffset.UnixEpoch.ToUnixTimeSeconds();
+
                 TokenManager.AddToken(dbToken);
 
                 mainWindow.GetStatsClient()?.TrackEvent("TokenAddedManually");

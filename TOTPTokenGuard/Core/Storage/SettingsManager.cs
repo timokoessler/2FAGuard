@@ -10,7 +10,7 @@ namespace TOTPTokenGuard.Core.Storage
             "settings"
         );
 
-        public static AppSettings Settings = new AppSettings();
+        public static AppSettings Settings = new();
 
         public static async Task Init()
         {

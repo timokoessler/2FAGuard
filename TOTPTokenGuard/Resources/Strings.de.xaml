@@ -65,16 +65,19 @@
     <system:String x:Key="i.add.manual">Manuelle Eingabe</system:String>
     <system:String x:Key="i.add.manual.description">Eingabe des geheimen Schlüssels und weiterer Informationen</system:String>
     <system:String x:Key="i.add.qr">QR-Code importieren</system:String>
-    <system:String x:Key="i.add.qr.description">Scannen eines QR-Codes durch Importieren einer Bilddatei</system:String>
+    <system:String x:Key="i.add.qr.description">Importiere einen QR-Code aus einer Bilddatei</system:String>
     <system:String x:Key="i.add.qrscreen">QR-Code vom Bildschirm scannen</system:String>
     <system:String x:Key="i.add.qrscreen.description">Wähle einen Bildschirmbereich aus, um den QR-Code zu scannen</system:String>
     <system:String x:Key="i.add.import">Importieren</system:String>
     <system:String x:Key="i.import.backup">Backup</system:String>
-    <system:String x:Key="i.import.backup.description">Importiere eine Sicherungsdatei, die mit TOTP Token Guard erstellt wurde</system:String>
+    <system:String x:Key="i.import.backup.description">Importiere ein Backup, das mit TOTP Token Guard erstellt wurde</system:String>
     <system:String x:Key="i.import.uri">Uri-Liste</system:String>
     <system:String x:Key="i.import.uri.description">Importiere eine Liste von TOTP URIs</system:String>
     <system:String x:Key="i.import.bitwarden">Bitwarden</system:String>
     <system:String x:Key="i.import.bitwarden.description">Tokens vom Passwort-Manager Bitwarden importieren</system:String>
+    <system:String x:Key="i.import.failed.title">Import fehlgeschlagen</system:String>
+    <system:String x:Key="i.import.failed.content">Beim Import ist ein Fehler aufgetreten:</system:String>
+    <system:String x:Key="i.import.noqrfound">Es wurde kein QR-Code erkannt</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">Allgemeine Informationen</system:String>
