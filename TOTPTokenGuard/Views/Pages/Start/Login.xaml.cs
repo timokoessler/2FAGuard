@@ -42,13 +42,19 @@ namespace TOTPTokenGuard.Views.Pages.Start
                     OnLoggedIn();
                     return;
                 }
-                if (promptWinHello && Auth.IsWindowsHelloRegistered())
+                if (Auth.IsWindowsHelloRegistered())
                 {
-                    LoginButton.IsEnabled = false;
-                    WinHelloButton.IsEnabled = false;
-                    LoginProgressBar.Visibility = Visibility.Visible;
-                    await Auth.LoginWithWindowsHello();
-                    OnLoggedIn();
+                    if(promptWinHello)
+                    {
+                        LoginButton.IsEnabled = false;
+                        WinHelloButton.IsEnabled = false;
+                        LoginProgressBar.Visibility = Visibility.Visible;
+                        await Auth.LoginWithWindowsHello();
+                        OnLoggedIn();
+                    }
+                } else
+                {
+                    WinHelloButton.Visibility = Visibility.Collapsed;
                 }
             }
             catch (Exception ex)

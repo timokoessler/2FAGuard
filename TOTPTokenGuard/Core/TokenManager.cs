@@ -35,6 +35,10 @@ namespace TOTPTokenGuard.Core
             {
                 throw new Exception("TokenHelpers not loaded");
             }
+            if(tokenHelpers.Count == 0)
+            {
+                return 1;
+            }
             return tokenHelpers.Max(token => token.dBToken.Id) + 1;
         }
 

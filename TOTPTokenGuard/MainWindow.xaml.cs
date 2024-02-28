@@ -144,13 +144,14 @@ namespace TOTPTokenGuard
             _ = SettingsManager.Save();
         }
 
-        private void NavLockClicked(object sender, System.Windows.RoutedEventArgs e)
+        private void NavLockClicked(object sender, RoutedEventArgs e)
         {
             Logout();
         }
 
         internal void Logout()
         {
+            RootNavigation.Navigate(typeof(Welcome));
             HideNavigation();
             Auth.Logout();
             FullContentFrame.Visibility = Visibility.Visible;

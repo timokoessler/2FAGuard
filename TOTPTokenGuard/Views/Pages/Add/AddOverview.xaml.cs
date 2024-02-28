@@ -59,5 +59,26 @@ namespace TOTPTokenGuard.Views.Pages.Add
                 }.ShowDialogAsync();
             }
         }
+
+        private async void Qr_Screen_Click(object sender, RoutedEventArgs e)
+        {
+            /*if (!GraphicsCaptureSession.IsSupported())
+            {
+                throw new Exception("GraphicsCaptureSession not supported");
+            }
+
+            var interopWindow = new WindowInteropHelper(mainWindow);
+            IntPtr Hwnd = interopWindow.Handle;
+
+            var picker = new GraphicsCapturePicker();
+            InitializeWithWindow.Initialize(picker, Hwnd);
+
+            var item = await picker.PickSingleItemAsync();
+
+            if (item != null)
+            {
+
+            }*/
+        }
     }
 }

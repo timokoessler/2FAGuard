@@ -59,7 +59,8 @@
                 Width="350"
                 Height="90"
                 Margin="0,15,15,0"
-                IsEnabled="False">
+                VerticalAlignment="Top"
+                Click="Qr_Screen_Click">
                 <ui:CardAction.Icon>
                     <ui:SymbolIcon FontSize="32px" Symbol="ScreenCut20" />
                 </ui:CardAction.Icon>
