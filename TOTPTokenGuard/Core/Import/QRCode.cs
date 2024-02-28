@@ -8,14 +8,12 @@ namespace TOTPTokenGuard.Core.Import
     {
         public static string? ParseQRBitmap(Bitmap bitmap)
         {
-            BarcodeReader reader = new()
-            {
-                AutoRotate = true,
-                Options =
+            BarcodeReader reader =
+                new()
                 {
-                    PossibleFormats = [BarcodeFormat.QR_CODE]
-                }
-            };
+                    AutoRotate = true,
+                    Options = { PossibleFormats = [BarcodeFormat.QR_CODE] }
+                };
 
             var result = reader.Decode(bitmap);
 
@@ -28,10 +26,8 @@ namespace TOTPTokenGuard.Core.Import
 
         public static string? ParseQRFile(string filePath)
         {
-            
             using Bitmap barcodeBitmap = (Bitmap)Image.FromFile(filePath);
             return ParseQRBitmap(barcodeBitmap);
         }
-
     }
 }

@@ -39,6 +39,10 @@ namespace TOTPTokenGuard.Core.Import
                 otpUri.Issuer = label.Split(':')[0][1..];
                 otpUri.Account = label.Split(':')[1];
             }
+            else
+            {
+                otpUri.Account = label[1..];
+            }
 
             if (uri.Query == null || uri.Query.Length < 2)
             {

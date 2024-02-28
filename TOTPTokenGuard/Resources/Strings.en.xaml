@@ -68,16 +68,20 @@
     <system:String x:Key="i.add.qr.description">Scan a QR code by importing an image file</system:String>
     <system:String x:Key="i.add.qrscreen">Scan QR code from the screen</system:String>
     <system:String x:Key="i.add.qrscreen.description">Select a screen area to scan the QR code</system:String>
+    <system:String x:Key="i.add.clipboard">Add from clipboard</system:String>
+    <system:String x:Key="i.add.clipboard.description">Paste a QR code image or a TOTP URI</system:String>
     <system:String x:Key="i.add.import">Import</system:String>
     <system:String x:Key="i.import.backup">Backup</system:String>
     <system:String x:Key="i.import.backup.description">Import a backup file that was created with TOTP Token Guard</system:String>
-    <system:String x:Key="i.import.uri">Uri list</system:String>
+    <system:String x:Key="i.import.uri">URI list</system:String>
     <system:String x:Key="i.import.uri.description">Import a list of TOTP URIs</system:String>
     <system:String x:Key="i.import.bitwarden">Bitwarden</system:String>
     <system:String x:Key="i.import.bitwarden.description">Import tokens from the password manager Bitwarden</system:String>
     <system:String x:Key="i.import.failed.title">Import failed</system:String>
     <system:String x:Key="i.import.failed.content">An error occurred while importing:</system:String>
     <system:String x:Key="i.import.noqrfound">Could not detect a QR code</system:String>
+    <system:String x:Key="i.import.clipboard.invalid">The clipboard does not contain an image or text.</system:String>
+    <system:String x:Key="i.import.clipboard.multifiles">Currently only one file can be imported from the clipboard at a time.</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">General information</system:String>

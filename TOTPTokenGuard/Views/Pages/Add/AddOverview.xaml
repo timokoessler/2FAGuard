@@ -19,7 +19,7 @@
             Orientation="Horizontal">
             <ui:CardAction
                 Width="350"
-                Height="90"
+                Height="95"
                 Margin="0,15,15,0"
                 Click="Manual_Click">
                 <ui:CardAction.Icon>
@@ -38,7 +38,27 @@
             </ui:CardAction>
             <ui:CardAction
                 Width="350"
-                Height="90"
+                Height="95"
+                Margin="0,15,15,0"
+                VerticalAlignment="Top"
+                Click="Clipboard_Click">
+                <ui:CardAction.Icon>
+                    <ui:SymbolIcon FontSize="32px" Symbol="ClipboardTextLtr24" />
+                </ui:CardAction.Icon>
+                <StackPanel Margin="0,0,8,0">
+                    <ui:TextBlock
+                        FontTypography="BodyStrong"
+                        Text="{DynamicResource i.add.clipboard}"
+                        TextWrapping="WrapWithOverflow" />
+                    <ui:TextBlock
+                        Appearance="Secondary"
+                        Text="{DynamicResource i.add.clipboard.description}"
+                        TextWrapping="WrapWithOverflow" />
+                </StackPanel>
+            </ui:CardAction>
+            <ui:CardAction
+                Width="350"
+                Height="95"
                 Margin="0,15,15,0"
                 Click="Qr_Import_Click">
                 <ui:CardAction.Icon>
@@ -55,26 +75,6 @@
                         TextWrapping="WrapWithOverflow" />
                 </StackPanel>
             </ui:CardAction>
-            <ui:CardAction
-                Width="350"
-                Height="90"
-                Margin="0,15,15,0"
-                VerticalAlignment="Top"
-                Click="Qr_Screen_Click">
-                <ui:CardAction.Icon>
-                    <ui:SymbolIcon FontSize="32px" Symbol="ScreenCut20" />
-                </ui:CardAction.Icon>
-                <StackPanel Margin="0,0,8,0">
-                    <ui:TextBlock
-                        FontTypography="BodyStrong"
-                        Text="{DynamicResource i.add.qrscreen}"
-                        TextWrapping="WrapWithOverflow" />
-                    <ui:TextBlock
-                        Appearance="Secondary"
-                        Text="{DynamicResource i.add.qrscreen.description}"
-                        TextWrapping="WrapWithOverflow" />
-                </StackPanel>
-            </ui:CardAction>
         </WrapPanel>
         <TextBlock
             FontSize="20"
@@ -83,7 +83,7 @@
         <WrapPanel VerticalAlignment="Top" Orientation="Horizontal">
             <ui:CardAction
                 Width="350"
-                Height="90"
+                Height="95"
                 Margin="0,15,15,0"
                 IsEnabled="False">
                 <ui:CardAction.Icon>
@@ -102,7 +102,7 @@
             </ui:CardAction>
             <ui:CardAction
                 Width="350"
-                Height="90"
+                Height="95"
                 Margin="0,15,15,0"
                 IsEnabled="False">
                 <ui:CardAction.Icon>
@@ -121,7 +121,7 @@
             </ui:CardAction>
             <ui:CardAction
                 Width="350"
-                Height="90"
+                Height="95"
                 Margin="0,15,15,0"
                 IsEnabled="False">
                 <Grid>

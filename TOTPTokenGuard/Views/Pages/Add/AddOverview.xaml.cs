@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Import;
 using TOTPTokenGuard.Core.Models;
+using ZXing.Aztec.Internal;
 
 namespace TOTPTokenGuard.Views.Pages.Add
 {
@@ -60,25 +61,30 @@ namespace TOTPTokenGuard.Views.Pages.Add
             }
         }
 
-        private async void Qr_Screen_Click(object sender, RoutedEventArgs e)
+        private void Clipboard_Click(object sender, RoutedEventArgs e)
         {
-            /*if (!GraphicsCaptureSession.IsSupported())
+            try
             {
-                throw new Exception("GraphicsCaptureSession not supported");
+                var dbToken = ClipboardImport.Parse();
+                if (dbToken == null)
+                {
+                    throw new Exception(I18n.GetString("import.clipboard.invalid"));
+                }
+                mainWindow.GetStatsClient()?.TrackEvent("TokenImportedClipboard");
+                NavigationContextManager.CurrentContext["tokenID"] = dbToken.Id;
+                NavigationContextManager.CurrentContext["type"] = "added";
+                mainWindow.Navigate(typeof(TokenSuccessPage));
             }
-
-            var interopWindow = new WindowInteropHelper(mainWindow);
-            IntPtr Hwnd = interopWindow.Handle;
-
-            var picker = new GraphicsCapturePicker();
-            InitializeWithWindow.Initialize(picker, Hwnd);
-
-            var item = await picker.PickSingleItemAsync();
-
-            if (item != null)
+            catch (Exception ex)
             {
-
-            }*/
+                new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("import.failed.title"),
+                    Content = $"{I18n.GetString("import.failed.content")} {ex.Message}",
+                    CloseButtonText = I18n.GetString("dialog.close"),
+                    MaxWidth = 400
+                }.ShowDialogAsync();
+            }
         }
     }
 }
