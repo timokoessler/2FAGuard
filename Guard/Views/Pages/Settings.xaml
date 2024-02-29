@@ -85,7 +85,7 @@
             FontWeight="Medium"
             Text="{DynamicResource i.settings.security}" />
 
-        <Grid Margin="0,20,0,10">
+        <Grid Margin="0,20,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -139,7 +139,56 @@
                     Icon="{ui:SymbolIcon Pen24}" />
             </ui:CardControl>
         </Grid>
-
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ui:CardControl
+                Grid.Column="0"
+                Margin="0,0,0,15"
+                Icon="{ui:SymbolIcon Record24}">
+                <ui:CardControl.Header>
+                    <Grid Margin="0,0,35,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="{DynamicResource i.settings.record}" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{DynamicResource i.settings.record.description}" />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ui:ToggleSwitch x:Name="ScreenRecordingSwitch" Grid.Column="1" />
+            </ui:CardControl>
+            <ui:CardControl
+                Grid.Column="1"
+                Margin="15,0,0,15"
+                Icon="{ui:SymbolIcon LockClosed24}">
+                <ui:CardControl.Header>
+                    <Grid Margin="0,0,35,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="{DynamicResource i.settings.autolock}" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{DynamicResource i.settings.autolock.description}" />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ui:ToggleSwitch x:Name="ScreenLockSwitch" Grid.Column="1" />
+            </ui:CardControl>
+        </Grid>
 
         <TextBlock
             Margin="0,20,0,0"

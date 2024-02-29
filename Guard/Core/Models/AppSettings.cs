@@ -18,5 +18,7 @@
     {
         public ThemeSetting Theme { get; set; } = ThemeSetting.System;
         public LanguageSetting Language { get; set; } = LanguageSetting.System;
+        public bool PreventRecording { get; set; } = true;
+        public bool LockOnScreenLock { get; set; } = true;
     }
 }

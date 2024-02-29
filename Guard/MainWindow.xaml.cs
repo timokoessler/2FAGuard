@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Runtime.ExceptionServices;
-using System.Web;
-using System.Windows;
-using System.Windows.Controls;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Aptabase;
 using Guard.Core.Icons;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
-using Guard.Views.Pages;
 using Guard.Views.Pages.Start;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Web;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
@@ -26,6 +24,7 @@ namespace Guard
     {
         private readonly ContentDialogService ContentDialogService;
         private AptabaseClient? StatsClient;
+        private IntPtr windowInteropHandle;
 
         public MainWindow()
         {
@@ -42,13 +41,25 @@ namespace Guard
             );
         }
 
+        [DllImport("user32.dll")]
+        public static extern uint SetWindowDisplayAffinity(IntPtr hwnd, uint dwAffinity);
+
+
         private async void OnWindowLoaded()
         {
             ContentDialogService.SetContentPresenter(RootContentDialogPresenter);
             HideNavigation();
 
+            windowInteropHandle = (new WindowInteropHelper(this)).Handle;
+
             await SettingsManager.Init();
             ApplyTheme(SettingsManager.Settings.Theme);
+
+            if(SettingsManager.Settings.PreventRecording)
+            {
+                AllowScreenRecording(!SettingsManager.Settings.PreventRecording);
+            }
+
             SimpleIconsManager.LoadIcons();
 
             StatsClient = new(
@@ -221,6 +232,18 @@ namespace Guard
         internal ContentPresenter GetRootContentDialogPresenter()
         {
             return RootContentDialogPresenter;
+        }
+
+        internal void AllowScreenRecording(bool allow)
+        {
+            if (allow)
+            {
+                _ = SetWindowDisplayAffinity(windowInteropHandle, 0);
+            }
+            else
+            {
+                _ = SetWindowDisplayAffinity(windowInteropHandle, 1);
+            }
         }
     }
 }

@@ -41,6 +41,10 @@
     <system:String x:Key="i.changepass.newbox.repeat">Passwort wiederholen</system:String>
     <system:String x:Key="i.changepass.current.notempty">Bitte gebe dein aktuelles Passwort ein</system:String>
     <system:String x:Key="i.changepass.current.incorrect">Das aktuelle Passwort ist nicht korrekt</system:String>
+    <system:String x:Key="i.settings.record">Bildschirmaufnahmen verhindern</system:String>
+    <system:String x:Key="i.settings.record.description">Blockiert Screenshots und Videoaufnahmen der App</system:String>
+    <system:String x:Key="i.settings.autolock">Automatisch Sperren</system:String>
+    <system:String x:Key="i.settings.autolock.description">App sperren, wenn Windows gesperrt wird</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wählen Sie, wie Sie Ihre Token sichern möchten.</system:String>

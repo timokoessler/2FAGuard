@@ -1,12 +1,10 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Controls;
-using Wpf.Ui.Appearance;
+using System.Windows;
+using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages
@@ -56,6 +54,31 @@ namespace Guard.Views.Pages
             WinHelloSwitch.IsEnabled = Auth.IsLoginEnabled();
             WinHelloSwitch.Checked += (sender, e) => EnableWinHello();
             WinHelloSwitch.Unchecked += (sender, e) => DisableWinHello();
+
+            ScreenRecordingSwitch.IsChecked = SettingsManager.Settings.PreventRecording;
+            ScreenRecordingSwitch.Checked += (sender, e) =>
+            {
+                mainWindow.AllowScreenRecording(false);
+                SettingsManager.Settings.PreventRecording = true;
+                _ = SettingsManager.Save();
+            };
+            ScreenRecordingSwitch.Unchecked += (sender, e) => {
+                mainWindow.AllowScreenRecording(true);
+                SettingsManager.Settings.PreventRecording = false;
+                _ = SettingsManager.Save();
+            };
+
+            ScreenLockSwitch.IsChecked = SettingsManager.Settings.LockOnScreenLock;
+            ScreenLockSwitch.Checked += (sender, e) =>
+            {
+                SettingsManager.Settings.LockOnScreenLock = true;
+                _ = SettingsManager.Save();
+            };
+            ScreenLockSwitch.Unchecked += (sender, e) =>
+            {
+                SettingsManager.Settings.LockOnScreenLock = false;
+                _ = SettingsManager.Save();
+            };
 
             Core.EventManager.AppThemeChanged += OnAppThemeChanged;
         }

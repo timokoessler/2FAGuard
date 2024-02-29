@@ -1,6 +1,9 @@
 ﻿using System.Drawing.Drawing2D;
 using System.Text.Json;
+using System.Windows;
 using Guard.Core.Models;
+using Guard.Core.Storage;
+using Microsoft.Win32;
 
 namespace Guard.Core.Security
 {
@@ -14,6 +17,7 @@ namespace Guard.Core.Security
         private static string? mainEncryptionKey;
         private static EncryptionHelper? mainEncryptionHelper;
         private static readonly int currentVersion = 1;
+        private static MainWindow? mainWindow;
 
         public static async Task Init()
         {
@@ -34,6 +38,8 @@ namespace Guard.Core.Security
                 }
                 authData = new AuthFileData();
             }
+            mainWindow = (MainWindow)Application.Current.MainWindow;
+            SystemEvents.SessionSwitch += OnSessionSwitch;
         }
 
         public static bool FileExists()
@@ -334,6 +340,14 @@ namespace Guard.Core.Security
             authData.PasswordProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
             authData.InsecureMainKey = null;
             await SaveFile();
+        }
+
+        private static void OnSessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            if (e.Reason == SessionSwitchReason.SessionLock && mainEncryptionKey != null && SettingsManager.Settings.LockOnScreenLock)
+            {
+                mainWindow?.Logout();
+            }
         }
     }
 }

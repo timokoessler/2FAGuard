@@ -41,6 +41,10 @@
     <system:String x:Key="i.changepass.newbox.repeat">Repeat the new password</system:String>
     <system:String x:Key="i.changepass.current.notempty">Please enter your current password</system:String>
     <system:String x:Key="i.changepass.current.incorrect">The current password you entered is incorrect</system:String>
+    <system:String x:Key="i.settings.record">Prevent recording</system:String>
+    <system:String x:Key="i.settings.record.description">Blocks screen recording and screenshots of the app</system:String>
+    <system:String x:Key="i.settings.autolock">Auto lock</system:String>
+    <system:String x:Key="i.settings.autolock.description">Lock the app if Windows is locked</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Thanks for downloading! Please choose how you would like to secure your tokens.</system:String>
