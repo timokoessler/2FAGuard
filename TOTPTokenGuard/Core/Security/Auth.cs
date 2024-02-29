@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Drawing.Drawing2D;
+using System.Text.Json;
 using TOTPTokenGuard.Core.Models;
 
 namespace TOTPTokenGuard.Core.Security
@@ -93,7 +94,7 @@ namespace TOTPTokenGuard.Core.Security
             await SaveFile();
         }
 
-        private static async Task RegisterWindowsHello()
+        public static async Task RegisterWindowsHello()
         {
             if (authData == null || mainEncryptionKey == null || authData.LoginSalt == null)
             {
@@ -166,6 +167,7 @@ namespace TOTPTokenGuard.Core.Security
             }
             mainEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
 
+            authData.LoginSalt = EncryptionHelper.GenerateSalt();
             authData.InsecureMainKey = mainEncryptionKey;
             authData.KeySalt = EncryptionHelper.GenerateSalt();
             authData.Version = currentVersion;
@@ -279,6 +281,59 @@ namespace TOTPTokenGuard.Core.Security
             mainEncryptionKey = null;
             mainEncryptionHelper = null;
             TokenManager.ClearTokens();
+        }
+
+        public static async void UnregisterWindowsHello()
+        {
+            if (authData == null)
+            {
+                throw new Exception("Auth data not initialized");
+            }
+            if (authData.WindowsHelloProtectedKey == null)
+            {
+                throw new Exception("Windows Hello not enabled");
+            }
+            authData.WindowsHelloProtectedKey = null;
+            authData.WindowsHelloChallenge = null;
+            await WindowsHello.Unregister();
+        }
+
+        public static bool CheckPassword(string password)
+        {
+            if (authData == null || authData.LoginSalt == null)
+            {
+                throw new Exception("Auth data not initialized");
+            }
+            if (authData.PasswordProtectedKey == null)
+            {
+                throw new Exception("Password not set");
+            }
+            try
+            {
+                EncryptionHelper encryptionHelper = new(password, authData.LoginSalt);
+                _ = encryptionHelper.DecryptString(authData.PasswordProtectedKey) ?? throw new Exception("Invalid password");
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static async Task ChangePassword(string newPassword)
+        {
+            if (authData == null || authData.LoginSalt == null)
+            {
+                throw new Exception("Auth data not initialized");
+            }
+            if(mainEncryptionKey == null)
+            {
+                throw new Exception("Main encryption key not set");
+            }
+            EncryptionHelper encryptionHelper = new(newPassword, authData.LoginSalt);
+            authData.PasswordProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
+            authData.InsecureMainKey = null;
+            await SaveFile();
         }
     }
 }

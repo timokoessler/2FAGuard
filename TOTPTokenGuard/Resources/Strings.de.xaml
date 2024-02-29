@@ -22,6 +22,25 @@
     <system:String x:Key="i.settings.about">Über diese Software</system:String>
     <system:String x:Key="i.settings.issue">Melde einen Fehler</system:String>
     <system:String x:Key="i.settings.myweb">Meine Website</system:String>
+    <system:String x:Key="i.settings.security">Sicherheit</system:String>
+    <system:String x:Key="i.settings.winhello">Windows Hello</system:String>
+    <system:String x:Key="i.settings.winhello.description">Login mit Windows Hello erlauben</system:String>
+    <system:String x:Key="i.settings.winhello.failed.title">Fehler aufgetreten</system:String>
+    <system:String x:Key="i.settings.winhello.failed.content">Bei der Einrichtung von Windows Hello ist ein Fehler aufgetreten:</system:String>
+    <system:String x:Key="i.passdialog.title">Passwort eingeben</system:String>
+    <system:String x:Key="i.passdialog.content">Bitte geben Sie zur Bestätigung Ihr Passwort ein</system:String>
+    <system:String x:Key="i.passdialog.input">Geben Sie Ihr Passwort ein</system:String>
+    <system:String x:Key="i.passdialog.next">Weiter</system:String>
+    <system:String x:Key="i.passdialog.incorrect">Das Passwort ist nicht korrekt</system:String>
+    <system:String x:Key="i.settings.password">Passwort</system:String>
+    <system:String x:Key="i.settings.password.description">Ändere dein Passwort</system:String>
+    <system:String x:Key="i.settings.password.button">Ändern</system:String>
+    <system:String x:Key="i.changepass.title">Passwort ändern</system:String>
+    <system:String x:Key="i.changepass.currentbox">Aktuelles Passwort</system:String>
+    <system:String x:Key="i.changepass.newbox">Neues Passwor eingeben</system:String>
+    <system:String x:Key="i.changepass.newbox.repeat">Passwort wiederholen</system:String>
+    <system:String x:Key="i.changepass.current.notempty">Bitte gebe dein aktuelles Passwort ein</system:String>
+    <system:String x:Key="i.changepass.current.incorrect">Das aktuelle Passwort ist nicht korrekt</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wählen Sie, wie Sie Ihre Token sichern möchten.</system:String>

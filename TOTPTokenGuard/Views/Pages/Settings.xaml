@@ -19,7 +19,7 @@
             FontSize="20"
             FontWeight="Medium"
             Text="{DynamicResource i.settings.personalisation}" />
-        <Grid Margin="0,20">
+        <Grid Margin="0,20,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -79,6 +79,67 @@
                     MinWidth="125" />
             </ui:CardControl>
         </Grid>
+
+        <TextBlock
+            FontSize="20"
+            FontWeight="Medium"
+            Text="{DynamicResource i.settings.security}" />
+
+        <Grid Margin="0,20,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ui:CardControl
+                Grid.Column="0"
+                Margin="0,0,0,15"
+                Icon="{ui:SymbolIcon Fingerprint24}">
+                <ui:CardControl.Header>
+                    <Grid Margin="0,0,35,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="{DynamicResource i.settings.winhello}" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{DynamicResource i.settings.winhello.description}" />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ui:ToggleSwitch x:Name="WinHelloSwitch" Grid.Column="1" />
+            </ui:CardControl>
+            <ui:CardControl
+                Grid.Column="1"
+                Margin="15,0,0,15"
+                Icon="{ui:SymbolIcon Password24}">
+                <ui:CardControl.Header>
+                    <Grid Margin="0,0,35,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="{DynamicResource i.settings.password}" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{DynamicResource i.settings.password.description}" />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ui:Button
+                    Grid.Column="1"
+                    Click="Change_Pass_Button_Click"
+                    Content="{DynamicResource i.settings.password.button}"
+                    Icon="{ui:SymbolIcon Pen24}" />
+            </ui:CardControl>
+        </Grid>
+
 
         <TextBlock
             Margin="0,20,0,0"

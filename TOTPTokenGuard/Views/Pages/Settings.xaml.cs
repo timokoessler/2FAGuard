@@ -3,7 +3,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Models;
+using TOTPTokenGuard.Core.Security;
 using TOTPTokenGuard.Core.Storage;
+using TOTPTokenGuard.Views.Controls;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -15,6 +17,7 @@ namespace TOTPTokenGuard.Views.Pages
     public partial class Settings : Page
     {
         private readonly MainWindow mainWindow;
+        private bool ignoreWinHelloSwitchEvents = false;
 
         public Settings()
         {
@@ -48,6 +51,11 @@ namespace TOTPTokenGuard.Views.Pages
 
             LanguagesComboBox.SelectionChanged += OnLanguageSelectionChanged;
             ThemeComboBox.SelectionChanged += OnThemeSelectionChanged;
+
+            WinHelloSwitch.IsChecked = Auth.IsWindowsHelloRegistered();
+            WinHelloSwitch.IsEnabled = Auth.IsLoginEnabled();
+            WinHelloSwitch.Checked += (sender, e) => EnableWinHello();
+            WinHelloSwitch.Unchecked += (sender, e) => DisableWinHello();
 
             Core.EventManager.AppThemeChanged += OnAppThemeChanged;
         }
@@ -115,6 +123,89 @@ namespace TOTPTokenGuard.Views.Pages
             {
                 SetSelectedTheme(e.Theme);
             }
+        }
+
+        private async void EnableWinHello()
+        {
+            if(ignoreWinHelloSwitchEvents)
+            {
+                return;
+            }
+            ignoreWinHelloSwitchEvents = true;
+            WinHelloSwitch.IsEnabled = false;
+            try {
+                await Auth.RegisterWindowsHello();
+                await Auth.SaveFile();
+                WinHelloSwitch.IsEnabled = true;
+                ignoreWinHelloSwitchEvents = false;
+            }
+            catch (Exception ex)
+            {
+                WinHelloSwitch.IsChecked = false;
+                WinHelloSwitch.IsEnabled = true;
+                ignoreWinHelloSwitchEvents = false;
+                if (ex.Message.Contains("UserCanceled"))
+                {
+                    return;
+                }
+                _ = new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("settings.winhello.failed.title"),
+                    Content = $"{I18n.GetString("settings.winhello.failed.content")} {ex.Message}",
+                    CloseButtonText = I18n.GetString("dialog.close"),
+                    MaxWidth = 400
+                }.ShowDialogAsync();
+            }
+        }
+
+        private async void DisableWinHello()
+        {
+            if (ignoreWinHelloSwitchEvents)
+            {
+                return;
+            }
+            ignoreWinHelloSwitchEvents = true;
+            var dialog = new PasswordDialog(mainWindow.GetRootContentDialogPresenter());
+            var result = await dialog.ShowAsync();
+
+            if(result.Equals(ContentDialogResult.Primary))
+            {
+                try { 
+                    string password = dialog.GetPassword();
+
+                    if(!Auth.CheckPassword(password))
+                    {
+                        throw new Exception(I18n.GetString("passdialog.incorrect"));
+                    }
+
+                    Auth.UnregisterWindowsHello();
+                    await Auth.SaveFile();
+                    ignoreWinHelloSwitchEvents = false;
+                }
+                catch (Exception ex)
+                {
+                    WinHelloSwitch.IsChecked = true;
+                    ignoreWinHelloSwitchEvents = false;
+                    _ = new Wpf.Ui.Controls.MessageBox
+                    {
+                        Title = I18n.GetString("settings.winhello.failed.title"),
+                        Content = $"{I18n.GetString("settings.winhello.failed.content")} {ex.Message}",
+                        CloseButtonText = I18n.GetString("dialog.close"),
+                        MaxWidth = 400
+                    }.ShowDialogAsync();
+                }
+            }
+            else
+            {
+                WinHelloSwitch.IsChecked = true;
+                ignoreWinHelloSwitchEvents = false;
+            }
+            
+        }
+
+        private void Change_Pass_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Navigate(typeof(ChangePasswordPage));
         }
     }
 }

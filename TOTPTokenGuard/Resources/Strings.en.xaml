@@ -22,6 +22,25 @@
     <system:String x:Key="i.settings.about">About this software</system:String>
     <system:String x:Key="i.settings.issue">Report an issue</system:String>
     <system:String x:Key="i.settings.myweb">My website</system:String>
+    <system:String x:Key="i.settings.security">Security</system:String>
+    <system:String x:Key="i.settings.winhello">Windows Hello</system:String>
+    <system:String x:Key="i.settings.winhello.description">Allow login with Windows Hello</system:String>
+    <system:String x:Key="i.settings.winhello.failed.title">An error occurred</system:String>
+    <system:String x:Key="i.settings.winhello.failed.content">An error occurred while setting up Windows Hello:</system:String>
+    <system:String x:Key="i.passdialog.title">Enter your password</system:String>
+    <system:String x:Key="i.passdialog.content">Please enter your password to confirm the action</system:String>
+    <system:String x:Key="i.passdialog.input">Your password</system:String>
+    <system:String x:Key="i.passdialog.next">Next</system:String>
+    <system:String x:Key="i.passdialog.incorrect">The password is incorrect</system:String>
+    <system:String x:Key="i.settings.password">Password</system:String>
+    <system:String x:Key="i.settings.password.description">Change your password</system:String>
+    <system:String x:Key="i.settings.password.button">Change</system:String>
+    <system:String x:Key="i.changepass.title">Change password</system:String>
+    <system:String x:Key="i.changepass.currentbox">Current password</system:String>
+    <system:String x:Key="i.changepass.newbox">Enter a new password</system:String>
+    <system:String x:Key="i.changepass.newbox.repeat">Repeat the new password</system:String>
+    <system:String x:Key="i.changepass.current.notempty">Please enter your current password</system:String>
+    <system:String x:Key="i.changepass.current.incorrect">The current password you entered is incorrect</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Thanks for downloading! Please choose how you would like to secure your tokens.</system:String>

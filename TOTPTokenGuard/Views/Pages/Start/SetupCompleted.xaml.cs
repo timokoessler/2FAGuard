@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Storage;
 using TOTPTokenGuard.Views.Pages.Add;
 
@@ -17,6 +18,8 @@ namespace TOTPTokenGuard.Views.Pages.Start
             InitializeComponent();
             mainWindow = (MainWindow)Application.Current.MainWindow;
             Database.Init();
+            // Inits empty token list
+            _ = TokenManager.GetAllTokens();
         }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)

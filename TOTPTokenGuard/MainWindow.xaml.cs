@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Web;
 using System.Windows;
+using System.Windows.Controls;
 using TOTPTokenGuard.Core;
 using TOTPTokenGuard.Core.Aptabase;
 using TOTPTokenGuard.Core.Icons;
@@ -212,9 +213,14 @@ namespace TOTPTokenGuard
             return StatsClient;
         }
 
-        public Type? GetActivePage()
+        internal Type? GetActivePage()
         {
             return RootNavigation?.SelectedItem?.TargetPageType;
+        }
+
+        internal ContentPresenter GetRootContentDialogPresenter()
+        {
+            return RootContentDialogPresenter;
         }
     }
 }
