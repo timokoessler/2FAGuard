@@ -82,6 +82,7 @@
     <!--  Home  -->
     <system:String x:Key="i.home.loading">Lade Daten...</system:String>
     <system:String x:Key="i.home.notokens">Keine Tokens vorhanden</system:String>
+    <system:String x:Key="i.home.notokens.button">Token hinzufügen</system:String>
 
     <!--  Add  -->
     <system:String x:Key="i.page.addoverview">Token hinzufügen</system:String>
@@ -104,7 +105,7 @@
     <system:String x:Key="i.import.failed.content">Beim Import ist ein Fehler aufgetreten:</system:String>
     <system:String x:Key="i.import.noqrfound">Es wurde kein QR-Code erkannt</system:String>
     <system:String x:Key="i.import.clipboard.invalid">Die Zwischenablage enthält kein Bild und keinen gültigen Text</system:String>
-    <system:String x:Key="i.import.clipboard.multifiles">Es wird aktuell nur eine Datei gleichzeitig unterstützt.</system:String>
+    <system:String x:Key="i.import.clipboard.invalid.multifiles">Es wird aktuell nur eine Datei gleichzeitig unterstützt.</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">Allgemeine Informationen</system:String>

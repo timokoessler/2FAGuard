@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using Guard.Core;
 using Guard.Core.Models;
+using Guard.Views.Pages.Add;
 using Guard.Views.UIComponents;
 
 namespace Guard.Views.Pages
@@ -11,12 +12,16 @@ namespace Guard.Views.Pages
     /// </summary>
     public partial class Home : Page
     {
+        private readonly MainWindow mainWindow;
+
         public Home()
         {
             InitializeComponent();
 
             Loaded += async (sender, e) => await LoadTokens();
             Core.EventManager.TokenUpdated += OnTokenUpdated;
+
+            mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
         private async Task LoadTokens()
@@ -34,9 +39,8 @@ namespace Guard.Views.Pages
 
                 if (tokenHelpers.Count == 0)
                 {
-                    LoadingText.Visibility = Visibility.Collapsed;
-                    LoadingProgressBar.Visibility = Visibility.Collapsed;
-                    NoTokensText.Visibility = Visibility.Visible;
+                    LoadingInfo.Visibility = Visibility.Collapsed;
+                    NoTokensInfo.Visibility = Visibility.Visible;
                     return;
                 }
 
@@ -55,6 +59,11 @@ namespace Guard.Views.Pages
             TOTPTokenContainer.Visibility = Visibility.Collapsed;
             TOTPTokenContainer.Children.Clear();
             _ = LoadTokens();
+        }
+
+        private void NoTokens_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Navigate(typeof(AddOverview));
         }
     }
 }

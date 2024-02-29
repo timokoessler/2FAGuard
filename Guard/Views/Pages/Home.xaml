@@ -21,7 +21,6 @@
                 HorizontalAlignment="Center"
                 Source="pack://application:,,,/Assets/padlock-gradient.svg" />
             <ui:TextBlock
-                x:Name="LoadingText"
                 Margin="0,30,0,0"
                 VerticalAlignment="Center"
                 FontSize="26"
@@ -29,19 +28,30 @@
                 Opacity="0.75"
                 Text="{DynamicResource i.home.loading}"
                 TextAlignment="Center" />
+            <ProgressBar Margin="0,40,0,0" IsIndeterminate="True" />
+        </StackPanel>
+        <StackPanel
+            x:Name="NoTokensInfo"
+            HorizontalAlignment="Center"
+            Visibility="Collapsed">
+            <svgc:SvgViewbox
+                Width="150"
+                Margin="0,50,0,0"
+                HorizontalAlignment="Center"
+                Source="pack://application:,,,/Assets/padlock-gradient.svg" />
             <ui:TextBlock
-                x:Name="NoTokensText"
                 Margin="0,30,0,0"
                 VerticalAlignment="Center"
                 FontSize="18"
                 Opacity="0.75"
                 Text="{DynamicResource i.home.notokens}"
-                TextAlignment="Center"
-                Visibility="Collapsed" />
-            <ProgressBar
-                x:Name="LoadingProgressBar"
-                Margin="0,40,0,0"
-                IsIndeterminate="True" />
+                TextAlignment="Center" />
+            <ui:Button
+                Margin="0,22,0,0"
+                HorizontalAlignment="Center"
+                Click="NoTokens_Button_Click"
+                Content="{DynamicResource i.home.notokens.button}"
+                Icon="{ui:SymbolIcon Add24}" />
         </StackPanel>
         <WrapPanel
             x:Name="TOTPTokenContainer"

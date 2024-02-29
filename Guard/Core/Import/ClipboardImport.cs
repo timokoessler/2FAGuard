@@ -22,11 +22,9 @@ namespace Guard.Core.Import
             }
             else if (Clipboard.ContainsImage())
             {
-                BitmapSource bitmapSource = Clipboard.GetImage();
-                if (bitmapSource == null)
-                {
-                    throw new Exception("Could not get image from clipboard");
-                }
+                BitmapSource bitmapSource =
+                    Clipboard.GetImage()
+                    ?? throw new Exception("Could not get image from clipboard");
                 Bitmap bitmap =
                     BitmapSourceToBitmap(bitmapSource)
                     ?? throw new Exception("Could not convert BitmapSource to Bitmap");
@@ -38,6 +36,7 @@ namespace Guard.Core.Import
             else if (Clipboard.ContainsFileDropList())
             {
                 var fileDropList = Clipboard.GetFileDropList();
+                // Todo Add support for multiple files?
                 if (fileDropList.Count != 1)
                 {
                     throw new Exception(I18n.GetString("import.clipboard.invalid.multifiles"));
@@ -69,7 +68,7 @@ namespace Guard.Core.Import
         private static Bitmap BitmapSourceToBitmap(BitmapSource bitmapSource)
         {
             Bitmap bitmap;
-            using (MemoryStream outStream = new MemoryStream())
+            using (MemoryStream outStream = new())
             {
                 // Create encoder
                 BitmapEncoder encoder = new BmpBitmapEncoder();
