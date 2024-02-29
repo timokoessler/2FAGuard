@@ -1,4 +1,4 @@
-# TOTP Token Guard - 2FA Authenticator
+# 2FAGuard - TOTP Authenticator
 
 A Windows tool for managing 2FA TOTP tokens.
 

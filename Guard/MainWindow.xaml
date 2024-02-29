@@ -1,0 +1,66 @@
+﻿<ui:FluentWindow
+    x:Class="Guard.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Guard"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Guard.Views.Pages"
+    xmlns:pagesadd="clr-namespace:Guard.Views.Pages.Add"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="2FAGuard"
+    Width="1200"
+    Height="720"
+    MinWidth="800"
+    MinHeight="500"
+    ExtendsContentIntoTitleBar="True"
+    WindowBackdropType="Mica"
+    WindowCornerPreference="Round"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid>
+        <ui:TitleBar Title="2FAGuard" Grid.Row="0">
+            <ui:TitleBar.Icon>
+                <ui:ImageIcon Source="pack://application:,,,/Assets/logo-256.png" />
+            </ui:TitleBar.Icon>
+        </ui:TitleBar>
+        <ui:NavigationView
+            x:Name="RootNavigation"
+            MinHeight="300"
+            Margin="40,50,40,0"
+            IsBackButtonVisible="Collapsed"
+            IsPaneToggleVisible="False"
+            PaneDisplayMode="Top"
+            PaneTitle="Navigation">
+            <ui:NavigationView.PaneHeader>
+                <ui:TextBlock
+                    x:Name="PageTitle"
+                    FontSize="28"
+                    FontWeight="SemiBold"
+                    Text="{DynamicResource i.page.home}" />
+            </ui:NavigationView.PaneHeader>
+            <ui:NavigationView.FooterMenuItems>
+                <ui:NavigationViewItem
+                    Content="{DynamicResource i.page.home}"
+                    Icon="{ui:SymbolIcon Key24}"
+                    TargetPageType="{x:Type pages:Home}" />
+                <ui:NavigationViewItem
+                    Content="{DynamicResource i.nav.add}"
+                    Icon="{ui:SymbolIcon Add24}"
+                    TargetPageType="{x:Type pagesadd:AddOverview}" />
+                <ui:NavigationViewItemSeparator />
+                <ui:NavigationViewItem
+                    x:Name="NavLock"
+                    Click="NavLockClicked"
+                    Icon="{ui:SymbolIcon LockClosed24}" />
+                <ui:NavigationViewItem Click="ToggleThemeClicked" Icon="{ui:SymbolIcon DarkTheme24}" />
+                <ui:NavigationViewItem
+                    Content="{DynamicResource i.page.settings}"
+                    Icon="{ui:SymbolIcon Settings24}"
+                    TargetPageType="{x:Type pages:Settings}" />
+            </ui:NavigationView.FooterMenuItems>
+        </ui:NavigationView>
+        <Frame x:Name="FullContentFrame" />
+        <ContentPresenter x:Name="RootContentDialogPresenter" Grid.Row="0" />
+    </Grid>
+</ui:FluentWindow>
