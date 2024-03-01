@@ -1,16 +1,17 @@
-﻿using Guard.Core;
-using Guard.Core.Aptabase;
-using Guard.Core.Icons;
-using Guard.Core.Models;
-using Guard.Core.Security;
-using Guard.Core.Storage;
-using Guard.Views.Pages.Start;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
+using Guard.Core;
+using Guard.Core.Aptabase;
+using Guard.Core.Icons;
+using Guard.Core.Import;
+using Guard.Core.Models;
+using Guard.Core.Security;
+using Guard.Core.Storage;
+using Guard.Views.Pages.Start;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
@@ -42,8 +43,7 @@ namespace Guard
         }
 
         [DllImport("user32.dll")]
-        public static extern uint SetWindowDisplayAffinity(IntPtr hwnd, uint dwAffinity);
-
+        internal static extern uint SetWindowDisplayAffinity(IntPtr hwnd, uint dwAffinity);
 
         private async void OnWindowLoaded()
         {
@@ -55,7 +55,7 @@ namespace Guard
             await SettingsManager.Init();
             ApplyTheme(SettingsManager.Settings.Theme);
 
-            if(SettingsManager.Settings.PreventRecording)
+            if (SettingsManager.Settings.PreventRecording)
             {
                 AllowScreenRecording(!SettingsManager.Settings.PreventRecording);
             }

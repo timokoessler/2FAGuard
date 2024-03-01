@@ -96,7 +96,12 @@ namespace Guard.Core
             {
                 return "Error!";
             }
-            if (dict[$"i.{key.ToLower()}"] is not string content)
+            key = key.ToLower();
+            if (!key.StartsWith("i."))
+            {
+                key = "i." + key;
+            }
+            if (dict[key] is not string content)
             {
                 return $"??? {key} ???";
             }

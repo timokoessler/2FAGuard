@@ -4,12 +4,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Markup;
-using OtpNet;
 using Guard.Core;
 using Guard.Core.Icons;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Views.UIComponents;
+using OtpNet;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages.Add
@@ -270,9 +270,13 @@ namespace Guard.Views.Pages.Add
                     dbToken.EncryptedNotes = encryptionHelper.EncryptString(notesXamlString);
                 }
 
+                long now = DateTimeOffset.UnixEpoch.ToUnixTimeSeconds();
+
                 if (existingToken != null)
                 {
                     TokenManager.DeleteTokenById(dbToken.Id);
+                    dbToken.CreationTime = existingToken.dBToken.CreationTime;
+                    dbToken.UpdatedTime = now;
                     TokenManager.AddToken(dbToken);
                     mainWindow.GetStatsClient()?.TrackEvent("TokenEdited");
 
@@ -282,7 +286,7 @@ namespace Guard.Views.Pages.Add
                     return;
                 }
 
-                dbToken.CreationTime = DateTimeOffset.UnixEpoch.ToUnixTimeSeconds();
+                dbToken.CreationTime = now;
 
                 TokenManager.AddToken(dbToken);
 

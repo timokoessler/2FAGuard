@@ -106,6 +106,9 @@
     <system:String x:Key="i.import.noqrfound">Es wurde kein QR-Code erkannt</system:String>
     <system:String x:Key="i.import.clipboard.invalid">Die Zwischenablage enthält kein Bild und keinen gültigen Text</system:String>
     <system:String x:Key="i.import.clipboard.invalid.multifiles">Es wird aktuell nur eine Datei gleichzeitig unterstützt.</system:String>
+    <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
+    <system:String x:Key="i.import.gauthenticator.description">Importiere Tokens aus der Google Authenticator App</system:String>
+    <system:String x:Key="i.import.gauthenticator.msgbox.content">Um Tokens aus Google Authenticator zu importieren, öffne die App und wähle "Konten übertragen" und dann "Konten exportieren". Erstelle einen Screenshot von dem angezeigten QR-Code und übertrage die Bilddatei auf dieses Gerät. Anschließend wähle einfach oben in dieser Anwendung "QR-Code importieren" aus.</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">Allgemeine Informationen</system:String>
@@ -132,11 +135,13 @@
     <system:String x:Key="i.td.invaliddigits">Die Anzahl der Ziffern ist ungültig</system:String>
     <system:String x:Key="i.td.invalidperiod">Die Gültigkeitsdauer ist ungültig</system:String>
 
-    <!--  Single token page  -->
+    <!--  Token Success Page  -->
     <system:String x:Key="i.page.singletokenpage">Token</system:String>
     <system:String x:Key="i.stp.added">Token hinzugefügt</system:String>
     <system:String x:Key="i.stp.home">Alle Tokens anzeigen</system:String>
     <system:String x:Key="i.stp.edited">Token bearbeitet</system:String>
+    <system:String x:Key="i.stp.added.multiple">Tokens hinzugefügt</system:String>
+    <system:String x:Key="i.stp.added.multiple.description">Es wurden @Count Tokens importiert</system:String>
 
     <!--  Text Formatting Dialog  -->
     <system:String x:Key="i.txtfd.title">Text formatieren</system:String>

@@ -1,9 +1,8 @@
 ﻿using System.Net.Sockets;
-using OtpNet;
 using Guard.Core.Icons;
 using Guard.Core.Models;
 using Guard.Core.Security;
-using Guard.Core.Import.GoogleOTPMigration;
+using OtpNet;
 
 namespace Guard.Core.Import
 {
@@ -15,11 +14,6 @@ namespace Guard.Core.Import
         internal static OTPUri Parse(string uriString)
         {
             ArgumentNullException.ThrowIfNull(uriString);
-
-            if(uriString.StartsWith("otpauth-migration:"))
-            {
-                return GoogleAuthenticator.Parse(uriString);
-            }
 
             Uri uri = new(Uri.UnescapeDataString(uriString));
             if (uri.Scheme != "otpauth")

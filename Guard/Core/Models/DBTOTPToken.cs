@@ -21,6 +21,7 @@ namespace Guard.Core.Models
         public string? Icon { get; set; }
         public IconManager.IconType? IconType { get; set; }
         public string? EncryptedNotes { get; set; }
+        public long? UpdatedTime { get; set; }
         public long? CreationTime { get; set; }
     }
 }

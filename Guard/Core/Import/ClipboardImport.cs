@@ -9,7 +9,7 @@ namespace Guard.Core.Import
 {
     internal class ClipboardImport
     {
-        internal static DBTOTPToken? Parse()
+        internal static List<DBTOTPToken>? Parse()
         {
             string? text = null;
             if (Clipboard.ContainsText())
@@ -59,10 +59,31 @@ namespace Guard.Core.Import
                 return null;
             }
 
+            List<DBTOTPToken> resultTokens = [];
+
+            if (text.StartsWith("otpauth-migration:"))
+            {
+                List<OTPUri> otpUris = GoogleAuthenticator.Parse(text);
+                if (otpUris.Count == 0)
+                {
+                    throw new Exception(
+                        "Google Authenticator migration failed because no tokens were found."
+                    );
+                }
+                foreach (OTPUri gOTPUri in otpUris)
+                {
+                    DBTOTPToken gDBToken = OTPUriHelper.ConvertToDBToken(gOTPUri);
+                    TokenManager.AddToken(gDBToken);
+                    resultTokens.Add(gDBToken);
+                }
+                return resultTokens;
+            }
+
             OTPUri otpUri = OTPUriHelper.Parse(text);
             DBTOTPToken dbToken = OTPUriHelper.ConvertToDBToken(otpUri);
             TokenManager.AddToken(dbToken);
-            return dbToken;
+            resultTokens.Add(dbToken);
+            return resultTokens;
         }
 
         private static Bitmap BitmapSourceToBitmap(BitmapSource bitmapSource)

@@ -18,26 +18,44 @@ namespace Guard.Views.Pages
             InitializeComponent();
             int tokenID = (int)NavigationContextManager.CurrentContext["tokenID"];
             string type = (string)NavigationContextManager.CurrentContext["type"];
-            NavigationContextManager.ClearContext();
 
             mainWindow = (MainWindow)Application.Current.MainWindow;
 
             if (type.Equals("added"))
             {
                 mainWindow.SetPageTitle(I18n.GetString("stp.added"));
-            } else if (type.Equals("edited"))
+            }
+            else if (type.Equals("edited"))
             {
                 mainWindow.SetPageTitle(I18n.GetString("stp.edited"));
             }
-
-            TOTPTokenHelper? token = TokenManager.GetTokenById(tokenID);
-            if (token == null)
+            else if (type.Equals("added-multiple"))
             {
-                mainWindow.Navigate(typeof(Home));
-                return;
+                mainWindow.SetPageTitle(I18n.GetString("stp.added.multiple"));
             }
 
-            TokenCardContainer.Children.Insert(1, new TokenCard(token));
+            if (!type.Equals("added-multiple"))
+            {
+                TOTPTokenHelper? token = TokenManager.GetTokenById(tokenID);
+                if (token == null)
+                {
+                    mainWindow.Navigate(typeof(Home));
+                    return;
+                }
+
+                TokenCardContainer.Children.Insert(1, new TokenCard(token));
+            }
+            else
+            {
+                Wpf.Ui.Controls.TextBlock textBlock = new();
+                int count = (int)NavigationContextManager.CurrentContext["count"];
+                textBlock.Text = I18n.GetString("i.stp.added.multiple.description")
+                    .Replace("@Count", count.ToString());
+                textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                TokenCardContainer.Children.Insert(1, textBlock);
+            }
+
+            NavigationContextManager.ClearContext();
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
