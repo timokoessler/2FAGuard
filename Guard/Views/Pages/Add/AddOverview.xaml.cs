@@ -52,20 +52,29 @@ namespace Guard.Views.Pages.Add
                         if (otpUris.Count == 1)
                         {
                             DBTOTPToken gDBToken = OTPUriHelper.ConvertToDBToken(otpUris[0]);
-                            TokenManager.AddToken(gDBToken);
+                            if (!TokenManager.AddToken(gDBToken))
+                            {
+                                throw new Exception(I18n.GetString("import.duplicate"));
+                            }
                             NavigationContextManager.CurrentContext["tokenID"] = gDBToken.Id;
                             NavigationContextManager.CurrentContext["type"] = "added";
                         }
                         else
                         {
+                            int alreadyExistingTokens = 0;
                             foreach (OTPUri gOTPUri in otpUris)
                             {
                                 DBTOTPToken gDBToken = OTPUriHelper.ConvertToDBToken(gOTPUri);
-                                TokenManager.AddToken(gDBToken);
+                                if (!TokenManager.AddToken(gDBToken))
+                                {
+                                    alreadyExistingTokens++;
+                                }
                             }
                             NavigationContextManager.CurrentContext["type"] = "added-multiple";
                             NavigationContextManager.CurrentContext["tokenID"] = 0;
                             NavigationContextManager.CurrentContext["count"] = otpUris.Count;
+                            NavigationContextManager.CurrentContext["duplicateCount"] =
+                                alreadyExistingTokens;
                         }
 
                         mainWindow.GetStatsClient()?.TrackEvent("TokenImportedGoogleQRFile");
@@ -75,7 +84,10 @@ namespace Guard.Views.Pages.Add
 
                     OTPUri otpUri = OTPUriHelper.Parse(qrText);
                     DBTOTPToken dbToken = OTPUriHelper.ConvertToDBToken(otpUri);
-                    TokenManager.AddToken(dbToken);
+                    if (!TokenManager.AddToken(dbToken))
+                    {
+                        throw new Exception(I18n.GetString("import.duplicate"));
+                    }
 
                     mainWindow.GetStatsClient()?.TrackEvent("TokenImportedQRFile");
 
@@ -100,22 +112,31 @@ namespace Guard.Views.Pages.Add
         {
             try
             {
-                var dbTokens =
-                    ClipboardImport.Parse()
-                    ?? throw new Exception(I18n.GetString("import.clipboard.invalid"));
-                mainWindow.GetStatsClient()?.TrackEvent("TokenImportedClipboard");
+                (int total, int duplicate, int tokenID) = ClipboardImport.Parse();
 
-                if (dbTokens.Count == 1)
+                if (total == 0)
                 {
+                    throw new Exception(I18n.GetString("import.clipboard.invalid"));
+                }
+
+                if (total == 1)
+                {
+                    if (duplicate == 1)
+                    {
+                        throw new Exception(I18n.GetString("import.duplicate"));
+                    }
                     NavigationContextManager.CurrentContext["type"] = "added";
-                    NavigationContextManager.CurrentContext["tokenID"] = dbTokens[0].Id;
+                    NavigationContextManager.CurrentContext["tokenID"] = tokenID;
                 }
                 else
                 {
                     NavigationContextManager.CurrentContext["type"] = "added-multiple";
                     NavigationContextManager.CurrentContext["tokenID"] = 0;
-                    NavigationContextManager.CurrentContext["count"] = dbTokens.Count;
+                    NavigationContextManager.CurrentContext["count"] = total;
+                    NavigationContextManager.CurrentContext["duplicateCount"] = duplicate;
                 }
+
+                mainWindow.GetStatsClient()?.TrackEvent("TokenImportedClipboard");
                 mainWindow.Navigate(typeof(TokenSuccessPage));
             }
             catch (Exception ex)

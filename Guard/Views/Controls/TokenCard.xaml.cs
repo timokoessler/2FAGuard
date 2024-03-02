@@ -181,5 +181,10 @@ namespace Guard.Views.UIComponents
                 Core.EventManager.EmitTokenUpdated(token.dBToken.Id);
             }
         }
+
+        internal string GetSearchString()
+        {
+            return $"{token.dBToken.Issuer.ToLower()} {token.dBToken.Username?.ToLower()}";
+        }
     }
 }

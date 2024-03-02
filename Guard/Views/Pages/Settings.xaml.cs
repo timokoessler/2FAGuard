@@ -1,10 +1,10 @@
-﻿using Guard.Core;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Guard.Core;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Controls;
-using System.Windows;
-using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages
@@ -62,7 +62,8 @@ namespace Guard.Views.Pages
                 SettingsManager.Settings.PreventRecording = true;
                 _ = SettingsManager.Save();
             };
-            ScreenRecordingSwitch.Unchecked += (sender, e) => {
+            ScreenRecordingSwitch.Unchecked += (sender, e) =>
+            {
                 mainWindow.AllowScreenRecording(true);
                 SettingsManager.Settings.PreventRecording = false;
                 _ = SettingsManager.Save();
@@ -88,10 +89,7 @@ namespace Guard.Views.Pages
             LanguagesComboBox.SelectedItem = LanguagesComboBox
                 .Items.OfType<ComboBoxItem>()
                 .FirstOrDefault(x =>
-                    ((string)x.Tag).Equals(
-                        lang.ToString(),
-                        StringComparison.CurrentCultureIgnoreCase
-                    )
+                    ((string)x.Tag).Equals(lang.ToString(), StringComparison.OrdinalIgnoreCase)
                 );
         }
 
@@ -100,10 +98,7 @@ namespace Guard.Views.Pages
             ThemeComboBox.SelectedItem = ThemeComboBox
                 .Items.OfType<ComboBoxItem>()
                 .FirstOrDefault(x =>
-                    ((string)x.Tag).Equals(
-                        theme.ToString(),
-                        StringComparison.CurrentCultureIgnoreCase
-                    )
+                    ((string)x.Tag).Equals(theme.ToString(), StringComparison.OrdinalIgnoreCase)
                 );
         }
 
@@ -150,13 +145,14 @@ namespace Guard.Views.Pages
 
         private async void EnableWinHello()
         {
-            if(ignoreWinHelloSwitchEvents)
+            if (ignoreWinHelloSwitchEvents)
             {
                 return;
             }
             ignoreWinHelloSwitchEvents = true;
             WinHelloSwitch.IsEnabled = false;
-            try {
+            try
+            {
                 await Auth.RegisterWindowsHello();
                 await Auth.SaveFile();
                 WinHelloSwitch.IsEnabled = true;
@@ -191,12 +187,13 @@ namespace Guard.Views.Pages
             var dialog = new PasswordDialog(mainWindow.GetRootContentDialogPresenter());
             var result = await dialog.ShowAsync();
 
-            if(result.Equals(ContentDialogResult.Primary))
+            if (result.Equals(ContentDialogResult.Primary))
             {
-                try { 
+                try
+                {
                     string password = dialog.GetPassword();
 
-                    if(!Auth.CheckPassword(password))
+                    if (!Auth.CheckPassword(password))
                     {
                         throw new Exception(I18n.GetString("passdialog.incorrect"));
                     }
@@ -212,7 +209,8 @@ namespace Guard.Views.Pages
                     _ = new Wpf.Ui.Controls.MessageBox
                     {
                         Title = I18n.GetString("settings.winhello.failed.title"),
-                        Content = $"{I18n.GetString("settings.winhello.failed.content")} {ex.Message}",
+                        Content =
+                            $"{I18n.GetString("settings.winhello.failed.content")} {ex.Message}",
                         CloseButtonText = I18n.GetString("dialog.close"),
                         MaxWidth = 400
                     }.ShowDialogAsync();
@@ -223,7 +221,6 @@ namespace Guard.Views.Pages
                 WinHelloSwitch.IsChecked = true;
                 ignoreWinHelloSwitchEvents = false;
             }
-            
         }
 
         private void Change_Pass_Button_Click(object sender, RoutedEventArgs e)

@@ -1,11 +1,11 @@
-﻿using OtpNet;
-using Guard.Core.Security;
+﻿using Guard.Core.Security;
+using OtpNet;
 
 namespace Guard.Core.Models
 {
     internal class TOTPTokenHelper
     {
-        private readonly string decryptedSecret;
+        internal readonly string decryptedSecret;
         private readonly Totp totp;
         internal readonly DBTOTPToken dBToken;
 

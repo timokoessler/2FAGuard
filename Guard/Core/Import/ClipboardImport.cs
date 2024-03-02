@@ -9,7 +9,7 @@ namespace Guard.Core.Import
 {
     internal class ClipboardImport
     {
-        internal static List<DBTOTPToken>? Parse()
+        internal static (int total, int duplicate, int tokenID) Parse()
         {
             string? text = null;
             if (Clipboard.ContainsText())
@@ -17,7 +17,7 @@ namespace Guard.Core.Import
                 text = Clipboard.GetText();
                 if (text == null || !text.StartsWith("otpauth://"))
                 {
-                    return null;
+                    throw new Exception(I18n.GetString("import.clipboard.invalid"));
                 }
             }
             else if (Clipboard.ContainsImage())
@@ -47,7 +47,7 @@ namespace Guard.Core.Import
                     || (!file.EndsWith(".png") && !file.EndsWith(".jpg") && !file.EndsWith(".jpeg"))
                 )
                 {
-                    return null;
+                    throw new Exception(I18n.GetString("import.clipboard.invalid"));
                 }
                 text =
                     QRCode.ParseQRFile(file)
@@ -56,13 +56,12 @@ namespace Guard.Core.Import
 
             if (text == null)
             {
-                return null;
+                throw new Exception(I18n.GetString("import.clipboard.invalid"));
             }
-
-            List<DBTOTPToken> resultTokens = [];
 
             if (text.StartsWith("otpauth-migration:"))
             {
+                int duplicateTokens = 0;
                 List<OTPUri> otpUris = GoogleAuthenticator.Parse(text);
                 if (otpUris.Count == 0)
                 {
@@ -73,17 +72,23 @@ namespace Guard.Core.Import
                 foreach (OTPUri gOTPUri in otpUris)
                 {
                     DBTOTPToken gDBToken = OTPUriHelper.ConvertToDBToken(gOTPUri);
-                    TokenManager.AddToken(gDBToken);
-                    resultTokens.Add(gDBToken);
+                    if (!TokenManager.AddToken(gDBToken))
+                    {
+                        duplicateTokens++;
+                    }
                 }
-                return resultTokens;
+                return (otpUris.Count, duplicateTokens, 0);
             }
 
             OTPUri otpUri = OTPUriHelper.Parse(text);
             DBTOTPToken dbToken = OTPUriHelper.ConvertToDBToken(otpUri);
-            TokenManager.AddToken(dbToken);
-            resultTokens.Add(dbToken);
-            return resultTokens;
+
+            if (!TokenManager.AddToken(dbToken))
+            {
+                return (1, 1, 0);
+            }
+
+            return (1, 0, dbToken.Id);
         }
 
         private static Bitmap BitmapSourceToBitmap(BitmapSource bitmapSource)

@@ -47,12 +47,33 @@ namespace Guard.Views.Pages
             }
             else
             {
-                Wpf.Ui.Controls.TextBlock textBlock = new();
                 int count = (int)NavigationContextManager.CurrentContext["count"];
-                textBlock.Text = I18n.GetString("i.stp.added.multiple.description")
-                    .Replace("@Count", count.ToString());
-                textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                int duplicateCount = (int)NavigationContextManager.CurrentContext["duplicateCount"];
+
+                int addedCount = count - duplicateCount;
+
+                Wpf.Ui.Controls.TextBlock textBlock =
+                    new()
+                    {
+                        Text = I18n.GetString("i.stp.added.multiple.description")
+                            .Replace("@Count", addedCount.ToString()),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        FontSize = 16
+                    };
                 TokenCardContainer.Children.Insert(1, textBlock);
+
+                if (duplicateCount > 0)
+                {
+                    Wpf.Ui.Controls.TextBlock duplicateTextBlock =
+                        new()
+                        {
+                            Text = I18n.GetString("i.stp.added.multiple.duplicate")
+                                .Replace("@Count", duplicateCount.ToString()),
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            FontSize = 16
+                        };
+                    TokenCardContainer.Children.Insert(2, duplicateTextBlock);
+                }
             }
 
             NavigationContextManager.ClearContext();

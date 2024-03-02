@@ -21,6 +21,29 @@ namespace Guard.Views.Pages
             Loaded += async (sender, e) => await LoadTokens();
             Core.EventManager.TokenUpdated += OnTokenUpdated;
 
+            SearchBox.TextChanged += (sender, e) =>
+            {
+                foreach (TokenCard card in TOTPTokenContainer.Children)
+                {
+                    if (SearchBox.Text.Length == 0)
+                    {
+                        card.Visibility = Visibility.Visible;
+                        continue;
+                    }
+                    if (
+                        card.GetSearchString()
+                            .Contains(SearchBox.Text, StringComparison.OrdinalIgnoreCase)
+                    )
+                    {
+                        card.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        card.Visibility = Visibility.Collapsed;
+                    }
+                }
+            };
+
             mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
@@ -46,6 +69,7 @@ namespace Guard.Views.Pages
 
                 LoadingInfo.Visibility = Visibility.Collapsed;
                 TOTPTokenContainer.Visibility = Visibility.Visible;
+                SearchPanel.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
             {

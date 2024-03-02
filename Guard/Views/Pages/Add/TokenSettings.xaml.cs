@@ -287,8 +287,12 @@ namespace Guard.Views.Pages.Add
                 }
 
                 dbToken.CreationTime = now;
+                dbToken.UpdatedTime = now;
 
-                TokenManager.AddToken(dbToken);
+                if (!TokenManager.AddToken(dbToken))
+                {
+                    throw new Exception(I18n.GetString("import.duplicate"));
+                }
 
                 mainWindow.GetStatsClient()?.TrackEvent("TokenAddedManually");
 

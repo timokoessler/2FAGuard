@@ -35,21 +35,27 @@ namespace Guard.Core
             {
                 throw new Exception("TokenHelpers not loaded");
             }
-            if(tokenHelpers.Count == 0)
+            if (tokenHelpers.Count == 0)
             {
                 return 1;
             }
             return tokenHelpers.Max(token => token.dBToken.Id) + 1;
         }
 
-        internal static void AddToken(DBTOTPToken dbToken)
+        internal static bool AddToken(DBTOTPToken dbToken)
         {
             if (tokenHelpers == null)
             {
                 throw new Exception("TokenHelpers not loaded");
             }
-            tokenHelpers.Add(new TOTPTokenHelper(dbToken));
+            var tokenHelper = new TOTPTokenHelper(dbToken);
+            if (IsDuplicate(tokenHelper))
+            {
+                return false;
+            }
+            tokenHelpers.Add(tokenHelper);
             Database.AddToken(dbToken);
+            return true;
         }
 
         internal static void ClearTokens()
@@ -78,6 +84,15 @@ namespace Guard.Core
                 tokenHelpers.Remove(token);
                 Database.DeleteTokenById(id);
             }
+        }
+
+        internal static bool IsDuplicate(TOTPTokenHelper token)
+        {
+            if (tokenHelpers == null)
+            {
+                throw new Exception("TokenHelpers not loaded");
+            }
+            return tokenHelpers.Any(t => token.decryptedSecret == t.decryptedSecret);
         }
     }
 }

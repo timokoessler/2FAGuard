@@ -10,7 +10,7 @@
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="2FAGuard"
     Width="1200"
-    Height="720"
+    Height="725"
     MinWidth="800"
     MinHeight="500"
     ExtendsContentIntoTitleBar="True"

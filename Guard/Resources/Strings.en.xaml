@@ -86,6 +86,7 @@
     <system:String x:Key="i.home.loading">Loading...</system:String>
     <system:String x:Key="i.home.notokens">No tokens found</system:String>
     <system:String x:Key="i.home.notokens.button">Add token</system:String>
+    <system:String x:Key="i.home.search.placeholder">Search tokens</system:String>
 
     <!--  Add  -->
     <system:String x:Key="i.page.addoverview">Token hinzufügen</system:String>
@@ -109,6 +110,7 @@
     <system:String x:Key="i.import.noqrfound">Could not detect a QR code</system:String>
     <system:String x:Key="i.import.clipboard.invalid">The clipboard does not contain an image or text.</system:String>
     <system:String x:Key="i.import.clipboard.invalid.multifiles">Currently only one file can be imported from the clipboard at a time.</system:String>
+    <system:String x:Key="i.import.duplicate">A token with the same secret key already exists</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">General information</system:String>
@@ -142,6 +144,7 @@
     <system:String x:Key="i.stp.edited">Token edited</system:String>
     <system:String x:Key="i.stp.added.multiple">Added tokens</system:String>
     <system:String x:Key="i.stp.added.multiple.description">@Count tokens have been added successfully</system:String>
+    <system:String x:Key="i.stp.added.multiple.duplicate">@Count tokens were not added because they already exist</system:String>
 
     <!--  Token card  -->
     <system:String x:Key="i.tokencard.copy">Copy</system:String>
