@@ -78,6 +78,8 @@
     <system:String x:Key="i.login.button">Mit Passwort anmelden</system:String>
     <system:String x:Key="i.login.pass.error">Das Passwort ist nicht korrekt</system:String>
     <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
+    <system:String x:Key="i.login.warning.capslock.title">Warnung</system:String>
+    <system:String x:Key="i.login.warning.capslock.content">Die Feststelltaste ist aktiviert</system:String>
 
     <!--  Home  -->
     <system:String x:Key="i.home.loading">Lade Daten...</system:String>

@@ -35,13 +35,13 @@
                 TextWrapping="Wrap" />
             <ui:PasswordBox
                 x:Name="PasswordBox"
-                MaxWidth="300"
+                Width="320"
                 Icon="{ui:SymbolIcon Password24}"
                 PlaceholderEnabled="True"
                 PlaceholderText="{DynamicResource i.login.passbox}" />
             <ui:Button
                 x:Name="LoginButton"
-                Margin="0,20,0,0"
+                Margin="0,22,0,0"
                 HorizontalAlignment="Center"
                 Appearance="Primary"
                 Click="LoginButton_Click"

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Guard.Core;
 using Guard.Core.Security;
 using Guard.Core.Storage;
@@ -31,6 +32,20 @@ namespace Guard.Views.Pages.Start
 
         private async Task Setup(bool promptWinHello)
         {
+            PasswordBox.KeyDown += (sender, e) =>
+            {
+                if (Keyboard.IsKeyToggled(Key.CapsLock))
+                {
+                    ShowWarning("", I18n.GetString("login.warning.capslock.content"));
+                }
+                else
+                {
+                    if (InfoBar.Message == I18n.GetString("login.warning.capslock.content"))
+                    {
+                        InfoBar.IsOpen = false;
+                    }
+                }
+            };
             try
             {
                 await Auth.Init();
@@ -44,7 +59,7 @@ namespace Guard.Views.Pages.Start
                 }
                 if (Auth.IsWindowsHelloRegistered())
                 {
-                    if(promptWinHello)
+                    if (promptWinHello)
                     {
                         LoginButton.IsEnabled = false;
                         WinHelloButton.IsEnabled = false;
@@ -52,7 +67,8 @@ namespace Guard.Views.Pages.Start
                         await Auth.LoginWithWindowsHello();
                         OnLoggedIn();
                     }
-                } else
+                }
+                else
                 {
                     WinHelloButton.Visibility = Visibility.Collapsed;
                 }
@@ -79,6 +95,14 @@ namespace Guard.Views.Pages.Start
             InfoBar.Title = title;
             InfoBar.Message = message;
             InfoBar.Severity = Wpf.Ui.Controls.InfoBarSeverity.Error;
+            InfoBar.IsOpen = true;
+        }
+
+        private void ShowWarning(string title, string message)
+        {
+            InfoBar.Title = title;
+            InfoBar.Message = message;
+            InfoBar.Severity = Wpf.Ui.Controls.InfoBarSeverity.Warning;
             InfoBar.IsOpen = true;
         }
 

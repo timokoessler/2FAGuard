@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Guard.Core;
 using Guard.Core.Security;
 
@@ -10,22 +11,28 @@ namespace Guard.Views.Pages
     /// </summary>
     public partial class ChangePasswordPage : Page
     {
-
         private MainWindow mainWindow;
         private readonly bool insecure = false;
+
         public ChangePasswordPage()
         {
             InitializeComponent();
             mainWindow = (MainWindow)Application.Current.MainWindow;
 
             insecure = !Auth.IsLoginEnabled();
-            if(insecure)
+            if (insecure)
             {
                 CurrentPass.Visibility = Visibility.Collapsed;
                 PasswordBox.Focus();
-            } else {
+            }
+            else
+            {
                 CurrentPass.Focus();
             }
+
+            CurrentPass.KeyDown += (sender, e) => CapsLockWarning();
+            PasswordBox.KeyDown += (sender, e) => CapsLockWarning();
+            PasswordBoxRepeat.KeyDown += (sender, e) => CapsLockWarning();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -57,7 +64,7 @@ namespace Guard.Views.Pages
 
             try
             {
-                if(!insecure && !Auth.CheckPassword(CurrentPass.Password))
+                if (!insecure && !Auth.CheckPassword(CurrentPass.Password))
                 {
                     throw new Exception(I18n.GetString("changepass.current.incorrect"));
                 }
@@ -78,6 +85,29 @@ namespace Guard.Views.Pages
             InfoBar.Message = message;
             InfoBar.Severity = Wpf.Ui.Controls.InfoBarSeverity.Error;
             InfoBar.IsOpen = true;
+        }
+
+        private void ShowWarning(string title, string message)
+        {
+            InfoBar.Title = title;
+            InfoBar.Message = message;
+            InfoBar.Severity = Wpf.Ui.Controls.InfoBarSeverity.Warning;
+            InfoBar.IsOpen = true;
+        }
+
+        private void CapsLockWarning()
+        {
+            if (Keyboard.IsKeyToggled(Key.CapsLock))
+            {
+                ShowWarning("", I18n.GetString("login.warning.capslock.content"));
+            }
+            else
+            {
+                if (InfoBar.Message == I18n.GetString("login.warning.capslock.content"))
+                {
+                    InfoBar.IsOpen = false;
+                }
+            }
         }
     }
 }

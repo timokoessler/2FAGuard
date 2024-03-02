@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Guard.Core;
 using Guard.Core.Security;
 
@@ -19,6 +20,9 @@ namespace Guard.Views.Pages.Start
             InitializeComponent();
             PasswordBox.Focus();
             mainWindow = (MainWindow)Application.Current.MainWindow;
+
+            PasswordBox.KeyDown += (sender, e) => CapsLockWarning();
+            PasswordBoxRepeat.KeyDown += (sender, e) => CapsLockWarning();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -63,6 +67,29 @@ namespace Guard.Views.Pages.Start
             InfoBar.Message = message;
             InfoBar.Severity = Wpf.Ui.Controls.InfoBarSeverity.Error;
             InfoBar.IsOpen = true;
+        }
+
+        private void ShowWarning(string title, string message)
+        {
+            InfoBar.Title = title;
+            InfoBar.Message = message;
+            InfoBar.Severity = Wpf.Ui.Controls.InfoBarSeverity.Warning;
+            InfoBar.IsOpen = true;
+        }
+
+        private void CapsLockWarning()
+        {
+            if (Keyboard.IsKeyToggled(Key.CapsLock))
+            {
+                ShowWarning("", I18n.GetString("login.warning.capslock.content"));
+            }
+            else
+            {
+                if (InfoBar.Message == I18n.GetString("login.warning.capslock.content"))
+                {
+                    InfoBar.IsOpen = false;
+                }
+            }
         }
     }
 }
