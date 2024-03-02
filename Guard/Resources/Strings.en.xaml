@@ -111,6 +111,11 @@
     <system:String x:Key="i.import.clipboard.invalid">The clipboard does not contain an image or text.</system:String>
     <system:String x:Key="i.import.clipboard.invalid.multifiles">Currently only one file can be imported from the clipboard at a time.</system:String>
     <system:String x:Key="i.import.duplicate">A token with the same secret key already exists</system:String>
+    <system:String x:Key="i.home.sort">Sort order</system:String>
+    <system:String x:Key="i.home.sort.issuer.asc">Issuer, ascending</system:String>
+    <system:String x:Key="i.home.sort.issuer.desc">Issuer, descending</system:String>
+    <system:String x:Key="i.home.sort.createdat.asc">Creation date, ascending</system:String>
+    <system:String x:Key="i.home.sort.createdat.desc">Creation date, descending</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">General information</system:String>

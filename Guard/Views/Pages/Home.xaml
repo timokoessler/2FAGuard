@@ -68,6 +68,20 @@
                 Margin="5,20,5,0"
                 Icon="{ui:SymbolIcon Search24}"
                 PlaceholderText="{DynamicResource i.home.search.placeholder}" />
+            <ui:DropDownButton
+                x:Name="SortDropDown"
+                Margin="5,20,5,0"
+                Content="{DynamicResource i.home.sort}"
+                Icon="{ui:SymbolIcon ArrowSortDownLines24}">
+                <ui:DropDownButton.Flyout>
+                    <ContextMenu>
+                        <MenuItem Click="Sort_Issuer_ASC" Header="{DynamicResource i.home.sort.issuer.asc}" />
+                        <MenuItem Click="Sort_Issuer_DESC" Header="{DynamicResource i.home.sort.issuer.desc}" />
+                        <MenuItem Click="Sort_CreatedAt_ASC" Header="{DynamicResource i.home.sort.createdat.asc}" />
+                        <MenuItem Click="Sort_CreatedAt_DESC" Header="{DynamicResource i.home.sort.createdat.desc}" />
+                    </ContextMenu>
+                </ui:DropDownButton.Flyout>
+            </ui:DropDownButton>
         </StackPanel>
         <WrapPanel
             x:Name="TOTPTokenContainer"

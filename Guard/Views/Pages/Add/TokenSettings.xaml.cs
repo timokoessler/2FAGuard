@@ -228,6 +228,7 @@ namespace Guard.Views.Pages.Add
                                 : TokenManager.GetNextId(),
                         Issuer = Issuer.Text,
                         EncryptedSecret = encryptionHelper.EncryptString(Secret.Password),
+                        CreationTime = DateTime.Now
                     };
 
                 if (digits != 6)
@@ -270,13 +271,11 @@ namespace Guard.Views.Pages.Add
                     dbToken.EncryptedNotes = encryptionHelper.EncryptString(notesXamlString);
                 }
 
-                long now = DateTimeOffset.UnixEpoch.ToUnixTimeSeconds();
-
                 if (existingToken != null)
                 {
                     TokenManager.DeleteTokenById(dbToken.Id);
                     dbToken.CreationTime = existingToken.dBToken.CreationTime;
-                    dbToken.UpdatedTime = now;
+                    dbToken.UpdatedTime = DateTime.Now;
                     TokenManager.AddToken(dbToken);
                     mainWindow.GetStatsClient()?.TrackEvent("TokenEdited");
 
@@ -286,8 +285,7 @@ namespace Guard.Views.Pages.Add
                     return;
                 }
 
-                dbToken.CreationTime = now;
-                dbToken.UpdatedTime = now;
+                dbToken.UpdatedTime = DateTime.Now;
 
                 if (!TokenManager.AddToken(dbToken))
                 {

@@ -134,7 +134,7 @@ namespace Guard.Core.Import
                     Digits = otpUri.Digits,
                     Period = otpUri.Period,
                     Username = otpUri.Account,
-                    CreationTime = DateTimeOffset.UnixEpoch.ToUnixTimeSeconds()
+                    CreationTime = DateTime.Now
                 };
 
             if (icon != null && icon.Type != IconManager.IconType.Default)

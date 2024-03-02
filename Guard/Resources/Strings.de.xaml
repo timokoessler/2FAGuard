@@ -84,6 +84,11 @@
     <system:String x:Key="i.home.notokens">Keine Tokens vorhanden</system:String>
     <system:String x:Key="i.home.notokens.button">Token hinzufügen</system:String>
     <system:String x:Key="i.home.search.placeholder">Tokens durchsuchen</system:String>
+    <system:String x:Key="i.home.sort">Sortierung</system:String>
+    <system:String x:Key="i.home.sort.issuer.asc">Aussteller, aufsteigend</system:String>
+    <system:String x:Key="i.home.sort.issuer.desc">Aussteller, absteigend</system:String>
+    <system:String x:Key="i.home.sort.createdat.asc">Erstellungsdatum, aufsteigend</system:String>
+    <system:String x:Key="i.home.sort.createdat.desc">Erstellungsdatum, absteigend</system:String>
 
     <!--  Add  -->
     <system:String x:Key="i.page.addoverview">Token hinzufügen</system:String>

@@ -21,7 +21,7 @@ namespace Guard.Views.UIComponents
         private readonly TOTPTokenHelper token;
         private DoubleAnimation? doubleAnimation;
         private readonly MainWindow mainWindow;
-
+        internal readonly string SearchString;
         private readonly IconManager.TotpIcon? icon;
 
         internal TokenCard(TOTPTokenHelper token)
@@ -64,6 +64,8 @@ namespace Guard.Views.UIComponents
             UpdateTokenText();
             InitProgressRing();
             _ = ScheduleUpdates();
+
+            SearchString = $"{token.dBToken.Issuer.ToLower()} {token.dBToken.Username?.ToLower()}";
 
             // Add Click event to copy token to clipboard
             MouseLeftButtonUp += (sender, e) =>
@@ -182,9 +184,14 @@ namespace Guard.Views.UIComponents
             }
         }
 
-        internal string GetSearchString()
+        internal string GetIssuer()
         {
-            return $"{token.dBToken.Issuer.ToLower()} {token.dBToken.Username?.ToLower()}";
+            return token.dBToken.Issuer;
+        }
+
+        internal DateTime GetCreationTime()
+        {
+            return token.dBToken.CreationTime;
         }
     }
 }
