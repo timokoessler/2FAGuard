@@ -191,12 +191,14 @@
         </Grid>
 
         <TextBlock
-            Margin="0,20,0,0"
             FontSize="20"
             FontWeight="Medium"
             Text="{DynamicResource i.settings.about}" />
 
-        <ui:CardExpander Margin="0,20,0,0" ContentPadding="0">
+        <ui:CardExpander
+            Margin="0,20,0,0"
+            ContentPadding="0"
+            IsExpanded="True">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -208,19 +210,14 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                         <svgc:SvgViewbox
-                            Height="32"
+                            Width="34"
+                            Height="34"
                             Margin="5,0,15,0"
                             VerticalAlignment="Center"
                             Source="pack://application:,,,/Assets/logo.svg" />
-                        <StackPanel VerticalAlignment="Center">
-                            <ui:TextBlock
-                                VerticalAlignment="Center"
-                                FontTypography="Body"
-                                Text="2FAGuard - TOTP Authenticator" />
-                            <ui:TextBlock
-                                x:Name="AppCopyrightText"
-                                VerticalAlignment="Center"
-                                Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                        <StackPanel Height="38" VerticalAlignment="Center">
+                            <ui:TextBlock FontTypography="Body" Text="2FAGuard - TOTP Authenticator" />
+                            <ui:TextBlock x:Name="AppCopyrightText" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                         </StackPanel>
                     </StackPanel>
                     <TextBlock
@@ -234,6 +231,10 @@
             <StackPanel>
 
                 <StackPanel Margin="15" Orientation="Horizontal">
+                    <ui:HyperlinkButton
+                        Content="Website"
+                        Icon="{ui:SymbolIcon Link24}"
+                        NavigateUri="https://2faguard.app" />
                     <ui:HyperlinkButton
                         Content="GitHub"
                         Icon="{ui:SymbolIcon Link24}"

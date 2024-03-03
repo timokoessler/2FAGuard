@@ -42,17 +42,13 @@ namespace Guard.Core.Installation
 
         internal static string GetInstallationTypeString()
         {
-            switch (GetInstallationType())
+            return GetInstallationType() switch
             {
-                case InstallationType.CLASSIC_INSTALLER:
-                    return "Classic Installation";
-                case InstallationType.CLASSIC_PORTABLE:
-                    return "Portable";
-                case InstallationType.MICROSOFT_STORE:
-                    return "Microsoft Store";
-                default:
-                    return "Unknown";
-            }
+                InstallationType.CLASSIC_INSTALLER => "Classic Installation",
+                InstallationType.CLASSIC_PORTABLE => "Portable",
+                InstallationType.MICROSOFT_STORE => "Microsoft Store",
+                _ => "Unknown",
+            };
         }
 
         internal static string GetVersionString()
