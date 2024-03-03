@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Guard.Core;
+using Guard.Core.Installation;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
@@ -25,7 +26,7 @@ namespace Guard.Views.Pages
 
             AppCopyrightText.Text =
                 $"Copyright © {DateTime.Now.Year} Timo Kössler and Open Source Contributors\n";
-            AppVersionText.Text = $"Version {Utils.GetVersionString()}";
+            AppVersionText.Text = $"Version {InstallationInfo.GetVersionString()}";
 
             SetSelectedTheme(SettingsManager.Settings.Theme);
 

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Guard.Core.Installation;
 using Guard.Core.Models;
 
 namespace Guard.Core.Storage
@@ -6,7 +7,7 @@ namespace Guard.Core.Storage
     internal class SettingsManager
     {
         private static readonly string settingsFilePath = System.IO.Path.Combine(
-            Utils.GetAppDataFolderPath(),
+            InstallationInfo.GetAppDataFolderPath(),
             "settings"
         );
 

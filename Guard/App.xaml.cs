@@ -8,7 +8,11 @@ namespace Guard
     /// </summary>
     public partial class App : Application
     {
+#if PORTABLE
+        private const string MutexName = "2FAGuardPortable";
+#else
         private const string MutexName = "2FAGuard";
+#endif
         private Mutex? singleInstanceMutex;
 
         protected override async void OnStartup(StartupEventArgs e)

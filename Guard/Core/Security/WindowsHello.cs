@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using Guard.Core.Installation;
 using Windows.Security.Credentials;
 using Windows.Security.Credentials.UI;
 using Windows.Security.Cryptography;
@@ -7,7 +8,8 @@ namespace Guard.Core.Security
 {
     internal partial class WindowsHello
     {
-        private static readonly string accountName = "2FAGuard";
+        private static readonly string accountName =
+            $"2FAGuard {(InstallationInfo.IsPortable() ? "Portable" : "")}";
 
         public static async Task<KeyCredentialRetrievalResult> Register()
         {
@@ -89,7 +91,8 @@ namespace Guard.Core.Security
                     }
                     await Task.Delay(500); // Retry after a delay if the window is not found
                 }
-            } catch
+            }
+            catch
             {
                 //
             }

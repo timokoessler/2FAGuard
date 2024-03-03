@@ -1,6 +1,7 @@
 ﻿using System.Drawing.Drawing2D;
 using System.Text.Json;
 using System.Windows;
+using Guard.Core.Installation;
 using Guard.Core.Models;
 using Guard.Core.Storage;
 using Microsoft.Win32;
@@ -10,7 +11,7 @@ namespace Guard.Core.Security
     internal class Auth
     {
         private static readonly string authFilePath = System.IO.Path.Combine(
-            Utils.GetAppDataFolderPath(),
+            InstallationInfo.GetAppDataFolderPath(),
             "auth-keys"
         );
         private static AuthFileData? authData;
@@ -32,9 +33,9 @@ namespace Guard.Core.Security
             }
             else
             {
-                if (!System.IO.Directory.Exists(Utils.GetAppDataFolderPath()))
+                if (!System.IO.Directory.Exists(InstallationInfo.GetAppDataFolderPath()))
                 {
-                    System.IO.Directory.CreateDirectory(Utils.GetAppDataFolderPath());
+                    System.IO.Directory.CreateDirectory(InstallationInfo.GetAppDataFolderPath());
                 }
                 authData = new AuthFileData();
             }
@@ -317,7 +318,9 @@ namespace Guard.Core.Security
             try
             {
                 EncryptionHelper encryptionHelper = new(password, authData.LoginSalt);
-                _ = encryptionHelper.DecryptString(authData.PasswordProtectedKey) ?? throw new Exception("Invalid password");
+                _ =
+                    encryptionHelper.DecryptString(authData.PasswordProtectedKey)
+                    ?? throw new Exception("Invalid password");
             }
             catch
             {
@@ -332,7 +335,7 @@ namespace Guard.Core.Security
             {
                 throw new Exception("Auth data not initialized");
             }
-            if(mainEncryptionKey == null)
+            if (mainEncryptionKey == null)
             {
                 throw new Exception("Main encryption key not set");
             }
@@ -344,7 +347,11 @@ namespace Guard.Core.Security
 
         private static void OnSessionSwitch(object sender, SessionSwitchEventArgs e)
         {
-            if (e.Reason == SessionSwitchReason.SessionLock && mainEncryptionKey != null && SettingsManager.Settings.LockOnScreenLock)
+            if (
+                e.Reason == SessionSwitchReason.SessionLock
+                && mainEncryptionKey != null
+                && SettingsManager.Settings.LockOnScreenLock
+            )
             {
                 mainWindow?.Logout();
             }

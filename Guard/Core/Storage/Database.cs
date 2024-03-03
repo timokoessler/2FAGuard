@@ -1,5 +1,6 @@
-﻿using LiteDB;
+﻿using Guard.Core.Installation;
 using Guard.Core.Models;
+using LiteDB;
 
 namespace Guard.Core.Storage
 {
@@ -10,7 +11,10 @@ namespace Guard.Core.Storage
 
         private static string GetDBPath()
         {
-            return System.IO.Path.Combine(Utils.GetAppDataFolderPath(), "TokenDatabase.db");
+            return System.IO.Path.Combine(
+                InstallationInfo.GetAppDataFolderPath(),
+                "TokenDatabase.db"
+            );
         }
 
         public static void Init()

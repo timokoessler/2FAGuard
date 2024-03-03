@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 using System.Reflection;
+using Guard.Core.Installation;
 
 namespace Guard.Core.Aptabase;
 
@@ -130,7 +131,7 @@ public class AptabaseClient : IAptabaseClient
                         osName = SystemInfo.GetOsName(),
                         osVersion = SystemInfo.GetOsVersion(),
                         locale = SystemInfo.GetLocale(),
-                        appVersion = Utils.GetVersionString(),
+                        appVersion = InstallationInfo.GetVersionString(),
                         sdkVersion = "0.0.7"
                     },
                     props

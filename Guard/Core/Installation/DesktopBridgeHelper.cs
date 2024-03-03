@@ -3,15 +3,21 @@ using System.Text;
 
 /**
  * The MIT License (MIT)
- * Copyright (c) 2015 Matteo Pagani
- * https://github.com/qmatteoq/DesktopBridgeHelpers
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * https://github.com/microsoft/Windows-AppConsult-Tools-DesktopBridgeHelpers/
+ * Modified methods to be static
  */
 namespace Guard.Core.Models
 {
     internal class DesktopBridgeHelper
     {
+        const long APPMODEL_ERROR_NO_PACKAGE = 15700L;
+
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        static extern int GetCurrentPackageFullName(ref int packageFullNameLength, StringBuilder packageFullName);
+        static extern int GetCurrentPackageFullName(
+            ref int packageFullNameLength,
+            StringBuilder packageFullName
+        );
 
         public static bool IsRunningAsUwp()
         {
@@ -22,13 +28,13 @@ namespace Guard.Core.Models
             else
             {
                 int length = 0;
-                StringBuilder sb = new StringBuilder(0);
+                StringBuilder sb = new(0);
                 int result = GetCurrentPackageFullName(ref length, sb);
 
                 sb = new StringBuilder(length);
                 result = GetCurrentPackageFullName(ref length, sb);
 
-                return result != 15700L;
+                return result != APPMODEL_ERROR_NO_PACKAGE;
             }
         }
 
