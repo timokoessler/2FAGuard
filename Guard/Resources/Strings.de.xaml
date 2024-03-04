@@ -45,6 +45,7 @@
     <system:String x:Key="i.settings.record.description">Blockiert Screenshots und Videoaufnahmen der App</system:String>
     <system:String x:Key="i.settings.autolock">Automatisch Sperren</system:String>
     <system:String x:Key="i.settings.autolock.description">App sperren, wenn Windows gesperrt wird</system:String>
+    <system:String x:Key="i.settings.license">Lizenz</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wählen Sie, wie Sie Ihre Token sichern möchten.</system:String>

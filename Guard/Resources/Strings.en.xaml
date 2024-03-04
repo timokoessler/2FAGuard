@@ -143,6 +143,7 @@
     <system:String x:Key="i.td.invalidsecret">The secret key is invalid</system:String>
     <system:String x:Key="i.td.invaliddigits">The number of digits is invalid</system:String>
     <system:String x:Key="i.td.invalidperiod">The validity period is invalid</system:String>
+    <system:String x:Key="i.settings.license">License</system:String>
 
     <!--  Token Success Page  -->
     <system:String x:Key="i.page.singletokenpage">Token</system:String>

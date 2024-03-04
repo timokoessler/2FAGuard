@@ -236,9 +236,9 @@
                         Icon="{ui:SymbolIcon Link24}"
                         NavigateUri="https://2faguard.app" />
                     <ui:HyperlinkButton
-                        Content="GitHub"
-                        Icon="{ui:SymbolIcon Link24}"
-                        NavigateUri="https://github.com/timokoessler/totp-token-guard" />
+                        Click="License_Button_Click"
+                        Content="{DynamicResource i.settings.license}"
+                        Icon="{ui:SymbolIcon ClipboardTextLtr24}" />
                     <ui:HyperlinkButton
                         Content="{DynamicResource i.settings.issue}"
                         Icon="{ui:SymbolIcon Link24}"
