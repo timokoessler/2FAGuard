@@ -235,7 +235,7 @@ namespace Guard.Views.Pages
             {
                 Title = "MIT License",
                 Content =
-                    @"Copyright (c) 2024 Timo Kössler and Open Source Contributors - https://github.com/timokoessler
+                    @"Copyright (c) 2024 Timo Kössler and Open Source Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the ""Software""), to deal
@@ -255,7 +255,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.",
                 CloseButtonText = I18n.GetString("dialog.close"),
-                MaxWidth = 700
+                MaxWidth = 600
+            }.ShowDialogAsync();
+        }
+
+        private void OSS_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _ = new Wpf.Ui.Controls.MessageBox
+            {
+                Title = I18n.GetString("settings.oss"),
+                Content =
+                    @"Google.Protobuf - Copyright Google Inc. under the BSD-3-Clause License
+LiteDB - Copyright Mauricio David under the MIT License
+NSec.Cryptography - Copyright Klaus Hartke under the MIT License
+Otp.NET - Copyright Kyle Spearrin under the MIT License
+SharpVectors.Wpf - Copyright Elinam LLC under the BSD 3-Clause License
+Wpf.Ui - Copyright Leszek Pomianowski and WPF UI Contributors under the MIT License
+ZXing.Net - Copytight Michael Jahn under the Apache 2.0 License
+",
+                CloseButtonText = I18n.GetString("dialog.close"),
+                MaxWidth = 600
             }.ShowDialogAsync();
         }
     }

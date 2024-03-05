@@ -21,7 +21,7 @@
     <system:String x:Key="i.settings.language.description">Select the language for the app</system:String>
     <system:String x:Key="i.settings.about">About this software</system:String>
     <system:String x:Key="i.settings.issue">Report an issue</system:String>
-    <system:String x:Key="i.settings.myweb">My website</system:String>
+    <system:String x:Key="i.settings.myweb">My personal website</system:String>
     <system:String x:Key="i.settings.security">Security</system:String>
     <system:String x:Key="i.settings.winhello">Windows Hello</system:String>
     <system:String x:Key="i.settings.winhello.description">Allow login with Windows Hello</system:String>
@@ -48,6 +48,7 @@
     <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
     <system:String x:Key="i.import.gauthenticator.description">Import tokens from the Google Authenticator app</system:String>
     <system:String x:Key="i.import.gauthenticator.msgbox.content">To import tokens from Google Authenticator, open the app and select "Transfer accounts" and then "Export accounts". Take a screenshot of the displayed QR code and transfer the image file to this device. Then simply select "Import QR code" at the top of this application.</system:String>
+    <system:String x:Key="i.settings.oss">Used open source software</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Thanks for downloading! Please choose how you would like to secure your tokens.</system:String>

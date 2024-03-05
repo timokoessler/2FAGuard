@@ -21,7 +21,7 @@
     <system:String x:Key="i.settings.language.description">Legt die Sprache der App fest</system:String>
     <system:String x:Key="i.settings.about">Über diese Software</system:String>
     <system:String x:Key="i.settings.issue">Melde einen Fehler</system:String>
-    <system:String x:Key="i.settings.myweb">Meine Website</system:String>
+    <system:String x:Key="i.settings.myweb">Meine persönliche Website</system:String>
     <system:String x:Key="i.settings.security">Sicherheit</system:String>
     <system:String x:Key="i.settings.winhello">Windows Hello</system:String>
     <system:String x:Key="i.settings.winhello.description">Login mit Windows Hello erlauben</system:String>
@@ -46,6 +46,7 @@
     <system:String x:Key="i.settings.autolock">Automatisch Sperren</system:String>
     <system:String x:Key="i.settings.autolock.description">App sperren, wenn Windows gesperrt wird</system:String>
     <system:String x:Key="i.settings.license">Lizenz</system:String>
+    <system:String x:Key="i.settings.oss">Verwendete Open Source Software</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wählen Sie, wie Sie Ihre Token sichern möchten.</system:String>

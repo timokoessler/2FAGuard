@@ -240,6 +240,10 @@
                         Content="{DynamicResource i.settings.license}"
                         Icon="{ui:SymbolIcon ClipboardTextLtr24}" />
                     <ui:HyperlinkButton
+                        Click="OSS_Button_Click"
+                        Content="{DynamicResource i.settings.oss}"
+                        Icon="{ui:SymbolIcon AppsListDetail24}" />
+                    <ui:HyperlinkButton
                         Content="{DynamicResource i.settings.issue}"
                         Icon="{ui:SymbolIcon Link24}"
                         NavigateUri="https://github.com/timokoessler/totp-token-guard/issues/new/choose" />
