@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using Guard.Core;
 using Guard.Core.Import;
+using Guard.Core.Import.Importer;
 using Guard.Core.Models;
 using OtpNet;
 using ZXing.Aztec.Internal;
@@ -104,12 +105,17 @@ namespace Guard.Views.Pages.Add
         {
             new Wpf.Ui.Controls.MessageBox
             {
-                Title = I18n.GetString("i.import.gauthenticator"),
+                Title = I18n.GetString("import.gauthenticator"),
                 Content = I18n.GetString("import.gauthenticator.msgbox.content")
                     .Replace("@n", "\n"),
                 CloseButtonText = I18n.GetString("dialog.close"),
                 MaxWidth = 500
             }.ShowDialogAsync();
+        }
+
+        private void UriList_Click(object sender, RoutedEventArgs e)
+        {
+            Import(new UriListImporter());
         }
     }
 }

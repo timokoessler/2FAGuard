@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 using Guard.Core.Models;
 using Microsoft.Win32;
 
-namespace Guard.Core.Import
+namespace Guard.Core.Import.Importer
 {
     internal class QRFileImporter : IImporter
     {

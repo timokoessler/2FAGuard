@@ -54,11 +54,11 @@
                     x:Name="Issuer"
                     FontSize="18"
                     FontTypography="BodyStrong"
-                    TextWrapping="WrapWithOverflow" />
+                    TextWrapping="NoWrap" />
                 <ui:TextBlock
                     x:Name="Username"
                     Appearance="Secondary"
-                    TextWrapping="WrapWithOverflow" />
+                    TextWrapping="NoWrap" />
                 <ui:TextBlock
                     x:Name="TokenTextBlock"
                     FontSize="32"

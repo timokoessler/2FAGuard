@@ -15,7 +15,7 @@ namespace Guard.Core.Import
         {
             ArgumentNullException.ThrowIfNull(uriString);
 
-            Uri uri = new(Uri.UnescapeDataString(uriString));
+            Uri uri = new(uriString);
             if (uri.Scheme != "otpauth")
             {
                 throw new Exception("Invalid URI scheme");
@@ -39,9 +39,10 @@ namespace Guard.Core.Import
                 otpUri.Issuer = label.Split(':')[0][1..];
                 otpUri.Account = label.Split(':')[1];
             }
-            else
+            else if (label.Contains("%3A"))
             {
-                otpUri.Account = label[1..];
+                otpUri.Issuer = label.Split("%3A")[0][1..];
+                otpUri.Account = label.Split("%3A")[1];
             }
 
             if (uri.Query == null || uri.Query.Length < 2)
@@ -95,9 +96,14 @@ namespace Guard.Core.Import
                 }
             }
 
+            if (otpUri.Issuer == null)
+            {
+                throw new Exception($"Missing issuer in URI");
+            }
+
             if (otpUri.Secret == null)
             {
-                throw new Exception("Missing secret");
+                throw new Exception($"Missing secret in URI from {otpUri.Issuer}");
             }
 
             try

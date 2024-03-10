@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Guard.Core.Models;
 
-namespace Guard.Core.Import
+namespace Guard.Core.Import.Importer
 {
     internal class ClipboardImporter : IImporter
     {
@@ -47,7 +47,7 @@ namespace Guard.Core.Import
                 var file = fileDropList[0];
                 if (
                     file == null
-                    || (!file.EndsWith(".png") && !file.EndsWith(".jpg") && !file.EndsWith(".jpeg"))
+                    || !file.EndsWith(".png") && !file.EndsWith(".jpg") && !file.EndsWith(".jpeg")
                 )
                 {
                     throw new Exception(I18n.GetString("import.clipboard.invalid"));

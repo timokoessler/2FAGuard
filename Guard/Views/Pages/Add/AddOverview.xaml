@@ -104,7 +104,7 @@
                 Width="350"
                 Height="95"
                 Margin="0,15,15,0"
-                IsEnabled="False">
+                Click="UriList_Click">
                 <ui:CardAction.Icon>
                     <ui:SymbolIcon FontSize="32px" Symbol="AppsList24" />
                 </ui:CardAction.Icon>

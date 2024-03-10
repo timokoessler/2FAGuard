@@ -1,4 +1,4 @@
-﻿namespace Guard.Core.Import
+﻿namespace Guard.Core.Import.Importer
 {
     internal interface IImporter
     {
