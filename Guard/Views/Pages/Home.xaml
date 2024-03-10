@@ -86,7 +86,7 @@
         <WrapPanel
             x:Name="TOTPTokenContainer"
             Grid.Row="1"
-            Margin="0,15,0,0"
+            Margin="0,15,0,15"
             VerticalAlignment="Top"
             Orientation="Horizontal"
             Visibility="Collapsed" />
