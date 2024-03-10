@@ -29,94 +29,43 @@ namespace Guard.Views.Pages.Add
 
         private void Qr_Import_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Microsoft.Win32.OpenFileDialog openFileDialog =
-                    new() { Filter = "Image (*.jpg, *.jpeg, *.png) | *.jpg; *.jpeg; *.png" };
-                bool? result = openFileDialog.ShowDialog();
-                if (result == true)
-                {
-                    string? qrText =
-                        QRCode.ParseQRFile(openFileDialog.FileName)
-                        ?? throw new Exception(I18n.GetString("import.noqrfound"));
-
-                    if (qrText.StartsWith("otpauth-migration:"))
-                    {
-                        List<OTPUri> otpUris = GoogleAuthenticator.Parse(qrText);
-                        if (otpUris.Count == 0)
-                        {
-                            throw new Exception(
-                                "Google Authenticator migration failed because no tokens were found."
-                            );
-                        }
-                        if (otpUris.Count == 1)
-                        {
-                            DBTOTPToken gDBToken = OTPUriHelper.ConvertToDBToken(otpUris[0]);
-                            if (!TokenManager.AddToken(gDBToken))
-                            {
-                                throw new Exception(I18n.GetString("import.duplicate"));
-                            }
-                            NavigationContextManager.CurrentContext["tokenID"] = gDBToken.Id;
-                            NavigationContextManager.CurrentContext["type"] = "added";
-                        }
-                        else
-                        {
-                            int alreadyExistingTokens = 0;
-                            foreach (OTPUri gOTPUri in otpUris)
-                            {
-                                DBTOTPToken gDBToken = OTPUriHelper.ConvertToDBToken(gOTPUri);
-                                if (!TokenManager.AddToken(gDBToken))
-                                {
-                                    alreadyExistingTokens++;
-                                }
-                            }
-                            NavigationContextManager.CurrentContext["type"] = "added-multiple";
-                            NavigationContextManager.CurrentContext["tokenID"] = 0;
-                            NavigationContextManager.CurrentContext["count"] = otpUris.Count;
-                            NavigationContextManager.CurrentContext["duplicateCount"] =
-                                alreadyExistingTokens;
-                        }
-
-                        mainWindow.GetStatsClient()?.TrackEvent("TokenImportedGoogleQRFile");
-                        mainWindow.Navigate(typeof(TokenSuccessPage));
-                        return;
-                    }
-
-                    OTPUri otpUri = OTPUriHelper.Parse(qrText);
-                    DBTOTPToken dbToken = OTPUriHelper.ConvertToDBToken(otpUri);
-                    if (!TokenManager.AddToken(dbToken))
-                    {
-                        throw new Exception(I18n.GetString("import.duplicate"));
-                    }
-
-                    mainWindow.GetStatsClient()?.TrackEvent("TokenImportedQRFile");
-
-                    NavigationContextManager.CurrentContext["tokenID"] = dbToken.Id;
-                    NavigationContextManager.CurrentContext["type"] = "added";
-                    mainWindow.Navigate(typeof(TokenSuccessPage));
-                }
-            }
-            catch (Exception ex)
-            {
-                new Wpf.Ui.Controls.MessageBox
-                {
-                    Title = I18n.GetString("import.failed.title"),
-                    Content = $"{I18n.GetString("import.failed.content")} {ex.Message}",
-                    CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
-                }.ShowDialogAsync();
-            }
+            Import(new QRFileImporter());
         }
 
         private void Clipboard_Click(object sender, RoutedEventArgs e)
         {
+            Import(new ClipboardImporter());
+        }
+
+        private void Import(IImporter importer)
+        {
+            int total = 0,
+                duplicate = 0,
+                tokenID = 0;
             try
             {
-                (int total, int duplicate, int tokenID) = ClipboardImport.Parse();
+                if (importer.Type == IImporter.ImportType.File)
+                {
+                    Microsoft.Win32.OpenFileDialog openFileDialog =
+                        new() { Filter = importer.SupportedFileExtensions };
+                    bool? result = openFileDialog.ShowDialog();
+                    if (result == true)
+                    {
+                        (total, duplicate, tokenID) = importer.Parse(openFileDialog.FileName);
+                    }
+                }
+                else if (importer.Type == IImporter.ImportType.Clipboard)
+                {
+                    (total, duplicate, tokenID) = importer.Parse("");
+                }
+                else
+                {
+                    throw new Exception("Invalid Importer Type");
+                }
 
                 if (total == 0)
                 {
-                    throw new Exception(I18n.GetString("import.clipboard.invalid"));
+                    throw new Exception(I18n.GetString("import.notokens"));
                 }
 
                 if (total == 1)
@@ -136,7 +85,7 @@ namespace Guard.Views.Pages.Add
                     NavigationContextManager.CurrentContext["duplicateCount"] = duplicate;
                 }
 
-                mainWindow.GetStatsClient()?.TrackEvent("TokenImportedClipboard");
+                mainWindow.GetStatsClient()?.TrackEvent("TokenImported" + importer.Name);
                 mainWindow.Navigate(typeof(TokenSuccessPage));
             }
             catch (Exception ex)
@@ -156,7 +105,8 @@ namespace Guard.Views.Pages.Add
             new Wpf.Ui.Controls.MessageBox
             {
                 Title = I18n.GetString("i.import.gauthenticator"),
-                Content = I18n.GetString("import.gauthenticator.msgbox.content"),
+                Content = I18n.GetString("import.gauthenticator.msgbox.content")
+                    .Replace("@n", "\n"),
                 CloseButtonText = I18n.GetString("dialog.close"),
                 MaxWidth = 500
             }.ShowDialogAsync();

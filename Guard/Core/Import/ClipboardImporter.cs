@@ -3,13 +3,16 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Guard.Core.Models;
-using Guard.Views.Pages;
 
 namespace Guard.Core.Import
 {
-    internal class ClipboardImport
+    internal class ClipboardImporter : IImporter
     {
-        internal static (int total, int duplicate, int tokenID) Parse()
+        public string Name => "Clipboard";
+        public IImporter.ImportType Type => IImporter.ImportType.Clipboard;
+        public string SupportedFileExtensions => "";
+
+        public (int total, int duplicate, int tokenID) Parse(string? path)
         {
             string? text = null;
             if (Clipboard.ContainsText())
