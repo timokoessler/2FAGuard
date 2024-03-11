@@ -123,7 +123,7 @@
                 Width="350"
                 Height="95"
                 Margin="0,15,15,0"
-                IsEnabled="False">
+                Click="Bitwarden_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />

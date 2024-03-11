@@ -117,5 +117,10 @@ namespace Guard.Views.Pages.Add
         {
             Import(new UriListImporter());
         }
+
+        private void Bitwarden_Click(object sender, RoutedEventArgs e)
+        {
+            Import(new BitwardenImporter());
+        }
     }
 }
