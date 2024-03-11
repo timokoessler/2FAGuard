@@ -29,6 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\authenticatorpro.svg" />
     <None Remove="Assets\bitwarden.svg" />
     <None Remove="Assets\check.svg" />
     <None Remove="Assets\gauthenticator.svg" />
@@ -56,6 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\authenticatorpro.svg" />
     <Resource Include="Assets\bitwarden.svg" />
     <Resource Include="Assets\check.svg" />
     <EmbeddedResource Include="Assets\Icons\si.json" />

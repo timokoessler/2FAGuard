@@ -199,18 +199,14 @@ namespace Guard.Views.UIComponents
         private async void MenuItem_Qr_Click(object sender, RoutedEventArgs e)
         {
             string uri = OTPUriCreator.GetUri(token);
-            var qrImage = QRCode.GenerateQRCodeImage(uri, 400);
-            var dialog = new ImageDialog(
-                mainWindow.GetRootContentDialogPresenter(),
-                qrImage,
-                400,
-                400
-            )
+            var qrImage = QRCode.GenerateQRCodeImage(uri, 380);
+            var dialog = new QRDialog(mainWindow.GetRootContentDialogPresenter(), qrImage, 380, 380)
             {
                 IsPrimaryButtonEnabled = true,
                 PrimaryButtonText = I18n.GetString("tokencard.save"),
                 IsSecondaryButtonEnabled = true,
                 SecondaryButtonText = I18n.GetString("tokencard.copy"),
+                DialogMaxHeight = 600
             };
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)

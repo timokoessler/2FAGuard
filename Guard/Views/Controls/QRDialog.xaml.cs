@@ -4,9 +4,9 @@ using Wpf.Ui.Controls;
 
 namespace Guard.Views.Controls;
 
-public partial class ImageDialog : ContentDialog
+public partial class QRDialog : ContentDialog
 {
-    public ImageDialog(ContentPresenter contentPresenter, BitmapImage bitmap, int height, int width)
+    public QRDialog(ContentPresenter contentPresenter, BitmapImage bitmap, int height, int width)
         : base(contentPresenter)
     {
         InitializeComponent();

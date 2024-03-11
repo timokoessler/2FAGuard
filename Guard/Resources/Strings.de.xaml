@@ -121,6 +121,8 @@
     <system:String x:Key="i.import.gauthenticator.msgbox.content">Um Tokens aus Google Authenticator zu importieren, öffne die App auf deinem Smartphone oder Tablet und wähle im Menü "Konten übertragen" und dann "Konten exportieren" aus.@nAnschließend erstelle einen Screenshot von dem angezeigten QR-Code und kopiere die Bilddatei auf dieses Gerät.@nImportiere diese Datei, indem du oben in dieser Anwendung "QR-Code importieren" auswählst.@n@nHinweis: Ein QR-Code kann nur eine begrenzte Anzahl an Informationen speichern. Bitte wähle maximal 5 Tokens gleichzeitig in der Google Authenticator App für den Export aus.</system:String>
     <system:String x:Key="i.import.duplicate">Es existiert bereits ein Token mit einem identischen geheimen Schlüssel</system:String>
     <system:String x:Key="i.import.notokens">Es konnte keine Tokens importiert werden</system:String>
+    <system:String x:Key="i.import.authpro">Authenticator Pro</system:String>
+    <system:String x:Key="i.import.authpro.description">Importiere ein Backup der App Authenticator Pro</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">Allgemeine Informationen</system:String>
@@ -169,6 +171,7 @@
     <system:String x:Key="i.tokencard.delete.modal.yes">Löschen</system:String>
     <system:String x:Key="i.tokencard.qr">QR-Code anzeigen</system:String>
     <system:String x:Key="i.tokencard.save">Speichern</system:String>
+    <system:String x:Key="i.tokencard.qr.keepsecure">Dieser QR-Code enthält sensible Informationen.</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">Die Anwendung 2FAGuard möchte Ihre Identität bestätigen.</system:String>

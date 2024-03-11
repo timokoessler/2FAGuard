@@ -120,6 +120,8 @@
     <system:String x:Key="i.home.sort.createdat.asc">Creation date, ascending</system:String>
     <system:String x:Key="i.home.sort.createdat.desc">Creation date, descending</system:String>
     <system:String x:Key="i.import.notokens">No tokens found in the import file</system:String>
+    <system:String x:Key="i.import.authpro">Authenticator Pro</system:String>
+    <system:String x:Key="i.import.authpro.description">Import a backup file from the app Authenticator Pro</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">General information</system:String>
@@ -165,6 +167,7 @@
     <system:String x:Key="i.tokencard.delete.modal.yes">Delete</system:String>
     <system:String x:Key="i.tokencard.qr">Display QR code</system:String>
     <system:String x:Key="i.tokencard.save">Save</system:String>
+    <system:String x:Key="i.tokencard.qr.keepsecure">This QR code contains sensitive information. Keep it secure.</system:String>
 
     <!--  Text Formatting Dialog  -->
     <system:String x:Key="i.txtfd.title">Format text</system:String>

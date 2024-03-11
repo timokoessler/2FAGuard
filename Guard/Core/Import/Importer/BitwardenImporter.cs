@@ -11,7 +11,7 @@ namespace Guard.Core.Import.Importer
     {
         public string Name => "Bitwarden";
         public IImporter.ImportType Type => IImporter.ImportType.File;
-        public string SupportedFileExtensions => "";
+        public string SupportedFileExtensions => "Bitwarden Export (*.json) | *.json";
 
         private readonly JsonSerializerOptions jsonSerializerOptions =
             new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true };
