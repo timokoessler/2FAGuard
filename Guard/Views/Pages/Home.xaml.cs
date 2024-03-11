@@ -21,7 +21,7 @@ namespace Guard.Views.Pages
             InitializeComponent();
             mainWindow = (MainWindow)Application.Current.MainWindow;
 
-            Loaded += async (sender, e) => await LoadTokens();
+            Loaded += (sender, e) => LoadTokens();
             Core.EventManager.TokenUpdated += OnTokenUpdated;
 
             SearchBox.TextChanged += (sender, e) =>
@@ -50,7 +50,7 @@ namespace Guard.Views.Pages
             };
         }
 
-        private async Task LoadTokens()
+        private async void LoadTokens()
         {
             List<TOTPTokenHelper>? tokenHelpers =
                 await TokenManager.GetAllTokens()
@@ -80,6 +80,15 @@ namespace Guard.Views.Pages
             LoadingInfo.Visibility = Visibility.Collapsed;
             TOTPTokenContainer.Visibility = Visibility.Visible;
             SearchPanel.Visibility = Visibility.Visible;
+
+            var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+            while (await periodicTimer.WaitForNextTickAsync())
+            {
+                foreach (TokenCard card in TOTPTokenContainer.Children)
+                {
+                    card.Update();
+                }
+            }
         }
 
         private void OnTokenUpdated(object? sender, int tokenId)
@@ -88,7 +97,7 @@ namespace Guard.Views.Pages
             TOTPTokenContainer.Visibility = Visibility.Collapsed;
             SearchPanel.Visibility = Visibility.Collapsed;
             TOTPTokenContainer.Children.Clear();
-            _ = LoadTokens();
+            LoadTokens();
         }
 
         private void NoTokens_Button_Click(object sender, RoutedEventArgs e)

@@ -63,7 +63,6 @@ namespace Guard.Views.UIComponents
 
             UpdateTokenText();
             InitProgressRing();
-            _ = ScheduleUpdates();
 
             SearchString = $"{token.dBToken.Issuer.ToLower()} {token.dBToken.Username?.ToLower()}";
 
@@ -76,18 +75,11 @@ namespace Guard.Views.UIComponents
             Cursor = Cursors.Hand;
         }
 
-        private async Task ScheduleUpdates()
+        internal void Update()
         {
-            while (true)
+            int remainingSeconds = token.GetRemainingSeconds();
+            if (remainingSeconds <= 1)
             {
-                int remainingSeconds = token.GetRemainingSeconds();
-                if (remainingSeconds > 6)
-                {
-                    await Task.Delay((token.GetRemainingSeconds() - 5) * 1000);
-                }
-                TimeProgressRing.Foreground = Brushes.Red;
-
-                await Task.Delay(token.GetRemainingSeconds() * 1000);
                 UpdateTokenText();
                 TimeProgressRing.Foreground = ApplicationAccentColorManager.PrimaryAccentBrush;
                 if (doubleAnimation != null)
@@ -96,6 +88,11 @@ namespace Guard.Views.UIComponents
                     doubleAnimation.Duration = TimeSpan.FromSeconds(token.dBToken.Period ?? 30);
                     TimeProgressRing.BeginAnimation(ProgressRing.ProgressProperty, doubleAnimation);
                 }
+                return;
+            }
+            if (remainingSeconds < 6)
+            {
+                TimeProgressRing.Foreground = Brushes.Red;
             }
         }
 
