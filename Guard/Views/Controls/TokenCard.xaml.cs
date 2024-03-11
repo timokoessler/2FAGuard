@@ -1,13 +1,18 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using Guard.Core;
+using Guard.Core.Export;
 using Guard.Core.Icons;
 using Guard.Core.Models;
+using Guard.Views.Controls;
 using Guard.Views.Pages;
 using Guard.Views.Pages.Add;
+using Microsoft.Win32;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -189,6 +194,44 @@ namespace Guard.Views.UIComponents
         internal DateTime GetCreationTime()
         {
             return token.dBToken.CreationTime;
+        }
+
+        private async void MenuItem_Qr_Click(object sender, RoutedEventArgs e)
+        {
+            string uri = OTPUriCreator.GetUri(token);
+            var qrImage = QRCode.GenerateQRCodeImage(uri, 400);
+            var dialog = new ImageDialog(
+                mainWindow.GetRootContentDialogPresenter(),
+                qrImage,
+                400,
+                400
+            )
+            {
+                IsPrimaryButtonEnabled = true,
+                PrimaryButtonText = I18n.GetString("tokencard.save"),
+                IsSecondaryButtonEnabled = true,
+                SecondaryButtonText = I18n.GetString("tokencard.copy"),
+            };
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                var saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "PNG (*.png)|*.png",
+                    FileName = $"{token.dBToken.Issuer}.png"
+                };
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    using FileStream fileStream = new(saveFileDialog.FileName, FileMode.Create);
+                    PngBitmapEncoder encoder = new();
+                    encoder.Frames.Add(BitmapFrame.Create(qrImage));
+                    encoder.Save(fileStream);
+                }
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+                Clipboard.SetImage(qrImage);
+            }
         }
     }
 }

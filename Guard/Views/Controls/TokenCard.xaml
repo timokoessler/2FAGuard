@@ -30,6 +30,7 @@
             <ContextMenu>
                 <MenuItem Click="MenuItem_Copy_Click" Header="{DynamicResource i.tokencard.copy}" />
                 <MenuItem Click="MenuItem_Edit_Click" Header="{DynamicResource i.tokencard.edit}" />
+                <MenuItem Click="MenuItem_Qr_Click" Header="{DynamicResource i.tokencard.qr}" />
                 <MenuItem Click="MenuItem_Delete_Click" Header="{DynamicResource i.tokencard.delete}" />
             </ContextMenu>
         </Border.ContextMenu>

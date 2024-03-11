@@ -163,6 +163,8 @@
     <system:String x:Key="i.tokencard.delete.modal.title">Delete token</system:String>
     <system:String x:Key="i.tokencard.delete.modal.content">Are you sure you want to delete the token @Name? This action cannot be undone.</system:String>
     <system:String x:Key="i.tokencard.delete.modal.yes">Delete</system:String>
+    <system:String x:Key="i.tokencard.qr">Display QR code</system:String>
+    <system:String x:Key="i.tokencard.save">Save</system:String>
 
     <!--  Text Formatting Dialog  -->
     <system:String x:Key="i.txtfd.title">Format text</system:String>
