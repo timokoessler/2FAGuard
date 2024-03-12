@@ -26,7 +26,8 @@ namespace Guard.Views.Pages
 
             AppCopyrightText.Text =
                 $"Copyright © {DateTime.Now.Year} Timo Kössler and Open Source Contributors\n";
-            AppVersionText.Text = $"Version {InstallationInfo.GetVersionString()}";
+            AppVersionText.Text =
+                $"Version {InstallationInfo.GetVersionString()} ({InstallationInfo.GetInstallationTypeString()})";
 
             SetSelectedTheme(SettingsManager.Settings.Theme);
 

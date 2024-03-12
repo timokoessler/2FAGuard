@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Guard.Core.Models;
+﻿using Guard.Core.Models;
 
 namespace Guard.Core.Installation
 {
@@ -53,8 +48,8 @@ namespace Guard.Core.Installation
 
         internal static string GetVersionString()
         {
-            return $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString()
-                ?? "????"} - {GetInstallationTypeString()}";
+            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString()
+                ?? "????";
         }
 
         internal static string GetAppDataFolderPath()

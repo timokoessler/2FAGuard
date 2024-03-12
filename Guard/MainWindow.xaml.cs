@@ -7,7 +7,6 @@ using System.Windows.Interop;
 using Guard.Core;
 using Guard.Core.Aptabase;
 using Guard.Core.Icons;
-using Guard.Core.Import;
 using Guard.Core.Installation;
 using Guard.Core.Models;
 using Guard.Core.Security;
@@ -210,7 +209,7 @@ namespace Guard
                 string errorMessage = HttpUtility.UrlEncode(e.Message + "\n\n" + e.StackTrace);
                 Process.Start(
                     new ProcessStartInfo(
-                        $"https://github.com/timokoessler/totp-token-guard/issues/new?template=bug.yml&title=%5BBug%5D%3A+&error-message={errorMessage}&win-version={windowsVersion}&app-version={InstallationInfo.GetVersionString()}"
+                        $"https://github.com/timokoessler/totp-token-guard/issues/new?template=bug.yml&title=%5BBug%5D%3A+&error-message={errorMessage}&win-version={windowsVersion}&app-version={InstallationInfo.GetVersionString()} ({InstallationInfo.GetInstallationTypeString()})"
                     )
                     {
                         UseShellExecute = true
