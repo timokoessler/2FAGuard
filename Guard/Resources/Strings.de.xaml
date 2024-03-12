@@ -28,8 +28,8 @@
     <system:String x:Key="i.settings.winhello.failed.title">Fehler aufgetreten</system:String>
     <system:String x:Key="i.settings.winhello.failed.content">Bei der Einrichtung von Windows Hello ist ein Fehler aufgetreten:</system:String>
     <system:String x:Key="i.passdialog.title">Passwort eingeben</system:String>
-    <system:String x:Key="i.passdialog.content">Bitte geben Sie zur Bestätigung Ihr Passwort ein</system:String>
-    <system:String x:Key="i.passdialog.input">Geben Sie Ihr Passwort ein</system:String>
+    <system:String x:Key="i.passdialog.content">Bitte gebe zur Bestätigung dein Passwort ein</system:String>
+    <system:String x:Key="i.passdialog.input">Gebe dein Passwort ein</system:String>
     <system:String x:Key="i.passdialog.next">Weiter</system:String>
     <system:String x:Key="i.passdialog.incorrect">Das Passwort ist nicht korrekt</system:String>
     <system:String x:Key="i.settings.password">Passwort</system:String>
@@ -49,7 +49,7 @@
     <system:String x:Key="i.settings.oss">Verwendete Open Source Software</system:String>
 
     <!--  Application setup  -->
-    <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wählen Sie, wie Sie Ihre Token sichern möchten.</system:String>
+    <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wähle, wie du deine Token sichern möchtest.</system:String>
     <system:String x:Key="i.welcome.hello">Windows Hello oder Passwort</system:String>
     <system:String x:Key="i.welcome.hello.description">Einfach und sicher, Passwort als Backup</system:String>
     <system:String x:Key="i.welcome.hello.notavailable">Windows Hello ist nicht verfügbar</system:String>
@@ -71,7 +71,7 @@
     <system:String x:Key="i.setup.finished.action.settings">Einstellungen</system:String>
     <system:String x:Key="i.setup.finished.action.settings.description">Passe die Einstellungen an</system:String>
     <system:String x:Key="i.welcome.insecure.dialog.title">Bitte beachten</system:String>
-    <system:String x:Key="i.welcome.insecure.dialog.content">Sie haben sich für die Verwendung von 2FAGuard ohne jegliche Sicherheit entschieden. Das bedeutet, dass Ihre Token nicht verschlüsselt sind und von jedem, der Zugang zu Ihrem Computer hat, eingesehen werden können. Sind Sie sicher, dass Sie fortfahren möchten?</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.content">Du hast dich für die Verwendung von 2FAGuard ohne jegliche Sicherheit entschieden. Das bedeutet, dass deine Tokens nicht verschlüsselt sind und von jedem, der Zugang zu deinem Computer hat, eingesehen werden können. Bist du sicher, dass du fortfahren möchtest?</system:String>
     <system:String x:Key="i.welcome.insecure.dialog.continue">Fortfahren (nicht empfohlen)</system:String>
 
     <!--  Login  -->
@@ -123,6 +123,11 @@
     <system:String x:Key="i.import.notokens">Es konnte keine Tokens importiert werden</system:String>
     <system:String x:Key="i.import.authpro">Authenticator Pro</system:String>
     <system:String x:Key="i.import.authpro.description">Importiere ein Backup der App Authenticator Pro</system:String>
+    <system:String x:Key="i.import.authpro.invalid">Die ausgewählte Datei ist kein gültiges Backup der App Authenticator Pro.</system:String>
+    <system:String x:Key="i.import.authpro.legacy">Das ausgewählte Backup ist in einem veralteten Format und kann nicht importiert werden. Bitte erstelle das Backup mit einer aktuellen Version der App Authenticator Pro.</system:String>
+    <system:String x:Key="i.import.password">Bitte gebe das Passwort für das Backup ein</system:String>
+    <system:String x:Key="i.import.password.invalid">Das eingegebene Passwort ist nicht korrekt</system:String>
+    <system:String x:Key="i.import.hotp.notsupported">Zählerbasierte Tokens (HOTP) werden nicht unterstützt</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">Allgemeine Informationen</system:String>
@@ -140,11 +145,11 @@
     <system:String x:Key="i.td.expert.digits.placeholder">6 ist der Standard</system:String>
     <system:String x:Key="i.td.expert.period">Gültigkeitsdauer in Sekunden</system:String>
     <system:String x:Key="i.td.expert.period.placeholder">30s ist der Standard</system:String>
-    <system:String x:Key="i.td.icon.text">Geben Sie einen Namen ein, um ein passendes Logo anzuzeigen</system:String>
+    <system:String x:Key="i.td.icon.text">Gebe einen Namen ein, um ein passendes Logo anzuzeigen</system:String>
     <system:String x:Key="i.td.note">Notiz (optional)</system:String>
     <system:String x:Key="i.td.format">Formatieren</system:String>
-    <system:String x:Key="i.td.noissuer">Bitte geben Sie den Namen des Ausstellers ein</system:String>
-    <system:String x:Key="i.td.nosecret">Bitte geben Sie den geheimen Schlüssel ein</system:String>
+    <system:String x:Key="i.td.noissuer">Bitte gebe den Namen des Ausstellers ein</system:String>
+    <system:String x:Key="i.td.nosecret">Bitte gebe den geheimen Schlüssel ein</system:String>
     <system:String x:Key="i.td.invalidsecret">Der geheime Schlüssel ist ungültig</system:String>
     <system:String x:Key="i.td.invaliddigits">Die Anzahl der Ziffern ist ungültig</system:String>
     <system:String x:Key="i.td.invalidperiod">Die Gültigkeitsdauer ist ungültig</system:String>
@@ -174,7 +179,7 @@
     <system:String x:Key="i.tokencard.qr.keepsecure">Dieser QR-Code enthält sensible Informationen.</system:String>
 
     <!--  Other  -->
-    <system:String x:Key="i.win.hello.request">Die Anwendung 2FAGuard möchte Ihre Identität bestätigen.</system:String>
+    <system:String x:Key="i.win.hello.request">Die Anwendung 2FAGuard möchte deine Identität bestätigen.</system:String>
     <system:String x:Key="i.error">Fehler</system:String>
     <system:String x:Key="i.save">Speichern</system:String>
     <system:String x:Key="i.dialog.close">Schließen</system:String>

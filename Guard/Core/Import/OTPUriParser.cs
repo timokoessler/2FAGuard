@@ -1,5 +1,4 @@
-﻿using System.Net.Sockets;
-using Guard.Core.Icons;
+﻿using Guard.Core.Icons;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using OtpNet;
@@ -9,7 +8,7 @@ namespace Guard.Core.Import
     /// <summary>
     /// https://github.com/google/google-authenticator/wiki/Key-Uri-Format
     /// </summary>
-    class OTPUriHelper
+    class OTPUriParser
     {
         internal static OTPUri Parse(string uriString)
         {
@@ -27,6 +26,10 @@ namespace Guard.Core.Import
 
             if (uri.Host != "totp")
             {
+                if (uri.Host == "hotp")
+                {
+                    throw new Exception(I18n.GetString("import.hotp.notsupported"));
+                }
                 throw new Exception("Invalid URI host");
             }
 

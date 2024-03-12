@@ -12,7 +12,9 @@ namespace Guard.Core.Import.Importer
         public IImporter.ImportType Type => IImporter.ImportType.Clipboard;
         public string SupportedFileExtensions => "";
 
-        public (int total, int duplicate, int tokenID) Parse(string? path)
+        public bool RequiresPassword(string? path) => false;
+
+        public (int total, int duplicate, int tokenID) Parse(string? path, string? password)
         {
             string? text = null;
             if (Clipboard.ContainsText())
@@ -74,7 +76,7 @@ namespace Guard.Core.Import.Importer
                 }
                 foreach (OTPUri gOTPUri in otpUris)
                 {
-                    DBTOTPToken gDBToken = OTPUriHelper.ConvertToDBToken(gOTPUri);
+                    DBTOTPToken gDBToken = OTPUriParser.ConvertToDBToken(gOTPUri);
                     if (!TokenManager.AddToken(gDBToken))
                     {
                         duplicateTokens++;
@@ -83,8 +85,8 @@ namespace Guard.Core.Import.Importer
                 return (otpUris.Count, duplicateTokens, 0);
             }
 
-            OTPUri otpUri = OTPUriHelper.Parse(text);
-            DBTOTPToken dbToken = OTPUriHelper.ConvertToDBToken(otpUri);
+            OTPUri otpUri = OTPUriParser.Parse(text);
+            DBTOTPToken dbToken = OTPUriParser.ConvertToDBToken(otpUri);
 
             if (!TokenManager.AddToken(dbToken))
             {

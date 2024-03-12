@@ -9,7 +9,9 @@ namespace Guard.Core.Import.Importer
         public IImporter.ImportType Type => IImporter.ImportType.File;
         public string SupportedFileExtensions => "Uri-List (*.txt) | *.txt";
 
-        public (int total, int duplicate, int tokenID) Parse(string? path)
+        public bool RequiresPassword(string? path) => false;
+
+        public (int total, int duplicate, int tokenID) Parse(string? path, string? password)
         {
             ArgumentNullException.ThrowIfNull(path);
             string[] lines = File.ReadAllLines(path);
@@ -22,8 +24,8 @@ namespace Guard.Core.Import.Importer
                 {
                     continue;
                 }
-                OTPUri otpUri = OTPUriHelper.Parse(line);
-                DBTOTPToken dbToken = OTPUriHelper.ConvertToDBToken(otpUri);
+                OTPUri otpUri = OTPUriParser.Parse(line);
+                DBTOTPToken dbToken = OTPUriParser.ConvertToDBToken(otpUri);
                 if (!TokenManager.AddToken(dbToken))
                 {
                     duplicate++;

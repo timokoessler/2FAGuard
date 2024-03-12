@@ -4,7 +4,9 @@ using Guard.Core;
 using Guard.Core.Import;
 using Guard.Core.Import.Importer;
 using Guard.Core.Models;
+using Guard.Views.Controls;
 using OtpNet;
+using Wpf.Ui.Controls;
 using ZXing.Aztec.Internal;
 
 namespace Guard.Views.Pages.Add
@@ -38,7 +40,7 @@ namespace Guard.Views.Pages.Add
             Import(new ClipboardImporter());
         }
 
-        private void Import(IImporter importer)
+        private async void Import(IImporter importer)
         {
             int total = 0,
                 duplicate = 0,
@@ -50,14 +52,38 @@ namespace Guard.Views.Pages.Add
                     Microsoft.Win32.OpenFileDialog openFileDialog =
                         new() { Filter = importer.SupportedFileExtensions };
                     bool? result = openFileDialog.ShowDialog();
-                    if (result == true)
+                    if (result != true)
                     {
-                        (total, duplicate, tokenID) = importer.Parse(openFileDialog.FileName);
+                        return;
                     }
+                    string? password = null;
+                    if (importer.RequiresPassword(openFileDialog.FileName))
+                    {
+                        var dialog = new PasswordDialog(mainWindow.GetRootContentDialogPresenter());
+                        dialog.Description.Text = I18n.GetString("import.password");
+                        var dialogResult = await dialog.ShowAsync();
+
+                        if (!dialogResult.Equals(ContentDialogResult.Primary))
+                        {
+                            return;
+                        }
+                        password = dialog.GetPassword();
+                        if (string.IsNullOrEmpty(password))
+                        {
+                            throw new Exception(I18n.GetString("import.password.invalid"));
+                        }
+                    }
+                    (total, duplicate, tokenID) = importer.Parse(openFileDialog.FileName, password);
                 }
                 else if (importer.Type == IImporter.ImportType.Clipboard)
                 {
-                    (total, duplicate, tokenID) = importer.Parse("");
+                    if (importer.RequiresPassword(""))
+                    {
+                        throw new NotImplementedException(
+                            "Importing password encrypted content from clipboard is not yet supported"
+                        );
+                    }
+                    (total, duplicate, tokenID) = importer.Parse(null, null);
                 }
                 else
                 {
@@ -91,7 +117,7 @@ namespace Guard.Views.Pages.Add
             }
             catch (Exception ex)
             {
-                new Wpf.Ui.Controls.MessageBox
+                _ = new Wpf.Ui.Controls.MessageBox
                 {
                     Title = I18n.GetString("import.failed.title"),
                     Content = $"{I18n.GetString("import.failed.content")} {ex.Message}",
@@ -121,6 +147,11 @@ namespace Guard.Views.Pages.Add
         private void Bitwarden_Click(object sender, RoutedEventArgs e)
         {
             Import(new BitwardenImporter());
+        }
+
+        private void AuthenticatorPro_Click(object sender, RoutedEventArgs e)
+        {
+            Import(new AuthenticatorProImporter());
         }
     }
 }

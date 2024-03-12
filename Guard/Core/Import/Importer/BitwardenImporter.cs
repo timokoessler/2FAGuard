@@ -13,6 +13,8 @@ namespace Guard.Core.Import.Importer
         public IImporter.ImportType Type => IImporter.ImportType.File;
         public string SupportedFileExtensions => "Bitwarden Export (*.json) | *.json";
 
+        public bool RequiresPassword(string? path) => false;
+
         private readonly JsonSerializerOptions jsonSerializerOptions =
             new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true };
 
@@ -22,7 +24,7 @@ namespace Guard.Core.Import.Importer
             Uri
         }
 
-        public (int total, int duplicate, int tokenID) Parse(string? path)
+        public (int total, int duplicate, int tokenID) Parse(string? path, string? password)
         {
             ArgumentNullException.ThrowIfNull(path);
             using FileStream stream = File.OpenRead(path);
@@ -58,8 +60,8 @@ namespace Guard.Core.Import.Importer
                 DBTOTPToken dbToken;
                 if (exportTotpType == BitwardenTOTPType.Uri)
                 {
-                    OTPUri otpUri = OTPUriHelper.Parse(totp);
-                    dbToken = OTPUriHelper.ConvertToDBToken(otpUri);
+                    OTPUri otpUri = OTPUriParser.Parse(totp);
+                    dbToken = OTPUriParser.ConvertToDBToken(otpUri);
                     total += 1;
                     if (!TokenManager.AddToken(dbToken))
                     {

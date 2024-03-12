@@ -83,7 +83,7 @@ namespace Guard.Views.UIComponents
         internal void Update()
         {
             int remainingSeconds = token.GetRemainingSeconds();
-            if (remainingSeconds <= 1)
+            if (remainingSeconds == (token.dBToken.Period ?? 30))
             {
                 UpdateTokenText();
                 TimeProgressRing.Foreground = ApplicationAccentColorManager.PrimaryAccentBrush;
