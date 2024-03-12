@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Security.Cryptography;
-using NSec.Cryptography;
+using System.Text;
+using Konscious.Security.Cryptography;
 
 namespace Guard.Core.Security
 {
@@ -8,20 +9,11 @@ namespace Guard.Core.Security
     {
         private const int SaltSize = 16;
         private const int KeySize = 32; // 256 bit
-        private readonly Argon2id argon2Id;
         private readonly Aes aes;
 
         public EncryptionHelper(string password, string saltStr)
         {
             byte[] salt = Convert.FromBase64String(saltStr);
-            argon2Id = new Argon2id(
-                new Argon2Parameters
-                {
-                    DegreeOfParallelism = 1,
-                    MemorySize = 12288,
-                    NumberOfPasses = 3,
-                }
-            );
             byte[] keyBytes = DeriveKey(password, salt);
             aes = Aes.Create();
             aes.Key = keyBytes;
@@ -79,9 +71,17 @@ namespace Guard.Core.Security
             return Convert.ToBase64String(salt);
         }
 
-        private byte[] DeriveKey(string password, byte[] salt)
+        private static byte[] DeriveKey(string password, byte[] salt)
         {
-            return argon2Id.DeriveBytes(password, salt, KeySize);
+            var argon2id = new Argon2id(Encoding.UTF8.GetBytes(password))
+            {
+                DegreeOfParallelism = 1,
+                Iterations = 3,
+                MemorySize = 67108,
+                Salt = salt
+            };
+
+            return argon2id.GetBytes(KeySize);
         }
 
         private byte[] GenerateIV()

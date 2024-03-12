@@ -1,16 +1,12 @@
 ﻿using System.IO;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Windows.Shapes;
 using Guard.Core.Icons;
 using Guard.Core.Models;
 using Guard.Core.Security;
+using Konscious.Security.Cryptography;
 using NSec.Cryptography;
 using OtpNet;
-using Windows.Security.Cryptography.Certificates;
-using ZXing.Aztec.Internal;
-using static Guard.Core.Models.BitwardenExportFile;
 
 namespace Guard.Core.Import.Importer
 {
@@ -50,7 +46,7 @@ namespace Guard.Core.Import.Importer
             }
 
             var backupType = GetBackupType(data);
-            AuthenticatorProBackup? backup = null;
+            AuthenticatorProBackup? backup;
             switch (backupType)
             {
                 case BackupType.Invalid:
@@ -210,26 +206,27 @@ namespace Guard.Core.Import.Importer
 
         private static AuthenticatorProBackup? DecryptStrong(byte[] data, string password)
         {
-            var argon2Id = new Argon2id(
-                new Argon2Parameters
-                {
-                    DegreeOfParallelism = ArgonParallelism,
-                    MemorySize = ArgonMemorySize,
-                    NumberOfPasses = ArgonIterations,
-                }
-            );
-
             using var memoryStream = new MemoryStream(data);
             using var binaryReader = new BinaryReader(memoryStream);
 
             binaryReader.ReadBytes(StrongHeader.Length);
-            ReadOnlySpan<byte> salt = binaryReader.ReadBytes(SaltLength);
+            byte[] salt = binaryReader.ReadBytes(SaltLength);
             ReadOnlySpan<byte> iv = binaryReader.ReadBytes(IvLength);
             ReadOnlySpan<byte> encryptedData = binaryReader.ReadBytes(
                 data.Length - StrongHeader.Length - SaltLength - IvLength
             );
 
-            byte[] keyBytes = argon2Id.DeriveBytes(password, salt, KeyLength);
+            var argon2id = new Konscious.Security.Cryptography.Argon2id(
+                Encoding.UTF8.GetBytes(password)
+            )
+            {
+                DegreeOfParallelism = ArgonParallelism,
+                Iterations = ArgonIterations,
+                MemorySize = ArgonMemorySize,
+                Salt = salt
+            };
+
+            byte[] keyBytes = argon2id.GetBytes(KeyLength);
 
             if (!Aes256Gcm.IsSupported)
             {
@@ -239,10 +236,12 @@ namespace Guard.Core.Import.Importer
             }
 
             Aes256Gcm aes = new();
-            Key key = Key.Import(AeadAlgorithm.Aes256Gcm, keyBytes, KeyBlobFormat.RawSymmetricKey);
+            Key key = Key.Import(aes, keyBytes, KeyBlobFormat.RawSymmetricKey);
 
-            byte[]? decryptedData = aes.Decrypt(key, iv, encryptedData, null);
-            var json = Encoding.UTF8.GetString(data);
+            byte[]? decryptedData =
+                aes.Decrypt(key, iv, null, encryptedData)
+                ?? throw new Exception(I18n.GetString("import.password.invalid"));
+            var json = Encoding.UTF8.GetString(decryptedData);
             return JsonSerializer.Deserialize<AuthenticatorProBackup>(json);
         }
     }
