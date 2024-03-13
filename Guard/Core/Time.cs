@@ -6,10 +6,18 @@ namespace Guard.Core
     {
         public static async Task<TimeSpan> GetLocalUTCTimeOffset()
         {
-            NtpClient client = NtpClient.Default;
-            NtpClock clock = await client.QueryAsync();
+            try
+            {
+                NtpClient client = NtpClient.Default;
+                NtpClock clock = await client.QueryAsync();
 
-            return clock.UtcNow - DateTimeOffset.UtcNow;
+                return clock.UtcNow - DateTimeOffset.UtcNow;
+            }
+            catch (Exception)
+            {
+                // Todo log
+                return TimeSpan.Zero;
+            }
         }
     }
 }
