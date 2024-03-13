@@ -1,7 +1,6 @@
-﻿using System.IO;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using Konscious.Security.Cryptography;
+using NSec.Cryptography;
 
 namespace Guard.Core.Security
 {
@@ -9,34 +8,26 @@ namespace Guard.Core.Security
     {
         private const int SaltSize = 16;
         private const int KeySize = 32; // 256 bit
-        private readonly Aes aes;
+        private const int NonceSize = 32; // 256 bit
+        private readonly Aegis256 aegis;
+        private readonly Key key;
 
         public EncryptionHelper(string password, string saltStr)
         {
             byte[] salt = Convert.FromBase64String(saltStr);
             byte[] keyBytes = DeriveKey(password, salt);
-            aes = Aes.Create();
-            aes.Key = keyBytes;
-            aes.Mode = CipherMode.CBC;
+            aegis = new Aegis256();
+            key = Key.Import(aegis, keyBytes, KeyBlobFormat.RawSymmetricKey);
         }
 
         public string EncryptString(string plainText)
         {
-            byte[] iv = GenerateIV();
-            aes.IV = iv;
-            using var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
-            using var msEncrypt = new MemoryStream();
-            using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-            using (var swEncrypt = new StreamWriter(csEncrypt))
-            {
-                swEncrypt.Write(plainText);
-            }
-            byte[] encryptedBytes = msEncrypt.ToArray();
+            byte[] nonce = GenerateNonce();
+            byte[] encrypted = aegis.Encrypt(key, nonce, null, Encoding.UTF8.GetBytes(plainText));
 
-            // Combine IV and encrypted data
-            byte[] result = new byte[iv.Length + encryptedBytes.Length];
-            Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
-            Buffer.BlockCopy(encryptedBytes, 0, result, iv.Length, encryptedBytes.Length);
+            byte[] result = new byte[NonceSize + encrypted.Length];
+            Buffer.BlockCopy(nonce, 0, result, 0, NonceSize);
+            Buffer.BlockCopy(encrypted, 0, result, NonceSize, encrypted.Length);
 
             return Convert.ToBase64String(result);
         }
@@ -45,19 +36,14 @@ namespace Guard.Core.Security
         {
             byte[] allBytes = Convert.FromBase64String(encryptedText);
 
-            // Extract IV from the beginning
-            byte[] iv = new byte[aes.BlockSize / 8];
-            Buffer.BlockCopy(allBytes, 0, iv, 0, iv.Length);
-            aes.IV = iv;
+            byte[] nonce = new byte[NonceSize];
+            Buffer.BlockCopy(allBytes, 0, nonce, 0, NonceSize);
 
-            byte[] encryptedBytes = new byte[allBytes.Length - iv.Length];
-            Buffer.BlockCopy(allBytes, iv.Length, encryptedBytes, 0, encryptedBytes.Length);
+            byte[] encrypted = new byte[allBytes.Length - NonceSize];
+            Buffer.BlockCopy(allBytes, NonceSize, encrypted, 0, encrypted.Length);
 
-            using var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-            using var msDecrypt = new MemoryStream(encryptedBytes);
-            using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
-            using var srDecrypt = new StreamReader(csDecrypt);
-            return srDecrypt.ReadToEnd();
+            byte[]? decrypted = aegis.Decrypt(key, nonce, null, encrypted) ?? throw new CryptographicException("Decryption failed (null)");
+            return Encoding.UTF8.GetString(decrypted);
         }
 
         public static string GenerateSalt()
@@ -71,9 +57,20 @@ namespace Guard.Core.Security
             return Convert.ToBase64String(salt);
         }
 
+        private static byte[] GenerateNonce()
+        {
+            byte[] nonce;
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                nonce = new byte[NonceSize];
+                rng.GetBytes(nonce);
+            }
+            return nonce;
+        }
+
         private static byte[] DeriveKey(string password, byte[] salt)
         {
-            var argon2id = new Argon2id(Encoding.UTF8.GetBytes(password))
+            var argon2id = new Konscious.Security.Cryptography.Argon2id(Encoding.UTF8.GetBytes(password))
             {
                 DegreeOfParallelism = 1,
                 Iterations = 3,
@@ -82,17 +79,6 @@ namespace Guard.Core.Security
             };
 
             return argon2id.GetBytes(KeySize);
-        }
-
-        private byte[] GenerateIV()
-        {
-            byte[] iv;
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                iv = new byte[aes.BlockSize / 8];
-                rng.GetBytes(iv);
-            }
-            return iv;
         }
 
         public static string GetRandomBase64String(int count)

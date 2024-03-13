@@ -1,8 +1,8 @@
-﻿using System.IO;
-using Google.Protobuf;
+﻿using Google.Protobuf;
 using Guard.Core.Import.GoogleOTPMigration;
 using Guard.Core.Models;
 using OtpNet;
+using System.IO;
 
 namespace Guard.Core.Import
 {
