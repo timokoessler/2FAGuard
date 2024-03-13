@@ -185,4 +185,7 @@
     <system:String x:Key="i.dialog.close">Close</system:String>
     <system:String x:Key="i.error.unhandled.title">Unhandled exception</system:String>
     <system:String x:Key="i.error.unhandled.openbug">Report bug</system:String>
+    <system:String x:Key="i.error.time.title">Warning: System time not synchronized</system:String>
+    <system:String x:Key="i.error.time.content">The time on your system deviates from the correct time by more than 10 seconds. This can lead to problems with the generation of TOTP codes. Please make sure that the time on your system is correct.</system:String>
+
 </ResourceDictionary>

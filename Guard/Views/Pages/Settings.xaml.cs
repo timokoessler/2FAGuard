@@ -254,13 +254,14 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
             {
                 Title = I18n.GetString("settings.oss"),
                 Content =
-                    @"Google.Protobuf - Copyright Google Inc. under the BSD-3-Clause License
-LiteDB - Copyright Mauricio David under the MIT License
-NSec.Cryptography - Copyright Klaus Hartke under the MIT License
-Otp.NET - Copyright Kyle Spearrin under the MIT License
-SharpVectors.Wpf - Copyright Elinam LLC under the BSD 3-Clause License
-Wpf.Ui - Copyright Leszek Pomianowski and WPF UI Contributors under the MIT License
-ZXing.Net - Copytight Michael Jahn under the Apache 2.0 License
+                    @"Google.Protobuf - Copyright Google Inc. under BSD-3-Clause License
+GuerrillaNtp - Copyright Robert Važan and contributors under Apache License 2.0
+LiteDB - Copyright Mauricio David under MIT License
+NSec.Cryptography - Copyright Klaus Hartke under MIT License
+Otp.NET - Copyright Kyle Spearrin under MIT License
+SharpVectors.Wpf - Copyright Elinam LLC under BSD 3-Clause License
+Wpf.Ui - Copyright Leszek Pomianowski and WPF UI Contributors under MIT License
+ZXing.Net - Copytight Michael Jahn under Apache 2.0 License
 ",
                 CloseButtonText = I18n.GetString("dialog.close"),
                 MaxWidth = 600

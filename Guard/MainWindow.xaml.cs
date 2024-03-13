@@ -71,11 +71,12 @@ namespace Guard
             {
                 StatsClient.TrackEvent("AppSetup");
                 FullContentFrame.Content = new Welcome();
-                return;
+            } else
+            {
+                StatsClient.TrackEvent("AppOpened");
+                FullContentFrame.Content = new Login();
             }
-
-            StatsClient.TrackEvent("AppOpened");
-            FullContentFrame.Content = new Login();
+            CheckLocalTime();
         }
 
         internal void ApplyTheme(Core.Models.ThemeSetting theme)
@@ -243,6 +244,23 @@ namespace Guard
             else
             {
                 _ = SetWindowDisplayAffinity(windowInteropHandle, 1);
+            }
+        }
+
+        private static async void CheckLocalTime()
+        {
+            TimeSpan offset = await Time.GetLocalUTCTimeOffset();
+            if(offset.TotalSeconds > 10)
+            {
+                var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("error.time.title"),
+                    Content = I18n.GetString("error.time.content"),
+                    MaxWidth = 400,
+                    CloseButtonText = I18n.GetString("dialog.close"),
+                };
+
+                _ = await uiMessageBox.ShowDialogAsync();
             }
         }
     }
