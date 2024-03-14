@@ -45,6 +45,8 @@ namespace Guard.Core.Import.Importer
                 duplicate = 0,
                 tokenID = 0;
 
+            EncryptionHelper encryption = Auth.GetMainEncryptionHelper();
+
             foreach (BitwardenExportFile.Item item in exportFile.Items)
             {
                 if (item.Login == null || item.Login.Totp == null)
@@ -98,11 +100,14 @@ namespace Guard.Core.Import.Importer
                     {
                         Id = TokenManager.GetNextId(),
                         Issuer = item.Name,
-                        EncryptedSecret = Auth.GetMainEncryptionHelper()
-                            .EncryptString(item.Login.Totp),
-                        Username = item.Login.Username,
+                        EncryptedSecret = encryption.EncryptStringToBytes(item.Login.Totp),
                         CreationTime = DateTime.Now
                     };
+
+                    if(item.Login.Username != null)
+                    {
+                        dbToken.EncryptedUsername = encryption.EncryptStringToBytes(item.Login.Username);
+                    }
 
                     if (icon != null && icon.Type != IconManager.IconType.Default)
                     {

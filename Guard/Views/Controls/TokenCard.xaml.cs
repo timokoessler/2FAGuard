@@ -37,9 +37,9 @@ namespace Guard.Views.UIComponents
             mainWindow = (MainWindow)Application.Current.MainWindow;
 
             Issuer.Text = token.dBToken.Issuer;
-            if (token.dBToken.Username != null)
+            if (token.Username != null)
             {
-                Username.Text = token.dBToken.Username;
+                Username.Text = token.Username;
             }
             else
             {
@@ -69,7 +69,7 @@ namespace Guard.Views.UIComponents
             UpdateTokenText();
             InitProgressRing();
 
-            SearchString = $"{token.dBToken.Issuer.ToLower()} {token.dBToken.Username?.ToLower()}";
+            SearchString = $"{token.dBToken.Issuer.ToLower()} {token.Username?.ToLower()}";
 
             // Add Click event to copy token to clipboard
             MouseLeftButtonUp += (sender, e) =>

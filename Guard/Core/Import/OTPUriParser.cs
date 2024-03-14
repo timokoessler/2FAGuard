@@ -133,18 +133,24 @@ namespace Guard.Core.Import
                 IconManager.IconType.Any
             );
 
+            EncryptionHelper encryption = Auth.GetMainEncryptionHelper();
+
             DBTOTPToken dbToken =
                 new()
                 {
                     Id = TokenManager.GetNextId(),
                     Issuer = otpUri.Issuer,
-                    EncryptedSecret = Auth.GetMainEncryptionHelper().EncryptString(otpUri.Secret),
+                    EncryptedSecret = encryption.EncryptStringToBytes(otpUri.Secret),
                     Algorithm = otpUri.Algorithm,
                     Digits = otpUri.Digits,
                     Period = otpUri.Period,
-                    Username = otpUri.Account,
                     CreationTime = DateTime.Now
                 };
+
+            if (otpUri.Account != null)
+            {
+                dbToken.EncryptedUsername = encryption.EncryptStringToBytes(otpUri.Account);
+            }
 
             if (icon != null && icon.Type != IconManager.IconType.Default)
             {

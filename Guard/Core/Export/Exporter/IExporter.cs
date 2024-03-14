@@ -10,7 +10,7 @@
         internal abstract string Name { get; }
         internal abstract ExportType Type { get; }
         internal abstract string ExportFileExtensions { get; }
-        internal abstract void Export(string? path, string? password);
+        internal abstract async void Export(string? path, string? password);
         internal abstract bool RequiresPassword();
     }
 }

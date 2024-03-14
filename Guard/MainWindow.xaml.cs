@@ -166,7 +166,6 @@ namespace Guard
 
         internal void Logout()
         {
-            throw new NotFiniteNumberException();
             RootNavigation.Navigate(typeof(Welcome));
             HideNavigation();
             Auth.Logout();

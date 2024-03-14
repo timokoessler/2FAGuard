@@ -5,15 +5,21 @@ namespace Guard.Core.Models
 {
     internal class TOTPTokenHelper
     {
-        internal readonly string decryptedSecret;
+        internal readonly string DecryptedSecret;
         private readonly Totp totp;
         internal readonly DBTOTPToken dBToken;
+        internal readonly string? Username;
 
         public TOTPTokenHelper(DBTOTPToken dBToken)
         {
             this.dBToken = dBToken;
-            decryptedSecret = Auth.GetMainEncryptionHelper().DecryptString(dBToken.EncryptedSecret);
-            byte[] secret = Base32Encoding.ToBytes(decryptedSecret);
+            EncryptionHelper encryption = Auth.GetMainEncryptionHelper();
+            DecryptedSecret = encryption.DecryptBytesToString(dBToken.EncryptedSecret);
+            if (dBToken.EncryptedUsername != null)
+            {
+                Username = encryption.DecryptBytesToString(dBToken.EncryptedUsername);
+            }
+            byte[] secret = Base32Encoding.ToBytes(DecryptedSecret);
 
             OtpHashMode hashMode = OtpHashMode.Sha1;
             if (dBToken.Algorithm != null)

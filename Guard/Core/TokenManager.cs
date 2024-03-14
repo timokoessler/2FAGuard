@@ -92,7 +92,7 @@ namespace Guard.Core
             {
                 throw new Exception("TokenHelpers not loaded");
             }
-            return tokenHelpers.Any(t => token.decryptedSecret == t.decryptedSecret);
+            return tokenHelpers.Any(t => token.DecryptedSecret == t.DecryptedSecret);
         }
     }
 }

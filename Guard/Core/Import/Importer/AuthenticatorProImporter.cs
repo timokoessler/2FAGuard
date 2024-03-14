@@ -74,6 +74,7 @@ namespace Guard.Core.Import.Importer
                 duplicate = 0,
                 tokenID = 0;
 
+            EncryptionHelper encryption = Auth.GetMainEncryptionHelper();
             foreach (var token in backup.Authenticators)
             {
                 if (token.Issuer == null)
@@ -113,11 +114,14 @@ namespace Guard.Core.Import.Importer
                     {
                         Id = TokenManager.GetNextId(),
                         Issuer = token.Issuer,
-                        EncryptedSecret = Auth.GetMainEncryptionHelper()
-                            .EncryptString(token.Secret),
-                        Username = token.Username,
+                        EncryptedSecret = encryption.EncryptStringToBytes(token.Secret),
                         CreationTime = DateTime.Now
                     };
+
+                if (token.Username != null)
+                {
+                    dbToken.EncryptedUsername = encryption.EncryptStringToBytes(token.Username);
+                }
 
                 if (icon != null && icon.Type != IconManager.IconType.Default)
                 {

@@ -9,12 +9,12 @@ namespace Guard.Core.Export
             DBTOTPToken dBToken = token.dBToken;
             string uri = $"otpauth://totp/{Uri.EscapeDataString(dBToken.Issuer)}";
 
-            if (dBToken.Username != null)
+            if (token.Username != null)
             {
-                uri += $":{Uri.EscapeDataString(dBToken.Username)}";
+                uri += $":{Uri.EscapeDataString(token.Username)}";
             }
 
-            uri += $"?secret={token.decryptedSecret}";
+            uri += $"?secret={token.DecryptedSecret}";
             uri += $"&issuer={Uri.EscapeDataString(dBToken.Issuer)}";
 
             if (dBToken.Algorithm != null)

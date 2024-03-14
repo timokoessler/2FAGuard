@@ -22,28 +22,45 @@ namespace Guard.Core.Security
 
         public string EncryptString(string plainText)
         {
+            return Convert.ToBase64String(EncryptBytes(Encoding.UTF8.GetBytes(plainText)));
+        }
+
+        public byte[] EncryptStringToBytes(string plainText)
+        {
+            return EncryptBytes(Encoding.UTF8.GetBytes(plainText));
+        }
+
+        public byte[] EncryptBytes(byte[] bytes)
+        {
             byte[] nonce = GenerateNonce();
-            byte[] encrypted = aegis.Encrypt(key, nonce, null, Encoding.UTF8.GetBytes(plainText));
+            byte[] encrypted = aegis.Encrypt(key, nonce, null, bytes);
 
             byte[] result = new byte[NonceSize + encrypted.Length];
             Buffer.BlockCopy(nonce, 0, result, 0, NonceSize);
             Buffer.BlockCopy(encrypted, 0, result, NonceSize, encrypted.Length);
 
-            return Convert.ToBase64String(result);
+            return result;
         }
 
         public string DecryptString(string encryptedText)
         {
-            byte[] allBytes = Convert.FromBase64String(encryptedText);
+            return Encoding.UTF8.GetString(DecryptBytes(Convert.FromBase64String(encryptedText)));
+        }
 
+        public string DecryptBytesToString(byte[] allBytes)
+        {
+            return Encoding.UTF8.GetString(DecryptBytes(allBytes));
+        }
+
+        public byte[] DecryptBytes(byte[] allBytes)
+        {
             byte[] nonce = new byte[NonceSize];
             Buffer.BlockCopy(allBytes, 0, nonce, 0, NonceSize);
 
             byte[] encrypted = new byte[allBytes.Length - NonceSize];
             Buffer.BlockCopy(allBytes, NonceSize, encrypted, 0, encrypted.Length);
 
-            byte[]? decrypted = aegis.Decrypt(key, nonce, null, encrypted) ?? throw new CryptographicException("Decryption failed (null)");
-            return Encoding.UTF8.GetString(decrypted);
+            return aegis.Decrypt(key, nonce, null, encrypted) ?? throw new CryptographicException("Decryption failed (null)");
         }
 
         public static string GenerateSalt()

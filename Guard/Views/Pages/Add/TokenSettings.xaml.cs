@@ -1,15 +1,13 @@
-﻿using System.IO;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Markup;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Icons;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Views.UIComponents;
 using OtpNet;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages.Add
@@ -69,7 +67,7 @@ namespace Guard.Views.Pages.Add
             {
                 EncryptionHelper encryptionHelper = Auth.GetMainEncryptionHelper();
                 Issuer.Text = existingToken.dBToken.Issuer;
-                Secret.Password = encryptionHelper.DecryptString(
+                Secret.Password = encryptionHelper.DecryptBytesToString(
                     existingToken.dBToken.EncryptedSecret
                 );
                 if (existingToken.dBToken.Icon != null)
@@ -83,22 +81,15 @@ namespace Guard.Views.Pages.Add
                     ImageLicense.Text = IconManager.GetLicense(selectedIcon);
                     NoIconText.Visibility = Visibility.Collapsed;
                 }
-                if (existingToken.dBToken.Username != null)
+                if (existingToken.dBToken.EncryptedUsername != null)
                 {
-                    Username.Text = existingToken.dBToken.Username;
+                    Username.Text = encryptionHelper.DecryptBytesToString(existingToken.dBToken.EncryptedUsername);
                 }
                 if (existingToken.dBToken.EncryptedNotes != null)
                 {
                     try
                     {
-                        MemoryStream notesStream =
-                            new(
-                                Encoding.Default.GetBytes(
-                                    encryptionHelper.DecryptString(
-                                        existingToken.dBToken.EncryptedNotes
-                                    )
-                                )
-                            );
+                        MemoryStream notesStream = new(encryptionHelper.DecryptBytes(existingToken.dBToken.EncryptedNotes));
                         TextRange notesRange =
                             new(Notes.Document.ContentStart, Notes.Document.ContentEnd);
                         notesRange.Load(notesStream, DataFormats.Xaml);
@@ -227,7 +218,7 @@ namespace Guard.Views.Pages.Add
                                 ? existingToken.dBToken.Id
                                 : TokenManager.GetNextId(),
                         Issuer = Issuer.Text,
-                        EncryptedSecret = encryptionHelper.EncryptString(Secret.Password),
+                        EncryptedSecret = encryptionHelper.EncryptStringToBytes(Secret.Password),
                         CreationTime = DateTime.Now
                     };
 
@@ -253,7 +244,11 @@ namespace Guard.Views.Pages.Add
 
                 if (!string.IsNullOrWhiteSpace(Username.Text))
                 {
-                    dbToken.Username = Username.Text;
+                    dbToken.EncryptedUsername = encryptionHelper.EncryptStringToBytes(Username.Text);
+                }
+                else
+                {
+                    dbToken.EncryptedUsername = null;
                 }
 
                 TextRange notesTextRange =
@@ -266,9 +261,12 @@ namespace Guard.Views.Pages.Add
                 {
                     MemoryStream notesStream = new();
                     notesTextRange.Save(notesStream, DataFormats.Xaml);
-                    string notesXamlString = Encoding.Default.GetString(notesStream.ToArray());
+                    dbToken.EncryptedNotes = encryptionHelper.EncryptBytes(notesStream.ToArray());
                     notesStream.Close();
-                    dbToken.EncryptedNotes = encryptionHelper.EncryptString(notesXamlString);
+                }
+                else
+                {
+                    dbToken.EncryptedNotes = null;
                 }
 
                 if (existingToken != null)
