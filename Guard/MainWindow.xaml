@@ -48,6 +48,7 @@
                     Content="{DynamicResource i.nav.add}"
                     Icon="{ui:SymbolIcon Add24}"
                     TargetPageType="{x:Type pagesadd:AddOverview}" />
+                <ui:NavigationViewItem Icon="{ui:SymbolIcon ArrowExportUp24}" TargetPageType="{x:Type pages:ExportPage}" />
                 <ui:NavigationViewItemSeparator />
                 <ui:NavigationViewItem
                     x:Name="NavLock"

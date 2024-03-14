@@ -203,8 +203,6 @@ namespace Guard.Views.Pages.Add
                 return;
             }
 
-            // If action is not edit, check for duplicate
-
             SaveButton.IsEnabled = false;
 
             try

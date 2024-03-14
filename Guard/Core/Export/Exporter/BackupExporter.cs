@@ -14,8 +14,12 @@ namespace Guard.Core.Export.Exporter
         public string ExportFileExtensions => "2FAGuard Backup (*.2fabackup) | *.2fabackup";
         public bool RequiresPassword() => true;
         private readonly byte[] prefix = Encoding.UTF8.GetBytes("2FAGuardBackupV1");
+        public string GetDefaultFileName()
+        {
+            return $"2FAGuardBackup-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.2fabackup";
+        }
 
-        public async void Export(string? path, string? password)
+        public async Task Export(string? path, string? password)
         {
             ArgumentNullException.ThrowIfNull(path);
             ArgumentNullException.ThrowIfNull(password);

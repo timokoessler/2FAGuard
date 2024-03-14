@@ -129,6 +129,17 @@
     <system:String x:Key="i.import.password.invalid">Das eingegebene Passwort ist nicht korrekt</system:String>
     <system:String x:Key="i.import.hotp.notsupported">Zählerbasierte Tokens (HOTP) werden nicht unterstützt</system:String>
 
+    <!--  Export  -->
+    <system:String x:Key="i.page.exportpage">Tokens exportieren</system:String>
+    <system:String x:Key="i.export.failed.title">Export fehlgeschlagen</system:String>
+    <system:String x:Key="i.export.failed.content">Beim Exportieren ist ein Fehler aufgetreten:</system:String>
+    <system:String x:Key="i.export.password">Bitte geben Sie ein Passwort für die Sicherungsdatei ein</system:String>
+    <system:String x:Key="i.export.password.invalid">Bitte geben Sie ein gültiges Passwort ein</system:String>
+    <system:String x:Key="i.export.backup">Backup</system:String>
+    <system:String x:Key="i.export.backup.description">Vollständige Sicherungsdatei, nur mit 2FAGuard kompatibel</system:String>
+    <system:String x:Key="i.export.uri">URI-Liste</system:String>
+    <system:String x:Key="i.export.uri.description">Exportiere eine Liste von TOTP-URIs ohne Notizen und unverschlüsselt</system:String>
+
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">Allgemeine Informationen</system:String>
     <system:String x:Key="i.td.issuer">Name des Ausstellers</system:String>

@@ -89,7 +89,7 @@
     <system:String x:Key="i.home.search.placeholder">Search tokens</system:String>
 
     <!--  Add  -->
-    <system:String x:Key="i.page.addoverview">Token hinzufügen</system:String>
+    <system:String x:Key="i.page.addoverview">Add tokens</system:String>
     <system:String x:Key="i.add.manual">Manual input</system:String>
     <system:String x:Key="i.add.manual.description">Enter the secret key and further information</system:String>
     <system:String x:Key="i.add.qr">Import QR code</system:String>
@@ -127,6 +127,17 @@
     <system:String x:Key="i.import.password">Please enter the password for the backup file</system:String>
     <system:String x:Key="i.import.password.invalid">The entered password is incorrect</system:String>
     <system:String x:Key="i.import.hotp.notsupported">Counter-based tokens (HOTP) are not supported</system:String>
+
+    <!--  Export  -->
+    <system:String x:Key="i.page.exportpage">Export tokens</system:String>
+    <system:String x:Key="i.export.failed.title">Export failed</system:String>
+    <system:String x:Key="i.export.failed.content">An error occurred while exporting:</system:String>
+    <system:String x:Key="i.export.password">Please enter a password for the backup file</system:String>
+    <system:String x:Key="i.export.password.invalid">Please enter a valid password</system:String>
+    <system:String x:Key="i.export.backup">Backup</system:String>
+    <system:String x:Key="i.export.backup.description">Complete backup file, only compatible with 2FAGuard</system:String>
+    <system:String x:Key="i.export.uri">URI list</system:String>
+    <system:String x:Key="i.export.uri.description">Export a list of TOTP URIs without notes and unencrypted</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">General information</system:String>
