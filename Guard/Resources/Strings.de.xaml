@@ -184,6 +184,7 @@
     <system:String x:Key="i.save">Speichern</system:String>
     <system:String x:Key="i.dialog.close">Schließen</system:String>
     <system:String x:Key="i.error.unhandled.title">Unbehandelte Ausnahme</system:String>
+    <system:String x:Key="i.error.unhandled.content">Es ist ein unerwarteter Fehler aufgetreten. Bitte melde diesen Fehler, damit er behoben werden kann. Mehr Informationen findest du in der Log-Datei.</system:String>
     <system:String x:Key="i.error.unhandled.openbug">Fehler melden</system:String>
     <system:String x:Key="i.error.time.title">Warnung: Systemzeit nicht synchronisiert</system:String>
     <system:String x:Key="i.error.time.content">Die Uhrzeit deines Systems weicht um mehr als 10 Sekunden von der korrekten Zeit ab. Dies kann zu Problemen bei der Generierung von TOTP Codes führen. Bitte stelle sicher, dass die Uhrzeit deines Systems korrekt ist.</system:String>

@@ -13,17 +13,17 @@ namespace Guard.Core.Import
             Uri uri = new(uriString);
             if (uri.Scheme != "otpauth-migration")
             {
-                throw new Exception("Invalid URI scheme");
+                throw new Exception("Cannot parse non-migration URI with GoogleAuthenticator class");
             }
             string[] query = uri.Query[1..].Split('&');
             if (query.Length != 1)
             {
-                throw new Exception("Invalid URI: Expected 1 query parameter");
+                throw new Exception("Invalid URI: Expected 1 query parameter (otpauth-migration)");
             }
 
             if (!query[0].StartsWith("data="))
             {
-                throw new Exception("Invalid URI: Expected data query parameter");
+                throw new Exception("Invalid URI: Expected data query parameter (otpauth-migration)");
             }
 
             string urlDecoded = Uri.UnescapeDataString(query[0][5..]);
@@ -38,11 +38,11 @@ namespace Guard.Core.Import
             {
                 if (string.IsNullOrEmpty(token.Issuer) && string.IsNullOrEmpty(token.Name))
                 {
-                    throw new Exception("Invalid token: Issuer and Name cannot be empty");
+                    throw new Exception("Invalid token: Issuer and Name cannot be empty (otpauth-migration)");
                 }
                 if (token.Secret == null || token.Secret.Length == 0)
                 {
-                    throw new Exception("Invalid token: Secret cannot be empty");
+                    throw new Exception("Invalid token: Secret cannot be empty (otpauth-migration)");
                 }
 
                 if (token.HasType)
@@ -54,7 +54,7 @@ namespace Guard.Core.Import
                         )
                     )
                     {
-                        throw new Exception("Invalid token: Only TOTP tokens are supported");
+                        throw new Exception("Invalid token: Only TOTP tokens are supported (otpauth-migration)");
                     }
                 }
 
@@ -75,7 +75,7 @@ namespace Guard.Core.Import
                         Algorithm.Sha256 => TOTPAlgorithm.SHA256,
                         Algorithm.Sha512 => TOTPAlgorithm.SHA512,
                         Algorithm.TypeUnspecified => TOTPAlgorithm.SHA1,
-                        _ => throw new Exception("Invalid token: Invalid algorithm")
+                        _ => throw new Exception("Invalid token: Invalid algorithm (otpauth-migration)")
                     };
                 }
 
@@ -86,7 +86,7 @@ namespace Guard.Core.Import
                         DigitCount.Six => 6,
                         DigitCount.Eight => 8,
                         DigitCount.Unspecified => 6,
-                        _ => throw new Exception("Invalid token: Invalid digits")
+                        _ => throw new Exception("Invalid token: Invalid digits (otpauth-migration)")
                     };
                 }
 

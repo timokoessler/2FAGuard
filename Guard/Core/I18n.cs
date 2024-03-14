@@ -46,7 +46,7 @@ namespace Guard.Core
             return null;
         }
 
-        public static void InitI18n()
+        public static void Init()
         {
             currentLanguage = GetLanguage();
             dict = new ResourceDictionary
@@ -63,6 +63,7 @@ namespace Guard.Core
         {
             if (dict == null)
             {
+                Log.Logger.Error("Can not change language, dict is null");
                 return;
             }
 
@@ -103,6 +104,7 @@ namespace Guard.Core
             }
             if (dict[key] is not string content)
             {
+                Log.Logger.Warning("Missing translation for key: " + key);
                 return $"??? {key} ???";
             }
             return content;

@@ -13,9 +13,9 @@ namespace Guard.Core
 
                 return clock.UtcNow - DateTimeOffset.UtcNow;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Todo log
+                Log.Logger.Warning("Failed to get UTC time offset from NTP server: {0}", ex.Message);
                 return TimeSpan.Zero;
             }
         }

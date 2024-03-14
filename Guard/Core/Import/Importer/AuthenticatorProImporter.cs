@@ -170,7 +170,7 @@ namespace Guard.Core.Import.Importer
             byte[] data = File.ReadAllBytes(path);
             if (data.Length == 0)
             {
-                throw new Exception("The file does not contain any data.");
+                throw new Exception("The Authenticator Pro backup file does not contain any data.");
             }
             return GetBackupType(data) == BackupType.StrongEncryption;
         }

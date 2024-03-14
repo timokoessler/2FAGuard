@@ -1,7 +1,6 @@
-﻿using System.Net.Http;
+﻿using Guard.Core.Installation;
+using System.Net.Http;
 using System.Net.Http.Json;
-using System.Reflection;
-using Guard.Core.Installation;
 
 namespace Guard.Core.Aptabase;
 
@@ -142,12 +141,12 @@ public class AptabaseClient : IAptabaseClient
             if (!response.IsSuccessStatusCode)
             {
                 var responseBody = await response.Content.ReadAsStringAsync();
-                // Todo Log
+                Log.Logger.Error("Aptabase Error: {0}", responseBody);
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // Todo Log
+            Log.Logger.Error("Aptabase Error: Failed to send event {0}", ex.Message);
         }
     }
 

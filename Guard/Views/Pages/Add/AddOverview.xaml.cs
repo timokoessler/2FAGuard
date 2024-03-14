@@ -117,6 +117,7 @@ namespace Guard.Views.Pages.Add
             }
             catch (Exception ex)
             {
+                Log.Logger.Error("Import of {importer} failed: {message} {stacktrace}", importer.Name, ex.Message, ex.StackTrace);
                 _ = new Wpf.Ui.Controls.MessageBox
                 {
                     Title = I18n.GetString("import.failed.title"),

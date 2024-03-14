@@ -29,7 +29,8 @@ namespace Guard
 
         public MainWindow()
         {
-            I18n.InitI18n();
+            Log.Init();
+            I18n.Init();
 
             InitializeComponent();
             Loaded += (s, e) => OnWindowLoaded();
@@ -76,6 +77,7 @@ namespace Guard
                 StatsClient.TrackEvent("AppOpened");
                 FullContentFrame.Content = new Login();
             }
+
             CheckLocalTime();
         }
 
@@ -164,6 +166,7 @@ namespace Guard
 
         internal void Logout()
         {
+            throw new NotFiniteNumberException();
             RootNavigation.Navigate(typeof(Welcome));
             HideNavigation();
             Auth.Logout();
@@ -193,21 +196,27 @@ namespace Guard
         private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
             Exception e = (Exception)args.ExceptionObject;
+            string content = $"{I18n.GetString("error.unhandled.content")}\n\n{e.Message}";
+            if(e.StackTrace != null)
+            {
+                content += e.StackTrace[..450] + "...";
+            }
             var uiMessageBox = new Wpf.Ui.Controls.MessageBox
             {
                 Title = I18n.GetString("error.unhandled.title"),
-                Content = e.Message + "\n\n" + e.StackTrace,
+                Content = content,
                 IsPrimaryButtonEnabled = true,
                 PrimaryButtonText = I18n.GetString("error.unhandled.openbug"),
                 CloseButtonText = I18n.GetString("dialog.close"),
-                MaxWidth = 1000
+                MaxWidth = 600
             };
 
+            Log.Logger.Error("Unhandled Exception {Exception}", e);
             var result = await uiMessageBox.ShowDialogAsync();
             if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
             {
                 string windowsVersion = HttpUtility.UrlEncode(SystemInfo.GetOsVersion());
-                string errorMessage = HttpUtility.UrlEncode(e.Message + "\n\n" + e.StackTrace);
+                string errorMessage = HttpUtility.UrlEncode(e.Message + "\n" + e.StackTrace);
                 Process.Start(
                     new ProcessStartInfo(
                         $"https://github.com/timokoessler/totp-token-guard/issues/new?template=bug.yml&title=%5BBug%5D%3A+&error-message={errorMessage}&win-version={windowsVersion}&app-version={InstallationInfo.GetVersionString()} ({InstallationInfo.GetInstallationTypeString()})"
