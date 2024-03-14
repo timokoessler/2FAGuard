@@ -117,7 +117,12 @@ namespace Guard.Views.Pages.Add
             }
             catch (Exception ex)
             {
-                Log.Logger.Error("Import of {importer} failed: {message} {stacktrace}", importer.Name, ex.Message, ex.StackTrace);
+                Log.Logger.Error(
+                    "Import of {importer} failed: {message} {stacktrace}",
+                    importer.Name,
+                    ex.Message,
+                    ex.StackTrace
+                );
                 _ = new Wpf.Ui.Controls.MessageBox
                 {
                     Title = I18n.GetString("import.failed.title"),
@@ -153,6 +158,11 @@ namespace Guard.Views.Pages.Add
         private void AuthenticatorPro_Click(object sender, RoutedEventArgs e)
         {
             Import(new AuthenticatorProImporter());
+        }
+
+        private void Backup_Click(object sender, RoutedEventArgs e)
+        {
+            Import(new BackupImporter());
         }
     }
 }

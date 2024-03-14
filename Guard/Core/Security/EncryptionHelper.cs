@@ -6,7 +6,7 @@ namespace Guard.Core.Security
 {
     internal class EncryptionHelper
     {
-        private const int SaltSize = 16;
+        public const int SaltSize = 16;
         private const int KeySize = 32; // 256 bit
         private const int NonceSize = 32; // 256 bit
         private readonly Aegis256 aegis;
@@ -60,7 +60,8 @@ namespace Guard.Core.Security
             byte[] encrypted = new byte[allBytes.Length - NonceSize];
             Buffer.BlockCopy(allBytes, NonceSize, encrypted, 0, encrypted.Length);
 
-            return aegis.Decrypt(key, nonce, null, encrypted) ?? throw new CryptographicException("Decryption failed (null)");
+            return aegis.Decrypt(key, nonce, null, encrypted)
+                ?? throw new CryptographicException("Decryption failed (null)");
         }
 
         public static string GenerateSalt()
@@ -87,7 +88,9 @@ namespace Guard.Core.Security
 
         private static byte[] DeriveKey(string password, byte[] salt)
         {
-            var argon2id = new Konscious.Security.Cryptography.Argon2id(Encoding.UTF8.GetBytes(password))
+            var argon2id = new Konscious.Security.Cryptography.Argon2id(
+                Encoding.UTF8.GetBytes(password)
+            )
             {
                 DegreeOfParallelism = 1,
                 Iterations = 3,

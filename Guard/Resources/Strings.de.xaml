@@ -139,6 +139,9 @@
     <system:String x:Key="i.export.backup.description">Vollständige Sicherungsdatei, nur mit 2FAGuard kompatibel</system:String>
     <system:String x:Key="i.export.uri">URI-Liste</system:String>
     <system:String x:Key="i.export.uri.description">Exportiere eine Liste von TOTP-URIs ohne Notizen und unverschlüsselt</system:String>
+    <system:String x:Key="i.export.success.title">Tokens exportiert</system:String>
+    <system:String x:Key="i.export.success.content">Die Tokens wurden erfolgreich exportiert.</system:String>
+    <system:String x:Key="i.export.success.open">Ordner öffnen</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">Allgemeine Informationen</system:String>

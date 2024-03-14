@@ -85,7 +85,7 @@
                 Width="350"
                 Height="95"
                 Margin="0,15,15,0"
-                IsEnabled="False">
+                Click="Backup_Click">
                 <ui:CardAction.Icon>
                     <ui:SymbolIcon FontSize="32px" Symbol="History24" />
                 </ui:CardAction.Icon>

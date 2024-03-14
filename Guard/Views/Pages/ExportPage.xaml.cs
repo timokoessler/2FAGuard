@@ -1,8 +1,10 @@
-﻿using Guard.Core;
-using Guard.Core.Export.Exporter;
-using Guard.Views.Controls;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Guard.Core;
+using Guard.Core.Export.Exporter;
+using Guard.Views.Controls;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages
@@ -27,7 +29,13 @@ namespace Guard.Views.Pages
                 if (exporter.Type == IExporter.ExportType.File)
                 {
                     Microsoft.Win32.SaveFileDialog saveFileDialog =
-                        new() { Filter = exporter.ExportFileExtensions, AddExtension = true, AddToRecent = false, FileName = exporter.GetDefaultFileName() };
+                        new()
+                        {
+                            Filter = exporter.ExportFileExtensions,
+                            AddExtension = true,
+                            AddToRecent = false,
+                            FileName = exporter.GetDefaultFileName()
+                        };
                     bool? result = saveFileDialog.ShowDialog();
 
                     if (result != true)
@@ -52,19 +60,44 @@ namespace Guard.Views.Pages
                         }
                     }
                     await exporter.Export(saveFileDialog.FileName, password);
+
+                    mainWindow.GetStatsClient()?.TrackEvent("TokenExported" + exporter.Name);
+
+                    Wpf.Ui.Controls.MessageBoxResult sucessDialogResult =
+                        await new Wpf.Ui.Controls.MessageBox
+                        {
+                            Title = I18n.GetString("export.success.title"),
+                            Content = I18n.GetString("export.success.content"),
+                            CloseButtonText = I18n.GetString("dialog.close"),
+                            PrimaryButtonText = I18n.GetString("export.success.open"),
+                            MaxWidth = 400
+                        }.ShowDialogAsync();
+
+                    if (sucessDialogResult == Wpf.Ui.Controls.MessageBoxResult.Primary)
+                    {
+                        ProcessStartInfo startInfo =
+                            new()
+                            {
+                                Arguments = Path.GetDirectoryName(saveFileDialog.FileName),
+                                FileName = "explorer.exe"
+                            };
+
+                        Process.Start(startInfo);
+                    }
                 }
                 else
                 {
                     throw new Exception("Invalid Exporter Type");
                 }
-
-                // Show success message
-
-                mainWindow.GetStatsClient()?.TrackEvent("TokenExported" + exporter.Name);
             }
             catch (Exception ex)
             {
-                Log.Logger.Error("Export to {exporter} failed: {message} {stacktrace}", exporter.Name, ex.Message, ex.StackTrace);
+                Log.Logger.Error(
+                    "Export to {exporter} failed: {message} {stacktrace}",
+                    exporter.Name,
+                    ex.Message,
+                    ex.StackTrace
+                );
                 _ = new Wpf.Ui.Controls.MessageBox
                 {
                     Title = I18n.GetString("export.failed.title"),
