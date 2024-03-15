@@ -1,11 +1,11 @@
-﻿using Guard.Core;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Controls;
-using System.Windows;
-using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages
@@ -51,6 +51,10 @@ namespace Guard.Views.Pages
 
             LanguagesComboBox.SelectionChanged += OnLanguageSelectionChanged;
             ThemeComboBox.SelectionChanged += OnThemeSelectionChanged;
+            AutoStartSwitch.IsChecked = Autostart.IsEnabled();
+
+            AutoStartSwitch.Checked += (sender, e) => Autostart.Enable();
+            AutoStartSwitch.Unchecked += (sender, e) => Autostart.Disable();
 
             WinHelloSwitch.IsChecked = Auth.IsWindowsHelloRegistered();
             WinHelloSwitch.IsEnabled = Auth.IsLoginEnabled();

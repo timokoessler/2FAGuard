@@ -46,6 +46,8 @@
     <system:String x:Key="i.settings.autolock">Auto lock</system:String>
     <system:String x:Key="i.settings.autolock.description">Lock the app if Windows is locked</system:String>
     <system:String x:Key="i.settings.oss">Used open source software</system:String>
+    <system:String x:Key="i.settings.autostart">Autostart</system:String>
+    <system:String x:Key="i.settings.autostart.description">Automatically open the app when Windows starts</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Thanks for downloading! Please choose how you would like to secure your tokens.</system:String>

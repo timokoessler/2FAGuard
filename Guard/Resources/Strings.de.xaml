@@ -47,6 +47,8 @@
     <system:String x:Key="i.settings.autolock.description">App sperren, wenn Windows gesperrt wird</system:String>
     <system:String x:Key="i.settings.license">Lizenz</system:String>
     <system:String x:Key="i.settings.oss">Verwendete Open Source Software</system:String>
+    <system:String x:Key="i.settings.autostart">Automatischer Start</system:String>
+    <system:String x:Key="i.settings.autostart.description">Startet die App automatisch mit Windows</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wähle, wie du deine Token sichern möchtest.</system:String>
