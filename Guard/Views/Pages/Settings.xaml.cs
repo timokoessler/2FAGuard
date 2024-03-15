@@ -265,6 +265,7 @@ LiteDB - Copyright Mauricio David under MIT License
 NSec.Cryptography - Copyright Klaus Hartke under MIT License
 Otp.NET - Copyright Kyle Spearrin under MIT License
 SharpVectors.Wpf - Copyright Elinam LLC under BSD 3-Clause License
+Simple Icons - Copyright under CC0 1.0 Universal
 Wpf.Ui - Copyright Leszek Pomianowski and WPF UI Contributors under MIT License
 ZXing.Net - Copytight Michael Jahn under Apache 2.0 License
 ",

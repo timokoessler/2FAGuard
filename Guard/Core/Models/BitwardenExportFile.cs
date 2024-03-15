@@ -11,7 +11,7 @@
         internal class Login
         {
             public string? Username { get; set; }
-            public string Totp { get; set; }
+            public required string Totp { get; set; }
         }
 
         internal class Item

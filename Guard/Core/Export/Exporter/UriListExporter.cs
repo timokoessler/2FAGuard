@@ -17,7 +17,7 @@ namespace Guard.Core.Export.Exporter
         {
             ArgumentNullException.ThrowIfNull(path);
 
-            var tokens = await TokenManager.GetAllTokens();
+            var tokens = await TokenManager.GetAllTokens() ?? throw new Exception(I18n.GetString("export.notokens"));
 
             if (tokens.Count == 0)
             {

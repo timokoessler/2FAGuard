@@ -1,5 +1,5 @@
-﻿using System.Runtime.InteropServices;
-using Guard.Core.Installation;
+﻿using Guard.Core.Installation;
+using System.Runtime.InteropServices;
 using Windows.Security.Credentials;
 using Windows.Security.Credentials.UI;
 using Windows.Security.Cryptography;
@@ -40,7 +40,7 @@ namespace Guard.Core.Security
         /// Strategy is based on Bitwarden's Windows Hello implementation:
         /// https://github.com/bitwarden/clients/blob/1f8e6ea6f8a736a8a766e5e0643c7106adfa8433/apps/desktop/desktop_native/src/biometric/windows.rs#L69
         /// </summary>
-        /// <returns>A string used as AES key with argon2id</returns>
+        /// <returns>A string used as key with argon2id</returns>
         public static async Task<string> GetSignedChallenge()
         {
             _ = FocusSecurityPrompt();
