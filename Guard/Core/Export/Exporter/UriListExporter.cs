@@ -21,7 +21,7 @@ namespace Guard.Core.Export.Exporter
 
             if (tokens.Count == 0)
             {
-                throw new Exception("No tokens to export");
+                throw new Exception(I18n.GetString("export.notokens"));
             }
 
             string uriList = string.Join(Environment.NewLine, tokens.Select(token => OTPUriCreator.GetUri(token)));

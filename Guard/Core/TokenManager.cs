@@ -94,5 +94,14 @@ namespace Guard.Core
             }
             return tokenHelpers.Any(t => token.DecryptedSecret == t.DecryptedSecret);
         }
+
+        internal static bool IsDuplicate(string secret)
+        {
+            if (tokenHelpers == null)
+            {
+                throw new Exception("TokenHelpers not loaded");
+            }
+            return tokenHelpers.Any(t => secret == t.DecryptedSecret);
+        }
     }
 }

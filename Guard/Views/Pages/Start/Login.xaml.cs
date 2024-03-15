@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Security;
 using Guard.Core.Storage;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Guard.Views.Pages.Start
 {

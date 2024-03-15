@@ -1,10 +1,10 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Models;
 using Guard.Core.Storage;
 using Guard.Views.Pages.Add;
 using Guard.Views.UIComponents;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Guard.Views.Pages
 {
@@ -15,6 +15,7 @@ namespace Guard.Views.Pages
     {
         private readonly MainWindow mainWindow;
         private SortOrderSetting currentSortOrder = SettingsManager.Settings.SortOrder;
+        private PeriodicTimer? timer;
 
         public Home()
         {
@@ -22,7 +23,13 @@ namespace Guard.Views.Pages
             mainWindow = (MainWindow)Application.Current.MainWindow;
 
             Loaded += (sender, e) => LoadTokens();
-            Core.EventManager.TokenUpdated += OnTokenUpdated;
+            Core.EventManager.TokenDeleted += OnTokenDeleted;
+
+            Unloaded += (object? sender, RoutedEventArgs e) =>
+            {
+                Core.EventManager.TokenDeleted -= OnTokenDeleted;
+                timer?.Dispose();
+            };
 
             SearchBox.TextChanged += (sender, e) =>
             {
@@ -81,8 +88,8 @@ namespace Guard.Views.Pages
             TOTPTokenContainer.Visibility = Visibility.Visible;
             SearchPanel.Visibility = Visibility.Visible;
 
-            var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(1));
-            while (await periodicTimer.WaitForNextTickAsync())
+            timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+            while (await timer.WaitForNextTickAsync())
             {
                 foreach (TokenCard card in TOTPTokenContainer.Children)
                 {
@@ -91,13 +98,16 @@ namespace Guard.Views.Pages
             }
         }
 
-        private void OnTokenUpdated(object? sender, int tokenId)
+        private void OnTokenDeleted(object? sender, int tokenId)
         {
-            LoadingInfo.Visibility = Visibility.Visible;
-            TOTPTokenContainer.Visibility = Visibility.Collapsed;
-            SearchPanel.Visibility = Visibility.Collapsed;
-            TOTPTokenContainer.Children.Clear();
-            LoadTokens();
+            foreach (TokenCard card in TOTPTokenContainer.Children)
+            {
+                if (card.GetTokenId() == tokenId)
+                {
+                    TOTPTokenContainer.Children.Remove(card);
+                    break;
+                }
+            }
         }
 
         private void NoTokens_Button_Click(object sender, RoutedEventArgs e)

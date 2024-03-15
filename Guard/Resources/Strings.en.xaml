@@ -141,6 +141,7 @@
     <system:String x:Key="i.export.success.title">Tokens exported</system:String>
     <system:String x:Key="i.export.success.content">Your tokens have been exported successfully.</system:String>
     <system:String x:Key="i.export.success.open">Open folder</system:String>
+    <system:String x:Key="i.export.notokens">There are no tokens that can be exported</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">General information</system:String>

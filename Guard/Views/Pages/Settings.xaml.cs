@@ -1,11 +1,11 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Controls;
+using System.Windows;
+using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages
@@ -84,6 +84,11 @@ namespace Guard.Views.Pages
             };
 
             Core.EventManager.AppThemeChanged += OnAppThemeChanged;
+
+            Unloaded += (sender, e) =>
+            {
+                Core.EventManager.AppThemeChanged -= OnAppThemeChanged;
+            };
         }
 
         private void SetSelectedLanguage(LanguageSetting lang)

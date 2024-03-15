@@ -1,10 +1,4 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Web;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Aptabase;
 using Guard.Core.Icons;
 using Guard.Core.Installation;
@@ -12,6 +6,12 @@ using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Pages.Start;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Web;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
@@ -72,7 +72,8 @@ namespace Guard
             {
                 StatsClient.TrackEvent("AppSetup");
                 FullContentFrame.Content = new Welcome();
-            } else
+            }
+            else
             {
                 StatsClient.TrackEvent("AppOpened");
                 FullContentFrame.Content = new Login();
@@ -196,7 +197,7 @@ namespace Guard
         {
             Exception e = (Exception)args.ExceptionObject;
             string content = $"{I18n.GetString("error.unhandled.content")}\n\n{e.Message}";
-            if(e.StackTrace != null)
+            if (e.StackTrace != null)
             {
                 content += e.StackTrace[..450] + "...";
             }
@@ -258,7 +259,7 @@ namespace Guard
         private static async void CheckLocalTime()
         {
             TimeSpan offset = await Time.GetLocalUTCTimeOffset();
-            if(offset.TotalSeconds > 10)
+            if (offset.TotalSeconds > 10)
             {
                 var uiMessageBox = new Wpf.Ui.Controls.MessageBox
                 {

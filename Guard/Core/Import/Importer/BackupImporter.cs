@@ -1,8 +1,8 @@
-﻿using System.IO;
+﻿using Guard.Core.Models;
+using Guard.Core.Security;
+using System.IO;
 using System.Text;
 using System.Text.Json;
-using Guard.Core.Models;
-using Guard.Core.Security;
 
 namespace Guard.Core.Import.Importer
 {
@@ -45,16 +45,53 @@ namespace Guard.Core.Import.Importer
                 encryptedData.Length
             );
 
-            EncryptionHelper encryption = new(password, Convert.ToBase64String(salt));
-            byte[] decryptedData = encryption.DecryptBytes(encryptedData);
+            EncryptionHelper backupEncryption = new(password, Convert.ToBase64String(salt));
+            byte[] decryptedData = backupEncryption.DecryptBytes(encryptedData);
 
             Backup backup =
                 JsonSerializer.Deserialize<Backup>(decryptedData)
                 ?? throw new Exception("Could not deserialize backup");
 
-            // Todo: Import tokens
+            EncryptionHelper internalEncryption = Auth.GetMainEncryptionHelper();
 
-            return (backup.Tokens.Length, 0, 0);
+            int duplicate = 0,
+                tokenID = 0;
+
+            foreach (var token in backup.Tokens)
+            {
+                if (TokenManager.IsDuplicate(token.Secret))
+                {
+                    duplicate++;
+                    continue;
+                }
+
+                tokenID = TokenManager.GetNextId();
+                DBTOTPToken dbToken = new()
+                {
+                    Id = tokenID,
+                    Issuer = token.Issuer,
+                    EncryptedUsername = token.Username != null
+                        ? internalEncryption.EncryptStringToBytes(token.Username)
+                        : null,
+                    EncryptedSecret = internalEncryption.EncryptStringToBytes(token.Secret),
+                    Algorithm = token.Algorithm,
+                    Digits = token.Digits,
+                    Period = token.Period,
+                    Icon = token.Icon,
+                    IconType = token.IconType,
+                    UpdatedTime = token.UpdatedTime,
+                    CreationTime = token.CreationTime,
+                    EncryptedNotes = token.Notes != null
+                        ? internalEncryption.EncryptStringToBytes(token.Notes)
+                        : null
+                };
+                if (!TokenManager.AddToken(dbToken))
+                {
+                    throw new Exception("Failed to add token");
+                }
+            }
+
+            return (backup.Tokens.Length, duplicate, tokenID);
         }
     }
 }

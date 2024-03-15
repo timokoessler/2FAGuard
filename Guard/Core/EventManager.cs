@@ -17,12 +17,12 @@ namespace Guard.Core
             internal EventSource Source { get; set; }
         }
 
-        internal static event EventHandler<int> TokenUpdated = delegate { };
+        internal static event EventHandler<int> TokenDeleted = delegate { };
         internal static event EventHandler<AppThemeChangedEventArgs> AppThemeChanged = delegate { };
 
-        internal static void EmitTokenUpdated(int tokenID)
+        internal static void EmitTokenDeleted(int tokenID)
         {
-            TokenUpdated?.Invoke(null, tokenID);
+            TokenDeleted?.Invoke(null, tokenID);
         }
 
         internal static void EmitAppThemeChanged(

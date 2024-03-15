@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Models;
 using Guard.Views.UIComponents;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Guard.Views.Pages
 {
@@ -12,6 +12,7 @@ namespace Guard.Views.Pages
     public partial class TokenSuccessPage : Page
     {
         private readonly MainWindow mainWindow;
+        private PeriodicTimer? timer;
 
         public TokenSuccessPage()
         {
@@ -20,6 +21,14 @@ namespace Guard.Views.Pages
             string type = (string)NavigationContextManager.CurrentContext["type"];
 
             mainWindow = (MainWindow)Application.Current.MainWindow;
+
+            Core.EventManager.TokenDeleted += OnTokenDeleted;
+
+            Unloaded += (object? sender, RoutedEventArgs e) =>
+            {
+                Core.EventManager.TokenDeleted -= OnTokenDeleted;
+                timer?.Dispose();
+            };
 
             if (type.Equals("added"))
             {
@@ -44,6 +53,7 @@ namespace Guard.Views.Pages
                 }
 
                 TokenCardContainer.Children.Insert(1, new TokenCard(token));
+                RunTimer();
             }
             else
             {
@@ -77,6 +87,20 @@ namespace Guard.Views.Pages
             }
 
             NavigationContextManager.ClearContext();
+        }
+
+        private void OnTokenDeleted(object? sender, int tokenId)
+        {
+            mainWindow.Navigate(typeof(Home));
+        }
+
+        private async void RunTimer()
+        {
+            timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+            while (await timer.WaitForNextTickAsync())
+            {
+                ((TokenCard)TokenCardContainer.Children[1]).Update();
+            }
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)

@@ -1,13 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Guard.Core;
-using Guard.Core.Import;
+﻿using Guard.Core;
 using Guard.Core.Import.Importer;
-using Guard.Core.Models;
 using Guard.Views.Controls;
-using OtpNet;
+using System.Windows;
+using System.Windows.Controls;
 using Wpf.Ui.Controls;
-using ZXing.Aztec.Internal;
 
 namespace Guard.Views.Pages.Add
 {
@@ -123,10 +119,21 @@ namespace Guard.Views.Pages.Add
                     ex.Message,
                     ex.StackTrace
                 );
+                string content = I18n.GetString("import.failed.content") + " ";
+
+                if (ex.Message.Contains("Decryption failed (null)"))
+                {
+                    content = I18n.GetString("import.password.invalid");
+                }
+                else
+                {
+                    content += ex.Message;
+                }
+
                 _ = new Wpf.Ui.Controls.MessageBox
                 {
                     Title = I18n.GetString("import.failed.title"),
-                    Content = $"{I18n.GetString("import.failed.content")} {ex.Message}",
+                    Content = content,
                     CloseButtonText = I18n.GetString("dialog.close"),
                     MaxWidth = 400
                 }.ShowDialogAsync();
