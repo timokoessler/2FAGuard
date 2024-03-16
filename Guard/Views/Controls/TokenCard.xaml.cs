@@ -1,4 +1,11 @@
-﻿using Guard.Core;
+﻿using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
+using Guard.Core;
 using Guard.Core.Export;
 using Guard.Core.Icons;
 using Guard.Core.Models;
@@ -6,13 +13,6 @@ using Guard.Views.Controls;
 using Guard.Views.Pages;
 using Guard.Views.Pages.Add;
 using Microsoft.Win32;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -85,8 +85,8 @@ namespace Guard.Views.UIComponents
             int remainingSeconds = token.GetRemainingSeconds();
             if (remainingSeconds == (token.dBToken.Period ?? 30) || TimeProgressRing.Progress == 0)
             {
-                Console.WriteLine(TimeProgressRing.Progress);
                 TimeProgressRing.Foreground = ApplicationAccentColorManager.PrimaryAccentBrush;
+                UpdateTokenText();
                 if (doubleAnimation != null)
                 {
                     doubleAnimation.From = 100;
