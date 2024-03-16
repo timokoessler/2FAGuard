@@ -1,9 +1,9 @@
-﻿using Guard.Core;
-using Guard.Core.Security;
-using Guard.Core.Storage;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Guard.Core;
+using Guard.Core.Security;
+using Guard.Core.Storage;
 
 namespace Guard.Views.Pages.Start
 {
@@ -82,6 +82,7 @@ namespace Guard.Views.Pages.Start
                 {
                     return;
                 }
+                Log.Logger.Error("Error during login setup: {0}", ex.Message);
                 ShowEror("Error", ex.Message);
             }
         }

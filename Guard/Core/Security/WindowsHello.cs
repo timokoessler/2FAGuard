@@ -1,21 +1,22 @@
-﻿using Guard.Core.Installation;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+using Guard.Core.Installation;
 using Windows.Security.Credentials;
-using Windows.Security.Credentials.UI;
 using Windows.Security.Cryptography;
 
 namespace Guard.Core.Security
 {
     internal partial class WindowsHello
     {
-        private static readonly string accountName =
-            $"2FAGuard {(InstallationInfo.IsPortable() ? "Portable" : "")}";
+        private static string GetAccountName()
+        {
+            return $"2FAGuard{(InstallationInfo.IsPortable() ? "Portable" : "")}{Auth.GetInstallationID()}";
+        }
 
         public static async Task<KeyCredentialRetrievalResult> Register()
         {
             _ = FocusSecurityPrompt();
             return await KeyCredentialManager.RequestCreateAsync(
-                accountName,
+                GetAccountName(),
                 KeyCredentialCreationOption.FailIfExists
             );
         }
@@ -25,7 +26,7 @@ namespace Guard.Core.Security
             return await KeyCredentialManager.IsSupportedAsync();
         }
 
-        public static async Task<bool> RequestSimpleVerification()
+        /*public static async Task<bool> RequestSimpleVerification()
         {
             _ = FocusSecurityPrompt();
             UserConsentVerificationResult consentResult =
@@ -33,7 +34,7 @@ namespace Guard.Core.Security
                     I18n.GetString("win.hello.request")
                 );
             return consentResult == UserConsentVerificationResult.Verified;
-        }
+        }*/
 
         /// <summary>
         /// Get a secret key by signing a payload with Windows Hello.
@@ -44,7 +45,7 @@ namespace Guard.Core.Security
         public static async Task<string> GetSignedChallenge()
         {
             _ = FocusSecurityPrompt();
-            var openKeyResult = await KeyCredentialManager.OpenAsync(accountName);
+            var openKeyResult = await KeyCredentialManager.OpenAsync(GetAccountName());
             if (openKeyResult.Status != KeyCredentialStatus.Success)
             {
                 throw new Exception(
@@ -71,7 +72,7 @@ namespace Guard.Core.Security
 
         public static async Task Unregister()
         {
-            await KeyCredentialManager.DeleteAsync(accountName);
+            await KeyCredentialManager.DeleteAsync(GetAccountName());
         }
 
         public static async Task FocusSecurityPrompt()

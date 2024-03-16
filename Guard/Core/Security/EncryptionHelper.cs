@@ -105,5 +105,13 @@ namespace Guard.Core.Security
         {
             return Convert.ToBase64String(RandomNumberGenerator.GetBytes(count));
         }
+
+        public static string GetRandomHexString(int count)
+        {
+            return BitConverter
+                .ToString(RandomNumberGenerator.GetBytes(count))
+                .Replace("-", "")
+                .ToLower();
+        }
     }
 }

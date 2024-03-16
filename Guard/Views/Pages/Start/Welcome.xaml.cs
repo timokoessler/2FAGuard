@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Guard.Core;
+using Guard.Core.Installation;
 using Guard.Core.Security;
 using Wpf.Ui;
 using Wpf.Ui.Extensions;
@@ -25,17 +26,31 @@ namespace Guard.Views.Pages.Start
         {
             if (!await WindowsHello.IsAvailable())
             {
-                await mainWindow
-                    .GetContentDialogService()
-                    .ShowSimpleDialogAsync(
-                        new SimpleContentDialogCreateOptions()
-                        {
-                            Title = I18n.GetString("welcome.hello.notavailable"),
-                            Content = I18n.GetString("welcome.hello.notavailable.content"),
-                            CloseButtonText = I18n.GetString("dialog.close")
-                        }
-                    );
+                _ = await new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("welcome.hello.notavailable"),
+                    Content = I18n.GetString("welcome.hello.notavailable.content"),
+                    CloseButtonText = I18n.GetString("dialog.close"),
+                    MaxWidth = 400
+                }.ShowDialogAsync();
                 return;
+            }
+            if (InstallationInfo.IsPortable())
+            {
+                Wpf.Ui.Controls.MessageBoxResult sucessDialogResult =
+                    await new Wpf.Ui.Controls.MessageBox
+                    {
+                        Title = I18n.GetString("welcome.portable.winhello.title"),
+                        Content = I18n.GetString("welcome.portable.winhello.content"),
+                        CloseButtonText = I18n.GetString("dialog.close"),
+                        PrimaryButtonText = I18n.GetString("dialog.next"),
+                        MaxWidth = 500
+                    }.ShowDialogAsync();
+
+                if (sucessDialogResult != Wpf.Ui.Controls.MessageBoxResult.Primary)
+                {
+                    return;
+                }
             }
             mainWindow.FullContentFrame.Content = new SetupPassword(true);
         }

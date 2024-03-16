@@ -133,7 +133,7 @@ namespace Guard.Views.Pages
             {
                 string theme = (string)((ComboBoxItem)ThemeComboBox.SelectedItem).Tag;
 
-                if (Enum.TryParse<ThemeSetting>(theme, true, out ThemeSetting result))
+                if (Enum.TryParse(theme, true, out ThemeSetting result))
                 {
                     mainWindow.ApplyTheme(result);
                     SettingsManager.Settings.Theme = result;

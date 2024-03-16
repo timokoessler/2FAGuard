@@ -75,6 +75,8 @@
     <system:String x:Key="i.welcome.insecure.dialog.title">Bitte beachten</system:String>
     <system:String x:Key="i.welcome.insecure.dialog.content">Du hast dich für die Verwendung von 2FAGuard ohne jegliche Sicherheit entschieden. Das bedeutet, dass deine Tokens nicht verschlüsselt sind und von jedem, der Zugang zu deinem Computer hat, eingesehen werden können. Bist du sicher, dass du fortfahren möchtest?</system:String>
     <system:String x:Key="i.welcome.insecure.dialog.continue">Fortfahren (nicht empfohlen)</system:String>
+    <system:String x:Key="i.welcome.portable.winhello.title">Hinweis</system:String>
+    <system:String x:Key="i.welcome.portable.winhello.content">Wenn du die Portable-Version von 2FAGuard auf einem USB-Stick oder einem anderen tragbaren Speichermedium verwendest, kannst du dich nicht automatisch mit Windows Hello mit anderen Windows Benutzer bzw. auf anderen Geräten anmelden. Du musst Windows Hello auf anderen Geräten zunächst in den Einstellungen von 2FAGuard aktivieren. Mit deinem Passwort kannst du dich immer anmelden.</system:String>
 
     <!--  Login  -->
     <system:String x:Key="i.login.subtext">Bitte melde dich an, um fortzufahren</system:String>
@@ -200,6 +202,7 @@
     <system:String x:Key="i.error">Fehler</system:String>
     <system:String x:Key="i.save">Speichern</system:String>
     <system:String x:Key="i.dialog.close">Schließen</system:String>
+    <system:String x:Key="i.dialog.next">Weiter</system:String>
     <system:String x:Key="i.error.unhandled.title">Unbehandelte Ausnahme</system:String>
     <system:String x:Key="i.error.unhandled.content">Es ist ein unerwarteter Fehler aufgetreten. Bitte melde diesen Fehler, damit er behoben werden kann. Mehr Informationen findest du in der Log-Datei.</system:String>
     <system:String x:Key="i.error.unhandled.openbug">Fehler melden</system:String>

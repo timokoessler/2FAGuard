@@ -5,6 +5,7 @@ using Guard.Core.Installation;
 using Guard.Core.Models;
 using Guard.Core.Storage;
 using Microsoft.Win32;
+using Windows.Security.Credentials;
 
 namespace Guard.Core.Security
 {
@@ -19,8 +20,15 @@ namespace Guard.Core.Security
         private static EncryptionHelper? mainEncryptionHelper;
         private static readonly int currentVersion = 1;
         private static MainWindow? mainWindow;
+        private static bool registrationFinished = false;
 
-        public static async Task Init()
+        /// <summary>
+        /// The password vault is used to store a encrypted version of the main encryption key that is decrypted by signing a payload with Windows Hello.
+        /// So if an malicious actor gets access to the Windows Credential Manager, they can not access the main encryption key.
+        /// </summary>
+        private static PasswordVault? passwordVault;
+
+        internal static async Task Init()
         {
             if (authData != null)
             {
@@ -29,6 +37,7 @@ namespace Guard.Core.Security
             }
             if (FileExists())
             {
+                registrationFinished = true;
                 await LoadFile();
             }
             else
@@ -37,28 +46,32 @@ namespace Guard.Core.Security
                 {
                     System.IO.Directory.CreateDirectory(InstallationInfo.GetAppDataFolderPath());
                 }
-                authData = new AuthFileData();
+                authData = new AuthFileData
+                {
+                    InstallationID = EncryptionHelper.GetRandomHexString(18),
+                    Version = currentVersion
+                };
             }
             mainWindow = (MainWindow)Application.Current.MainWindow;
+            passwordVault = new();
             SystemEvents.SessionSwitch += OnSessionSwitch;
         }
 
-        public static bool FileExists()
+        internal static bool FileExists()
         {
             return System.IO.File.Exists(authFilePath);
         }
 
-        public static async Task LoadFile()
+        internal static async Task LoadFile()
         {
             byte[] fileData = await System.IO.File.ReadAllBytesAsync(authFilePath);
             string fileContent = System.Text.Encoding.UTF8.GetString(fileData);
             authData = JsonSerializer.Deserialize<AuthFileData>(fileContent);
         }
 
-        public static async Task SaveFile()
+        internal static async Task SaveFile()
         {
-            string fileContent = JsonSerializer.Serialize(authData);
-            byte[] fileData = System.Text.Encoding.UTF8.GetBytes(fileContent);
+            byte[] fileData = JsonSerializer.SerializeToUtf8Bytes(authData);
             await System.IO.File.WriteAllBytesAsync(authFilePath, fileData);
         }
 
@@ -68,46 +81,39 @@ namespace Guard.Core.Security
         /// </summary>
         /// <param name="password">The user chosen password to encrypt the key with</param>
         /// <param name="enableWindowsHello">If Windows Hello should be enabled</param>
-        public static async Task Register(string password, bool enableWindowsHello)
+        internal static async Task Register(string password, bool enableWindowsHello)
         {
             if (authData == null)
             {
                 throw new Exception("Auth data not initialized");
             }
-            if (
-                authData.PasswordProtectedKey != null
-                || authData.WindowsHelloProtectedKey != null
-                || authData.InsecureMainKey != null
-                || mainEncryptionKey != null
-            )
+            if (registrationFinished)
             {
                 throw new Exception("Already registered");
             }
             mainEncryptionKey = EncryptionHelper.GetRandomBase64String(128);
             authData.KeySalt = EncryptionHelper.GenerateSalt();
+            authData.LoginSalt = EncryptionHelper.GenerateSalt();
 
-            string loginSalt = EncryptionHelper.GenerateSalt();
-            authData.LoginSalt = loginSalt;
-
-            EncryptionHelper encryptionHelper = new(password, loginSalt);
+            EncryptionHelper encryptionHelper = new(password, authData.LoginSalt);
 
             authData.PasswordProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
-            authData.Version = currentVersion;
 
             if (enableWindowsHello)
             {
                 await RegisterWindowsHello();
             }
             await SaveFile();
+            registrationFinished = true;
         }
 
-        public static async Task RegisterWindowsHello()
+        internal static async Task RegisterWindowsHello()
         {
             if (authData == null || mainEncryptionKey == null || authData.LoginSalt == null)
             {
                 throw new Exception("Auth data not initialized");
             }
-            if (authData.WindowsHelloProtectedKey != null)
+            if (IsWindowsHelloRegistered())
             {
                 throw new Exception("Windows Hello already registered");
             }
@@ -155,20 +161,13 @@ namespace Guard.Core.Security
                 );
             }
             EncryptionHelper encryptionHelper = new(signedChallenge, authData.LoginSalt);
-            authData.WindowsHelloProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
+            SetWindowsHelloProtectedKey(encryptionHelper.EncryptString(mainEncryptionKey));
         }
 
-        public static async Task RegisterInsecure()
+        internal static async Task RegisterInsecure()
         {
-            if (authData == null)
-            {
-                throw new Exception("Auth data not initialized");
-            }
-            if (
-                authData.PasswordProtectedKey != null
-                || authData.WindowsHelloProtectedKey != null
-                || mainEncryptionKey != null
-            )
+            ArgumentNullException.ThrowIfNull(authData);
+            if (registrationFinished)
             {
                 throw new Exception("Already registered");
             }
@@ -179,33 +178,69 @@ namespace Guard.Core.Security
             authData.KeySalt = EncryptionHelper.GenerateSalt();
             authData.Version = currentVersion;
             await SaveFile();
+            registrationFinished = true;
         }
 
-        public static bool IsLoggedIn()
+        internal static bool IsLoggedIn()
         {
             return mainEncryptionKey != null;
         }
 
-        public static bool IsLoginEnabled()
+        internal static bool IsLoginEnabled()
         {
             return authData?.InsecureMainKey == null;
         }
 
-        public static bool IsWindowsHelloRegistered()
+        internal static bool IsWindowsHelloRegistered()
         {
-            return authData?.WindowsHelloProtectedKey != null;
+            try
+            {
+                _ = GetWindowsHelloProtectedKey();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public static async Task LoginWithWindowsHello()
+        internal static string GetWindowsHelloProtectedKey()
+        {
+            ArgumentNullException.ThrowIfNull(authData);
+            ArgumentNullException.ThrowIfNull(passwordVault);
+
+            PasswordCredential cred = passwordVault.Retrieve("2FAGuard", authData.InstallationID);
+            cred.RetrievePassword();
+            return cred.Password;
+        }
+
+        internal static void SetWindowsHelloProtectedKey(string key)
+        {
+            ArgumentNullException.ThrowIfNull(authData);
+            ArgumentNullException.ThrowIfNull(passwordVault);
+
+            PasswordCredential cred = new("2FAGuard", authData.InstallationID, key);
+            passwordVault.Add(cred);
+        }
+
+        internal static void DeleteWindowsHelloProtectedKey()
+        {
+            ArgumentNullException.ThrowIfNull(authData);
+            ArgumentNullException.ThrowIfNull(passwordVault);
+
+            PasswordCredential cred = passwordVault.Retrieve("2FAGuard", authData.InstallationID);
+            passwordVault.Remove(cred);
+        }
+
+        internal static async Task LoginWithWindowsHello()
         {
             if (authData == null || authData.LoginSalt == null)
             {
                 throw new Exception("Auth data not initialized");
             }
-            if (authData.WindowsHelloProtectedKey == null)
-            {
-                throw new Exception("Windows Hello not registered");
-            }
+            string windowsHelloProtectedKey =
+                GetWindowsHelloProtectedKey() ?? throw new Exception("Windows Hello not enabled");
+
             string signedChallenge = await WindowsHello.GetSignedChallenge();
             if (signedChallenge == null || signedChallenge.Length == 0)
             {
@@ -214,7 +249,7 @@ namespace Guard.Core.Security
                 );
             }
             EncryptionHelper encryptionHelper = new(signedChallenge, authData.LoginSalt);
-            mainEncryptionKey = encryptionHelper.DecryptString(authData.WindowsHelloProtectedKey);
+            mainEncryptionKey = encryptionHelper.DecryptString(windowsHelloProtectedKey);
 
             if (mainEncryptionKey == null)
             {
@@ -222,7 +257,7 @@ namespace Guard.Core.Security
             }
         }
 
-        public static void LoginWithPassword(string password)
+        internal static void LoginWithPassword(string password)
         {
             if (authData == null || authData.LoginSalt == null)
             {
@@ -247,7 +282,7 @@ namespace Guard.Core.Security
             }
         }
 
-        public static void LoginInsecure()
+        internal static void LoginInsecure()
         {
             if (authData == null)
             {
@@ -260,7 +295,7 @@ namespace Guard.Core.Security
             mainEncryptionKey = authData.InsecureMainKey;
         }
 
-        public static EncryptionHelper GetMainEncryptionHelper()
+        internal static EncryptionHelper GetMainEncryptionHelper()
         {
             if (mainEncryptionKey == null)
             {
@@ -274,7 +309,7 @@ namespace Guard.Core.Security
             return mainEncryptionHelper;
         }
 
-        public static string GetWindowsHelloChallenge()
+        internal static string GetWindowsHelloChallenge()
         {
             if (authData == null || authData.WindowsHelloChallenge == null)
             {
@@ -283,29 +318,28 @@ namespace Guard.Core.Security
             return authData.WindowsHelloChallenge;
         }
 
-        public static void Logout()
+        internal static void Logout()
         {
             mainEncryptionKey = null;
             mainEncryptionHelper = null;
             TokenManager.ClearTokens();
         }
 
-        public static async void UnregisterWindowsHello()
+        internal static async void UnregisterWindowsHello()
         {
             if (authData == null)
             {
                 throw new Exception("Auth data not initialized");
             }
-            if (authData.WindowsHelloProtectedKey == null)
+            if (!IsWindowsHelloRegistered())
             {
                 throw new Exception("Windows Hello not enabled");
             }
-            authData.WindowsHelloProtectedKey = null;
-            authData.WindowsHelloChallenge = null;
+            DeleteWindowsHelloProtectedKey();
             await WindowsHello.Unregister();
         }
 
-        public static bool CheckPassword(string password)
+        internal static bool CheckPassword(string password)
         {
             if (authData == null || authData.LoginSalt == null)
             {
@@ -329,7 +363,7 @@ namespace Guard.Core.Security
             return true;
         }
 
-        public static async Task ChangePassword(string newPassword)
+        internal static async Task ChangePassword(string newPassword)
         {
             if (authData == null || authData.LoginSalt == null)
             {
@@ -355,6 +389,12 @@ namespace Guard.Core.Security
             {
                 mainWindow?.Logout();
             }
+        }
+
+        internal static string GetInstallationID()
+        {
+            ArgumentNullException.ThrowIfNull(authData);
+            return authData.InstallationID;
         }
     }
 }
