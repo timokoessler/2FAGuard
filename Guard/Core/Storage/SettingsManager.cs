@@ -13,11 +13,11 @@ namespace Guard.Core.Storage
 
         public static AppSettings Settings = new();
 
-        public static async Task Init()
+        public static void Init()
         {
             if (System.IO.File.Exists(settingsFilePath))
             {
-                byte[] fileData = await System.IO.File.ReadAllBytesAsync(settingsFilePath);
+                byte[] fileData = System.IO.File.ReadAllBytes(settingsFilePath);
                 string fileContent = System.Text.Encoding.UTF8.GetString(fileData);
                 AppSettings? appSettings = JsonSerializer.Deserialize<AppSettings>(fileContent);
                 if (appSettings != null)

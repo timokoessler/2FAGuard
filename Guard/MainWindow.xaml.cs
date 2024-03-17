@@ -1,4 +1,10 @@
-﻿using Guard.Core;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Web;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
+using Guard.Core;
 using Guard.Core.Aptabase;
 using Guard.Core.Icons;
 using Guard.Core.Installation;
@@ -6,12 +12,6 @@ using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Pages.Start;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Web;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
@@ -30,6 +30,7 @@ namespace Guard
         public MainWindow()
         {
             Log.Init();
+            SettingsManager.Init();
             I18n.Init();
 
             InitializeComponent();
@@ -46,14 +47,13 @@ namespace Guard
         [DllImport("user32.dll")]
         internal static extern uint SetWindowDisplayAffinity(IntPtr hwnd, uint dwAffinity);
 
-        private async void OnWindowLoaded()
+        private void OnWindowLoaded()
         {
             ContentDialogService.SetContentPresenter(RootContentDialogPresenter);
             HideNavigation();
 
             windowInteropHandle = (new WindowInteropHelper(this)).Handle;
 
-            await SettingsManager.Init();
             ApplyTheme(SettingsManager.Settings.Theme);
 
             if (SettingsManager.Settings.PreventRecording)
@@ -82,9 +82,9 @@ namespace Guard
             CheckLocalTime();
         }
 
-        internal void ApplyTheme(Core.Models.ThemeSetting theme)
+        internal void ApplyTheme(ThemeSetting theme)
         {
-            if (theme == Core.Models.ThemeSetting.System)
+            if (theme == ThemeSetting.System)
             {
                 SystemThemeWatcher.Watch(this);
                 ApplicationTheme appTheme =
@@ -93,15 +93,15 @@ namespace Guard
                         : ApplicationTheme.Light;
                 if (ApplicationThemeManager.GetAppTheme() != appTheme)
                 {
-                    ApplicationThemeManager.Apply(appTheme, WindowBackdropType.Mica);
+                    ApplicationThemeManager.Apply(appTheme);
                 }
             }
-            else if (theme == Core.Models.ThemeSetting.Dark)
+            else if (theme == ThemeSetting.Dark)
             {
                 SystemThemeWatcher.UnWatch(this);
                 if (ApplicationThemeManager.GetAppTheme() != ApplicationTheme.Dark)
                 {
-                    ApplicationThemeManager.Apply(ApplicationTheme.Dark, WindowBackdropType.Mica);
+                    ApplicationThemeManager.Apply(ApplicationTheme.Dark);
                 }
             }
             else
@@ -109,9 +109,10 @@ namespace Guard
                 SystemThemeWatcher.UnWatch(this);
                 if (ApplicationThemeManager.GetAppTheme() != ApplicationTheme.Light)
                 {
-                    ApplicationThemeManager.Apply(ApplicationTheme.Light, WindowBackdropType.Mica);
+                    ApplicationThemeManager.Apply(ApplicationTheme.Light);
                 }
             }
+            this.WindowBackdropType = WindowBackdropType.Mica;
         }
 
         private void OnNavigationSelectionChanged(object sender, RoutedEventArgs e)
