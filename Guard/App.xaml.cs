@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Guard.Core;
+using Guard.Core.Installation;
 
 namespace Guard
 {
@@ -8,16 +9,23 @@ namespace Guard
     /// </summary>
     public partial class App : Application
     {
-#if PORTABLE
-        private const string MutexName = "2FAGuardPortable";
-#else
-        private const string MutexName = "2FAGuard";
-#endif
         private Mutex? singleInstanceMutex;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            singleInstanceMutex = new Mutex(true, MutexName, out bool createdNew);
+            string mutexName = "2FAGuard";
+
+            InstallationType installationType = InstallationInfo.GetInstallationType();
+            if (installationType == InstallationType.CLASSIC_PORTABLE)
+            {
+                mutexName += "Portable";
+            }
+            else if (installationType == InstallationType.MICROSOFT_STORE)
+            {
+                mutexName += "Store";
+            }
+
+            singleInstanceMutex = new Mutex(true, mutexName, out bool createdNew);
 
             if (!createdNew)
             {

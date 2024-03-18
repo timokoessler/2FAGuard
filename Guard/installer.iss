@@ -1,5 +1,5 @@
 ﻿#define MyAppName "2FAGuard"
-#define MyAppVersion "0.1.0"
+#define MyAppVersion "1.0.0"
 #define MyAppPublisher "Timo Kössler"
 #define MyAppURL "https://2faguard.app"
 #define MyAppExeName "2FAGuard.exe"
@@ -29,6 +29,7 @@ AppCopyright=Timo Kössler and Open Source Contributors
 MinVersion=10.0.18362
 ShowLanguageDialog=auto
 DisableReadyPage=yes
+UsePreviousTasks=yes
 DisableFinishedPage=yes
 
 [Languages]

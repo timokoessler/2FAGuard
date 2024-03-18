@@ -29,10 +29,10 @@ namespace Guard.Core.Models
             {
                 int length = 0;
                 StringBuilder sb = new(0);
-                int result = GetCurrentPackageFullName(ref length, sb);
+                _ = GetCurrentPackageFullName(ref length, sb);
 
                 sb = new StringBuilder(length);
-                result = GetCurrentPackageFullName(ref length, sb);
+                int result = GetCurrentPackageFullName(ref length, sb);
 
                 return result != APPMODEL_ERROR_NO_PACKAGE;
             }

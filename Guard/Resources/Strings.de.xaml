@@ -21,7 +21,6 @@
     <system:String x:Key="i.settings.language.description">Legt die Sprache der App fest</system:String>
     <system:String x:Key="i.settings.about">Über diese Software</system:String>
     <system:String x:Key="i.settings.issue">Melde einen Fehler</system:String>
-    <system:String x:Key="i.settings.myweb">Meine persönliche Website</system:String>
     <system:String x:Key="i.settings.security">Sicherheit</system:String>
     <system:String x:Key="i.settings.winhello">Windows Hello</system:String>
     <system:String x:Key="i.settings.winhello.description">Login mit Windows Hello erlauben</system:String>
@@ -197,6 +196,15 @@
     <system:String x:Key="i.tokencard.save">Speichern</system:String>
     <system:String x:Key="i.tokencard.qr.keepsecure">Dieser QR-Code enthält sensible Informationen.</system:String>
 
+    <!--  Update  -->
+    <system:String x:Key="i.update.title">Update verfügbar</system:String>
+    <system:String x:Key="i.update.content">Es ist eine neue Version von 2FAGuard verfügbar. Möchtest du das Update jetzt installieren?</system:String>
+    <system:String x:Key="i.update.install">Update installieren</system:String>
+    <system:String x:Key="i.update.skip">Überspringen</system:String>
+    <system:String x:Key="i.update.loading">Update wird heruntergeladen...</system:String>
+    <system:String x:Key="i.update.error.title">Update fehlgeschlagen</system:String>
+    <system:String x:Key="i.update.error.content">Beim Aktualisieren ist ein Fehler aufgetreten:</system:String>
+
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">Die Anwendung 2FAGuard möchte deine Identität bestätigen.</system:String>
     <system:String x:Key="i.error">Fehler</system:String>
@@ -208,5 +216,4 @@
     <system:String x:Key="i.error.unhandled.openbug">Fehler melden</system:String>
     <system:String x:Key="i.error.time.title">Warnung: Systemzeit nicht synchronisiert</system:String>
     <system:String x:Key="i.error.time.content">Die Uhrzeit deines Systems weicht um mehr als 10 Sekunden von der korrekten Zeit ab. Dies kann zu Problemen bei der Generierung von TOTP Codes führen. Bitte stelle sicher, dass die Uhrzeit deines Systems korrekt ist.</system:String>
-
 </ResourceDictionary>

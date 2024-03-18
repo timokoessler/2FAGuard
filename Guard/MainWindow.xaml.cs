@@ -78,7 +78,6 @@ namespace Guard
                 StatsClient.TrackEvent("AppOpened");
                 FullContentFrame.Content = new Login();
             }
-
             CheckLocalTime();
         }
 

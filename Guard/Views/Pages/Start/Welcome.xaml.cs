@@ -13,7 +13,7 @@ namespace Guard.Views.Pages.Start
     /// </summary>
     public partial class Welcome : Page
     {
-        private MainWindow mainWindow;
+        private readonly MainWindow mainWindow;
 
         public Welcome()
         {
@@ -62,38 +62,36 @@ namespace Guard.Views.Pages.Start
 
         private async void Button_Skip_Click(object sender, RoutedEventArgs e)
         {
-            var dialogResult = await mainWindow
-                .GetContentDialogService()
-                .ShowSimpleDialogAsync(
-                    new SimpleContentDialogCreateOptions()
-                    {
-                        Title = I18n.GetString("welcome.insecure.dialog.title"),
-                        Content = I18n.GetString("welcome.insecure.dialog.content"),
-                        CloseButtonText = I18n.GetString("dialog.close"),
-                        PrimaryButtonText = I18n.GetString("welcome.insecure.dialog.continue")
-                    }
-                );
-            if (dialogResult == Wpf.Ui.Controls.ContentDialogResult.Primary)
+            Wpf.Ui.Controls.MessageBoxResult sucessDialogResult =
+                await new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("welcome.insecure.dialog.title"),
+                    Content = I18n.GetString("welcome.insecure.dialog.content"),
+                    CloseButtonText = I18n.GetString("dialog.close"),
+                    PrimaryButtonText = I18n.GetString("welcome.insecure.dialog.continue"),
+                    MaxWidth = 500
+                }.ShowDialogAsync();
+
+            if (sucessDialogResult != Wpf.Ui.Controls.MessageBoxResult.Primary)
             {
-                try
+                return;
+            }
+
+            try
+            {
+                await Auth.Init();
+                await Auth.RegisterInsecure();
+                mainWindow.FullContentFrame.Content = new SetupCompleted();
+            }
+            catch (Exception ex)
+            {
+                _ = await new Wpf.Ui.Controls.MessageBox
                 {
-                    await Auth.Init();
-                    await Auth.RegisterInsecure();
-                    mainWindow.FullContentFrame.Content = new SetupCompleted();
-                }
-                catch (Exception ex)
-                {
-                    await mainWindow
-                        .GetContentDialogService()
-                        .ShowSimpleDialogAsync(
-                            new SimpleContentDialogCreateOptions()
-                            {
-                                Title = "Error",
-                                Content = ex.Message,
-                                CloseButtonText = I18n.GetString("dialog.close"),
-                            }
-                        );
-                }
+                    Title = "Error",
+                    Content = ex.Message,
+                    CloseButtonText = I18n.GetString("dialog.close"),
+                    MaxWidth = 500
+                }.ShowDialogAsync();
             }
         }
     }

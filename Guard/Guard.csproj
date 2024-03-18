@@ -11,10 +11,10 @@
     <Authors>Timo Kössler and Open Source Contributors</Authors>
     <Copyright>$(Authors)</Copyright>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/timokoessler/totp-token-guard</RepositoryUrl>
+    <RepositoryUrl>https://github.com/timokoessler/2FAGuard</RepositoryUrl>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <ApplicationIcon>totp.ico</ApplicationIcon>
-    <AssemblyVersion>0.1.0</AssemblyVersion>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
     <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
     <SignAssembly>False</SignAssembly>
     <!--<PublishSingleFile>true</PublishSingleFile>-->
@@ -28,6 +28,14 @@
 	<DefineConstants Condition=" '$(IsPortable)' == 'true' ">$(DefineConstants);PORTABLE</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <NoWarn />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <NoWarn />
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Assets\authenticatorpro.svg" />
     <None Remove="Assets\bitwarden.svg" />
@@ -39,6 +47,7 @@
     <None Remove="Assets\logo-512.png" />
     <None Remove="Assets\logo.svg" />
     <None Remove="Assets\padlock-gradient.svg" />
+    <None Remove="Assets\update.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,6 +81,7 @@
     <Resource Include="Assets\logo-512.png" />
     <Resource Include="Assets\logo.svg" />
     <Resource Include="Assets\padlock-gradient.svg" />
+    <Resource Include="Assets\update.svg" />
   </ItemGroup>
 
   <ItemGroup>

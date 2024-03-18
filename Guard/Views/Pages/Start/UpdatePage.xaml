@@ -1,0 +1,73 @@
+﻿<Page
+    x:Class="Guard.Views.Pages.Start.UpdatePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Guard.Views.Pages.Start"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Update"
+    d:Background="White"
+    d:DesignHeight="700"
+    d:DesignWidth="1150"
+    mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center">
+            <svgc:SvgViewbox
+                Width="200"
+                Margin="0,45,0,0"
+                HorizontalAlignment="Center"
+                Source="pack://application:,,,/Assets/update.svg" />
+            <StackPanel x:Name="QuestionPanel" HorizontalAlignment="Center">
+                <ui:TextBlock
+                    Margin="0,20,0,0"
+                    FontSize="32"
+                    FontWeight="SemiBold"
+                    Text="{DynamicResource i.update.title}"
+                    TextAlignment="Center" />
+                <ui:TextBlock
+                    MaxWidth="400"
+                    Margin="0,20,0,30"
+                    FontSize="15"
+                    Text="{DynamicResource i.update.content}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
+                <StackPanel
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <ui:Button
+                        Margin="0,0,22,0"
+                        Appearance="Primary"
+                        Click="Install_Click"
+                        Content="{DynamicResource i.update.install}"
+                        Icon="{ui:SymbolIcon ArrowDownload24,
+                                             Filled=True}"
+                        IsDefault="True" />
+                    <ui:Button
+                        HorizontalAlignment="Center"
+                        Click="Skip_Click"
+                        Content="{DynamicResource i.update.skip}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel
+                x:Name="ProgressPanel"
+                Margin="0,80,0,0"
+                HorizontalAlignment="Center"
+                Visibility="Collapsed">
+                <ui:ProgressRing
+                    Width="80"
+                    Height="80"
+                    IsIndeterminate="True" />
+                <ui:TextBlock
+                    Margin="0,40,0,0"
+                    FontSize="16"
+                    Text="{DynamicResource i.update.loading}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

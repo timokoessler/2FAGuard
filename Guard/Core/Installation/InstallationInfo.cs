@@ -39,7 +39,7 @@ namespace Guard.Core.Installation
         {
             return GetInstallationType() switch
             {
-                InstallationType.CLASSIC_INSTALLER => "Classic Installation",
+                InstallationType.CLASSIC_INSTALLER => "Desktop Installation",
                 InstallationType.CLASSIC_PORTABLE => "Portable",
                 InstallationType.MICROSOFT_STORE => "Microsoft Store",
                 _ => "Unknown",
@@ -60,6 +60,13 @@ namespace Guard.Core.Installation
                     AppContext.BaseDirectory
                         ?? throw new Exception("Could not get process directory"),
                     "2FAGuard-Data"
+                );
+            }
+            if (GetInstallationType() == InstallationType.MICROSOFT_STORE)
+            {
+                return System.IO.Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "2FAGuardStoreApp"
                 );
             }
             return System.IO.Path.Combine(

@@ -275,10 +275,6 @@
                         Content="{DynamicResource i.settings.issue}"
                         Icon="{ui:SymbolIcon Link24}"
                         NavigateUri="https://github.com/timokoessler/totp-token-guard/issues/new/choose" />
-                    <ui:HyperlinkButton
-                        Content="{DynamicResource i.settings.myweb}"
-                        Icon="{ui:SymbolIcon Link24}"
-                        NavigateUri="https://timokoessler.de" />
                 </StackPanel>
             </StackPanel>
         </ui:CardExpander>

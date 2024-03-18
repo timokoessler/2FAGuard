@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using Guard.Core;
+using Guard.Core.Installation;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 
@@ -13,13 +14,15 @@ namespace Guard.Views.Pages.Start
     public partial class Login : Page
     {
         private readonly MainWindow mainWindow;
+        private Updater.UpdateInfo? updateInfo;
 
         public Login()
         {
             InitializeComponent();
             PasswordBox.Focus();
             mainWindow = (MainWindow)Application.Current.MainWindow;
-            _ = Setup(true);
+            CheckForUpdate();
+            Setup(true);
         }
 
         public Login(bool promptWinHello)
@@ -27,10 +30,20 @@ namespace Guard.Views.Pages.Start
             InitializeComponent();
             PasswordBox.Focus();
             mainWindow = (MainWindow)Application.Current.MainWindow;
-            _ = Setup(promptWinHello);
+            CheckForUpdate();
+            Setup(promptWinHello);
         }
 
-        private async Task Setup(bool promptWinHello)
+        private async void CheckForUpdate()
+        {
+            if (InstallationInfo.GetInstallationType() == InstallationType.MICROSOFT_STORE)
+            {
+                return;
+            }
+            updateInfo = await Updater.CheckForUpdate();
+        }
+
+        private async void Setup(bool promptWinHello)
         {
             PasswordBox.KeyDown += (sender, e) =>
             {
@@ -141,6 +154,12 @@ namespace Guard.Views.Pages.Start
                 return;
             }
             Database.Init();
+
+            if (updateInfo != null)
+            {
+                mainWindow.FullContentFrame.Content = new UpdatePage(updateInfo);
+                return;
+            }
             mainWindow.FullContentFrame.Content = null;
             mainWindow.FullContentFrame.Visibility = Visibility.Collapsed;
             mainWindow.ShowNavigation();

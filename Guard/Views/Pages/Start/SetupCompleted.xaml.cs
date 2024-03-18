@@ -20,6 +20,7 @@ namespace Guard.Views.Pages.Start
             Database.Init();
             // Inits empty token list
             _ = TokenManager.GetAllTokens();
+            mainWindow.GetStatsClient()?.TrackEvent("SetupCompleted");
         }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)

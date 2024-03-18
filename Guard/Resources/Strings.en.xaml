@@ -21,7 +21,6 @@
     <system:String x:Key="i.settings.language.description">Select the language for the app</system:String>
     <system:String x:Key="i.settings.about">About this software</system:String>
     <system:String x:Key="i.settings.issue">Report an issue</system:String>
-    <system:String x:Key="i.settings.myweb">My personal website</system:String>
     <system:String x:Key="i.settings.security">Security</system:String>
     <system:String x:Key="i.settings.winhello">Windows Hello</system:String>
     <system:String x:Key="i.settings.winhello.description">Allow login with Windows Hello</system:String>
@@ -182,6 +181,10 @@
     <system:String x:Key="i.stp.added.multiple.description">@Count tokens have been added successfully</system:String>
     <system:String x:Key="i.stp.added.multiple.duplicate">@Count tokens were not added because they already exist</system:String>
 
+    <!--  Text Formatting Dialog  -->
+    <system:String x:Key="i.txtfd.title">Format text</system:String>
+    <system:String x:Key="i.txtfd.content">Ctrl+B: Bold@nCtrl+I: Italic@nCtrl+U: Underline@nCtrl+Shift+L: Bullet points@nCtrl+Shift+N: Numbering@nCtrl+E: Center text@nCtrl+L: Text left@nCtrl+R: Text right</system:String>
+
     <!--  Token card  -->
     <system:String x:Key="i.tokencard.copy">Copy</system:String>
     <system:String x:Key="i.tokencard.edit">Edit</system:String>
@@ -193,9 +196,14 @@
     <system:String x:Key="i.tokencard.save">Save</system:String>
     <system:String x:Key="i.tokencard.qr.keepsecure">This QR code contains sensitive information. Keep it secure.</system:String>
 
-    <!--  Text Formatting Dialog  -->
-    <system:String x:Key="i.txtfd.title">Format text</system:String>
-    <system:String x:Key="i.txtfd.content">Ctrl+B: Bold@nCtrl+I: Italic@nCtrl+U: Underline@nCtrl+Shift+L: Bullet points@nCtrl+Shift+N: Numbering@nCtrl+E: Center text@nCtrl+L: Text left@nCtrl+R: Text right</system:String>
+    <!--  Update  -->
+    <system:String x:Key="i.update.title">Update available</system:String>
+    <system:String x:Key="i.update.content">A new version of 2FAGuard is available. Do you want to install it now?</system:String>
+    <system:String x:Key="i.update.install">Install update</system:String>
+    <system:String x:Key="i.update.skip">Skip</system:String>
+    <system:String x:Key="i.update.loading">Downloading update...</system:String>
+    <system:String x:Key="i.update.error.title">Update failed</system:String>
+    <system:String x:Key="i.update.error.content">An error occurred while updating:</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">The application 2FAGuard wants to prove your identity</system:String>
@@ -208,5 +216,4 @@
     <system:String x:Key="i.error.unhandled.openbug">Report bug</system:String>
     <system:String x:Key="i.error.time.title">Warning: System time not synchronized</system:String>
     <system:String x:Key="i.error.time.content">The time on your system deviates from the correct time by more than 10 seconds. This can lead to problems with the generation of TOTP codes. Please make sure that the time on your system is correct.</system:String>
-
 </ResourceDictionary>
