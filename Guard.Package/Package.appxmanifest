@@ -8,8 +8,8 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="88778318-e53f-4b47-a3f6-6941d4d08a1f"
-    Publisher="CN=Timo Kössler"
+    Name="TimoKssler.2FAGuard"
+    Publisher="CN=F9CCA312-A05F-45A0-B7A8-E28C9DA26188"
 	ProcessorArchitecture="x64"
     Version="1.0.0.0" />
 
