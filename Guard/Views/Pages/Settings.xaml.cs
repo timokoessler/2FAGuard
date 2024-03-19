@@ -1,11 +1,11 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Controls;
+using System.Windows;
+using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages
@@ -17,6 +17,7 @@ namespace Guard.Views.Pages
     {
         private readonly MainWindow mainWindow;
         private bool ignoreWinHelloSwitchEvents = false;
+        private bool ignoreAutoStartSwitchEvents = false;
 
         public Settings()
         {
@@ -51,10 +52,18 @@ namespace Guard.Views.Pages
 
             LanguagesComboBox.SelectionChanged += OnLanguageSelectionChanged;
             ThemeComboBox.SelectionChanged += OnThemeSelectionChanged;
-            AutoStartSwitch.IsChecked = Autostart.IsEnabled();
 
-            AutoStartSwitch.Checked += (sender, e) => Autostart.Enable();
-            AutoStartSwitch.Unchecked += (sender, e) => Autostart.Disable();
+            if (InstallationInfo.IsPortable())
+            {
+                AutoStartSwitch.IsEnabled = false;
+            }
+            else
+            {
+                SetAutostartStatus();
+                AutoStartSwitch.Checked += AutoStartSwitch_Checked;
+                AutoStartSwitch.Unchecked += AutoStartSwitch_Unchecked;
+            }
+
 
             WinHelloSwitch.IsChecked = Auth.IsWindowsHelloRegistered();
             WinHelloSwitch.IsEnabled = Auth.IsLoginEnabled();
@@ -237,6 +246,77 @@ namespace Guard.Views.Pages
         private void Change_Pass_Button_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.Navigate(typeof(ChangePasswordPage));
+        }
+
+        private async void SetAutostartStatus()
+        {
+            if (InstallationInfo.IsPortable())
+            {
+                return;
+            }
+            ignoreAutoStartSwitchEvents = true;
+            AutoStartSwitch.IsEnabled = false;
+
+            AutoStartSwitch.IsChecked = await Autostart.IsEnabled();
+
+            ignoreAutoStartSwitchEvents = false;
+            AutoStartSwitch.IsEnabled = true;
+        }
+
+        private async void AutoStartSwitch_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ignoreAutoStartSwitchEvents)
+            {
+                return;
+            }
+            AutoStartSwitch.IsEnabled = false;
+            try
+            {
+                await Autostart.Enable();
+                AutoStartSwitch.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                AutoStartSwitch.IsEnabled = true;
+                SetAutostartStatus();
+                Log.Logger.Error("Error enabling autostart: {0}", ex.Message);
+
+                _ = new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("settings.autostart.error.title"),
+                    Content = ex.Message,
+                    CloseButtonText = I18n.GetString("dialog.close"),
+                    MaxWidth = 400
+                }.ShowDialogAsync();
+            }
+        }
+
+        private async void AutoStartSwitch_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (ignoreAutoStartSwitchEvents)
+            {
+                return;
+            }
+            AutoStartSwitch.IsEnabled = false;
+            try
+            {
+                await Autostart.Disable();
+                AutoStartSwitch.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                AutoStartSwitch.IsEnabled = true;
+                SetAutostartStatus();
+                Log.Logger.Error("Error disabling autostart: {0}", ex.Message);
+
+                _ = new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("settings.autostart.error.title"),
+                    Content = ex.Message,
+                    CloseButtonText = I18n.GetString("dialog.close"),
+                    MaxWidth = 400
+                }.ShowDialogAsync();
+            }
         }
 
         private void License_Button_Click(object sender, RoutedEventArgs e)

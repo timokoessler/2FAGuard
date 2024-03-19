@@ -5,7 +5,8 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap rescap">
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  IgnorableNamespaces="uap rescap desktop">
 
   <Identity
     Name="TimoKssler.2FAGuard"
@@ -44,6 +45,16 @@
         <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png" ShortName="2FAGuard"/>
         <uap:SplashScreen Image="Images\SplashScreen.png" />
       </uap:VisualElements>
+		<Extensions>
+			<desktop:Extension
+				Category="windows.startupTask"
+				EntryPoint="Windows.FullTrustApplication">
+				<desktop:StartupTask
+				  TaskId="2FAGuardApp"
+				  Enabled="false"
+				  DisplayName="2FAGuardApp" />
+			</desktop:Extension>
+		</Extensions>
     </Application>
   </Applications>
 

@@ -1,6 +1,7 @@
-﻿using System.Windows;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Installation;
+using Guard.Core.Storage;
+using System.Windows;
 
 namespace Guard
 {
@@ -13,6 +14,7 @@ namespace Guard
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
             string mutexName = "2FAGuard";
 
             InstallationType installationType = InstallationInfo.GetInstallationType();
@@ -27,23 +29,27 @@ namespace Guard
 
             singleInstanceMutex = new Mutex(true, mutexName, out bool createdNew);
 
+            Log.Init();
+            SettingsManager.Init();
+            I18n.Init();
+
             if (!createdNew)
             {
                 // Another instance is already running
                 var uiMessageBox = new Wpf.Ui.Controls.MessageBox
                 {
-                    Title = "App is already running / App läuft bereits",
-                    Content =
-                        "You can only run one instance of this app at a time.\n"
-                        + "Sie können diese App nur einmal gleichzeitig ausführen.",
-                    CloseButtonText = "Exit / Beenden"
+                    Title = I18n.GetString("i.running.title"),
+                    Content = I18n.GetString("i.running.content"),
+                    CloseButtonText = I18n.GetString("i.running.exit"),
                 };
-
                 await uiMessageBox.ShowDialogAsync();
                 Shutdown();
+                return;
             }
 
-            base.OnStartup(e);
+            bool autostart = e.Args != null && e.Args.Contains("--autostart");
+            MainWindow mainWindow = new(autostart);
+            mainWindow.Show();
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -51,5 +57,6 @@ namespace Guard
             singleInstanceMutex?.Dispose();
             base.OnExit(e);
         }
+
     }
 }

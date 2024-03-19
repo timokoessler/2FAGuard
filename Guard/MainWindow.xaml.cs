@@ -1,10 +1,4 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Web;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Aptabase;
 using Guard.Core.Icons;
 using Guard.Core.Installation;
@@ -12,6 +6,12 @@ using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Pages.Start;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Web;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
@@ -26,12 +26,15 @@ namespace Guard
         private readonly ContentDialogService ContentDialogService;
         private AptabaseClient? StatsClient;
         private IntPtr windowInteropHandle;
+        private bool isAutostart;
 
-        public MainWindow()
+        public MainWindow(bool autostart)
         {
-            Log.Init();
-            SettingsManager.Init();
-            I18n.Init();
+            if (autostart)
+            {
+                isAutostart = true;
+                WindowState = WindowState.Minimized;
+            }
 
             InitializeComponent();
             Loaded += (s, e) => OnWindowLoaded();
@@ -76,7 +79,7 @@ namespace Guard
             else
             {
                 StatsClient.TrackEvent("AppOpened");
-                FullContentFrame.Content = new Login();
+                FullContentFrame.Content = new Login(!isAutostart);
             }
             CheckLocalTime();
         }

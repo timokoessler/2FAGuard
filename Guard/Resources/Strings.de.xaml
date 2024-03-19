@@ -48,6 +48,11 @@
     <system:String x:Key="i.settings.oss">Verwendete Open Source Software</system:String>
     <system:String x:Key="i.settings.autostart">Automatischer Start</system:String>
     <system:String x:Key="i.settings.autostart.description">Startet die App automatisch mit Windows</system:String>
+    <system:String x:Key="i.settings.autostart.error.title">Es ist ein Fehler aufgetreten</system:String>
+    <system:String x:Key="i.settings.autostart.error.disabled.policy">Der automatische Start der App wurde durch eine Gruppenrichtlinie deaktiviert</system:String>
+    <system:String x:Key="i.settings.autostart.error.disabled.user">Der automatische Start der App wurde im Windows Task-Manager deaktiviert und kann nur dort geändert werden</system:String>
+    <system:String x:Key="i.settings.autostart.error.alreadyenabled">Der automatische Start der App ist bereits aktiviert</system:String>
+    <system:String x:Key="i.settings.autostart.error.notenabled">Der automatische Start der App kann nicht deaktiviert werden, da er bereits deaktiviert ist</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wähle, wie du deine Token sichern möchtest.</system:String>
@@ -216,4 +221,7 @@
     <system:String x:Key="i.error.unhandled.openbug">Fehler melden</system:String>
     <system:String x:Key="i.error.time.title">Warnung: Systemzeit nicht synchronisiert</system:String>
     <system:String x:Key="i.error.time.content">Die Uhrzeit deines Systems weicht um mehr als 10 Sekunden von der korrekten Zeit ab. Dies kann zu Problemen bei der Generierung von TOTP Codes führen. Bitte stelle sicher, dass die Uhrzeit deines Systems korrekt ist.</system:String>
+    <system:String x:Key="i.running.title">App wird bereits ausgeführt</system:String>
+    <system:String x:Key="i.running.content">Diese App kann nur einmal gleichzeitig ausgeführt werden.</system:String>
+    <system:String x:Key="i.running.exit">Beenden</system:String>
 </ResourceDictionary>
