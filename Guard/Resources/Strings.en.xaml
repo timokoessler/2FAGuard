@@ -95,6 +95,8 @@
     <system:String x:Key="i.home.notokens">No tokens found</system:String>
     <system:String x:Key="i.home.notokens.button">Add token</system:String>
     <system:String x:Key="i.home.search.placeholder">Search tokens</system:String>
+    <system:String x:Key="i.home.intro.title">Notice</system:String>
+    <system:String x:Key="i.home.intro.content">You can perform further actions, such as editing or deleting, by right-clicking on a token.</system:String>
 
     <!--  Add  -->
     <system:String x:Key="i.page.addoverview">Add tokens</system:String>

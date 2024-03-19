@@ -29,5 +29,6 @@
         public bool PreventRecording { get; set; } = true;
         public bool LockOnScreenLock { get; set; } = true;
         public SortOrderSetting SortOrder { get; set; } = SortOrderSetting.ISSUER_ASC;
+        public bool ShowTokenCardIntro { get; set; } = true;
     }
 }

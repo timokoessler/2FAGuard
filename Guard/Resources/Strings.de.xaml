@@ -101,6 +101,8 @@
     <system:String x:Key="i.home.sort.issuer.desc">Aussteller, absteigend</system:String>
     <system:String x:Key="i.home.sort.createdat.asc">Erstellungsdatum, aufsteigend</system:String>
     <system:String x:Key="i.home.sort.createdat.desc">Erstellungsdatum, absteigend</system:String>
+    <system:String x:Key="i.home.intro.title">Tipp</system:String>
+    <system:String x:Key="i.home.intro.content">Du kannst mit einem Rechtsklick auf ein Token weitere Aktionen ausführen, wie z.B. einen Token bearbeiten oder löschen.</system:String>
 
     <!--  Add  -->
     <system:String x:Key="i.page.addoverview">Token hinzufügen</system:String>

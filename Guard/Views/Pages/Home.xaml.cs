@@ -1,10 +1,10 @@
-﻿using Guard.Core;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Guard.Core;
 using Guard.Core.Models;
 using Guard.Core.Storage;
 using Guard.Views.Pages.Add;
 using Guard.Views.UIComponents;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace Guard.Views.Pages
 {
@@ -88,6 +88,24 @@ namespace Guard.Views.Pages
             TOTPTokenContainer.Visibility = Visibility.Visible;
             SearchPanel.Visibility = Visibility.Visible;
 
+            RunTimer();
+
+            if (SettingsManager.Settings.ShowTokenCardIntro)
+            {
+                _ = await new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("home.intro.title"),
+                    Content = I18n.GetString("home.intro.content"),
+                    CloseButtonText = I18n.GetString("dialog.close"),
+                    MaxWidth = 400
+                }.ShowDialogAsync();
+                SettingsManager.Settings.ShowTokenCardIntro = false;
+                _ = SettingsManager.Save();
+            }
+        }
+
+        private async void RunTimer()
+        {
             timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
             while (await timer.WaitForNextTickAsync())
             {
