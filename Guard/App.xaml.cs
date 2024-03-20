@@ -1,7 +1,8 @@
-﻿using Guard.Core;
+﻿using System.Windows;
+using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Storage;
-using System.Windows;
+using Windows.ApplicationModel.Activation;
 
 namespace Guard
 {
@@ -11,6 +12,7 @@ namespace Guard
     public partial class App : Application
     {
         private Mutex? singleInstanceMutex;
+        private bool autostart = false;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
@@ -29,7 +31,6 @@ namespace Guard
 
             singleInstanceMutex = new Mutex(true, mutexName, out bool createdNew);
 
-            Log.Init();
             SettingsManager.Init();
             I18n.Init();
 
@@ -47,7 +48,10 @@ namespace Guard
                 return;
             }
 
-            bool autostart = e.Args != null && e.Args.Contains("--autostart");
+            if (!autostart)
+            {
+                autostart = e.Args != null && e.Args.Contains("--autostart");
+            }
             MainWindow mainWindow = new(autostart);
             mainWindow.Show();
         }
@@ -58,5 +62,12 @@ namespace Guard
             base.OnExit(e);
         }
 
+        public void OnActivatedGuard(IActivatedEventArgs? e)
+        {
+            if (e != null && e.Kind == ActivationKind.StartupTask)
+            {
+                autostart = true;
+            }
+        }
     }
 }
