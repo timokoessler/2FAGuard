@@ -48,6 +48,19 @@ namespace Guard
                 return;
             }
 
+            if (Environment.OSVersion.Version.Build < 18362)
+            {
+                var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("i.oldos.title"),
+                    Content = I18n.GetString("i.oldos.content"),
+                    CloseButtonText = I18n.GetString("i.oldos.exit"),
+                };
+                await uiMessageBox.ShowDialogAsync();
+                Shutdown();
+                return;
+            }
+
             if (!autostart)
             {
                 autostart = e.Args != null && e.Args.Contains("--autostart");

@@ -226,4 +226,7 @@
     <system:String x:Key="i.running.title">App wird bereits ausgeführt</system:String>
     <system:String x:Key="i.running.content">Diese App kann nur einmal gleichzeitig ausgeführt werden.</system:String>
     <system:String x:Key="i.running.exit">Beenden</system:String>
+    <system:String x:Key="i.oldos.title">Nicht unterstütztes Betriebssystem</system:String>
+    <system:String x:Key="i.oldos.content">Bitte aktualisiere auf Windows 10 1903 (18362) oder höher, um 2FAGuard verwenden zu können.</system:String>
+    <system:String x:Key="i.oldos.exit">Beenden</system:String>
 </ResourceDictionary>
