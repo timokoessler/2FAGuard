@@ -74,7 +74,11 @@ namespace Guard.Views.Pages.Start
 
                 using var process = new Process
                 {
-                    StartInfo = new ProcessStartInfo(downloadFileName) { UseShellExecute = true }
+                    StartInfo = new ProcessStartInfo(downloadFileName)
+                    {
+                        UseShellExecute = true,
+                        WindowStyle = ProcessWindowStyle.Normal
+                    },
                 };
                 process.Start();
                 Application.Current.Shutdown();

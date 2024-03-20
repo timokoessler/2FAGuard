@@ -31,6 +31,7 @@ namespace Guard
 
             singleInstanceMutex = new Mutex(true, mutexName, out bool createdNew);
 
+            Log.Init();
             SettingsManager.Init();
             I18n.Init();
 

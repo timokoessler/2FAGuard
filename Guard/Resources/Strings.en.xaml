@@ -210,7 +210,7 @@
     <system:String x:Key="i.update.skip">Skip</system:String>
     <system:String x:Key="i.update.loading">Downloading update...</system:String>
     <system:String x:Key="i.update.error.title">Update failed</system:String>
-    <system:String x:Key="i.update.error.content">An error occurred while updating:</system:String>
+    <system:String x:Key="i.update.error.content">An error occurred while updating</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">The application 2FAGuard wants to prove your identity</system:String>

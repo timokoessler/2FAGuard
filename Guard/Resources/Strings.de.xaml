@@ -210,7 +210,7 @@
     <system:String x:Key="i.update.skip">Überspringen</system:String>
     <system:String x:Key="i.update.loading">Update wird heruntergeladen...</system:String>
     <system:String x:Key="i.update.error.title">Update fehlgeschlagen</system:String>
-    <system:String x:Key="i.update.error.content">Beim Aktualisieren ist ein Fehler aufgetreten:</system:String>
+    <system:String x:Key="i.update.error.content">Beim Aktualisieren ist ein Fehler aufgetreten</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">Die Anwendung 2FAGuard möchte deine Identität bestätigen.</system:String>
