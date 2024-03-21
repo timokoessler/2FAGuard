@@ -4,6 +4,8 @@
 #define MyAppURL "https://2faguard.app"
 #define MyAppExeName "2FAGuard.exe"
 
+#include "CodeDependencies.iss"
+
 [Setup]
 AppId={{E975C7D9-79F6-47D9-9597-014331FC3C0F}
 AppName={#MyAppName}
@@ -17,9 +19,9 @@ DefaultDirName={autopf}\{#MyAppName}
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
-OutputDir=.\bin\installer
+OutputDir=..\bin\installer
 OutputBaseFilename=2FAGuard-Installer-{#MyAppVersion}
-SetupIconFile=.\totp.ico
+SetupIconFile=..\totp.ico
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
@@ -40,7 +42,7 @@ Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: ".\bin\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\bin\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -50,6 +52,11 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent; Parameters: setup
 
 [Code]
+function InitializeSetup: Boolean;
+begin
+  Dependency_AddVC2015To2022;
+  Result := True;
+end;
 procedure CurPageChanged(CurPageID: Integer);
 begin
   if CurPageID = wpSelectTasks then

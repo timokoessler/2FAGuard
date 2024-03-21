@@ -1,7 +1,10 @@
-﻿using System.Windows;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Storage;
+using NSec.Cryptography;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Windows;
 using Windows.ApplicationModel.Activation;
 
 namespace Guard
@@ -53,11 +56,53 @@ namespace Guard
             {
                 var uiMessageBox = new Wpf.Ui.Controls.MessageBox
                 {
-                    Title = I18n.GetString("i.oldos.title"),
-                    Content = I18n.GetString("i.oldos.content"),
-                    CloseButtonText = I18n.GetString("i.oldos.exit"),
+                    Title = I18n.GetString("i.unsupported.os.title"),
+                    Content = I18n.GetString("i.unsupported.os.content"),
+                    CloseButtonText = I18n.GetString("i.unsupported.exit"),
                 };
                 await uiMessageBox.ShowDialogAsync();
+                Shutdown();
+                return;
+            }
+
+            if (RuntimeInformation.ProcessArchitecture != Architecture.X64)
+            {
+                var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("i.unsupported.arch.title"),
+                    Content = I18n.GetString("i.unsupported.arch.content"),
+                    CloseButtonText = I18n.GetString("i.unsupported.exit"),
+                };
+                await uiMessageBox.ShowDialogAsync();
+                Shutdown();
+                return;
+            }
+            try
+            {
+                _ = new Aegis256();
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to initialize NSec.Cryptography.Aegis256 {0} {1}", ex.Message, ex.StackTrace);
+                var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("i.unsupported.vcpp.title"),
+                    Content = I18n.GetString("i.unsupported.vcpp.content"),
+                    CloseButtonText = I18n.GetString("i.unsupported.exit"),
+                    PrimaryButtonText = I18n.GetString("i.unsupported.vcpp.download"),
+                };
+                var result = await uiMessageBox.ShowDialogAsync();
+                if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
+                {
+                    Process.Start(
+                        new ProcessStartInfo(
+                            $"https://aka.ms/vs/17/release/vc_redist.x64.exe"
+                        )
+                        {
+                            UseShellExecute = true,
+                        }
+                    );
+                }
                 Shutdown();
                 return;
             }
