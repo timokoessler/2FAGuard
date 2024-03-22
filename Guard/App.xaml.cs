@@ -1,10 +1,10 @@
-﻿using Guard.Core;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Windows;
+using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Storage;
 using NSec.Cryptography;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
 using Windows.ApplicationModel.Activation;
 
 namespace Guard
@@ -83,7 +83,11 @@ namespace Guard
             }
             catch (Exception ex)
             {
-                Log.Logger.Error("Failed to initialize NSec.Cryptography.Aegis256 {0} {1}", ex.Message, ex.StackTrace);
+                Log.Logger.Error(
+                    "Failed to initialize NSec.Cryptography.Aegis256 {0} {1}",
+                    ex.Message,
+                    ex.StackTrace
+                );
                 var uiMessageBox = new Wpf.Ui.Controls.MessageBox
                 {
                     Title = I18n.GetString("i.unsupported.vcpp.title"),
@@ -95,9 +99,7 @@ namespace Guard
                 if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
                 {
                     Process.Start(
-                        new ProcessStartInfo(
-                            $"https://aka.ms/vs/17/release/vc_redist.x64.exe"
-                        )
+                        new ProcessStartInfo($"https://aka.ms/vs/17/release/vc_redist.x64.exe")
                         {
                             UseShellExecute = true,
                         }

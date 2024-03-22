@@ -2,7 +2,6 @@
 {
     internal class TwoFasBackup
     {
-
         internal class ServiceOTP
         {
             public string? Link { get; set; }

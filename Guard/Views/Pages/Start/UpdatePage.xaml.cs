@@ -1,9 +1,9 @@
-﻿using Guard.Core;
-using Guard.Core.Installation;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Guard.Core;
+using Guard.Core.Installation;
 
 namespace Guard.Views.Pages.Start
 {
@@ -51,20 +51,30 @@ namespace Guard.Views.Pages.Start
 
                 string downloadFileName = Path.GetFullPath(
                     isPortable
-                        ? Path.Combine(AppContext.BaseDirectory, $"2FAGuard-Portable-{updateInfo.Version}.zip")
+                        ? Path.Combine(
+                            AppContext.BaseDirectory,
+                            $"2FAGuard-Portable-{updateInfo.Version}.zip"
+                        )
                         : Path.Combine(
                             Path.GetTempPath(),
                             $"2FAGuard-Installer-{updateInfo.Version}-{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}.exe"
                         )
                 );
 
-                Log.Logger.Information("Downloading update from {0} to {1}", downloadUrl, downloadFileName);
+                Log.Logger.Information(
+                    "Downloading update from {0} to {1}",
+                    downloadUrl,
+                    downloadFileName
+                );
                 if (File.Exists(downloadFileName))
                 {
                     File.Delete(downloadFileName);
                 }
 
-                string portableExePath = Path.Combine(AppContext.BaseDirectory, $"2FAGuard-Portable-{updateInfo.Version}.exe");
+                string portableExePath = Path.Combine(
+                    AppContext.BaseDirectory,
+                    $"2FAGuard-Portable-{updateInfo.Version}.exe"
+                );
                 if (isPortable && File.Exists(portableExePath))
                 {
                     throw new Exception(
@@ -73,16 +83,20 @@ namespace Guard.Views.Pages.Start
                 }
 
                 using var stream = await Updater.httpClient.GetStreamAsync(downloadUrl);
-                using FileStream fileStream = new(downloadFileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
+                using FileStream fileStream =
+                    new(downloadFileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
                 await stream.CopyToAsync(fileStream);
                 fileStream.Close();
                 stream.Close();
 
                 string startFilePath = downloadFileName;
-                string arguments = "";
+                string arguments = "/SILENT";
                 if (isPortable)
                 {
-                    string extractDir = Path.Combine(AppContext.BaseDirectory, $"2FAGuard-Portable-Update-{updateInfo.Version}-Temp");
+                    string extractDir = Path.Combine(
+                        AppContext.BaseDirectory,
+                        $"2FAGuard-Portable-Update-{updateInfo.Version}-Temp"
+                    );
 
                     await Task.Run(() =>
                     {
@@ -91,8 +105,15 @@ namespace Guard.Views.Pages.Start
                             Directory.Delete(extractDir, true);
                         }
                         Directory.CreateDirectory(extractDir);
-                        System.IO.Compression.ZipFile.ExtractToDirectory(downloadFileName, extractDir);
-                        string[] fileNames = Directory.GetFiles(extractDir, "*.exe", SearchOption.AllDirectories);
+                        System.IO.Compression.ZipFile.ExtractToDirectory(
+                            downloadFileName,
+                            extractDir
+                        );
+                        string[] fileNames = Directory.GetFiles(
+                            extractDir,
+                            "*.exe",
+                            SearchOption.AllDirectories
+                        );
                         if (fileNames.Length == 0)
                         {
                             throw new Exception("Did not find any executable in the zip file");

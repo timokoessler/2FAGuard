@@ -1,11 +1,11 @@
-﻿using Guard.Core.Icons;
-using Guard.Core.Models;
-using Guard.Core.Security;
-using NSec.Cryptography;
-using System.IO;
+﻿using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using Guard.Core.Icons;
+using Guard.Core.Models;
+using Guard.Core.Security;
+using NSec.Cryptography;
 
 namespace Guard.Core.Import.Importer
 {
@@ -14,7 +14,8 @@ namespace Guard.Core.Import.Importer
         public string Name => "2FAS";
         public IImporter.ImportType Type => IImporter.ImportType.File;
         public string SupportedFileExtensions => "2FAS Backup (*.2fas) | *.2fas";
-        private readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        private readonly JsonSerializerOptions jsonSerializerOptions =
+            new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
         public (int total, int duplicate, int tokenID) Parse(string? path, string? password)
         {
@@ -26,11 +27,17 @@ namespace Guard.Core.Import.Importer
             }
 
             var json = Encoding.UTF8.GetString(data);
-            var backup = JsonSerializer.Deserialize<TwoFasBackup>(json, jsonSerializerOptions) ?? throw new Exception("Failed to parse the 2FAS backup file. JSON deserialization failed.");
+            var backup =
+                JsonSerializer.Deserialize<TwoFasBackup>(json, jsonSerializerOptions)
+                ?? throw new Exception(
+                    "Failed to parse the 2FAS backup file. JSON deserialization failed."
+                );
 
             if (backup.SchemaVersion != 4)
             {
-                throw new Exception($"Unsupported 2FAS backup schema version: {backup.SchemaVersion}");
+                throw new Exception(
+                    $"Unsupported 2FAS backup schema version: {backup.SchemaVersion}"
+                );
             }
 
             TwoFasBackup.Service[]? services;
@@ -50,7 +57,9 @@ namespace Guard.Core.Import.Importer
 
             if (services == null)
             {
-                throw new Exception("Failed to parse the 2FAS backup file because it does not contain any services.");
+                throw new Exception(
+                    "Failed to parse the 2FAS backup file because it does not contain any services."
+                );
             }
 
             int total = 0,
@@ -81,7 +90,9 @@ namespace Guard.Core.Import.Importer
 
                 if (!OTPUriParser.IsValidSecret(normalizedSecret))
                 {
-                    throw new Exception($"{I18n.GetString("td.invalidsecret")} ({service.OTP.Issuer})");
+                    throw new Exception(
+                        $"{I18n.GetString("td.invalidsecret")} ({service.OTP.Issuer})"
+                    );
                 }
 
                 if (service.OTP.TokenType?.ToLower() != "totp")
@@ -96,17 +107,19 @@ namespace Guard.Core.Import.Importer
                 }
 
                 DBTOTPToken dbToken =
-                   new()
-                   {
-                       Id = TokenManager.GetNextId(),
-                       Issuer = service.OTP.Issuer,
-                       EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
-                       CreationTime = DateTime.Now
-                   };
+                    new()
+                    {
+                        Id = TokenManager.GetNextId(),
+                        Issuer = service.OTP.Issuer,
+                        EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
+                        CreationTime = DateTime.Now
+                    };
 
                 if (service.OTP.Account != null)
                 {
-                    dbToken.EncryptedUsername = encryption.EncryptStringToBytes(service.OTP.Account);
+                    dbToken.EncryptedUsername = encryption.EncryptStringToBytes(
+                        service.OTP.Account
+                    );
                 }
 
                 if (icon != null && icon.Type != IconManager.IconType.Default)
@@ -164,7 +177,11 @@ namespace Guard.Core.Import.Importer
             }
 
             var json = Encoding.UTF8.GetString(data);
-            var backup = JsonSerializer.Deserialize<TwoFasBackup>(json, jsonSerializerOptions) ?? throw new Exception("Failed to parse the 2FAS backup file. JSON deserialization failed.");
+            var backup =
+                JsonSerializer.Deserialize<TwoFasBackup>(json, jsonSerializerOptions)
+                ?? throw new Exception(
+                    "Failed to parse the 2FAS backup file. JSON deserialization failed."
+                );
 
             if (backup.ServicesEncrypted != null)
             {
@@ -186,7 +203,12 @@ namespace Guard.Core.Import.Importer
             byte[] salt = Convert.FromBase64String(parts[1]);
             ReadOnlySpan<byte> iv = Convert.FromBase64String(parts[2]);
 
-            ReadOnlySpan<byte> keyBytes = new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(pass), salt, 10000, HashAlgorithmName.SHA256).GetBytes(32);
+            ReadOnlySpan<byte> keyBytes = new Rfc2898DeriveBytes(
+                Encoding.UTF8.GetBytes(pass),
+                salt,
+                10000,
+                HashAlgorithmName.SHA256
+            ).GetBytes(32);
 
             if (!Aes256Gcm.IsSupported)
             {
@@ -201,8 +223,10 @@ namespace Guard.Core.Import.Importer
             byte[]? decryptedData =
                 aes.Decrypt(key, iv, null, encryptedData)
                 ?? throw new Exception(I18n.GetString("import.password.invalid"));
-            return JsonSerializer.Deserialize<TwoFasBackup.Service[]>(Encoding.UTF8.GetString(decryptedData), jsonSerializerOptions);
+            return JsonSerializer.Deserialize<TwoFasBackup.Service[]>(
+                Encoding.UTF8.GetString(decryptedData),
+                jsonSerializerOptions
+            );
         }
-
     }
 }
