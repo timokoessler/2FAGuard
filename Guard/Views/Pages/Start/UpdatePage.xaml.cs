@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
+﻿using Guard.Core;
+using Guard.Core.Installation;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using Guard.Core;
-using Guard.Core.Installation;
 
 namespace Guard.Views.Pages.Start
 {
@@ -51,14 +51,21 @@ namespace Guard.Views.Pages.Start
 
                 string downloadFileName = Path.GetFullPath(
                     isPortable
-                        ? $"2FAGuard-Portable-{updateInfo.Version}.exe"
+                        ? Path.Combine(AppContext.BaseDirectory, $"2FAGuard-Portable-{updateInfo.Version}.zip")
                         : Path.Combine(
                             Path.GetTempPath(),
                             $"2FAGuard-Installer-{updateInfo.Version}-{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}.exe"
                         )
                 );
 
-                if (isPortable && File.Exists(downloadFileName))
+                Log.Logger.Information("Downloading update from {0} to {1}", downloadUrl, downloadFileName);
+                if (File.Exists(downloadFileName))
+                {
+                    File.Delete(downloadFileName);
+                }
+
+                string portableExePath = Path.Combine(AppContext.BaseDirectory, $"2FAGuard-Portable-{updateInfo.Version}.exe");
+                if (isPortable && File.Exists(portableExePath))
                 {
                     throw new Exception(
                         "You have already downloaded the newest portable version. Please start the new version instead of the old one."
@@ -66,18 +73,49 @@ namespace Guard.Views.Pages.Start
                 }
 
                 using var stream = await Updater.httpClient.GetStreamAsync(downloadUrl);
-                using FileStream fileStream =
-                    new(downloadFileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
+                using FileStream fileStream = new(downloadFileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
                 await stream.CopyToAsync(fileStream);
                 fileStream.Close();
                 stream.Close();
 
+                string startFilePath = downloadFileName;
+                string arguments = "";
+                if (isPortable)
+                {
+                    string extractDir = Path.Combine(AppContext.BaseDirectory, $"2FAGuard-Portable-Update-{updateInfo.Version}-Temp");
+
+                    await Task.Run(() =>
+                    {
+                        if (Directory.Exists(extractDir))
+                        {
+                            Directory.Delete(extractDir, true);
+                        }
+                        Directory.CreateDirectory(extractDir);
+                        System.IO.Compression.ZipFile.ExtractToDirectory(downloadFileName, extractDir);
+                        string[] fileNames = Directory.GetFiles(extractDir, "*.exe", SearchOption.AllDirectories);
+                        if (fileNames.Length == 0)
+                        {
+                            throw new Exception("Did not find any executable in the zip file");
+                        }
+                        if (fileNames.Length > 1)
+                        {
+                            throw new Exception("Found more than one executable in the zip file");
+                        }
+                        File.Move(fileNames[0], portableExePath);
+                        File.Delete(downloadFileName);
+                        Directory.Delete(extractDir, true);
+                    });
+                    startFilePath = portableExePath;
+                    arguments = $"--updated-from {InstallationInfo.GetVersionString()} --portable";
+                }
+
                 using var process = new Process
                 {
-                    StartInfo = new ProcessStartInfo(downloadFileName)
+                    StartInfo = new ProcessStartInfo(startFilePath)
                     {
                         UseShellExecute = true,
-                        WindowStyle = ProcessWindowStyle.Normal
+                        WindowStyle = ProcessWindowStyle.Normal,
+                        Arguments = arguments
                     },
                 };
                 process.Start();

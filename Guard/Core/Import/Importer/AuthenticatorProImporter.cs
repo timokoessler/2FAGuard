@@ -2,7 +2,6 @@
 using Guard.Core.Models;
 using Guard.Core.Security;
 using NSec.Cryptography;
-using OtpNet;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -92,11 +91,9 @@ namespace Guard.Core.Import.Importer
                     IconManager.IconType.Any
                 );
 
-                try
-                {
-                    Base32Encoding.ToBytes(token.Secret);
-                }
-                catch
+                string normalizedSecret = OTPUriParser.NormalizeSecret(token.Secret);
+
+                if (!OTPUriParser.IsValidSecret(normalizedSecret))
                 {
                     throw new Exception($"{I18n.GetString("td.invalidsecret")} ({token.Issuer})");
                 }
@@ -113,7 +110,7 @@ namespace Guard.Core.Import.Importer
                     {
                         Id = TokenManager.GetNextId(),
                         Issuer = token.Issuer,
-                        EncryptedSecret = encryption.EncryptStringToBytes(token.Secret),
+                        EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
                         CreationTime = DateTime.Now
                     };
 

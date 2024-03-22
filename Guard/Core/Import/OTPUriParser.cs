@@ -109,14 +109,12 @@ namespace Guard.Core.Import
                 throw new Exception($"Missing secret in URI from {otpUri.Issuer}");
             }
 
-            try
+            string normalizedSecret = NormalizeSecret(otpUri.Secret);
+            if (!IsValidSecret(normalizedSecret))
             {
-                Base32Encoding.ToBytes(otpUri.Secret);
+                throw new Exception($"{I18n.GetString("td.invalidsecret")} ({otpUri.Issuer})");
             }
-            catch
-            {
-                throw new Exception(I18n.GetString("td.invalidsecret"));
-            }
+            otpUri.Secret = normalizedSecret;
 
             return otpUri;
         }
@@ -160,5 +158,28 @@ namespace Guard.Core.Import
 
             return dbToken;
         }
+
+        internal static string NormalizeSecret(string secret)
+        {
+
+            return new string(secret.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray()).ToUpper();
+
+        }
+
+        internal static bool IsValidSecret(string secret)
+        {
+            try
+            {
+                Base32Encoding.ToBytes(secret);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
     }
 }

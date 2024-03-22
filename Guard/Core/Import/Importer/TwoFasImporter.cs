@@ -2,7 +2,6 @@
 using Guard.Core.Models;
 using Guard.Core.Security;
 using NSec.Cryptography;
-using OtpNet;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -34,7 +33,7 @@ namespace Guard.Core.Import.Importer
                 throw new Exception($"Unsupported 2FAS backup schema version: {backup.SchemaVersion}");
             }
 
-            TwoFasBackup.Service[] services = [];
+            TwoFasBackup.Service[]? services;
             if (backup.ServicesEncrypted != null)
             {
                 ArgumentNullException.ThrowIfNull(password);
@@ -47,6 +46,11 @@ namespace Guard.Core.Import.Importer
                     throw new Exception("The 2FAS backup file does not contain any services.");
                 }
                 services = backup.Services;
+            }
+
+            if (services == null)
+            {
+                throw new Exception("Failed to parse the 2FAS backup file because it does not contain any services.");
             }
 
             int total = 0,
@@ -73,11 +77,9 @@ namespace Guard.Core.Import.Importer
                     IconManager.IconType.Any
                 );
 
-                try
-                {
-                    Base32Encoding.ToBytes(service.Secret);
-                }
-                catch
+                string normalizedSecret = OTPUriParser.NormalizeSecret(service.Secret);
+
+                if (!OTPUriParser.IsValidSecret(normalizedSecret))
                 {
                     throw new Exception($"{I18n.GetString("td.invalidsecret")} ({service.OTP.Issuer})");
                 }
@@ -98,7 +100,7 @@ namespace Guard.Core.Import.Importer
                    {
                        Id = TokenManager.GetNextId(),
                        Issuer = service.OTP.Issuer,
-                       EncryptedSecret = encryption.EncryptStringToBytes(service.Secret),
+                       EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
                        CreationTime = DateTime.Now
                    };
 

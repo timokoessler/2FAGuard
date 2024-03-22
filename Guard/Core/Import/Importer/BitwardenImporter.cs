@@ -1,9 +1,8 @@
-﻿using System.IO;
-using System.Text.Json;
-using Guard.Core.Icons;
+﻿using Guard.Core.Icons;
 using Guard.Core.Models;
 using Guard.Core.Security;
-using OtpNet;
+using System.IO;
+using System.Text.Json;
 
 namespace Guard.Core.Import.Importer
 {
@@ -87,11 +86,9 @@ namespace Guard.Core.Import.Importer
                         IconManager.IconType.Any
                     );
 
-                    try
-                    {
-                        Base32Encoding.ToBytes(item.Login.Totp);
-                    }
-                    catch
+                    string normalizedSecret = OTPUriParser.NormalizeSecret(item.Login.Totp);
+
+                    if (!OTPUriParser.IsValidSecret(normalizedSecret))
                     {
                         throw new Exception($"{I18n.GetString("td.invalidsecret")} ({item.Name})");
                     }
@@ -100,11 +97,11 @@ namespace Guard.Core.Import.Importer
                     {
                         Id = TokenManager.GetNextId(),
                         Issuer = item.Name,
-                        EncryptedSecret = encryption.EncryptStringToBytes(item.Login.Totp),
+                        EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
                         CreationTime = DateTime.Now
                     };
 
-                    if(item.Login.Username != null)
+                    if (item.Login.Username != null)
                     {
                         dbToken.EncryptedUsername = encryption.EncryptStringToBytes(item.Login.Username);
                     }

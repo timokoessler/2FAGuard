@@ -1,8 +1,8 @@
-﻿using System.Windows;
+﻿using Guard.Core;
+using Guard.Core.Security;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Guard.Core;
-using Guard.Core.Security;
 
 namespace Guard.Views.Pages.Start
 {
@@ -55,6 +55,7 @@ namespace Guard.Views.Pages.Start
             }
             catch (Exception ex)
             {
+                Log.Logger.Error("Error during registration: {0} {1}", ex.Message, ex.StackTrace);
                 RegisterProgressBar.Visibility = Visibility.Collapsed;
                 ShowEror("Error", ex.Message);
                 SaveButton.IsEnabled = true;

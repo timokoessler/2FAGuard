@@ -1,9 +1,9 @@
 ﻿using Guard.Core;
 using Guard.Core.Icons;
+using Guard.Core.Import;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Views.UIComponents;
-using OtpNet;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -181,15 +181,14 @@ namespace Guard.Views.Pages.Add
                 ShowEror(I18n.GetString("td.nosecret"));
                 return;
             }
-            try
-            {
-                Base32Encoding.ToBytes(Secret.Password);
-            }
-            catch
+
+            string normalizedSecret = OTPUriParser.NormalizeSecret(Secret.Password);
+            if (!OTPUriParser.IsValidSecret(normalizedSecret))
             {
                 ShowEror(I18n.GetString("td.invalidsecret"));
                 return;
             }
+
             // Validate digits
             if (!int.TryParse(DigitsBox.Text, out int digits) || digits < 4 || digits > 9)
             {
@@ -216,7 +215,7 @@ namespace Guard.Views.Pages.Add
                                 ? existingToken.dBToken.Id
                                 : TokenManager.GetNextId(),
                         Issuer = Issuer.Text,
-                        EncryptedSecret = encryptionHelper.EncryptStringToBytes(Secret.Password),
+                        EncryptedSecret = encryptionHelper.EncryptStringToBytes(normalizedSecret),
                         CreationTime = DateTime.Now
                     };
 

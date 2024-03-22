@@ -244,6 +244,6 @@
     <system:String x:Key="i.unsupported.arch.title">Architecture not supported</system:String>
     <system:String x:Key="i.unsupported.arch.content">The architecture of your system is not supported. 2FAGuard only supports 64-bit systems.</system:String>
     <system:String x:Key="i.unsupported.vcpp.title">Visual C++ Redistributable not installed</system:String>
-    <system:String x:Key="i.unsupported.vcpp.content">The Microsoft Visual C++ Redistributable 2015-2022 is required to run 2FAGuard. Please install it and restart the app.</system:String>
+    <system:String x:Key="i.unsupported.vcpp.content">The Microsoft Visual C++ Redistributable 2015-2022 is required to run 2FAGuard. Please install the package to be able to use 2FAGuard. If you have used the 2FAGuard installer or have just installed the package, you may need to restart your device.</system:String>
     <system:String x:Key="i.unsupported.vcpp.download">Download</system:String>
 </ResourceDictionary>

@@ -55,7 +55,7 @@ namespace Guard.Views.Pages.Start
 
         private void CardAction_Password_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.FullContentFrame.Content = new SetupPassword(true);
+            mainWindow.FullContentFrame.Content = new SetupPassword(false);
         }
 
         private async void Button_Skip_Click(object sender, RoutedEventArgs e)
