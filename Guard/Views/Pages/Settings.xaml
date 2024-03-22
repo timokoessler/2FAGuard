@@ -13,7 +13,7 @@
     d:DesignWidth="1150"
     mc:Ignorable="d">
 
-    <StackPanel Margin="0,15,0,15" d:Margin="15,15,0,15">
+    <StackPanel Margin="0,15,15,15">
         <TextBlock
             Margin="0,24,0,0"
             FontSize="20"
@@ -167,7 +167,7 @@
                     Icon="{ui:SymbolIcon Pen24}" />
             </ui:CardControl>
         </Grid>
-        <Grid Margin="0,0,0,10">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -215,6 +215,38 @@
                     </Grid>
                 </ui:CardControl.Header>
                 <ui:ToggleSwitch x:Name="ScreenLockSwitch" Grid.Column="1" />
+            </ui:CardControl>
+        </Grid>
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ui:CardControl
+                Grid.Column="0"
+                Margin="0,0,0,15"
+                Icon="{ui:SymbolIcon Delete24}">
+                <ui:CardControl.Header>
+                    <Grid Margin="0,0,35,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="{DynamicResource i.settings.reset}" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{DynamicResource i.settings.reset.description}" />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ui:Button
+                    Grid.Column="1"
+                    Click="Reset_Button_Click"
+                    Content="{DynamicResource i.settings.reset.button}"
+                    Icon="{ui:SymbolIcon ArrowReset24}" />
             </ui:CardControl>
         </Grid>
 
@@ -275,6 +307,14 @@
                         Content="{DynamicResource i.settings.issue}"
                         Icon="{ui:SymbolIcon Link24}"
                         NavigateUri="https://github.com/timokoessler/totp-token-guard/issues/new/choose" />
+                    <ui:HyperlinkButton
+                        Content="{DynamicResource i.settings.privacy}"
+                        Icon="{ui:SymbolIcon Link24}"
+                        NavigateUri="https://2faguard.app/privacy" />
+                    <ui:HyperlinkButton
+                        Content="{DynamicResource i.settings.imprint}"
+                        Icon="{ui:SymbolIcon Link24}"
+                        NavigateUri="https://2faguard.app/imprint" />
                 </StackPanel>
             </StackPanel>
         </ui:CardExpander>

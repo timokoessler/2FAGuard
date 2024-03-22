@@ -1,8 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Guard.Core;
+﻿using Guard.Core;
+using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Pages.Add;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Guard.Views.Pages.Start
 {
@@ -20,7 +21,15 @@ namespace Guard.Views.Pages.Start
             Database.Init();
             // Inits empty token list
             _ = TokenManager.GetAllTokens();
-            mainWindow.GetStatsClient()?.TrackEvent("SetupCompleted");
+            if (Auth.IsLoginEnabled())
+            {
+                mainWindow.GetStatsClient()?.TrackEvent("SetupCompleted");
+            }
+            else
+            {
+                mainWindow.GetStatsClient()?.TrackEvent("SetupCompletedInsecure");
+            }
+
         }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)

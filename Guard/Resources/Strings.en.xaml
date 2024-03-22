@@ -52,6 +52,14 @@
     <system:String x:Key="i.settings.autostart.error.disabled.user">The automatic start of the app has been deactivated in the Windows Task Manager and can only be changed there</system:String>
     <system:String x:Key="i.settings.autostart.error.alreadyenabled">The automatic start of the app is already activated</system:String>
     <system:String x:Key="i.settings.autostart.error.notenabled">The automatic start of the app cannot be deactivated as it is already deactivated</system:String>
+    <system:String x:Key="i.settings.imprint">Imprint</system:String>
+    <system:String x:Key="i.settings.privacy">Privacy</system:String>
+    <system:String x:Key="i.settings.reset">Reset app</system:String>
+    <system:String x:Key="i.settings.reset.description">Delete all tokens and settings</system:String>
+    <system:String x:Key="i.settings.reset.button">Reset</system:String>
+    <system:String x:Key="i.settings.reset.confirm.title">Are you sure?</system:String>
+    <system:String x:Key="i.settings.reset.confirm.content">Do you really want to delete all tokens and settings? This action cannot be undone.</system:String>
+    <system:String x:Key="i.settings.reset.confirm.btn">Reset</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Thanks for downloading! Please choose how you would like to secure your tokens.</system:String>
@@ -218,6 +226,7 @@
     <system:String x:Key="i.save">Save</system:String>
     <system:String x:Key="i.dialog.close">Close</system:String>
     <system:String x:Key="i.dialog.next">Next</system:String>
+    <system:String x:Key="i.dialog.cancel">Cancel</system:String>
     <system:String x:Key="i.error.unhandled.title">Unhandled exception</system:String>
     <system:String x:Key="i.error.unhandled.content">An unexpected error has occurred. Please report this error so that it can be corrected. You can find more information in the log file.</system:String>
     <system:String x:Key="i.error.unhandled.openbug">Report bug</system:String>

@@ -14,7 +14,7 @@
     <RepositoryUrl>https://github.com/timokoessler/2FAGuard</RepositoryUrl>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <ApplicationIcon>totp.ico</ApplicationIcon>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.1.0</AssemblyVersion>
     <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
     <SignAssembly>False</SignAssembly>
     <!--<PublishSingleFile>true</PublishSingleFile>-->

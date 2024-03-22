@@ -17,7 +17,7 @@ namespace Guard.Core.Storage
             );
         }
 
-        public static void Init()
+        internal static void Init()
         {
             if (db != null)
             {
@@ -28,12 +28,23 @@ namespace Guard.Core.Storage
             tokens = db.GetCollection<DBTOTPToken>("tokens");
         }
 
-        public static bool FileExists()
+        internal static void Deinit()
+        {
+            if (db == null)
+            {
+                return;
+            }
+            db.Dispose();
+            db = null;
+            tokens = null;
+        }
+
+        internal static bool FileExists()
         {
             return System.IO.File.Exists(GetDBPath());
         }
 
-        public static List<DBTOTPToken> GetAllTokens()
+        internal static List<DBTOTPToken> GetAllTokens()
         {
             if (tokens == null)
             {
@@ -42,7 +53,7 @@ namespace Guard.Core.Storage
             return tokens.FindAll().ToList();
         }
 
-        public static void AddToken(DBTOTPToken token)
+        internal static void AddToken(DBTOTPToken token)
         {
             if (tokens == null)
             {
@@ -51,7 +62,7 @@ namespace Guard.Core.Storage
             tokens.Insert(token);
         }
 
-        public static void DeleteTokenById(int id)
+        internal static void DeleteTokenById(int id)
         {
             if (tokens == null)
             {

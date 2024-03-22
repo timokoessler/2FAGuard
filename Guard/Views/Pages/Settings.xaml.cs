@@ -359,5 +359,57 @@ ZXing.Net - Copytight Michael Jahn under Apache 2.0 License
                 MaxWidth = 600
             }.ShowDialogAsync();
         }
+
+        private async void Reset_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (Auth.IsLoginEnabled())
+                {
+                    var dialog = new PasswordDialog(mainWindow.GetRootContentDialogPresenter());
+                    var result = await dialog.ShowAsync();
+
+                    if (!result.Equals(ContentDialogResult.Primary))
+                    {
+                        return;
+                    }
+
+                    string password = dialog.GetPassword();
+                    if (!Auth.CheckPassword(password))
+                    {
+                        throw new Exception(I18n.GetString("passdialog.incorrect"));
+                    }
+
+                }
+
+                var confirmResult = await new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("settings.reset.confirm.title"),
+                    Content = I18n.GetString("settings.reset.confirm.content"),
+                    CloseButtonText = I18n.GetString("dialog.cancel"),
+                    PrimaryButtonText = I18n.GetString("settings.reset.confirm.btn"),
+                    PrimaryButtonAppearance = ControlAppearance.Danger,
+                    MaxWidth = 500
+                }.ShowDialogAsync();
+
+                if (confirmResult == Wpf.Ui.Controls.MessageBoxResult.Primary)
+                {
+                    Reset.DeleteEverything();
+                    Application.Current.Shutdown();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Error resetting app: {0} {1}", ex.Message, ex.StackTrace);
+                _ = await new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = "Error",
+                    Content = ex.Message,
+                    CloseButtonText = I18n.GetString("dialog.close"),
+                    MaxWidth = 500
+                }.ShowDialogAsync();
+            }
+        }
     }
 }

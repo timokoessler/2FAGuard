@@ -53,6 +53,14 @@
     <system:String x:Key="i.settings.autostart.error.disabled.user">Der automatische Start der App wurde im Windows Task-Manager deaktiviert und kann nur dort geändert werden</system:String>
     <system:String x:Key="i.settings.autostart.error.alreadyenabled">Der automatische Start der App ist bereits aktiviert</system:String>
     <system:String x:Key="i.settings.autostart.error.notenabled">Der automatische Start der App kann nicht deaktiviert werden, da er bereits deaktiviert ist</system:String>
+    <system:String x:Key="i.settings.imprint">Impressum</system:String>
+    <system:String x:Key="i.settings.privacy">Datenschutz</system:String>
+    <system:String x:Key="i.settings.reset">App zurücksetzen</system:String>
+    <system:String x:Key="i.settings.reset.description">Löscht alle Daten und Einstellungen der App</system:String>
+    <system:String x:Key="i.settings.reset.button">Zurücksetzen</system:String>
+    <system:String x:Key="i.settings.reset.confirm.title">Bist du sicher?</system:String>
+    <system:String x:Key="i.settings.reset.confirm.content">Möchtest du wirklich alle Daten und Einstellungen der App löschen? Diese Aktion kann nicht rückgängig gemacht werden.</system:String>
+    <system:String x:Key="i.settings.reset.confirm.btn">Zurücksetzen</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wähle, wie du deine Token sichern möchtest.</system:String>
@@ -218,6 +226,7 @@
     <system:String x:Key="i.save">Speichern</system:String>
     <system:String x:Key="i.dialog.close">Schließen</system:String>
     <system:String x:Key="i.dialog.next">Weiter</system:String>
+    <system:String x:Key="i.dialog.cancel">Abbrechen</system:String>
     <system:String x:Key="i.error.unhandled.title">Unbehandelte Ausnahme</system:String>
     <system:String x:Key="i.error.unhandled.content">Es ist ein unerwarteter Fehler aufgetreten. Bitte melde diesen Fehler, damit er behoben werden kann. Mehr Informationen findest du in der Log-Datei.</system:String>
     <system:String x:Key="i.error.unhandled.openbug">Fehler melden</system:String>

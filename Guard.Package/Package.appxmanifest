@@ -12,7 +12,7 @@
     Name="TimoKssler.2FAGuard"
     Publisher="CN=F9CCA312-A05F-45A0-B7A8-E28C9DA26188"
 	ProcessorArchitecture="x64"
-    Version="1.0.0.0" />
+    Version="1.1.0.0" />
 
   <Properties>
     <DisplayName>2FAGuard</DisplayName>

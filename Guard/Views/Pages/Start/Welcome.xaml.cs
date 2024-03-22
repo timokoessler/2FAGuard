@@ -1,10 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Security;
-using Wpf.Ui;
-using Wpf.Ui.Extensions;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Guard.Views.Pages.Start
 {

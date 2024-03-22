@@ -73,7 +73,7 @@ namespace Guard
 
             if (!Auth.FileExists())
             {
-                StatsClient.TrackEvent("AppSetup");
+                StatsClient.TrackEvent($"AppSetup{InstallationInfo.GetInstallationTypeString()}");
                 FullContentFrame.Content = new Welcome();
             }
             else
