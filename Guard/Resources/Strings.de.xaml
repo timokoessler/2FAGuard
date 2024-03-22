@@ -146,6 +146,8 @@
     <system:String x:Key="i.import.password">Bitte gebe das Passwort für das Backup ein</system:String>
     <system:String x:Key="i.import.password.invalid">Das eingegebene Passwort ist nicht korrekt</system:String>
     <system:String x:Key="i.import.hotp.notsupported">Zählerbasierte Tokens (HOTP) werden nicht unterstützt</system:String>
+    <system:String x:Key="i.import.twofas">2FAS</system:String>
+    <system:String x:Key="i.import.twofas.description">Importiere ein Backup der App 2FAS</system:String>
 
     <!--  Export  -->
     <system:String x:Key="i.page.exportpage">Tokens exportieren</system:String>

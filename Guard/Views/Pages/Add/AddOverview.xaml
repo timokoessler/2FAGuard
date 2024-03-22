@@ -123,6 +123,32 @@
                 Width="350"
                 Height="95"
                 Margin="0,15,15,0"
+                Click="TwoFas_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <svgc:SvgViewbox
+                        Grid.Column="0"
+                        Height="32"
+                        Source="pack://application:,,,/Assets/twofas.svg" />
+                    <StackPanel Grid.Column="1" Margin="15,0,8,0">
+                        <ui:TextBlock
+                            FontTypography="BodyStrong"
+                            Text="{DynamicResource i.import.twofas}"
+                            TextWrapping="WrapWithOverflow" />
+                        <ui:TextBlock
+                            Appearance="Secondary"
+                            Text="{DynamicResource i.import.twofas.description}"
+                            TextWrapping="WrapWithOverflow" />
+                    </StackPanel>
+                </Grid>
+            </ui:CardAction>
+            <ui:CardAction
+                Width="350"
+                Height="95"
+                Margin="0,15,15,0"
                 Click="AuthenticatorPro_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>

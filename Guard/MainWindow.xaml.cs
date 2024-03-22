@@ -262,7 +262,7 @@ namespace Guard
         private static async void CheckLocalTime()
         {
             TimeSpan offset = await Time.GetLocalUTCTimeOffset();
-            if (offset.TotalSeconds > 10)
+            if (offset.TotalSeconds > 10 || offset.TotalSeconds < -10)
             {
                 var uiMessageBox = new Wpf.Ui.Controls.MessageBox
                 {

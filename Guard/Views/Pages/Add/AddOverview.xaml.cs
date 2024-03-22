@@ -171,5 +171,10 @@ namespace Guard.Views.Pages.Add
         {
             Import(new BackupImporter());
         }
+
+        private void TwoFas_Click(object sender, RoutedEventArgs e)
+        {
+            Import(new TwoFasImporter());
+        }
     }
 }

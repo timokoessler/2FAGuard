@@ -136,8 +136,8 @@ namespace Guard.Core.Import.Importer
                         AuthenticatorProBackup.HashAlgorithm.Sha256 => TOTPAlgorithm.SHA256,
                         AuthenticatorProBackup.HashAlgorithm.Sha512 => TOTPAlgorithm.SHA512,
                         _
-                            => throw new Exception(
-                                "Invalid AuthenticatorPro backup: Invalid algorithm"
+                        => throw new Exception(
+                                $"Invalid AuthenticatorPro: Unsupported algorithm {token.Algorithm}"
                             ),
                     };
                 }

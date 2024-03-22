@@ -49,6 +49,7 @@
     <None Remove="Assets\logo-512.png" />
     <None Remove="Assets\logo.svg" />
     <None Remove="Assets\padlock-gradient.svg" />
+    <None Remove="Assets\twofas.svg" />
     <None Remove="Assets\update.svg" />
   </ItemGroup>
 
@@ -83,6 +84,7 @@
     <Resource Include="Assets\logo-512.png" />
     <Resource Include="Assets\logo.svg" />
     <Resource Include="Assets\padlock-gradient.svg" />
+    <Resource Include="Assets\twofas.svg" />
     <Resource Include="Assets\update.svg" />
   </ItemGroup>
 
