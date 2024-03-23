@@ -123,6 +123,7 @@
     <system:String x:Key="i.import.uri.description">Import a list of TOTP URIs</system:String>
     <system:String x:Key="i.import.bitwarden">Bitwarden</system:String>
     <system:String x:Key="i.import.bitwarden.description">Import tokens from the password manager Bitwarden</system:String>
+    <system:String x:Key="i.import.bitwarden.accountencryption">The selected backup is limited to your Bitwarden account and cannot be imported by other applications. Please create a password-protected backup to import it into 2FAGuard.</system:String>
     <system:String x:Key="i.import.failed.title">Import failed</system:String>
     <system:String x:Key="i.import.failed.content">An error occurred while importing:</system:String>
     <system:String x:Key="i.import.noqrfound">Could not detect a QR code</system:String>

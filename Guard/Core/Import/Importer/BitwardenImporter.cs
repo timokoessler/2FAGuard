@@ -1,8 +1,10 @@
-﻿using Guard.Core.Icons;
+﻿using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
+using Guard.Core.Icons;
 using Guard.Core.Models;
 using Guard.Core.Security;
-using System.IO;
-using System.Text.Json;
 
 namespace Guard.Core.Import.Importer
 {
@@ -11,8 +13,14 @@ namespace Guard.Core.Import.Importer
         public string Name => "Bitwarden";
         public IImporter.ImportType Type => IImporter.ImportType.File;
         public string SupportedFileExtensions => "Bitwarden Export (*.json) | *.json";
+        private static readonly int KeySize = 32; // 256 bits
 
-        public bool RequiresPassword(string? path) => false;
+        public bool RequiresPassword(string? path)
+        {
+            ArgumentNullException.ThrowIfNull(path);
+            BitwardenExportFile exportFile = ParseFile(path);
+            return GetEncryptionType(exportFile) == BitwardenEncryptionType.Password;
+        }
 
         private readonly JsonSerializerOptions jsonSerializerOptions =
             new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true };
@@ -23,19 +31,58 @@ namespace Guard.Core.Import.Importer
             Uri
         }
 
+        private enum BitwardenEncryptionType
+        {
+            None,
+            Password,
+            Account
+        }
+
+        private BitwardenExportFile ParseFile(string path)
+        {
+            using FileStream stream = File.OpenRead(path);
+            return JsonSerializer.Deserialize<BitwardenExportFile>(stream, jsonSerializerOptions)
+                ?? throw new Exception("Could not parse Bitwarden export file");
+        }
+
+        private static BitwardenEncryptionType GetEncryptionType(BitwardenExportFile exportFile)
+        {
+            if (exportFile.Encrypted == null || exportFile.Encrypted == false)
+            {
+                return BitwardenEncryptionType.None;
+            }
+            if (exportFile.PasswordProtected == true)
+            {
+                return BitwardenEncryptionType.Password;
+            }
+            return BitwardenEncryptionType.Account;
+        }
+
         public (int total, int duplicate, int tokenID) Parse(string? path, string? password)
         {
             ArgumentNullException.ThrowIfNull(path);
-            using FileStream stream = File.OpenRead(path);
-            BitwardenExportFile? exportFile =
-                JsonSerializer.Deserialize<BitwardenExportFile>(stream, jsonSerializerOptions)
-                ?? throw new Exception("Could not parse Bitwarden export file");
-            if (exportFile.Encrypted == true)
+            BitwardenExportFile exportFile = ParseFile(path);
+
+            var encryptionType = GetEncryptionType(exportFile);
+
+            if (encryptionType == BitwardenEncryptionType.Account)
             {
-                throw new Exception("Encrypted Bitwarden export files are not supported yet");
+                throw new Exception(I18n.GetString("i.import.bitwarden.accountencryption"));
             }
 
-            if (exportFile.Items == null)
+            BitwardenExportFile.Item[]? items;
+
+            if (encryptionType == BitwardenEncryptionType.Password)
+            {
+                ArgumentNullException.ThrowIfNull(password);
+                items = DecryptItems(exportFile, password);
+            }
+            else
+            {
+                items = exportFile.Items;
+            }
+
+            if (items == null)
             {
                 throw new Exception("Invalid Bitwarden export file: No items found");
             }
@@ -46,7 +93,7 @@ namespace Guard.Core.Import.Importer
 
             EncryptionHelper encryption = Auth.GetMainEncryptionHelper();
 
-            foreach (BitwardenExportFile.Item item in exportFile.Items)
+            foreach (BitwardenExportFile.Item item in items)
             {
                 if (item.Login == null || item.Login.Totp == null)
                 {
@@ -103,7 +150,9 @@ namespace Guard.Core.Import.Importer
 
                     if (item.Login.Username != null)
                     {
-                        dbToken.EncryptedUsername = encryption.EncryptStringToBytes(item.Login.Username);
+                        dbToken.EncryptedUsername = encryption.EncryptStringToBytes(
+                            item.Login.Username
+                        );
                     }
 
                     if (icon != null && icon.Type != IconManager.IconType.Default)
@@ -125,6 +174,111 @@ namespace Guard.Core.Import.Importer
             }
 
             return (total, duplicate, tokenID);
+        }
+
+        private BitwardenExportFile.Item[]? DecryptItems(
+            BitwardenExportFile exportFile,
+            string password
+        )
+        {
+            ArgumentNullException.ThrowIfNull(exportFile.Data);
+
+            var parts = exportFile.Data.Split(".", 2)[1].Split("|");
+            if (parts.Length < 3)
+            {
+                throw new ArgumentException(
+                    "Data of Bitwarden export file is invalid (missing parts)"
+                );
+            }
+
+            byte[] iv = Convert.FromBase64String(parts[0]);
+            byte[] encrypted = Convert.FromBase64String(parts[1]);
+            byte[] mac = Convert.FromBase64String(parts[2]);
+            byte[] key = DeriveKey(exportFile, password);
+            byte[] encryptionKey = HKDF.Expand(
+                HashAlgorithmName.SHA256,
+                key,
+                KeySize,
+                Encoding.UTF8.GetBytes("enc")
+            );
+            byte[] macKey = HKDF.Expand(
+                HashAlgorithmName.SHA256,
+                key,
+                KeySize,
+                Encoding.UTF8.GetBytes("mac")
+            );
+
+            // Validate MAC
+            var hmacHashContent = new byte[iv.Length + encrypted.Length];
+            Buffer.BlockCopy(iv, 0, hmacHashContent, 0, iv.Length);
+            Buffer.BlockCopy(encrypted, 0, hmacHashContent, iv.Length, encrypted.Length);
+            using var hmac = new HMACSHA256(macKey);
+            var hash = hmac.ComputeHash(hmacHashContent);
+            if (!hash.SequenceEqual(mac))
+            {
+                throw new Exception(I18n.GetString("import.password.invalid"));
+            }
+
+            // Decrypt
+            using Aes aes = Aes.Create();
+            aes.Mode = CipherMode.CBC;
+            aes.Padding = PaddingMode.PKCS7;
+            aes.Key = encryptionKey;
+            aes.IV = iv;
+
+            using var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+            using var msDecrypt = new MemoryStream(encrypted);
+            using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
+            using var srDecrypt = new StreamReader(csDecrypt);
+            string json = srDecrypt.ReadToEnd();
+            BitwardenExportFile decryptedFile =
+                JsonSerializer.Deserialize<BitwardenExportFile>(json, jsonSerializerOptions)
+                ?? throw new Exception("Could not parse Bitwarden export file after decryption");
+            return decryptedFile.Items;
+        }
+
+        private static byte[] DeriveKey(BitwardenExportFile exportFile, string password)
+        {
+            int iterations =
+                exportFile.KdfIterations
+                ?? throw new Exception("KDF iterations not found in Bitwarden export file");
+
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+            byte[] salt = Encoding.UTF8.GetBytes(
+                exportFile.Salt ?? throw new Exception("Salt not found in Bitwarden export file")
+            );
+
+            if (exportFile.KdfType == BitwardenExportFile.BWKdfType.Pbkdf2)
+            {
+                return new Rfc2898DeriveBytes(
+                    passwordBytes,
+                    salt,
+                    iterations,
+                    HashAlgorithmName.SHA256
+                ).GetBytes(KeySize);
+            }
+            else if (exportFile.KdfType == BitwardenExportFile.BWKdfType.Argon2id)
+            {
+                int parallelism =
+                    exportFile.KdfParallelism
+                    ?? throw new Exception("KDF parallelism not found in Bitwarden export file");
+                int memorySize =
+                    exportFile.KdfMemory
+                    ?? throw new Exception("KDF memory size not found in Bitwarden export file");
+                var argon2id = new Konscious.Security.Cryptography.Argon2id(passwordBytes)
+                {
+                    DegreeOfParallelism = parallelism,
+                    Iterations = iterations,
+                    MemorySize = memorySize * 1024, // Convert to KB
+                    Salt = SHA256.HashData(salt)
+                };
+
+                return argon2id.GetBytes(KeySize);
+            }
+            else
+            {
+                throw new Exception("Unsupported KDF type in Bitwarden export file");
+            }
         }
     }
 }

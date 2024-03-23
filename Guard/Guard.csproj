@@ -28,6 +28,7 @@
 	<DefineConstants Condition=" '$(IsPortable)' == 'true' ">$(DefineConstants);PORTABLE</DefineConstants>
 	<ApplicationManifest>app.manifest</ApplicationManifest>
 	<StartupObject>Guard.Program</StartupObject>
+	<PackageProjectUrl>https://2faguard.app</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
