@@ -1,11 +1,11 @@
-﻿using Guard.Core;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Controls;
-using System.Windows;
-using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages
@@ -64,7 +64,6 @@ namespace Guard.Views.Pages
                 AutoStartSwitch.Unchecked += AutoStartSwitch_Unchecked;
             }
 
-
             WinHelloSwitch.IsChecked = Auth.IsWindowsHelloRegistered();
             WinHelloSwitch.IsEnabled = Auth.IsLoginEnabled();
             WinHelloSwitch.Checked += (sender, e) => EnableWinHello();
@@ -101,6 +100,22 @@ namespace Guard.Views.Pages
             Unloaded += (sender, e) =>
             {
                 Core.EventManager.AppThemeChanged -= OnAppThemeChanged;
+            };
+
+            TraySwitch.IsChecked = SettingsManager.Settings.MinimizeToTray;
+
+            TraySwitch.Checked += (sender, e) =>
+            {
+                SettingsManager.Settings.MinimizeToTray = true;
+                mainWindow.AddTrayIcon();
+                _ = SettingsManager.Save();
+            };
+
+            TraySwitch.Unchecked += (sender, e) =>
+            {
+                SettingsManager.Settings.MinimizeToTray = false;
+                mainWindow.RemoveTrayIcon();
+                _ = SettingsManager.Save();
             };
         }
 
@@ -379,7 +394,6 @@ ZXing.Net - Copytight Michael Jahn under Apache 2.0 License
                     {
                         throw new Exception(I18n.GetString("passdialog.incorrect"));
                     }
-
                 }
 
                 var confirmResult = await new Wpf.Ui.Controls.MessageBox
@@ -397,7 +411,6 @@ ZXing.Net - Copytight Michael Jahn under Apache 2.0 License
                     Reset.DeleteEverything();
                     Application.Current.Shutdown();
                 }
-
             }
             catch (Exception ex)
             {

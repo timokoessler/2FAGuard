@@ -53,6 +53,8 @@
     <system:String x:Key="i.settings.autostart.error.disabled.user">Der automatische Start der App wurde im Windows Task-Manager deaktiviert und kann nur dort geändert werden</system:String>
     <system:String x:Key="i.settings.autostart.error.alreadyenabled">Der automatische Start der App ist bereits aktiviert</system:String>
     <system:String x:Key="i.settings.autostart.error.notenabled">Der automatische Start der App kann nicht deaktiviert werden, da er bereits deaktiviert ist</system:String>
+    <system:String x:Key="i.settings.tray">In den Infobereich minimieren</system:String>
+    <system:String x:Key="i.settings.tray.description">App wird in den Infobereich minimiert und nicht geschlossen</system:String>
     <system:String x:Key="i.settings.imprint">Impressum</system:String>
     <system:String x:Key="i.settings.privacy">Datenschutz</system:String>
     <system:String x:Key="i.settings.reset">App zurücksetzen</system:String>
@@ -222,6 +224,10 @@
     <system:String x:Key="i.update.loading">Update wird heruntergeladen...</system:String>
     <system:String x:Key="i.update.error.title">Update fehlgeschlagen</system:String>
     <system:String x:Key="i.update.error.content">Beim Aktualisieren ist ein Fehler aufgetreten</system:String>
+
+    <!--  Tray  -->
+    <system:String x:Key="i.tray.exit">Beenden</system:String>
+    <system:String x:Key="i.tray.lock">Sperren</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">Die Anwendung 2FAGuard möchte deine Identität bestätigen.</system:String>

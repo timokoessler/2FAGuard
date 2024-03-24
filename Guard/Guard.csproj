@@ -48,6 +48,7 @@
     <None Remove="Assets\key.svg" />
     <None Remove="Assets\logo-256.png" />
     <None Remove="Assets\logo-512.png" />
+    <None Remove="Assets\logo-tray.png" />
     <None Remove="Assets\logo.svg" />
     <None Remove="Assets\padlock-gradient.svg" />
     <None Remove="Assets\twofas.svg" />
@@ -70,6 +71,7 @@
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.4" />
     <PackageReference Include="WPF-UI" Version="3.0.2" />
+    <PackageReference Include="WPF-UI.Tray" Version="3.0.2" />
     <PackageReference Include="ZXing.Net" Version="0.16.9" />
     <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.12" />
   </ItemGroup>
@@ -83,6 +85,7 @@
     <Resource Include="Assets\key.svg" />
     <Resource Include="Assets\logo-256.png" />
     <Resource Include="Assets\logo-512.png" />
+    <Resource Include="Assets\logo-tray.png" />
     <Resource Include="Assets\logo.svg" />
     <Resource Include="Assets\padlock-gradient.svg" />
     <Resource Include="Assets\twofas.svg" />

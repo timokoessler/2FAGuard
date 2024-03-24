@@ -1,4 +1,12 @@
-﻿using Guard.Core;
+﻿using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Web;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
+using Guard.Core;
 using Guard.Core.Aptabase;
 using Guard.Core.Icons;
 using Guard.Core.Installation;
@@ -6,15 +14,11 @@ using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Pages.Start;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Web;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Input;
+using Wpf.Ui.Tray.Controls;
 
 namespace Guard
 {
@@ -26,7 +30,7 @@ namespace Guard
         private readonly ContentDialogService ContentDialogService;
         private AptabaseClient? StatsClient;
         private IntPtr windowInteropHandle;
-        private bool isAutostart;
+        private readonly bool isAutostart;
 
         public MainWindow(bool autostart)
         {
@@ -81,7 +85,13 @@ namespace Guard
                 StatsClient.TrackEvent("AppOpened");
                 FullContentFrame.Content = new Login(!isAutostart);
             }
+
             CheckLocalTime();
+
+            if (SettingsManager.Settings.MinimizeToTray)
+            {
+                AddTrayIcon();
+            }
         }
 
         internal void ApplyTheme(ThemeSetting theme)
@@ -274,6 +284,99 @@ namespace Guard
 
                 _ = await uiMessageBox.ShowDialogAsync();
             }
+        }
+
+        internal void AddTrayIcon()
+        {
+            BitmapImage trayIconImage = new();
+            trayIconImage.BeginInit();
+            trayIconImage.UriSource = new("pack://application:,,,/Assets/logo-tray.png");
+            trayIconImage.EndInit();
+
+            NotifyIcon trayIcon =
+                new()
+                {
+                    FocusOnLeftClick = false,
+                    Icon = trayIconImage,
+                    ToolTip = "2FAGuard",
+                    MenuOnRightClick = true,
+                    Menu = new ContextMenu
+                    {
+                        Items =
+                        {
+                            new Wpf.Ui.Controls.MenuItem
+                            {
+                                Header = I18n.GetString("i.tray.exit"),
+                                Command = new RelayCommand<object>(Tray_Exit_Click)
+                            }
+                        }
+                    }
+                };
+            trayIcon.LeftClick += Tray_Open_Click;
+            if (Auth.IsLoginEnabled())
+            {
+                trayIcon.Menu.Items.Insert(
+                    0,
+                    new Wpf.Ui.Controls.MenuItem
+                    {
+                        Header = I18n.GetString("i.tray.lock"),
+                        Command = new RelayCommand<object>(Tray_Lock_Click)
+                    }
+                );
+            }
+            RootGrid.Children.Add(trayIcon);
+        }
+
+        internal void RemoveTrayIcon()
+        {
+            NotifyIcon? trayIcon = RootGrid.Children.OfType<NotifyIcon>().FirstOrDefault();
+            if (trayIcon != null)
+            {
+                RootGrid.Children.Remove(trayIcon);
+                trayIcon.Unregister();
+                trayIcon.Dispose();
+            }
+        }
+
+        private void Tray_Exit_Click(object? sender)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void Tray_Lock_Click(object? sender)
+        {
+            RemoveTrayIcon();
+            Logout();
+        }
+
+        private void Tray_Open_Click(NotifyIcon sender, RoutedEventArgs e)
+        {
+            Show();
+            WindowState = WindowState.Normal;
+        }
+
+        protected override void OnStateChanged(EventArgs e)
+        {
+            if (SettingsManager.Settings.MinimizeToTray)
+            {
+                if (WindowState == WindowState.Minimized)
+                {
+                    Hide();
+                }
+            }
+
+            base.OnStateChanged(e);
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (SettingsManager.Settings.MinimizeToTray)
+            {
+                e.Cancel = true;
+                WindowState = WindowState.Minimized;
+                Hide();
+            }
+            base.OnClosing(e);
         }
     }
 }

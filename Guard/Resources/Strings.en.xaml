@@ -52,6 +52,8 @@
     <system:String x:Key="i.settings.autostart.error.disabled.user">The automatic start of the app has been deactivated in the Windows Task Manager and can only be changed there</system:String>
     <system:String x:Key="i.settings.autostart.error.alreadyenabled">The automatic start of the app is already activated</system:String>
     <system:String x:Key="i.settings.autostart.error.notenabled">The automatic start of the app cannot be deactivated as it is already deactivated</system:String>
+    <system:String x:Key="i.settings.tray">Minimize and close to tray</system:String>
+    <system:String x:Key="i.settings.tray.description">Move the app to the system tray when minimizing and closing</system:String>
     <system:String x:Key="i.settings.imprint">Imprint</system:String>
     <system:String x:Key="i.settings.privacy">Privacy</system:String>
     <system:String x:Key="i.settings.reset">Reset app</system:String>
@@ -222,6 +224,10 @@
     <system:String x:Key="i.update.loading">Downloading update...</system:String>
     <system:String x:Key="i.update.error.title">Update failed</system:String>
     <system:String x:Key="i.update.error.content">An error occurred while updating</system:String>
+
+    <!--  Tray  -->
+    <system:String x:Key="i.tray.exit">Exit</system:String>
+    <system:String x:Key="i.tray.lock">Lock</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">The application 2FAGuard wants to prove your identity</system:String>

@@ -106,6 +106,28 @@
                 </ui:CardControl.Header>
                 <ui:ToggleSwitch x:Name="AutoStartSwitch" Grid.Column="1" />
             </ui:CardControl>
+            <ui:CardControl
+                Grid.Column="1"
+                Margin="15,0,0,15"
+                Icon="{ui:SymbolIcon ShareCloseTray24}">
+                <ui:CardControl.Header>
+                    <Grid Margin="0,0,35,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="{DynamicResource i.settings.tray}" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{DynamicResource i.settings.tray.description}" />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ui:ToggleSwitch x:Name="TraySwitch" Grid.Column="1" />
+            </ui:CardControl>
         </Grid>
 
         <TextBlock
