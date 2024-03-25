@@ -1,10 +1,10 @@
-﻿using System.Drawing.Drawing2D;
-using System.Text.Json;
-using System.Windows;
-using Guard.Core.Installation;
+﻿using Guard.Core.Installation;
 using Guard.Core.Models;
 using Guard.Core.Storage;
 using Microsoft.Win32;
+using System.Text;
+using System.Text.Json;
+using System.Windows;
 using Windows.Security.Credentials;
 
 namespace Guard.Core.Security
@@ -81,7 +81,7 @@ namespace Guard.Core.Security
         /// </summary>
         /// <param name="password">The user chosen password to encrypt the key with</param>
         /// <param name="enableWindowsHello">If Windows Hello should be enabled</param>
-        internal static async Task Register(string password, bool enableWindowsHello)
+        internal static async Task Register(byte[] password, bool enableWindowsHello)
         {
             if (authData == null)
             {
@@ -95,8 +95,7 @@ namespace Guard.Core.Security
             authData.KeySalt = EncryptionHelper.GenerateSalt();
             authData.LoginSalt = EncryptionHelper.GenerateSalt();
 
-            EncryptionHelper encryptionHelper = new(password, authData.LoginSalt);
-
+            EncryptionHelper encryptionHelper = new(password, Convert.FromBase64String(authData.LoginSalt));
             authData.PasswordProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
 
             if (enableWindowsHello)
@@ -160,7 +159,7 @@ namespace Guard.Core.Security
                     "Failed to register with Windows Hello because the signed challenge is empty"
                 );
             }
-            EncryptionHelper encryptionHelper = new(signedChallenge, authData.LoginSalt);
+            EncryptionHelper encryptionHelper = new(Encoding.UTF8.GetBytes(signedChallenge), Convert.FromBase64String(authData.LoginSalt));
             SetWindowsHelloProtectedKey(encryptionHelper.EncryptString(mainEncryptionKey));
         }
 
@@ -248,7 +247,7 @@ namespace Guard.Core.Security
                     "Failed to login with Windows Hello because the signed challenge is empty"
                 );
             }
-            EncryptionHelper encryptionHelper = new(signedChallenge, authData.LoginSalt);
+            EncryptionHelper encryptionHelper = new(Encoding.UTF8.GetBytes(signedChallenge), Convert.FromBase64String(authData.LoginSalt));
             mainEncryptionKey = encryptionHelper.DecryptString(windowsHelloProtectedKey);
 
             if (mainEncryptionKey == null)
@@ -257,7 +256,7 @@ namespace Guard.Core.Security
             }
         }
 
-        internal static void LoginWithPassword(string password)
+        internal static void LoginWithPassword(byte[] password)
         {
             if (authData == null || authData.LoginSalt == null)
             {
@@ -269,7 +268,7 @@ namespace Guard.Core.Security
             }
             try
             {
-                EncryptionHelper encryptionHelper = new(password, authData.LoginSalt);
+                EncryptionHelper encryptionHelper = new(password, Convert.FromBase64String(authData.LoginSalt));
                 mainEncryptionKey = encryptionHelper.DecryptString(authData.PasswordProtectedKey);
             }
             catch
@@ -305,7 +304,7 @@ namespace Guard.Core.Security
             {
                 throw new Exception("Key salt not set");
             }
-            mainEncryptionHelper ??= new EncryptionHelper(mainEncryptionKey, authData.KeySalt);
+            mainEncryptionHelper ??= new EncryptionHelper(Encoding.UTF8.GetBytes(mainEncryptionKey), Convert.FromBase64String(authData.KeySalt));
             return mainEncryptionHelper;
         }
 
@@ -339,7 +338,7 @@ namespace Guard.Core.Security
             await WindowsHello.Unregister();
         }
 
-        internal static bool CheckPassword(string password)
+        internal static bool CheckPassword(byte[] password)
         {
             if (authData == null || authData.LoginSalt == null)
             {
@@ -351,7 +350,7 @@ namespace Guard.Core.Security
             }
             try
             {
-                EncryptionHelper encryptionHelper = new(password, authData.LoginSalt);
+                EncryptionHelper encryptionHelper = new(password, Convert.FromBase64String(authData.LoginSalt));
                 _ =
                     encryptionHelper.DecryptString(authData.PasswordProtectedKey)
                     ?? throw new Exception("Invalid password");
@@ -363,7 +362,7 @@ namespace Guard.Core.Security
             return true;
         }
 
-        internal static async Task ChangePassword(string newPassword)
+        internal static async Task ChangePassword(byte[] newPassword)
         {
             if (authData == null || authData.LoginSalt == null)
             {
@@ -373,7 +372,7 @@ namespace Guard.Core.Security
             {
                 throw new Exception("Main encryption key not set");
             }
-            EncryptionHelper encryptionHelper = new(newPassword, authData.LoginSalt);
+            EncryptionHelper encryptionHelper = new(newPassword, Convert.FromBase64String(authData.LoginSalt));
             authData.PasswordProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
             authData.InsecureMainKey = null;
             await SaveFile();

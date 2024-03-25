@@ -18,12 +18,12 @@ namespace Guard.Core.Export.Exporter
             return $"2FAGuardBackup-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.2fabackup";
         }
 
-        public async Task Export(string? path, string? password)
+        public async Task Export(string? path, byte[]? password)
         {
             ArgumentNullException.ThrowIfNull(path);
             ArgumentNullException.ThrowIfNull(password);
 
-            string salt = EncryptionHelper.GenerateSalt();
+            byte[] salt = EncryptionHelper.GenerateSaltBytes();
             EncryptionHelper encryption = new(password, salt);
 
             var tokenHelpers = await TokenManager.GetAllTokens() ?? throw new Exception(I18n.GetString("export.notokens"));
@@ -60,12 +60,11 @@ namespace Guard.Core.Export.Exporter
             byte[] data = JsonSerializer.SerializeToUtf8Bytes(backup);
 
             byte[] encryptedData = encryption.EncryptBytes(data);
-            byte[] saltBytes = Convert.FromBase64String(salt);
 
-            byte[] result = new byte[prefix.Length + saltBytes.Length + encryptedData.Length];
+            byte[] result = new byte[prefix.Length + salt.Length + encryptedData.Length];
             Buffer.BlockCopy(prefix, 0, result, 0, prefix.Length);
-            Buffer.BlockCopy(saltBytes, 0, result, prefix.Length, saltBytes.Length);
-            Buffer.BlockCopy(encryptedData, 0, result, prefix.Length + saltBytes.Length, encryptedData.Length);
+            Buffer.BlockCopy(salt, 0, result, prefix.Length, salt.Length);
+            Buffer.BlockCopy(encryptedData, 0, result, prefix.Length + salt.Length, encryptedData.Length);
 
             await File.WriteAllBytesAsync(path, result);
         }

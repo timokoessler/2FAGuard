@@ -15,7 +15,7 @@ namespace Guard.Core.Import.Importer
 
         public bool RequiresPassword(string? path) => true;
 
-        public (int total, int duplicate, int tokenID) Parse(string? path, string? password)
+        public (int total, int duplicate, int tokenID) Parse(string? path, byte[]? password)
         {
             ArgumentNullException.ThrowIfNull(path);
             ArgumentNullException.ThrowIfNull(password);
@@ -45,7 +45,7 @@ namespace Guard.Core.Import.Importer
                 encryptedData.Length
             );
 
-            EncryptionHelper backupEncryption = new(password, Convert.ToBase64String(salt));
+            EncryptionHelper backupEncryption = new(password, salt);
             byte[] decryptedData = backupEncryption.DecryptBytes(encryptedData);
 
             Backup backup =

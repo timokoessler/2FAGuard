@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Guard.Core.Models;
+﻿using Guard.Core.Models;
+using System.IO;
 
 namespace Guard.Core.Import.Importer
 {
@@ -11,7 +11,7 @@ namespace Guard.Core.Import.Importer
 
         public bool RequiresPassword(string? path) => false;
 
-        public (int total, int duplicate, int tokenID) Parse(string? path, string? password)
+        public (int total, int duplicate, int tokenID) Parse(string? path, byte[]? password)
         {
             ArgumentNullException.ThrowIfNull(path);
             string[] lines = File.ReadAllLines(path);

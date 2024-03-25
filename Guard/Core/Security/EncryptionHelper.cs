@@ -1,10 +1,10 @@
-﻿using System.Security.Cryptography;
+﻿using NSec.Cryptography;
+using System.Security.Cryptography;
 using System.Text;
-using NSec.Cryptography;
 
 namespace Guard.Core.Security
 {
-    internal class EncryptionHelper
+    public class EncryptionHelper
     {
         public const int SaltSize = 16;
         private const int KeySize = 32; // 256 bit
@@ -12,9 +12,8 @@ namespace Guard.Core.Security
         private readonly Aegis256 aegis;
         private readonly Key key;
 
-        public EncryptionHelper(string password, string saltStr)
+        public EncryptionHelper(byte[] password, byte[] salt)
         {
-            byte[] salt = Convert.FromBase64String(saltStr);
             byte[] keyBytes = DeriveKey(password, salt);
             aegis = new Aegis256();
             key = Key.Import(aegis, keyBytes, KeyBlobFormat.RawSymmetricKey);
@@ -42,6 +41,11 @@ namespace Guard.Core.Security
             return result;
         }
 
+        public string EncryptBytesToString(byte[] allBytes)
+        {
+            return Convert.ToBase64String(EncryptBytes(allBytes));
+        }
+
         public string DecryptString(string encryptedText)
         {
             return Encoding.UTF8.GetString(DecryptBytes(Convert.FromBase64String(encryptedText)));
@@ -50,6 +54,11 @@ namespace Guard.Core.Security
         public string DecryptBytesToString(byte[] allBytes)
         {
             return Encoding.UTF8.GetString(DecryptBytes(allBytes));
+        }
+
+        public byte[] DecryptStringToBytes(string encryptedText)
+        {
+            return DecryptBytes(Convert.FromBase64String(encryptedText));
         }
 
         public byte[] DecryptBytes(byte[] allBytes)
@@ -66,13 +75,18 @@ namespace Guard.Core.Security
 
         public static string GenerateSalt()
         {
+            return Convert.ToBase64String(GenerateSaltBytes());
+        }
+
+        public static byte[] GenerateSaltBytes()
+        {
             byte[] salt;
             using (var rng = RandomNumberGenerator.Create())
             {
                 salt = new byte[SaltSize];
                 rng.GetBytes(salt);
             }
-            return Convert.ToBase64String(salt);
+            return salt;
         }
 
         private static byte[] GenerateNonce()
@@ -86,11 +100,9 @@ namespace Guard.Core.Security
             return nonce;
         }
 
-        private static byte[] DeriveKey(string password, byte[] salt)
+        private static byte[] DeriveKey(byte[] pass, byte[] salt)
         {
-            var argon2id = new Konscious.Security.Cryptography.Argon2id(
-                Encoding.UTF8.GetBytes(password)
-            )
+            var argon2id = new Konscious.Security.Cryptography.Argon2id(pass)
             {
                 DegreeOfParallelism = 1,
                 Iterations = 3,
@@ -101,9 +113,14 @@ namespace Guard.Core.Security
             return argon2id.GetBytes(KeySize);
         }
 
+        public static byte[] GetRandomBytes(int count)
+        {
+            return RandomNumberGenerator.GetBytes(count);
+        }
+
         public static string GetRandomBase64String(int count)
         {
-            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(count));
+            return Convert.ToBase64String(GetRandomBytes(count));
         }
 
         public static string GetRandomHexString(int count)

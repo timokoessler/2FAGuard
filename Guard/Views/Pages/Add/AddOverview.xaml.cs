@@ -52,7 +52,7 @@ namespace Guard.Views.Pages.Add
                     {
                         return;
                     }
-                    string? password = null;
+                    byte[]? password = null;
                     if (importer.RequiresPassword(openFileDialog.FileName))
                     {
                         var dialog = new PasswordDialog(mainWindow.GetRootContentDialogPresenter());
@@ -64,7 +64,7 @@ namespace Guard.Views.Pages.Add
                             return;
                         }
                         password = dialog.GetPassword();
-                        if (string.IsNullOrEmpty(password))
+                        if (password == null || password.Length == 0)
                         {
                             throw new Exception(I18n.GetString("import.password.invalid"));
                         }

@@ -1,11 +1,11 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Controls;
+using System.Windows;
+using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages
@@ -226,7 +226,7 @@ namespace Guard.Views.Pages
             {
                 try
                 {
-                    string password = dialog.GetPassword();
+                    byte[] password = dialog.GetPassword();
 
                     if (!Auth.CheckPassword(password))
                     {
@@ -389,7 +389,7 @@ ZXing.Net - Copytight Michael Jahn under Apache 2.0 License
                         return;
                     }
 
-                    string password = dialog.GetPassword();
+                    byte[] password = dialog.GetPassword();
                     if (!Auth.CheckPassword(password))
                     {
                         throw new Exception(I18n.GetString("passdialog.incorrect"));

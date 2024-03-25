@@ -1,8 +1,9 @@
-﻿using System.Windows;
+﻿using Guard.Core;
+using Guard.Core.Security;
+using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Guard.Core;
-using Guard.Core.Security;
 
 namespace Guard.Views.Pages
 {
@@ -64,11 +65,11 @@ namespace Guard.Views.Pages
 
             try
             {
-                if (!insecure && !Auth.CheckPassword(CurrentPass.Password))
+                if (!insecure && !Auth.CheckPassword(Encoding.UTF8.GetBytes(CurrentPass.Password)))
                 {
                     throw new Exception(I18n.GetString("changepass.current.incorrect"));
                 }
-                await Auth.ChangePassword(PasswordBox.Password);
+                await Auth.ChangePassword(Encoding.UTF8.GetBytes(PasswordBox.Password));
                 mainWindow.Navigate(typeof(Settings));
             }
             catch (Exception ex)

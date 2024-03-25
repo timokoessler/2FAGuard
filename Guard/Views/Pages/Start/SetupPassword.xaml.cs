@@ -1,5 +1,6 @@
 ﻿using Guard.Core;
 using Guard.Core.Security;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -50,7 +51,7 @@ namespace Guard.Views.Pages.Start
             try
             {
                 await Auth.Init();
-                await Auth.Register(PasswordBox.Password, enableWinHello);
+                await Auth.Register(Encoding.UTF8.GetBytes(PasswordBox.Password), enableWinHello);
                 mainWindow.FullContentFrame.Content = new SetupCompleted();
             }
             catch (Exception ex)

@@ -3,6 +3,7 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using System.Text;
 using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
@@ -16,8 +17,8 @@ public partial class PasswordDialog : ContentDialog
         InitializeComponent();
     }
 
-    internal string GetPassword()
+    internal byte[] GetPassword()
     {
-        return PasswordBox.Password;
+        return Encoding.UTF8.GetBytes(PasswordBox.Password);
     }
 }

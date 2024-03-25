@@ -1,10 +1,10 @@
-﻿using System.IO;
+﻿using Guard.Core.Icons;
+using Guard.Core.Models;
+using Guard.Core.Security;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using Guard.Core.Icons;
-using Guard.Core.Models;
-using Guard.Core.Security;
 
 namespace Guard.Core.Import.Importer
 {
@@ -58,7 +58,7 @@ namespace Guard.Core.Import.Importer
             return BitwardenEncryptionType.Account;
         }
 
-        public (int total, int duplicate, int tokenID) Parse(string? path, string? password)
+        public (int total, int duplicate, int tokenID) Parse(string? path, byte[]? password)
         {
             ArgumentNullException.ThrowIfNull(path);
             BitwardenExportFile exportFile = ParseFile(path);
@@ -178,7 +178,7 @@ namespace Guard.Core.Import.Importer
 
         private BitwardenExportFile.Item[]? DecryptItems(
             BitwardenExportFile exportFile,
-            string password
+            byte[] password
         )
         {
             ArgumentNullException.ThrowIfNull(exportFile.Data);
@@ -237,13 +237,12 @@ namespace Guard.Core.Import.Importer
             return decryptedFile.Items;
         }
 
-        private static byte[] DeriveKey(BitwardenExportFile exportFile, string password)
+        private static byte[] DeriveKey(BitwardenExportFile exportFile, byte[] password)
         {
             int iterations =
                 exportFile.KdfIterations
                 ?? throw new Exception("KDF iterations not found in Bitwarden export file");
 
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] salt = Encoding.UTF8.GetBytes(
                 exportFile.Salt ?? throw new Exception("Salt not found in Bitwarden export file")
             );
@@ -251,7 +250,7 @@ namespace Guard.Core.Import.Importer
             if (exportFile.KdfType == BitwardenExportFile.BWKdfType.Pbkdf2)
             {
                 return new Rfc2898DeriveBytes(
-                    passwordBytes,
+                    password,
                     salt,
                     iterations,
                     HashAlgorithmName.SHA256
@@ -265,7 +264,7 @@ namespace Guard.Core.Import.Importer
                 int memorySize =
                     exportFile.KdfMemory
                     ?? throw new Exception("KDF memory size not found in Bitwarden export file");
-                var argon2id = new Konscious.Security.Cryptography.Argon2id(passwordBytes)
+                var argon2id = new Konscious.Security.Cryptography.Argon2id(password)
                 {
                     DegreeOfParallelism = parallelism,
                     Iterations = iterations,

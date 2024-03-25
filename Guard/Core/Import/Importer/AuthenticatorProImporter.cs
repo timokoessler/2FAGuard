@@ -33,7 +33,7 @@ namespace Guard.Core.Import.Importer
         private const int KeyLength = 32;
         private const int IvLength = 12;
 
-        public (int total, int duplicate, int tokenID) Parse(string? path, string? password)
+        public (int total, int duplicate, int tokenID) Parse(string? path, byte[]? password)
         {
             ArgumentNullException.ThrowIfNull(path);
 
@@ -204,7 +204,7 @@ namespace Guard.Core.Import.Importer
             return BackupType.Invalid;
         }
 
-        private static AuthenticatorProBackup? DecryptStrong(byte[] data, string password)
+        private static AuthenticatorProBackup? DecryptStrong(byte[] data, byte[] password)
         {
             using var memoryStream = new MemoryStream(data);
             using var binaryReader = new BinaryReader(memoryStream);
@@ -216,9 +216,7 @@ namespace Guard.Core.Import.Importer
                 data.Length - StrongHeader.Length - SaltLength - IvLength
             );
 
-            var argon2id = new Konscious.Security.Cryptography.Argon2id(
-                Encoding.UTF8.GetBytes(password)
-            )
+            var argon2id = new Konscious.Security.Cryptography.Argon2id(password)
             {
                 DegreeOfParallelism = ArgonParallelism,
                 Iterations = ArgonIterations,

@@ -13,7 +13,7 @@
         internal abstract string SupportedFileExtensions { get; }
         internal abstract (int total, int duplicate, int tokenID) Parse(
             string? path,
-            string? password
+            byte[]? password
         );
         internal abstract bool RequiresPassword(string? path);
     }

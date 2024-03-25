@@ -13,7 +13,7 @@ namespace Guard.Core.Export.Exporter
             return $"2FATokens-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.txt";
         }
 
-        public async Task Export(string? path, string? password)
+        public async Task Export(string? path, byte[]? password)
         {
             ArgumentNullException.ThrowIfNull(path);
 

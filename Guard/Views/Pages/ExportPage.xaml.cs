@@ -1,10 +1,10 @@
-﻿using System.Diagnostics;
+﻿using Guard.Core;
+using Guard.Core.Export.Exporter;
+using Guard.Views.Controls;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using Guard.Core;
-using Guard.Core.Export.Exporter;
-using Guard.Views.Controls;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages
@@ -42,7 +42,7 @@ namespace Guard.Views.Pages
                     {
                         return;
                     }
-                    string? password = null;
+                    byte[]? password = null;
                     if (exporter.RequiresPassword())
                     {
                         var dialog = new PasswordDialog(mainWindow.GetRootContentDialogPresenter());
@@ -54,7 +54,7 @@ namespace Guard.Views.Pages
                             return;
                         }
                         password = dialog.GetPassword();
-                        if (string.IsNullOrEmpty(password))
+                        if (password == null || password.Length == 0)
                         {
                             throw new Exception(I18n.GetString("export.password.invalid"));
                         }

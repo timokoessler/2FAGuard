@@ -1,10 +1,11 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Security;
 using Guard.Core.Storage;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Guard.Views.Pages.Start
 {
@@ -135,7 +136,7 @@ namespace Guard.Views.Pages.Start
 
             try
             {
-                Auth.LoginWithPassword(PasswordBox.Password);
+                Auth.LoginWithPassword(Encoding.UTF8.GetBytes(PasswordBox.Password));
                 OnLoggedIn();
             }
             catch (Exception ex)

@@ -1,11 +1,11 @@
-﻿using System.IO;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.Json;
-using Guard.Core.Icons;
+﻿using Guard.Core.Icons;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using NSec.Cryptography;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
 
 namespace Guard.Core.Import.Importer
 {
@@ -17,7 +17,7 @@ namespace Guard.Core.Import.Importer
         private readonly JsonSerializerOptions jsonSerializerOptions =
             new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
-        public (int total, int duplicate, int tokenID) Parse(string? path, string? password)
+        public (int total, int duplicate, int tokenID) Parse(string? path, byte[]? password)
         {
             ArgumentNullException.ThrowIfNull(path);
             byte[] data = File.ReadAllBytes(path);
@@ -191,7 +191,7 @@ namespace Guard.Core.Import.Importer
             return false;
         }
 
-        internal TwoFasBackup.Service[]? DecryptServices(string encrypted, string pass)
+        internal TwoFasBackup.Service[]? DecryptServices(string encrypted, byte[] pass)
         {
             string[] parts = encrypted.Split(":");
             if (parts.Length != 3)
@@ -204,7 +204,7 @@ namespace Guard.Core.Import.Importer
             ReadOnlySpan<byte> iv = Convert.FromBase64String(parts[2]);
 
             ReadOnlySpan<byte> keyBytes = new Rfc2898DeriveBytes(
-                Encoding.UTF8.GetBytes(pass),
+                pass,
                 salt,
                 10000,
                 HashAlgorithmName.SHA256

@@ -1,8 +1,8 @@
-﻿using System.Drawing;
+﻿using Guard.Core.Models;
+using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using Guard.Core.Models;
 
 namespace Guard.Core.Import.Importer
 {
@@ -14,7 +14,7 @@ namespace Guard.Core.Import.Importer
 
         public bool RequiresPassword(string? path) => false;
 
-        public (int total, int duplicate, int tokenID) Parse(string? path, string? password)
+        public (int total, int duplicate, int tokenID) Parse(string? path, byte[]? password)
         {
             string? text = null;
             if (Clipboard.ContainsText())

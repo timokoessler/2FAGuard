@@ -11,11 +11,19 @@ namespace Guard.Core
         {
             await Task.Run(() =>
             {
-                List<DBTOTPToken> dbTokens = Database.GetAllTokens();
-                tokenHelpers = [];
-                foreach (DBTOTPToken dbToken in dbTokens)
+                try
                 {
-                    tokenHelpers.Add(new TOTPTokenHelper(dbToken));
+                    List<DBTOTPToken> dbTokens = Database.GetAllTokens();
+                    tokenHelpers = [];
+                    foreach (DBTOTPToken dbToken in dbTokens)
+                    {
+                        tokenHelpers.Add(new TOTPTokenHelper(dbToken));
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Logger.Error("Error loading tokens: {0} {1}", e.Message, e.StackTrace);
+                    throw new Exception("Error loading tokens");
                 }
             });
         }
