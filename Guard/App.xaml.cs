@@ -1,10 +1,11 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Installation;
+using Guard.Core.Security;
 using Guard.Core.Storage;
 using NSec.Cryptography;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Windows;
 using Windows.ApplicationModel.Activation;
 
 namespace Guard
@@ -129,6 +130,17 @@ namespace Guard
             {
                 autostart = true;
             }
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            InactivityDetector.OnFocusGained();
+            base.OnActivated(e);
+        }
+        protected override void OnDeactivated(EventArgs e)
+        {
+            InactivityDetector.OnFocusLost();
+            base.OnDeactivated(e);
         }
     }
 }
