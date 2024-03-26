@@ -247,6 +247,31 @@
             <ui:CardControl
                 Grid.Column="0"
                 Margin="0,0,0,15"
+                Icon="{ui:SymbolIcon ClockLock24}">
+                <ui:CardControl.Header>
+                    <Grid Margin="0,0,35,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="{DynamicResource i.settings.locktime}" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{DynamicResource i.settings.locktime.description}" />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ComboBox
+                    x:Name="LockTimeComboBox"
+                    Grid.Column="1"
+                    MinWidth="125" />
+            </ui:CardControl>
+            <ui:CardControl
+                Grid.Column="1"
+                Margin="15,0,0,15"
                 Icon="{ui:SymbolIcon Delete24}">
                 <ui:CardControl.Header>
                     <Grid Margin="0,0,35,0">

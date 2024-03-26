@@ -62,6 +62,15 @@
     <system:String x:Key="i.settings.reset.confirm.title">Are you sure?</system:String>
     <system:String x:Key="i.settings.reset.confirm.content">Do you really want to delete all tokens and settings? This action cannot be undone.</system:String>
     <system:String x:Key="i.settings.reset.confirm.btn">Reset</system:String>
+    <system:String x:Key="i.settings.locktime">Lock timer</system:String>
+    <system:String x:Key="i.settings.locktime.description">Lock the app after a certain time of inactivity</system:String>
+    <system:String x:Key="i.settings.locktime.never">Never</system:String>
+    <system:String x:Key="i.settings.locktime.thirtyseconds">30 seconds</system:String>
+    <system:String x:Key="i.settings.locktime.oneminute">1 minute</system:String>
+    <system:String x:Key="i.settings.locktime.fiveminutes">5 minutes</system:String>
+    <system:String x:Key="i.settings.locktime.tenminutes">10 minutes</system:String>
+    <system:String x:Key="i.settings.locktime.thirtyminutes">30 minutes</system:String>
+    <system:String x:Key="i.settings.locktime.onehour">1 hour</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Thanks for downloading! Please choose how you would like to secure your tokens.</system:String>

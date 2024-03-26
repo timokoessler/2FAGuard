@@ -14,7 +14,7 @@
 
         internal static void ClearContext()
         {
-            CurrentContext = new NavigationContext();
+            CurrentContext = [];
         }
     }
 }

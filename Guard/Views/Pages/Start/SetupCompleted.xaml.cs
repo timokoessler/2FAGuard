@@ -1,9 +1,10 @@
-﻿using Guard.Core;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Guard.Core;
+using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Pages.Add;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace Guard.Views.Pages.Start
 {
@@ -29,7 +30,7 @@ namespace Guard.Views.Pages.Start
             {
                 mainWindow.GetStatsClient()?.TrackEvent("SetupCompletedInsecure");
             }
-
+            InactivityDetector.Start();
         }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)

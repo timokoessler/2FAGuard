@@ -1,8 +1,8 @@
-﻿using Guard.Core;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Guard.Core;
 using Guard.Core.Import.Importer;
 using Guard.Views.Controls;
-using System.Windows;
-using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages.Add
@@ -38,11 +38,11 @@ namespace Guard.Views.Pages.Add
 
         private async void Import(IImporter importer)
         {
-            int total = 0,
-                duplicate = 0,
-                tokenID = 0;
             try
             {
+                int total;
+                int duplicate;
+                int tokenID;
                 if (importer.Type == IImporter.ImportType.File)
                 {
                     Microsoft.Win32.OpenFileDialog openFileDialog =

@@ -1,9 +1,9 @@
-﻿using Guard.Core;
-using Guard.Core.Security;
-using System.Text;
+﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Guard.Core;
+using Guard.Core.Security;
 
 namespace Guard.Views.Pages
 {
@@ -12,7 +12,7 @@ namespace Guard.Views.Pages
     /// </summary>
     public partial class ChangePasswordPage : Page
     {
-        private MainWindow mainWindow;
+        private readonly MainWindow mainWindow;
         private readonly bool insecure = false;
 
         public ChangePasswordPage()

@@ -1,11 +1,12 @@
-﻿using Guard.Core;
-using Guard.Core.Installation;
-using Guard.Core.Security;
-using Guard.Core.Storage;
-using System.Text;
+﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Guard.Core;
+using Guard.Core.Installation;
+using Guard.Core.Models;
+using Guard.Core.Security;
+using Guard.Core.Storage;
 
 namespace Guard.Views.Pages.Start
 {
@@ -165,6 +166,8 @@ namespace Guard.Views.Pages.Start
             mainWindow.FullContentFrame.Visibility = Visibility.Collapsed;
             mainWindow.ShowNavigation();
             mainWindow.Navigate(typeof(Home));
+
+            InactivityDetector.Start();
         }
 
         private async void WinHelloButton_Click(object sender, RoutedEventArgs e)

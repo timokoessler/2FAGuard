@@ -1,11 +1,11 @@
-﻿using Guard.Core;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.Views.Controls;
-using System.Windows;
-using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages
@@ -117,6 +117,28 @@ namespace Guard.Views.Pages
                 mainWindow.RemoveTrayIcon();
                 _ = SettingsManager.Save();
             };
+
+            string[] lockTimes = Enum.GetNames(typeof(LockTimeSetting));
+            foreach (string time in lockTimes)
+            {
+                string tag = time.ToString().ToLower();
+                LockTimeComboBox.Items.Add(
+                    new ComboBoxItem
+                    {
+                        Content = I18n.GetString($"i.settings.locktime.{time}"),
+                        Tag = tag
+                    }
+                );
+            }
+            LockTimeComboBox.SelectedItem = LockTimeComboBox
+                .Items.OfType<ComboBoxItem>()
+                .FirstOrDefault(x =>
+                    ((string)x.Tag).Equals(
+                        SettingsManager.Settings.LockTime.ToString(),
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                );
+            LockTimeComboBox.SelectionChanged += OnLockTimeSelectionChanged;
         }
 
         private void SetSelectedLanguage(LanguageSetting lang)
@@ -175,6 +197,34 @@ namespace Guard.Views.Pages
             if (e.Source != Core.EventManager.AppThemeChangedEventArgs.EventSource.Settings)
             {
                 SetSelectedTheme(e.Theme);
+            }
+        }
+
+        private void OnLockTimeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LockTimeComboBox.SelectedItem != null)
+            {
+                string time = (string)((ComboBoxItem)LockTimeComboBox.SelectedItem).Tag;
+
+                if (Enum.TryParse<LockTimeSetting>(time, true, out LockTimeSetting result))
+                {
+                    SettingsManager.Settings.LockTime = result;
+                    _ = SettingsManager.Save();
+                    if (result == LockTimeSetting.Never)
+                    {
+                        if (InactivityDetector.IsRunning())
+                        {
+                            InactivityDetector.Stop();
+                        }
+                    }
+                    else
+                    {
+                        if (!InactivityDetector.IsRunning())
+                        {
+                            InactivityDetector.Start();
+                        }
+                    }
+                }
             }
         }
 

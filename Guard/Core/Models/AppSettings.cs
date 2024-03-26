@@ -22,6 +22,17 @@
         CREATED_DESC
     }
 
+    internal enum LockTimeSetting
+    {
+        Never,
+        ThirtySeconds,
+        OneMinute,
+        FiveMinutes,
+        TenMinutes,
+        ThirtyMinutes,
+        OneHour
+    }
+
     internal class AppSettings
     {
         public ThemeSetting Theme { get; set; } = ThemeSetting.System;
@@ -31,5 +42,6 @@
         public SortOrderSetting SortOrder { get; set; } = SortOrderSetting.ISSUER_ASC;
         public bool ShowTokenCardIntro { get; set; } = true;
         public bool MinimizeToTray { get; set; } = false;
+        public LockTimeSetting LockTime { get; set; } = LockTimeSetting.TenMinutes;
     }
 }
