@@ -33,6 +33,8 @@ ShowLanguageDialog=auto
 DisableReadyPage=yes
 UsePreviousTasks=yes
 DisableFinishedPage=yes
+PrivilegesRequiredOverridesAllowed=dialog
+ArchitecturesInstallIn64BitMode=x64
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"

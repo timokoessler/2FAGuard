@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
+﻿using Guard.Core;
+using Guard.Core.Installation;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using Guard.Core;
-using Guard.Core.Installation;
 
 namespace Guard.Views.Pages.Start
 {
@@ -57,7 +57,7 @@ namespace Guard.Views.Pages.Start
                         )
                         : Path.Combine(
                             Path.GetTempPath(),
-                            $"2FAGuard-Installer-{updateInfo.Version}-{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}.exe"
+                            $"2FAGuard-Updater-{updateInfo.Version}.exe"
                         )
                 );
 
