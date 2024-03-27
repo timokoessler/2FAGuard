@@ -1,8 +1,8 @@
-﻿using Guard.Core;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Guard.Core;
 using Guard.Core.Models;
 using Guard.Views.UIComponents;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace Guard.Views.Pages
 {
@@ -29,19 +29,6 @@ namespace Guard.Views.Pages
                 Core.EventManager.TokenDeleted -= OnTokenDeleted;
                 timer?.Dispose();
             };
-
-            if (type.Equals("added"))
-            {
-                mainWindow.SetPageTitle(I18n.GetString("stp.added"));
-            }
-            else if (type.Equals("edited"))
-            {
-                mainWindow.SetPageTitle(I18n.GetString("stp.edited"));
-            }
-            else if (type.Equals("added-multiple"))
-            {
-                mainWindow.SetPageTitle(I18n.GetString("stp.added.multiple"));
-            }
 
             if (!type.Equals("added-multiple"))
             {
@@ -87,6 +74,22 @@ namespace Guard.Views.Pages
             }
 
             NavigationContextManager.ClearContext();
+
+            Loaded += (sender, e) =>
+            {
+                if (type.Equals("added"))
+                {
+                    mainWindow.SetPageTitle(I18n.GetString("stp.added"));
+                }
+                else if (type.Equals("edited"))
+                {
+                    mainWindow.SetPageTitle(I18n.GetString("stp.edited"));
+                }
+                else if (type.Equals("added-multiple"))
+                {
+                    mainWindow.SetPageTitle(I18n.GetString("stp.added.multiple"));
+                }
+            };
         }
 
         private void OnTokenDeleted(object? sender, int tokenId)

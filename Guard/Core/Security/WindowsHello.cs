@@ -93,13 +93,13 @@ namespace Guard.Core.Security
                     await Task.Delay(500); // Retry after a delay if the window is not found
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                //
+                Log.Logger.Warning("Failed to focus Windows Hello prompt {msg}", ex.Message);
             }
         }
 
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         private static extern IntPtr FindWindow(string lpClassName, IntPtr ZeroOnly);
 
         [DllImport("user32.dll")]

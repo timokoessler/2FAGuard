@@ -72,6 +72,7 @@
     <system:String x:Key="i.settings.locktime.tenminutes">10 Minuten</system:String>
     <system:String x:Key="i.settings.locktime.thirtyminutes">30 Minuten</system:String>
     <system:String x:Key="i.settings.locktime.onehour">1 Stunde</system:String>
+    <system:String x:Key="i.page.changepasswordpage">Passwort ändern</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wähle, wie du deine Token sichern möchtest.</system:String>
@@ -160,6 +161,9 @@
     <system:String x:Key="i.import.hotp.notsupported">Zählerbasierte Tokens (HOTP) werden nicht unterstützt</system:String>
     <system:String x:Key="i.import.twofas">2FAS</system:String>
     <system:String x:Key="i.import.twofas.description">Importiere ein Backup der App 2FAS</system:String>
+    <system:String x:Key="i.page.tokensettings">Token</system:String>
+    <system:String x:Key="i.page.tokensettings.add">Token hinzufügen</system:String>
+    <system:String x:Key="i.page.tokensettings.edit">Token bearbeiten</system:String>
 
     <!--  Export  -->
     <system:String x:Key="i.page.exportpage">Tokens exportieren</system:String>
@@ -202,7 +206,7 @@
     <system:String x:Key="i.td.invalidperiod">Die Gültigkeitsdauer ist ungültig</system:String>
 
     <!--  Token Success Page  -->
-    <system:String x:Key="i.page.singletokenpage">Token</system:String>
+    <system:String x:Key="i.page.tokensuccesspage">Token</system:String>
     <system:String x:Key="i.stp.added">Token hinzugefügt</system:String>
     <system:String x:Key="i.stp.home">Alle Tokens anzeigen</system:String>
     <system:String x:Key="i.stp.edited">Token bearbeitet</system:String>

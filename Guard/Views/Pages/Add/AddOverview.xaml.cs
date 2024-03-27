@@ -23,7 +23,7 @@ namespace Guard.Views.Pages.Add
         private void Manual_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             NavigationContextManager.CurrentContext["action"] = "add";
-            mainWindow.Navigate(typeof(TokenSettings));
+            mainWindow.Navigate(typeof(TokenSettings), true);
         }
 
         private void Qr_Import_Click(object sender, RoutedEventArgs e)

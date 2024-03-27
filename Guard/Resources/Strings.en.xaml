@@ -71,6 +71,7 @@
     <system:String x:Key="i.settings.locktime.tenminutes">10 minutes</system:String>
     <system:String x:Key="i.settings.locktime.thirtyminutes">30 minutes</system:String>
     <system:String x:Key="i.settings.locktime.onehour">1 hour</system:String>
+    <system:String x:Key="i.page.changepasswordpage">Change password</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Thanks for downloading! Please choose how you would like to secure your tokens.</system:String>
@@ -159,6 +160,9 @@
     <system:String x:Key="i.import.hotp.notsupported">Counter-based tokens (HOTP) are not supported</system:String>
     <system:String x:Key="i.import.twofas">2FAS</system:String>
     <system:String x:Key="i.import.twofas.description">Import a backup file from the app 2FAS</system:String>
+    <system:String x:Key="i.page.tokensettings">Token</system:String>
+    <system:String x:Key="i.page.tokensettings.add">Add token</system:String>
+    <system:String x:Key="i.page.tokensettings.edit">Edit token</system:String>
 
     <!--  Export  -->
     <system:String x:Key="i.page.exportpage">Export tokens</system:String>
@@ -202,7 +206,7 @@
     <system:String x:Key="i.settings.license">License</system:String>
 
     <!--  Token Success Page  -->
-    <system:String x:Key="i.page.singletokenpage">Token</system:String>
+    <system:String x:Key="i.page.tokensuccesspage">Token</system:String>
     <system:String x:Key="i.stp.added">Token added</system:String>
     <system:String x:Key="i.stp.home">View all tokens</system:String>
     <system:String x:Key="i.stp.edited">Token edited</system:String>

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Web;
 using System.Windows;
@@ -43,8 +44,10 @@ namespace Guard
             InitializeComponent();
             Loaded += (s, e) => OnWindowLoaded();
 
-            RootNavigation.SelectionChanged += OnNavigationSelectionChanged;
+            RootNavigation.Navigated += OnNavigated;
             ContentDialogService = new ContentDialogService();
+            RootNavigation.Navigating += (s, e) =>
+                RootNavigation.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
 
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(
                 OnUnhandledException
@@ -127,33 +130,39 @@ namespace Guard
             this.WindowBackdropType = WindowBackdropType.Mica;
         }
 
-        private void OnNavigationSelectionChanged(object sender, RoutedEventArgs e)
+        private void OnNavigated(object sender, NavigatedEventArgs e)
         {
             if (sender is not NavigationView)
             {
                 return;
             }
-
-            UpdatePageTitle();
+            UpdatePageTitle(e.Page.GetType().Name);
         }
 
-        internal void UpdatePageTitle()
+        /// <summary>
+        /// Set the title of the current page to the localized string of the given page name
+        /// </summary>
+        /// <param name="pageName"></param>
+        internal void UpdatePageTitle(string pageName)
         {
-            string? pageName = RootNavigation.SelectedItem?.TargetPageType?.Name;
-            if (pageName != null)
-            {
-                PageTitle.Text = I18n.GetString("page." + pageName.ToLower());
-            }
+            PageTitle.Text = I18n.GetString("page." + pageName.ToLower());
         }
 
+        /// <summary>
+        /// Set the title of the current page to the given string
+        /// </summary>
+        /// <param name="title"></param>
         internal void SetPageTitle(string title)
         {
             PageTitle.Text = title;
         }
 
-        internal void Navigate(Type page)
+        internal void Navigate(Type page, bool enableBackButton = false)
         {
             RootNavigation.Navigate(page);
+            RootNavigation.IsBackButtonVisible = enableBackButton
+                ? NavigationViewBackButtonVisible.Visible
+                : NavigationViewBackButtonVisible.Collapsed;
         }
 
         // TODO: Bug: Mica Backdrop is not visible after Theme change
@@ -180,7 +189,7 @@ namespace Guard
 
         internal void Logout()
         {
-            RootNavigation.Navigate(typeof(Welcome));
+            Navigate(typeof(Welcome));
             HideNavigation();
             Auth.Logout();
             FullContentFrame.Visibility = Visibility.Visible;
@@ -349,7 +358,7 @@ namespace Guard
             Logout();
         }
 
-        private void Tray_Open_Click(NotifyIcon sender, RoutedEventArgs e)
+        private void Tray_Open_Click([NotNull] NotifyIcon sender, RoutedEventArgs e)
         {
             Show();
             WindowState = WindowState.Normal;

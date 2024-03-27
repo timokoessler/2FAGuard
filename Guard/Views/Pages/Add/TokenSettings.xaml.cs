@@ -1,13 +1,13 @@
-﻿using Guard.Core;
+﻿using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using Guard.Core;
 using Guard.Core.Icons;
 using Guard.Core.Import;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Views.UIComponents;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages.Add
@@ -42,6 +42,7 @@ namespace Guard.Views.Pages.Add
                 int tokenID = (int)NavigationContextManager.CurrentContext["tokenID"];
                 existingToken = TokenManager.GetTokenById(tokenID);
             }
+
             NavigationContextManager.ClearContext();
 
             defaultIcon = IconManager.GetIcon(
@@ -83,13 +84,18 @@ namespace Guard.Views.Pages.Add
                 }
                 if (existingToken.dBToken.EncryptedUsername != null)
                 {
-                    Username.Text = encryptionHelper.DecryptBytesToString(existingToken.dBToken.EncryptedUsername);
+                    Username.Text = encryptionHelper.DecryptBytesToString(
+                        existingToken.dBToken.EncryptedUsername
+                    );
                 }
                 if (existingToken.dBToken.EncryptedNotes != null)
                 {
                     try
                     {
-                        MemoryStream notesStream = new(encryptionHelper.DecryptBytes(existingToken.dBToken.EncryptedNotes));
+                        MemoryStream notesStream =
+                            new(
+                                encryptionHelper.DecryptBytes(existingToken.dBToken.EncryptedNotes)
+                            );
                         TextRange notesRange =
                             new(Notes.Document.ContentStart, Notes.Document.ContentEnd);
                         notesRange.Load(notesStream, DataFormats.Xaml);
@@ -125,6 +131,18 @@ namespace Guard.Views.Pages.Add
 
             Issuer.SuggestionChosen += AutoSuggestBoxOnSuggestionChosen;
             Issuer.TextChanged += AutoSuggestBoxOnTextChanged;
+
+            Loaded += (sender, e) =>
+            {
+                if (action.Equals("edit"))
+                {
+                    mainWindow.SetPageTitle(I18n.GetString("i.page.tokensettings.edit"));
+                }
+                else
+                {
+                    mainWindow.SetPageTitle(I18n.GetString("i.page.tokensettings.add"));
+                }
+            };
         }
 
         private void AutoSuggestBoxOnSuggestionChosen(
@@ -241,7 +259,9 @@ namespace Guard.Views.Pages.Add
 
                 if (!string.IsNullOrWhiteSpace(Username.Text))
                 {
-                    dbToken.EncryptedUsername = encryptionHelper.EncryptStringToBytes(Username.Text);
+                    dbToken.EncryptedUsername = encryptionHelper.EncryptStringToBytes(
+                        Username.Text
+                    );
                 }
                 else
                 {

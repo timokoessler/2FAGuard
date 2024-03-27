@@ -157,7 +157,8 @@ namespace Guard.Views.UIComponents
         {
             NavigationContextManager.CurrentContext["tokenID"] = token.dBToken.Id;
             NavigationContextManager.CurrentContext["action"] = "edit";
-            mainWindow.Navigate(typeof(TokenSettings));
+            bool showBackButton = mainWindow.GetActivePage()?.Name == "Home";
+            mainWindow.Navigate(typeof(TokenSettings), showBackButton);
         }
 
         private async void MenuItem_Delete_Click(object sender, RoutedEventArgs e)

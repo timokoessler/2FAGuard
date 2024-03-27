@@ -168,7 +168,7 @@ namespace Guard.Views.Pages
                 if (Enum.TryParse<LanguageSetting>(lang, true, out LanguageSetting result))
                 {
                     I18n.ChangeLanguage(result);
-                    mainWindow.UpdatePageTitle();
+                    mainWindow.UpdatePageTitle("settings");
                 }
             }
         }
@@ -310,7 +310,7 @@ namespace Guard.Views.Pages
 
         private void Change_Pass_Button_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.Navigate(typeof(ChangePasswordPage));
+            mainWindow.Navigate(typeof(ChangePasswordPage), true);
         }
 
         private async void SetAutostartStatus()
