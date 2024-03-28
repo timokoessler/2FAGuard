@@ -190,6 +190,7 @@
     <system:String x:Key="i.td.expert">Expert settings</system:String>
     <system:String x:Key="i.td.expert.warning.title">Warning</system:String>
     <system:String x:Key="i.td.expert.warning.text">Only change these settings if you know what you are doing</system:String>
+    <system:String x:Key="i.td.expert.warning.button">Continue anyway</system:String>
     <system:String x:Key="i.td.expert.algorithm">Algorithm</system:String>
     <system:String x:Key="i.td.expert.digits">Digits</system:String>
     <system:String x:Key="i.td.expert.digits.placeholder">6 is the standard</system:String>

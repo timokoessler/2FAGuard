@@ -1,13 +1,13 @@
-﻿using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Icons;
 using Guard.Core.Import;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Views.UIComponents;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages.Add
@@ -326,6 +326,20 @@ namespace Guard.Views.Pages.Add
             InfoBar.Message = message;
             InfoBar.Severity = InfoBarSeverity.Error;
             InfoBar.IsOpen = true;
+        }
+
+        private void ExpertSettings_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Wpf.Ui.Controls.Button button)
+            {
+                button.Visibility = Visibility.Collapsed;
+            }
+
+            ExpertWarningBar.IsOpen = false;
+            ExpertWarningBar.Visibility = Visibility.Collapsed;
+            AlgorithmComboBox.IsEnabled = true;
+            DigitsBox.IsEnabled = true;
+            PeriodBox.IsEnabled = true;
         }
     }
 }

@@ -191,6 +191,7 @@
     <system:String x:Key="i.td.expert">Experten-Einstellungen</system:String>
     <system:String x:Key="i.td.expert.warning.title">Warnung</system:String>
     <system:String x:Key="i.td.expert.warning.text">Ändere diese Einstellungen nur, wenn du weißt, was du tust.</system:String>
+    <system:String x:Key="i.td.expert.warning.button">Trotzdem fortfahren</system:String>
     <system:String x:Key="i.td.expert.algorithm">Algorithmus</system:String>
     <system:String x:Key="i.td.expert.digits">Anzahl Ziffern</system:String>
     <system:String x:Key="i.td.expert.digits.placeholder">6 ist der Standard</system:String>

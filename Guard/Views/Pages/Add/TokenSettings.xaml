@@ -115,11 +115,29 @@
                 FontWeight="Medium"
                 Text="{DynamicResource i.td.expert}" />
 
+            <ui:InfoBar
+                x:Name="ExpertWarningBar"
+                Title="{DynamicResource i.td.expert.warning.title}"
+                Width="320"
+                Margin="0,20,0,0"
+                IsClosable="False"
+                IsOpen="True"
+                Message="{DynamicResource i.td.expert.warning.text}"
+                Severity="Warning" />
+            <ui:Button
+                Margin="0,15,0,0"
+                Click="ExpertSettings_Button_Click"
+                Content="{DynamicResource i.td.expert.warning.button}"
+                Icon="{ui:SymbolIcon Warning24}" />
+
             <Label
                 Margin="0,20,0,0"
                 Content="{DynamicResource i.td.expert.algorithm}"
                 Target="{Binding ElementName=AlgorithmComboBox}" />
-            <ComboBox x:Name="AlgorithmComboBox" Margin="0,2,0,0" />
+            <ComboBox
+                x:Name="AlgorithmComboBox"
+                Margin="0,2,0,0"
+                IsEnabled="False" />
             <Label
                 Margin="0,15,0,0"
                 Content="{DynamicResource i.td.expert.digits}"
@@ -128,6 +146,7 @@
                 x:Name="DigitsBox"
                 Margin="0,2,0,0"
                 Icon="{ui:SymbolIcon NumberSymbolSquare24}"
+                IsEnabled="False"
                 PlaceholderEnabled="True"
                 PlaceholderText="{DynamicResource i.td.expert.digits.placeholder}"
                 Value="6" />
@@ -139,17 +158,10 @@
                 x:Name="PeriodBox"
                 Margin="0,2,0,0"
                 Icon="{ui:SymbolIcon Timer24}"
+                IsEnabled="False"
                 PlaceholderEnabled="True"
                 PlaceholderText="{DynamicResource i.td.expert.period.placeholder}"
                 Value="30" />
-            <ui:InfoBar
-                Title="{DynamicResource i.td.expert.warning.title}"
-                Width="320"
-                Margin="0,20,0,0"
-                IsOpen="True"
-                Message="{DynamicResource i.td.expert.warning.text}"
-                Severity="Warning" />
         </StackPanel>
-
     </Grid>
 </Page>
