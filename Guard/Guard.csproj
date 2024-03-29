@@ -7,14 +7,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <Title>2FAGuard</Title>
-    <Version>$(AssemblyVersion)</Version>
+    <Version>1.1.0</Version>
     <Authors>Timo Kössler and Open Source Contributors</Authors>
     <Copyright>$(Authors)</Copyright>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/timokoessler/2FAGuard</RepositoryUrl>
-    <FileVersion>$(AssemblyVersion)</FileVersion>
+    <FileVersion>$(Version)</FileVersion>
     <ApplicationIcon>totp.ico</ApplicationIcon>
-    <AssemblyVersion>1.1.0</AssemblyVersion>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
     <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
     <SignAssembly>False</SignAssembly>
     <!--<PublishSingleFile>true</PublishSingleFile>-->

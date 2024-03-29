@@ -35,6 +35,9 @@ UsePreviousTasks=yes
 DisableFinishedPage=yes
 PrivilegesRequiredOverridesAllowed=dialog
 ArchitecturesInstallIn64BitMode=x64
+SignTool=mysigntool sign /n $qOpen Source Developer, Timo Kössler$q /t $qhttp://time.certum.pl/$q /fd sha256 /d $q2FAGuard Installer$q /du $qhttps://2faguard.app$q $f
+SignedUninstaller=yes
+SignToolRetryCount=0
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
