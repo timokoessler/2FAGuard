@@ -1,5 +1,6 @@
-﻿using Guard.Core.Installation;
-using System.IO;
+﻿using System.IO;
+using Guard.Core.Installation;
+using Guard.Core.Security;
 
 namespace Guard.Core.Storage
 {
@@ -9,6 +10,8 @@ namespace Guard.Core.Storage
         {
             string path = InstallationInfo.GetAppDataFolderPath();
             Database.Deinit();
+            _ = WindowsHello.Unregister();
+            Auth.DeleteWindowsHelloProtectedKey();
 
             string[] files = ["auth-keys", "settings", "TokenDatabase.db", "TokenDatabase-log.db"];
 

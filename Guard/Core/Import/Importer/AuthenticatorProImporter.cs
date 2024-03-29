@@ -1,10 +1,10 @@
-﻿using Guard.Core.Icons;
+﻿using System.IO;
+using System.Text;
+using System.Text.Json;
+using Guard.Core.Icons;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using NSec.Cryptography;
-using System.IO;
-using System.Text;
-using System.Text.Json;
 
 namespace Guard.Core.Import.Importer
 {
@@ -133,7 +133,7 @@ namespace Guard.Core.Import.Importer
                         AuthenticatorProBackup.HashAlgorithm.Sha256 => TOTPAlgorithm.SHA256,
                         AuthenticatorProBackup.HashAlgorithm.Sha512 => TOTPAlgorithm.SHA512,
                         _
-                        => throw new Exception(
+                            => throw new Exception(
                                 $"Invalid AuthenticatorPro: Unsupported algorithm {token.Algorithm}"
                             ),
                     };

@@ -31,8 +31,12 @@
             public int? CopyCount { get; set; }
             public int? Ranking { get; set; }
             public string? Icon { get; set; }
+            public string? Pin { get; set; }
         }
 
-        public Authenticator[]? Authenticators { get; set; }
+        public IEnumerable<Authenticator>? Authenticators { get; set; }
+        public IEnumerable<object>? Categories { get; set; }
+        public IEnumerable<object>? AuthenticatorCategories { get; set; }
+        public IEnumerable<object>? CustomIcons { get; set; }
     }
 }

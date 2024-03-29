@@ -178,6 +178,8 @@
     <system:String x:Key="i.export.success.content">Your tokens have been exported successfully.</system:String>
     <system:String x:Key="i.export.success.open">Open folder</system:String>
     <system:String x:Key="i.export.notokens">There are no tokens that can be exported</system:String>
+    <system:String x:Key="i.export.authpro">Authenticator Pro</system:String>
+    <system:String x:Key="i.export.authpro.description">Export tokens as a Authenticator Pro backup file</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">General information</system:String>

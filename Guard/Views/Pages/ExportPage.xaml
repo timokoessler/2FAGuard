@@ -55,6 +55,32 @@
                         TextWrapping="WrapWithOverflow" />
                 </StackPanel>
             </ui:CardAction>
+            <ui:CardAction
+                Width="350"
+                Height="95"
+                Margin="0,15,15,0"
+                Click="AuthenticatorPro_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <svgc:SvgViewbox
+                        Grid.Column="0"
+                        Height="32"
+                        Source="pack://application:,,,/Assets/authenticatorpro.svg" />
+                    <StackPanel Grid.Column="1" Margin="15,0,8,0">
+                        <ui:TextBlock
+                            FontTypography="BodyStrong"
+                            Text="{DynamicResource i.export.authpro}"
+                            TextWrapping="WrapWithOverflow" />
+                        <ui:TextBlock
+                            Appearance="Secondary"
+                            Text="{DynamicResource i.export.authpro.description}"
+                            TextWrapping="WrapWithOverflow" />
+                    </StackPanel>
+                </Grid>
+            </ui:CardAction>
         </WrapPanel>
     </StackPanel>
 </Page>

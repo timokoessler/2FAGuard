@@ -1,6 +1,6 @@
-﻿using NSec.Cryptography;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
+using NSec.Cryptography;
 
 namespace Guard.Core.Security
 {
@@ -80,24 +80,12 @@ namespace Guard.Core.Security
 
         public static byte[] GenerateSaltBytes()
         {
-            byte[] salt;
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                salt = new byte[SaltSize];
-                rng.GetBytes(salt);
-            }
-            return salt;
+            return GetRandomBytes(SaltSize);
         }
 
         private static byte[] GenerateNonce()
         {
-            byte[] nonce;
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                nonce = new byte[NonceSize];
-                rng.GetBytes(nonce);
-            }
-            return nonce;
+            return GetRandomBytes(NonceSize);
         }
 
         private static byte[] DeriveKey(byte[] pass, byte[] salt)
