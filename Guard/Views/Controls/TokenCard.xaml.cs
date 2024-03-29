@@ -37,9 +37,17 @@ namespace Guard.Views.UIComponents
             mainWindow = (MainWindow)Application.Current.MainWindow;
 
             Issuer.Text = token.dBToken.Issuer;
+            if (token.dBToken.Issuer.Length > 18)
+            {
+                Issuer.ToolTip = token.dBToken.Issuer;
+            }
             if (token.Username != null)
             {
                 Username.Text = token.Username;
+                if (token.Username.Length > 22)
+                {
+                    Username.ToolTip = token.Username;
+                }
             }
             else
             {

@@ -5,13 +5,12 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Windows;
 using Microsoft.Security.Extensions;
-using static Guard.Core.Installation.Updater;
 
 namespace Guard.Core.Installation
 {
     public class Updater
     {
-        private static readonly string updateApiUrl = "http://localhost:4321/api/update";
+        public static readonly string updateApiUrl = "https://2faguard.app/api/update";
         public static readonly HttpClient httpClient = new();
         private static readonly JsonSerializerOptions jsonSerializerOptions =
             new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
