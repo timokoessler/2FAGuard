@@ -16,7 +16,11 @@ namespace Guard.Core.Installation
 #if PORTABLE
             return true;
 #endif
+#pragma warning disable IDE0079 // Unnötige Unterdrückung entfernen
+#pragma warning disable CS0162
             return false;
+#pragma warning restore CS0162
+#pragma warning restore IDE0079
         }
 
         internal static InstallationType GetInstallationType()
