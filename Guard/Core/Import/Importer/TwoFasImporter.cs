@@ -1,11 +1,11 @@
-﻿using Guard.Core.Icons;
-using Guard.Core.Models;
-using Guard.Core.Security;
-using NSec.Cryptography;
-using System.IO;
+﻿using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using Guard.Core.Icons;
+using Guard.Core.Models;
+using Guard.Core.Security;
+using NSec.Cryptography;
 
 namespace Guard.Core.Import.Importer
 {
@@ -82,7 +82,6 @@ namespace Guard.Core.Import.Importer
 
                 IconManager.TotpIcon icon = IconManager.GetIcon(
                     service.OTP.Issuer,
-                    IconManager.IconColor.Colored,
                     IconManager.IconType.Any
                 );
 

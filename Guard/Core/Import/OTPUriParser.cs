@@ -127,7 +127,6 @@ namespace Guard.Core.Import
 
             IconManager.TotpIcon icon = IconManager.GetIcon(
                 otpUri.Issuer,
-                IconManager.IconColor.Colored,
                 IconManager.IconType.Any
             );
 
@@ -161,11 +160,9 @@ namespace Guard.Core.Import
 
         internal static string NormalizeSecret(string secret)
         {
-
-            return new string(secret.ToCharArray()
-                .Where(c => !Char.IsWhiteSpace(c))
-                .ToArray()).ToUpper();
-
+            return new string(
+                secret.ToCharArray().Where(c => !Char.IsWhiteSpace(c)).ToArray()
+            ).ToUpper();
         }
 
         internal static bool IsValidSecret(string secret)
@@ -180,6 +177,5 @@ namespace Guard.Core.Import
                 return false;
             }
         }
-
     }
 }

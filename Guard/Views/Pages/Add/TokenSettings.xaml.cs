@@ -1,13 +1,13 @@
-﻿using Guard.Core;
+﻿using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using Guard.Core;
 using Guard.Core.Icons;
 using Guard.Core.Import;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Views.UIComponents;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages.Add
@@ -45,11 +45,7 @@ namespace Guard.Views.Pages.Add
 
             NavigationContextManager.ClearContext();
 
-            defaultIcon = IconManager.GetIcon(
-                "default",
-                IconManager.IconColor.Colored,
-                IconManager.IconType.Default
-            );
+            defaultIcon = IconManager.GetIcon("default", IconManager.IconType.Default);
             IconSvgView.SvgSource = defaultIcon.Svg;
             Issuer.OriginalItemsSource = IconManager.GetIconNames();
 
@@ -75,7 +71,6 @@ namespace Guard.Views.Pages.Add
                 {
                     selectedIcon = IconManager.GetIcon(
                         existingToken.dBToken.Icon,
-                        IconManager.IconColor.Colored,
                         existingToken.dBToken.IconType ?? IconManager.IconType.Any
                     );
                     IconSvgView.SvgSource = selectedIcon.Svg;
@@ -156,11 +151,7 @@ namespace Guard.Views.Pages.Add
             if (args.SelectedItem is not string selectedSuggestBoxItem)
                 return;
 
-            selectedIcon = IconManager.GetIcon(
-                selectedSuggestBoxItem,
-                IconManager.IconColor.Colored,
-                IconManager.IconType.Any
-            );
+            selectedIcon = IconManager.GetIcon(selectedSuggestBoxItem, IconManager.IconType.Any);
             IconSvgView.SvgSource = selectedIcon.Svg;
             ImageLicense.Text = IconManager.GetLicense(selectedIcon);
             NoIconText.Visibility = Visibility.Collapsed;

@@ -1,10 +1,10 @@
-﻿using Guard.Core.Icons;
-using Guard.Core.Models;
-using Guard.Core.Security;
-using System.IO;
+﻿using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using Guard.Core.Icons;
+using Guard.Core.Models;
+using Guard.Core.Security;
 
 namespace Guard.Core.Import.Importer
 {
@@ -129,7 +129,6 @@ namespace Guard.Core.Import.Importer
 
                     IconManager.TotpIcon icon = IconManager.GetIcon(
                         item.Name,
-                        IconManager.IconColor.Colored,
                         IconManager.IconType.Any
                     );
 

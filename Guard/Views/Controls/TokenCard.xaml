@@ -41,11 +41,14 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <svgc:SvgViewbox
-                x:Name="SvgIconView"
+            <StackPanel
                 Grid.Column="0"
                 Width="45"
-                Margin="22,0,0,0" />
+                Margin="22,0,0,0"
+                VerticalAlignment="Center">
+                <svgc:SvgViewbox x:Name="SvgIconView" />
+                <ui:Image x:Name="ImageIconView" />
+            </StackPanel>
 
             <StackPanel
                 Grid.Column="1"

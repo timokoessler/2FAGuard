@@ -58,19 +58,14 @@ namespace Guard.Views.UIComponents
             {
                 icon = IconManager.GetIcon(
                     token.dBToken.Icon,
-                    IconManager.IconColor.Colored,
-                    (IconManager.IconType)token.dBToken.IconType
+                    token.dBToken.IconType ?? IconManager.IconType.Any
                 );
 
                 SvgIconView.SvgSource = icon.Svg;
             }
             else
             {
-                icon = IconManager.GetIcon(
-                    "default",
-                    IconManager.IconColor.Colored,
-                    IconManager.IconType.Default
-                );
+                icon = IconManager.GetIcon("default", IconManager.IconType.Default);
                 SvgIconView.SvgSource = icon.Svg;
             }
 

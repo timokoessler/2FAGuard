@@ -1,27 +1,30 @@
-﻿namespace Guard.Core.Icons
+﻿using System.IO;
+using Guard.Core.Installation;
+
+namespace Guard.Core.Icons
 {
     class IconManager
     {
-        public enum IconColor
-        {
-            Colored,
-            Dark,
-            Light
-        }
-
         internal enum IconType
         {
             Default,
             Any,
             SimpleIcons,
+            Custom
         }
 
         internal class TotpIcon
         {
             public required IconType Type { get; set; }
-            public required string Svg { get; set; }
             public required string Name { get; set; }
+            public string? Svg { get; set; }
+            public string? Path { get; set; }
         }
+
+        private static readonly string customIconsPath = Path.Combine(
+            InstallationInfo.GetAppDataFolderPath(),
+            "icons"
+        );
 
         public static void LoadIcons()
         {
@@ -44,41 +47,20 @@
                 Name = "default",
             };
 
-        public static TotpIcon GetIcon(string name, IconColor color, IconType type)
+        public static TotpIcon GetIcon(string name, IconType type)
         {
             if (name == null || name == "default" || type == IconType.Default)
             {
                 return defaultIcon;
             }
-            SimpleIcon? simpleIcon = SimpleIconsManager.GetIcon(name);
 
-            if (simpleIcon == null)
+            if (type == IconType.SimpleIcons || type == IconType.Any)
             {
-                return defaultIcon;
+                TotpIcon? simpleIcon = SimpleIconsManager.GetTotpIcon(name);
+                return simpleIcon ?? defaultIcon;
             }
 
-            string hexColor;
-
-            if (color == IconColor.Colored && simpleIcon.H != null)
-            {
-                hexColor = $"#{simpleIcon.H}";
-            }
-            else if (color == IconColor.Dark)
-            {
-                hexColor = "#313131";
-            }
-            else
-            {
-                hexColor = "#ffffff";
-            }
-
-            return new TotpIcon
-            {
-                Type = IconType.SimpleIcons,
-                Svg =
-                    $"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"{hexColor}\"><path d=\"{simpleIcon.P}\"/></svg>",
-                Name = name,
-            };
+            return defaultIcon;
         }
 
         public static string GetLicense(TotpIcon icon)

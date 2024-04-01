@@ -87,7 +87,6 @@ namespace Guard.Core.Import.Importer
 
                 IconManager.TotpIcon icon = IconManager.GetIcon(
                     token.Issuer,
-                    IconManager.IconColor.Colored,
                     IconManager.IconType.Any
                 );
 
