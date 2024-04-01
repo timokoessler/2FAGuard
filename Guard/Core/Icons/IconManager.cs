@@ -18,7 +18,7 @@ namespace Guard.Core.Icons
             public required IconType Type { get; set; }
             public required string Name { get; set; }
             public string? Svg { get; set; }
-            public string? Path { get; set; }
+            public Uri? Path { get; set; }
         }
 
         private static readonly string customIconsPath = Path.Combine(
@@ -60,6 +60,16 @@ namespace Guard.Core.Icons
                 return simpleIcon ?? defaultIcon;
             }
 
+            if (type == IconType.Custom)
+            {
+                return new TotpIcon
+                {
+                    Type = IconType.Custom,
+                    Name = name,
+                    Path = new Uri(Path.Combine(customIconsPath, name)),
+                };
+            }
+
             return defaultIcon;
         }
 
@@ -71,6 +81,49 @@ namespace Guard.Core.Icons
                 return string.IsNullOrEmpty(siLicense) ? string.Empty : siLicense;
             }
             return string.Empty;
+        }
+
+        public static async Task<string> AddCustomIcon(string path)
+        {
+            if (!Directory.Exists(customIconsPath))
+            {
+                Directory.CreateDirectory(customIconsPath);
+            }
+
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException("The source file does not exist.");
+            }
+
+            if (new FileInfo(path).Length > 1000000)
+            {
+                throw new Exception(I18n.GetString("i.td.customicon.tolarge"));
+            }
+
+            string id = Guid.NewGuid().ToString();
+            string ext =
+                Path.GetExtension(path)
+                ?? throw new Exception("The file extension could not be determined.");
+            string[] allowedExtensions = [".svg", ".png", ".jpg", ".jpeg"];
+            if (!allowedExtensions.Contains(ext))
+            {
+                throw new Exception("The file extension is not allowed.");
+            }
+
+            string destPath = Path.Combine(customIconsPath, $"{id}{ext}");
+
+            await Task.Run(() => File.Copy(path, destPath));
+
+            return $"{id}{ext}";
+        }
+
+        public static void RemoveCustomIcon(string name)
+        {
+            string path = Path.Combine(customIconsPath, name);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
         }
     }
 }

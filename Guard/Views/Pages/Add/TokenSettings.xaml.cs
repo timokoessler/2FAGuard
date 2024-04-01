@@ -1,13 +1,16 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media.Imaging;
 using Guard.Core;
 using Guard.Core.Icons;
 using Guard.Core.Import;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Views.UIComponents;
+using Microsoft.Win32;
 using Wpf.Ui.Controls;
 
 namespace Guard.Views.Pages.Add
@@ -73,9 +76,18 @@ namespace Guard.Views.Pages.Add
                         existingToken.dBToken.Icon,
                         existingToken.dBToken.IconType ?? IconManager.IconType.Any
                     );
-                    IconSvgView.SvgSource = selectedIcon.Svg;
-                    ImageLicense.Text = IconManager.GetLicense(selectedIcon);
+
                     NoIconText.Visibility = Visibility.Collapsed;
+
+                    if (selectedIcon.Type == IconManager.IconType.Custom)
+                    {
+                        showCustomImage();
+                    }
+                    else
+                    {
+                        IconSvgView.SvgSource = selectedIcon.Svg;
+                        ImageLicense.Text = IconManager.GetLicense(selectedIcon);
+                    }
                 }
                 if (existingToken.dBToken.EncryptedUsername != null)
                 {
@@ -151,7 +163,16 @@ namespace Guard.Views.Pages.Add
             if (args.SelectedItem is not string selectedSuggestBoxItem)
                 return;
 
+            if (selectedIcon != null && selectedIcon.Type == IconManager.IconType.Custom)
+            {
+                IconManager.RemoveCustomIcon(selectedIcon.Name);
+            }
+
+            ImageIconView.Source = null;
+            ImageIconView.Visibility = Visibility.Collapsed;
+            IconSvgView.Visibility = Visibility.Visible;
             selectedIcon = IconManager.GetIcon(selectedSuggestBoxItem, IconManager.IconType.Any);
+            IconSvgView.Source = null;
             IconSvgView.SvgSource = selectedIcon.Svg;
             ImageLicense.Text = IconManager.GetLicense(selectedIcon);
             NoIconText.Visibility = Visibility.Collapsed;
@@ -162,12 +183,19 @@ namespace Guard.Views.Pages.Add
             AutoSuggestBoxTextChangedEventArgs args
         )
         {
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            if (args.Reason != AutoSuggestionBoxTextChangeReason.UserInput)
             {
-                IconSvgView.SvgSource = defaultIcon.Svg;
-                ImageLicense.Text = string.Empty;
-                NoIconText.Visibility = Visibility.Visible;
+                return;
             }
+
+            if (selectedIcon != null && selectedIcon.Type == IconManager.IconType.Custom)
+            {
+                return;
+            }
+
+            IconSvgView.SvgSource = defaultIcon.Svg;
+            ImageLicense.Text = string.Empty;
+            NoIconText.Visibility = Visibility.Visible;
         }
 
         private void FormatButton_Click(object sender, RoutedEventArgs e)
@@ -331,6 +359,75 @@ namespace Guard.Views.Pages.Add
             AlgorithmComboBox.IsEnabled = true;
             DigitsBox.IsEnabled = true;
             PeriodBox.IsEnabled = true;
+        }
+
+        private async void CustomIcon_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog =
+                    new()
+                    {
+                        Filter = "Icon (*.jpg, *.jpeg, *.png, *.svg) | *.jpg; *.jpeg; *.png; *.svg",
+                        Title = I18n.GetString("i.td.customicon.dialog.title")
+                    };
+                bool? result = openFileDialog.ShowDialog();
+                if (result != true)
+                {
+                    return;
+                }
+                if (string.IsNullOrEmpty(openFileDialog.FileName))
+                {
+                    return;
+                }
+
+                string name = await IconManager.AddCustomIcon(openFileDialog.FileName);
+
+                ImageIconView.Source = null;
+                IconSvgView.SvgSource = null;
+                IconSvgView.Source = null;
+
+                if (selectedIcon != null && selectedIcon.Type == IconManager.IconType.Custom)
+                {
+                    IconManager.RemoveCustomIcon(selectedIcon.Name);
+                }
+
+                selectedIcon = IconManager.GetIcon(name, IconManager.IconType.Custom);
+
+                showCustomImage();
+            }
+            catch (Exception ex)
+            {
+                ShowEror(ex.Message);
+            }
+        }
+
+        private void showCustomImage()
+        {
+            if (selectedIcon == null || selectedIcon.Path == null)
+            {
+                return;
+            }
+            if (selectedIcon.Path.AbsolutePath.EndsWith(".svg"))
+            {
+                ImageIconView.Visibility = Visibility.Collapsed;
+                IconSvgView.Visibility = Visibility.Visible;
+                IconSvgView.Source = selectedIcon.Path;
+            }
+            else
+            {
+                IconSvgView.Visibility = Visibility.Collapsed;
+                ImageIconView.Visibility = Visibility.Visible;
+
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.UriSource = selectedIcon.Path;
+                bitmap.EndInit();
+                ImageIconView.Source = bitmap;
+            }
+            ImageLicense.Text = string.Empty;
+            NoIconText.Visibility = Visibility.Collapsed;
         }
     }
 }

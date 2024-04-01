@@ -207,6 +207,9 @@
     <system:String x:Key="i.td.invaliddigits">The number of digits is invalid</system:String>
     <system:String x:Key="i.td.invalidperiod">The validity period is invalid</system:String>
     <system:String x:Key="i.settings.license">License</system:String>
+    <system:String x:Key="i.td.customicon.btn">Custom icon</system:String>
+    <system:String x:Key="i.td.customicon.dialog.title">Select an icon</system:String>
+    <system:String x:Key="i.td.customicon.tolarge">Only images with a maximum size of 1MB are supported</system:String>
 
     <!--  Token Success Page  -->
     <system:String x:Key="i.page.tokensuccesspage">Token</system:String>

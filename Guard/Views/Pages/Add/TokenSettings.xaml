@@ -22,13 +22,15 @@
         <StackPanel
             Grid.Column="0"
             Width="200"
-            Margin="0,0,20,0">
-            <svgc:SvgViewbox
-                x:Name="IconSvgView"
+            Margin="0,0,25,0">
+            <StackPanel
                 Grid.Column="0"
                 Width="60"
                 Margin="0,80,0,25"
-                HorizontalAlignment="Center" />
+                HorizontalAlignment="Center">
+                <svgc:SvgViewbox x:Name="IconSvgView" />
+                <ui:Image x:Name="ImageIconView" Visibility="Collapsed" />
+            </StackPanel>
             <ui:TextBlock
                 x:Name="NoIconText"
                 Opacity="0.7"
@@ -38,6 +40,12 @@
                 x:Name="ImageLicense"
                 Opacity="0.7"
                 TextWrapping="Wrap" />
+            <ui:Button
+                Margin="0,15,0,0"
+                HorizontalAlignment="Center"
+                Click="CustomIcon_Click"
+                Content="{DynamicResource i.td.customicon.btn}"
+                Icon="{ui:SymbolIcon ImageAdd24}" />
         </StackPanel>
         <StackPanel
             Grid.Column="1"

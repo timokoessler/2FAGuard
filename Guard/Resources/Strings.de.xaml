@@ -207,6 +207,9 @@
     <system:String x:Key="i.td.invalidsecret">Der geheime Schlüssel ist ungültig</system:String>
     <system:String x:Key="i.td.invaliddigits">Die Anzahl der Ziffern ist ungültig</system:String>
     <system:String x:Key="i.td.invalidperiod">Die Gültigkeitsdauer ist ungültig</system:String>
+    <system:String x:Key="i.td.customicon.btn">Eigenes Icon</system:String>
+    <system:String x:Key="i.td.customicon.dialog.title">Eigenes Icon auswählen</system:String>
+    <system:String x:Key="i.td.customicon.tolarge">Ein Icon darf maximal 1 MB groß sein</system:String>
 
     <!--  Token Success Page  -->
     <system:String x:Key="i.page.tokensuccesspage">Token</system:String>

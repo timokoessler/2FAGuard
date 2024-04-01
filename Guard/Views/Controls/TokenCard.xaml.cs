@@ -61,7 +61,29 @@ namespace Guard.Views.UIComponents
                     token.dBToken.IconType ?? IconManager.IconType.Any
                 );
 
-                SvgIconView.SvgSource = icon.Svg;
+                if (icon.Type != IconManager.IconType.Custom)
+                {
+                    SvgIconView.SvgSource = icon.Svg;
+                }
+                else
+                {
+                    if (icon.Path != null && icon.Path.AbsolutePath.EndsWith(".svg"))
+                    {
+                        SvgIconView.Source = icon.Path;
+                    }
+                    else
+                    {
+                        ImageIconView.Visibility = Visibility.Visible;
+                        SvgIconView.Visibility = Visibility.Collapsed;
+
+                        var bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.UriSource = icon.Path;
+                        bitmap.EndInit();
+                        ImageIconView.Source = bitmap;
+                    }
+                }
             }
             else
             {
@@ -181,6 +203,14 @@ namespace Guard.Views.UIComponents
             if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
             {
                 TokenManager.DeleteTokenById(token.dBToken.Id);
+                if (
+                    token.dBToken.Icon != null
+                    && token.dBToken.IconType != null
+                    && token.dBToken.IconType == IconManager.IconType.Custom
+                )
+                {
+                    IconManager.RemoveCustomIcon(token.dBToken.Icon);
+                }
                 if (mainWindow.GetActivePage()?.Name != "Home")
                 {
                     mainWindow.Navigate(typeof(Home));

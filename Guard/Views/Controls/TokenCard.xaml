@@ -47,7 +47,7 @@
                 Margin="22,0,0,0"
                 VerticalAlignment="Center">
                 <svgc:SvgViewbox x:Name="SvgIconView" />
-                <ui:Image x:Name="ImageIconView" />
+                <ui:Image x:Name="ImageIconView" Visibility="Collapsed" />
             </StackPanel>
 
             <StackPanel
