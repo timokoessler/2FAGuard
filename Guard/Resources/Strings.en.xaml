@@ -272,4 +272,6 @@
     <system:String x:Key="i.unsupported.vcpp.title">Visual C++ Redistributable not installed</system:String>
     <system:String x:Key="i.unsupported.vcpp.content">The Microsoft Visual C++ Redistributable 2015-2022 is required to run 2FAGuard. Please install the package to be able to use 2FAGuard. If you have used the 2FAGuard installer or have just installed the package, you may need to restart your device.</system:String>
     <system:String x:Key="i.unsupported.vcpp.download">Download</system:String>
+    <system:String x:Key="i.unsupported.olderversion.title">Outdated app version</system:String>
+    <system:String x:Key="i.unsupported.olderversion.content">You are using an outdated version of 2FAGuard. Data that has already been edited with a newer version of the app cannot be opened. Please update the app to use the data.</system:String>
 </ResourceDictionary>

@@ -52,8 +52,13 @@ namespace Guard.Core.Installation
 
         internal static string GetVersionString()
         {
-            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString()
-                ?? "????";
+            return GetVersion().ToString() ?? "????";
+        }
+
+        internal static Version GetVersion()
+        {
+            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
+                ?? new Version(0, 0);
         }
 
         internal static string GetAppDataFolderPath()

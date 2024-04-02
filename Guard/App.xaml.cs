@@ -1,11 +1,12 @@
-﻿using Guard.Core;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Windows;
+using Guard.Core;
 using Guard.Core.Installation;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using NSec.Cryptography;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
+using Serilog.Core;
 using Windows.ApplicationModel.Activation;
 
 namespace Guard
@@ -110,6 +111,40 @@ namespace Guard
                 return;
             }
 
+            Version currentVersion = InstallationInfo.GetVersion();
+            if (
+                SettingsManager.Settings.LastUsedAppVersion.Major == 0
+                && SettingsManager.Settings.LastUsedAppVersion.Minor == 0
+            )
+            {
+                SettingsManager.Settings.LastUsedAppVersion = currentVersion;
+                _ = SettingsManager.Save();
+            }
+            int versionCompare = SettingsManager.Settings.LastUsedAppVersion.CompareTo(
+                currentVersion
+            );
+            if (versionCompare < 0)
+            {
+                SettingsManager.Settings.LastUsedAppVersion = currentVersion;
+                _ = SettingsManager.Save();
+            }
+            else if (versionCompare > 0)
+            {
+                Log.Logger.Error(
+                    "Preventing app start: Current version is older than last used version: {0} < {1}",
+                    currentVersion,
+                    SettingsManager.Settings.LastUsedAppVersion
+                );
+                var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("i.unsupported.olderversion.title"),
+                    Content = I18n.GetString("i.unsupported.olderversion.content"),
+                    CloseButtonText = I18n.GetString("i.unsupported.exit"),
+                };
+                await uiMessageBox.ShowDialogAsync();
+                Shutdown();
+            }
+
             if (!autostart)
             {
                 autostart = e.Args != null && e.Args.Contains("--autostart");
@@ -137,6 +172,7 @@ namespace Guard
             InactivityDetector.OnFocusGained();
             base.OnActivated(e);
         }
+
         protected override void OnDeactivated(EventArgs e)
         {
             InactivityDetector.OnFocusLost();

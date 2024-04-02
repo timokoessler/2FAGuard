@@ -1,4 +1,6 @@
-﻿namespace Guard.Core.Models
+﻿using Guard.Core.Installation;
+
+namespace Guard.Core.Models
 {
     internal enum ThemeSetting
     {
@@ -43,5 +45,6 @@
         public bool ShowTokenCardIntro { get; set; } = true;
         public bool MinimizeToTray { get; set; } = false;
         public LockTimeSetting LockTime { get; set; } = LockTimeSetting.TenMinutes;
+        public Version LastUsedAppVersion { get; set; } = new(0, 0);
     }
 }
