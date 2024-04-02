@@ -47,6 +47,10 @@ namespace Guard.Core.Import
                 otpUri.Issuer = label.Split("%3A")[0][1..];
                 otpUri.Account = label.Split("%3A")[1];
             }
+            else
+            {
+                otpUri.Account = label[1..];
+            }
 
             if (uri.Query == null || uri.Query.Length < 2)
             {
