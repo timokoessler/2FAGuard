@@ -411,6 +411,7 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
                     @"Google.Protobuf - Copyright Google Inc. under BSD-3-Clause License
 GuerrillaNtp - Copyright Robert Važan and contributors under Apache License 2.0
 Konscious.Security.Cryptography - Copyright Keef Aragon under MIT License
+libsodium - Copyright Frank Denis under ISC License
 LiteDB - Copyright Mauricio David under MIT License
 NSec.Cryptography - Copyright Klaus Hartke under MIT License
 Otp.NET - Copyright Kyle Spearrin under MIT License
@@ -418,7 +419,9 @@ Serilog - Copyright Serilog Contributors under Apache License 2.0
 SharpVectors.Wpf - Copyright Elinam LLC under BSD 3-Clause License
 Simple Icons - Copyright under CC0 1.0 Universal
 Wpf.Ui - Copyright Leszek Pomianowski and WPF UI Contributors under MIT License
-ZXing.Net - Copytight Michael Jahn under Apache 2.0 License
+Wpf.Ui.Tray - Copyright Leszek Pomianowski and WPF UI Contributors under MIT License
+ZXing.Net - Copyright Michael Jahn under Apache 2.0 License
+ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2.0 License
 ",
                 CloseButtonText = I18n.GetString("dialog.close"),
                 MaxWidth = 600

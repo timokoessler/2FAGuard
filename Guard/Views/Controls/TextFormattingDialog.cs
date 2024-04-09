@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using Guard.Core;
-using Guard.Views.Pages.Start;
 using Wpf.Ui;
 using Wpf.Ui.Extensions;
 
