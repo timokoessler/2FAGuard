@@ -8,6 +8,7 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

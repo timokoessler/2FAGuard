@@ -19,10 +19,6 @@ namespace Guard.Core.Import
             {
                 throw new Exception("Invalid URI scheme");
             }
-            if (uri.Host == "hotp")
-            {
-                throw new Exception("HOTP is not supported");
-            }
 
             if (uri.Host != "totp")
             {
@@ -30,10 +26,10 @@ namespace Guard.Core.Import
                 {
                     throw new Exception(I18n.GetString("import.hotp.notsupported"));
                 }
-                throw new Exception("Invalid URI host");
+                throw new Exception("Invalid token type");
             }
 
-            OTPUri otpUri = new();
+            OTPUri otpUri = new() { Type = OtpUriType.TOTP, };
 
             string label = uri.LocalPath;
 
