@@ -1,7 +1,7 @@
 ﻿using Guard.Core.Import;
 using Guard.Core.Models;
 
-namespace Guard.Test.Core
+namespace Guard.Test.Import
 {
     public class OTPUriParsing
     {
