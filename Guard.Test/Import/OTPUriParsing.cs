@@ -59,5 +59,16 @@ namespace Guard.Test.Import
             Assert.Equal("SECRET", otpUri.Secret);
             Assert.Equal(OtpUriType.TOTP, otpUri.Type);
         }
+
+        [Fact]
+        public void ParseCiscoMerakiUri()
+        {
+            string uri = "otpauth://totp/test%40example.com%2FMeraki?secret=ABCDEFG";
+            OTPUri otpUri = OTPUriParser.Parse(uri);
+            Assert.Equal("test@example.com", otpUri.Account);
+            Assert.Equal("Meraki", otpUri.Issuer);
+            Assert.Equal("ABCDEFG", otpUri.Secret);
+            Assert.Equal(OtpUriType.TOTP, otpUri.Type);
+        }
     }
 }

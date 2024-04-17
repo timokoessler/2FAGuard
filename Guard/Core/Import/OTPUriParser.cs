@@ -32,20 +32,39 @@ namespace Guard.Core.Import
             OTPUri otpUri = new() { Type = OtpUriType.TOTP, };
 
             string label = uri.LocalPath;
+            if (label.Length < 2)
+            {
+                throw new Exception("Invalid URI label");
+            }
+            // Remove leading slash
+            label = label[1..];
 
-            if (label.Contains(':'))
+            string[] labelSplitChars = [":", "%3A", "/", "%2F"];
+
+            foreach (string splitChar in labelSplitChars)
             {
-                otpUri.Issuer = label.Split(':')[0][1..];
-                otpUri.Account = label.Split(':')[1];
+                if (label.Contains(splitChar))
+                {
+                    var splitted = label.Split(splitChar);
+                    if (splitted.Length == 2)
+                    {
+                        otpUri.Issuer = splitted[0];
+                        otpUri.Account = splitted[1];
+                        break;
+                    }
+                }
             }
-            else if (label.Contains("%3A"))
+
+            if (string.IsNullOrEmpty(otpUri.Account))
             {
-                otpUri.Issuer = label.Split("%3A")[0][1..];
-                otpUri.Account = label.Split("%3A")[1];
+                otpUri.Account = label;
             }
-            else
+
+            // Workaround for Cisco Meraki (issue #14)
+            if (otpUri.Account.Equals("Meraki") && !string.IsNullOrEmpty(otpUri.Issuer))
             {
-                otpUri.Account = label[1..];
+                otpUri.Account = otpUri.Issuer;
+                otpUri.Issuer = "Meraki";
             }
 
             if (uri.Query == null || uri.Query.Length < 2)
