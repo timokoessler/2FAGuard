@@ -149,6 +149,32 @@
                 Width="350"
                 Height="95"
                 Margin="0,15,15,0"
+                Click="Aegis_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ui:Image
+                        Grid.Column="0"
+                        Height="32"
+                        Source="pack://application:,,,/Assets/aegis.png" />
+                    <StackPanel Grid.Column="1" Margin="15,0,8,0">
+                        <ui:TextBlock
+                            FontTypography="BodyStrong"
+                            Text="{DynamicResource i.import.aegis}"
+                            TextWrapping="WrapWithOverflow" />
+                        <ui:TextBlock
+                            Appearance="Secondary"
+                            Text="{DynamicResource i.import.aegis.description}"
+                            TextWrapping="WrapWithOverflow" />
+                    </StackPanel>
+                </Grid>
+            </ui:CardAction>
+            <ui:CardAction
+                Width="350"
+                Height="95"
+                Margin="0,15,15,0"
                 Click="AuthenticatorPro_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>

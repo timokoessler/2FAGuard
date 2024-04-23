@@ -1,34 +1,40 @@
-﻿namespace Guard.Core.Models
+﻿using System.Text.Json.Serialization;
+
+namespace Guard.Core.Models
 {
     public class AegisExport
     {
-        class HeaderParams
+        public class HeaderParams
         {
             public required string Nonce { get; set; }
             public required string Tag { get; set; }
         }
 
-        class HeaderSlot
+        public class HeaderSlot
         {
             public int Type { get; set; }
             public required string Uuid { get; set; }
             public required string Key { get; set; }
+
+            [JsonPropertyName("key_params")]
             public required HeaderParams Key_Params { get; set; }
             public int? N { get; set; }
             public int? R { get; set; }
             public int? P { get; set; }
             public string? Salt { get; set; }
             public bool? Repaired { get; set; }
+
+            [JsonPropertyName("is_backup")]
             public bool? Is_Backup { get; set; }
         }
 
-        class Header
+        public class Header
         {
             public HeaderSlot[]? Slots { get; set; }
             public HeaderParams? Params { get; set; }
         }
 
-        class DatabaseEntryInfo
+        public class DatabaseEntryInfo
         {
             public required string Secret { get; set; }
             public required string Algo { get; set; }
@@ -36,7 +42,7 @@
             public required int Period { get; set; }
         }
 
-        class DatabaseEntry
+        public class DatabaseEntry
         {
             public required string Type { get; set; }
             public required string Uuid { get; set; }
@@ -49,20 +55,20 @@
             public required DatabaseEntryInfo Info { get; set; }
         }
 
-        class Database
+        public class Database
         {
             public int Version { get; set; }
             public required DatabaseEntry[] Entries { get; set; }
         }
 
-        class Encrypted
+        public class Encrypted
         {
             public int Version { get; set; }
             public required Header Header { get; set; }
             public required string Db { get; set; }
         }
 
-        class Plain
+        public class Plain
         {
             public int Version { get; set; }
             public required Header Header { get; set; }

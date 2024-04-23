@@ -40,6 +40,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\aegis.png" />
     <None Remove="Assets\authenticatorpro.svg" />
     <None Remove="Assets\bitwarden.svg" />
     <None Remove="Assets\check.svg" />
@@ -78,6 +79,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\aegis.png" />
     <Resource Include="Assets\authenticatorpro.svg" />
     <Resource Include="Assets\bitwarden.svg" />
     <Resource Include="Assets\check.svg" />

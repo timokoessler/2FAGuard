@@ -176,5 +176,10 @@ namespace Guard.Views.Pages.Add
         {
             Import(new TwoFasImporter());
         }
+
+        private void Aegis_Click(object sender, RoutedEventArgs e)
+        {
+            Import(new AegisAuthenticatorImporter());
+        }
     }
 }

@@ -59,7 +59,7 @@ namespace Guard
 
         private void OnWindowLoaded()
         {
-            ContentDialogService.SetContentPresenter(RootContentDialogPresenter);
+            ContentDialogService.SetDialogHost(RootContentDialogPresenter);
             HideNavigation();
 
             windowInteropHandle = (new WindowInteropHelper(this)).Handle;
