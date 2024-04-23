@@ -67,21 +67,29 @@ namespace Guard.Views.UIComponents
                 }
                 else
                 {
-                    if (icon.Path != null && icon.Path.AbsolutePath.EndsWith(".svg"))
+                    if (icon.Path != null && File.Exists(icon.Path.AbsolutePath))
                     {
-                        SvgIconView.Source = icon.Path;
+                        if (icon.Path.AbsolutePath.EndsWith(".svg"))
+                        {
+                            SvgIconView.Source = icon.Path;
+                        }
+                        else
+                        {
+                            ImageIconView.Visibility = Visibility.Visible;
+                            SvgIconView.Visibility = Visibility.Collapsed;
+
+                            var bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmap.UriSource = icon.Path;
+                            bitmap.EndInit();
+                            ImageIconView.Source = bitmap;
+                        }
                     }
                     else
                     {
-                        ImageIconView.Visibility = Visibility.Visible;
-                        SvgIconView.Visibility = Visibility.Collapsed;
-
-                        var bitmap = new BitmapImage();
-                        bitmap.BeginInit();
-                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmap.UriSource = icon.Path;
-                        bitmap.EndInit();
-                        ImageIconView.Source = bitmap;
+                        icon = IconManager.GetIcon("default", IconManager.IconType.Default);
+                        SvgIconView.SvgSource = icon.Svg;
                     }
                 }
             }
