@@ -125,5 +125,13 @@ namespace Guard.Core.Icons
                 File.Delete(path);
             }
         }
+
+        public static void RemoveAllCustomIcons()
+        {
+            if (Directory.Exists(customIconsPath))
+            {
+                Directory.Delete(customIconsPath, true);
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace Guard.Core.Import.Importer
         public IImporter.ImportType Type => IImporter.ImportType.File;
         public string SupportedFileExtensions => "Aegis Authenticator Export (*.json) | *.json";
 
-        private bool isEncryptedBackup(string jsonString)
+        private static bool IsEncryptedBackup(string jsonString)
         {
             JsonDocument doc = JsonDocument.Parse(jsonString);
             JsonElement root = doc.RootElement;
@@ -40,7 +40,7 @@ namespace Guard.Core.Import.Importer
         {
             ArgumentNullException.ThrowIfNull(path);
             string jsonString = File.ReadAllText(path, Encoding.UTF8);
-            return isEncryptedBackup(jsonString);
+            return IsEncryptedBackup(jsonString);
         }
 
         // https://nsec.rocks/docs/api/nsec.cryptography.passwordbasedkeyderivationalgorithm
@@ -50,9 +50,9 @@ namespace Guard.Core.Import.Importer
             ArgumentNullException.ThrowIfNull(path);
             string jsonString = File.ReadAllText(path, Encoding.UTF8);
 
-            AegisExport.Database? database = null;
+            AegisExport.Database? database;
 
-            if (isEncryptedBackup(jsonString))
+            if (IsEncryptedBackup(jsonString))
             {
                 // Encrypted backup
                 ArgumentNullException.ThrowIfNull(password);
@@ -116,14 +116,15 @@ namespace Guard.Core.Import.Importer
                         );
                     }
 
-                    Scrypt scrypt = new Scrypt(
-                        new ScryptParameters()
-                        {
-                            Cost = slot.N.Value,
-                            BlockSize = slot.R.Value,
-                            Parallelization = slot.P.Value,
-                        }
-                    );
+                    Scrypt scrypt =
+                        new(
+                            new ScryptParameters()
+                            {
+                                Cost = slot.N.Value,
+                                BlockSize = slot.R.Value,
+                                Parallelization = slot.P.Value,
+                            }
+                        );
 
                     try
                     {

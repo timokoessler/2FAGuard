@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Guard.Core.Icons;
 using Guard.Core.Installation;
 using Guard.Core.Security;
 
@@ -12,6 +13,7 @@ namespace Guard.Core.Storage
             Database.Deinit();
             _ = WindowsHello.Unregister();
             Auth.DeleteWindowsHelloProtectedKey();
+            IconManager.RemoveAllCustomIcons();
 
             string[] files = ["auth-keys", "settings", "TokenDatabase.db", "TokenDatabase-log.db"];
 
