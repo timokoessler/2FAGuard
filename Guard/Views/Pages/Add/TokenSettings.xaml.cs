@@ -404,7 +404,11 @@ namespace Guard.Views.Pages.Add
 
         private void showCustomImage()
         {
-            if (selectedIcon == null || selectedIcon.Path == null)
+            if (
+                selectedIcon == null
+                || selectedIcon.Path == null
+                || !File.Exists(selectedIcon.Path.AbsolutePath)
+            )
             {
                 return;
             }
