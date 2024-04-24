@@ -12,7 +12,8 @@ namespace Guard.Core
             {
                 { "system", "System" },
                 { "en", "English" },
-                { "de", "Deutsch" }
+                { "de", "Deutsch" },
+                { "zh_cn", "大陆简体" }
             };
         private static readonly LanguageSetting defaultLanguage = LanguageSetting.EN;
         private static LanguageSetting currentLanguage = defaultLanguage;
@@ -37,8 +38,18 @@ namespace Guard.Core
         public static LanguageSetting? GetSystemLanguageIfSupported()
         {
             string lang = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+            string regionCode = System
+                .Globalization
+                .RegionInfo
+                .CurrentRegion
+                .TwoLetterISORegionName;
 
-            if (Enum.TryParse<LanguageSetting>(lang, true, out LanguageSetting result))
+            if (Enum.TryParse($"{lang}_{regionCode}", true, out LanguageSetting result))
+            {
+                return result;
+            }
+
+            if (Enum.TryParse(lang, true, out result))
             {
                 return result;
             }
