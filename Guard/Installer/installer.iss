@@ -1,5 +1,5 @@
 ﻿#define MyAppName "2FAGuard"
-#define MyAppVersion "1.2.0"
+#define MyAppVersion "1.3.0"
 #define MyAppPublisher "Timo Kössler"
 #define MyAppURL "https://2faguard.app"
 #define MyAppExeName "2FAGuard.exe"
