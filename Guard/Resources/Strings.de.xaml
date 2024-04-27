@@ -101,6 +101,7 @@
     <system:String x:Key="i.welcome.insecure.dialog.continue">Fortfahren (nicht empfohlen)</system:String>
     <system:String x:Key="i.welcome.portable.winhello.title">Hinweis</system:String>
     <system:String x:Key="i.welcome.portable.winhello.content">Wenn du die Portable-Version von 2FAGuard auf einem USB-Stick oder einem anderen tragbaren Speichermedium verwendest, kannst du dich nicht automatisch mit Windows Hello mit anderen Windows Benutzer bzw. auf anderen Geräten anmelden. Du musst Windows Hello auf anderen Geräten zunächst in den Einstellungen von 2FAGuard aktivieren. Mit deinem Passwort kannst du dich immer anmelden.</system:String>
+    <system:String x:Key="i.page.welcome">Willkommen</system:String>
 
     <!--  Login  -->
     <system:String x:Key="i.login.subtext">Bitte melde dich an, um fortzufahren</system:String>

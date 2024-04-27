@@ -15,6 +15,7 @@ public partial class PasswordDialog : ContentDialog
         : base(contentPresenter)
     {
         InitializeComponent();
+        this.PasswordBox.Focus();
     }
 
     internal byte[] GetPassword()

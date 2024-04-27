@@ -81,7 +81,7 @@ namespace Guard.Views.Pages.Add
 
                     if (selectedIcon.Type == IconManager.IconType.Custom)
                     {
-                        showCustomImage();
+                        ShowCustomImage();
                     }
                     else
                     {
@@ -394,7 +394,7 @@ namespace Guard.Views.Pages.Add
 
                 selectedIcon = IconManager.GetIcon(name, IconManager.IconType.Custom);
 
-                showCustomImage();
+                ShowCustomImage();
             }
             catch (Exception ex)
             {
@@ -402,7 +402,7 @@ namespace Guard.Views.Pages.Add
             }
         }
 
-        private void showCustomImage()
+        private void ShowCustomImage()
         {
             if (
                 selectedIcon == null
