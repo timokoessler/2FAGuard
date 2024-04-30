@@ -32,6 +32,7 @@ namespace Guard
         private AptabaseClient? StatsClient;
         private IntPtr windowInteropHandle;
         private readonly bool isAutostart;
+        private string currentPageName = "";
 
         public MainWindow(bool autostart)
         {
@@ -136,7 +137,8 @@ namespace Guard
             {
                 return;
             }
-            UpdatePageTitle(e.Page.GetType().Name);
+            currentPageName = e.Page.GetType().Name;
+            UpdatePageTitle(currentPageName);
         }
 
         /// <summary>
@@ -256,9 +258,9 @@ namespace Guard
             return StatsClient;
         }
 
-        internal Type? GetActivePage()
+        internal string GetActivePage()
         {
-            return RootNavigation?.SelectedItem?.TargetPageType;
+            return currentPageName;
         }
 
         internal ContentPresenter GetRootContentDialogPresenter()

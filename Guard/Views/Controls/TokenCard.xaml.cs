@@ -190,7 +190,7 @@ namespace Guard.Views.UIComponents
         {
             NavigationContextManager.CurrentContext["tokenID"] = token.dBToken.Id;
             NavigationContextManager.CurrentContext["action"] = "edit";
-            bool showBackButton = mainWindow.GetActivePage()?.Name == "Home";
+            bool showBackButton = mainWindow.GetActivePage() == "Home";
             mainWindow.Navigate(typeof(TokenSettings), showBackButton);
         }
 
@@ -219,7 +219,7 @@ namespace Guard.Views.UIComponents
                 {
                     IconManager.RemoveCustomIcon(token.dBToken.Icon);
                 }
-                if (mainWindow.GetActivePage()?.Name != "Home")
+                if (mainWindow.GetActivePage() != "Home")
                 {
                     mainWindow.Navigate(typeof(Home));
                     return;
