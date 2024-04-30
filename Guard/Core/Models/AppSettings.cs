@@ -14,7 +14,8 @@ namespace Guard.Core.Models
         System,
         EN,
         DE,
-        ZH_CN
+        ZH_CN,
+        ZH_TW
     }
 
     internal enum SortOrderSetting

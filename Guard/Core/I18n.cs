@@ -13,7 +13,8 @@ namespace Guard.Core
                 { "system", "System" },
                 { "en", "English" },
                 { "de", "Deutsch" },
-                { "zh_cn", "大陆简体" }
+                { "zh_cn", "大陆简体" },
+                { "zh_tw", "中文(繁體)" }
             };
         private static readonly LanguageSetting defaultLanguage = LanguageSetting.EN;
         private static LanguageSetting currentLanguage = defaultLanguage;
