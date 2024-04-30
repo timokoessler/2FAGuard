@@ -407,16 +407,16 @@ namespace Guard.Views.Pages.Add
             if (
                 selectedIcon == null
                 || selectedIcon.Path == null
-                || !File.Exists(selectedIcon.Path.AbsolutePath)
+                || !File.Exists(selectedIcon.Path)
             )
             {
                 return;
             }
-            if (selectedIcon.Path.AbsolutePath.EndsWith(".svg"))
+            if (selectedIcon.Path.EndsWith(".svg"))
             {
                 ImageIconView.Visibility = Visibility.Collapsed;
                 IconSvgView.Visibility = Visibility.Visible;
-                IconSvgView.Source = selectedIcon.Path;
+                IconSvgView.Source = new Uri(selectedIcon.Path);
             }
             else
             {
@@ -426,7 +426,7 @@ namespace Guard.Views.Pages.Add
                 var bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.UriSource = selectedIcon.Path;
+                bitmap.UriSource = new Uri(selectedIcon.Path);
                 bitmap.EndInit();
                 ImageIconView.Source = bitmap;
             }

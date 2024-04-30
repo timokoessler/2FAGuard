@@ -18,7 +18,7 @@ namespace Guard.Core.Icons
             public required IconType Type { get; set; }
             public required string Name { get; set; }
             public string? Svg { get; set; }
-            public Uri? Path { get; set; }
+            public string? Path { get; set; }
         }
 
         private static readonly string customIconsPath = Path.Combine(
@@ -66,7 +66,7 @@ namespace Guard.Core.Icons
                 {
                     Type = IconType.Custom,
                     Name = name,
-                    Path = new Uri(Path.Combine(customIconsPath, name)),
+                    Path = Path.Combine(customIconsPath, name),
                 };
             }
 

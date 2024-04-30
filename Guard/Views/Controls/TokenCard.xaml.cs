@@ -67,11 +67,11 @@ namespace Guard.Views.UIComponents
                 }
                 else
                 {
-                    if (icon.Path != null && File.Exists(icon.Path.AbsolutePath))
+                    if (icon.Path != null && File.Exists(icon.Path))
                     {
-                        if (icon.Path.AbsolutePath.EndsWith(".svg"))
+                        if (icon.Path.EndsWith(".svg"))
                         {
-                            SvgIconView.Source = icon.Path;
+                            SvgIconView.Source = new Uri(icon.Path);
                         }
                         else
                         {
@@ -81,13 +81,18 @@ namespace Guard.Views.UIComponents
                             var bitmap = new BitmapImage();
                             bitmap.BeginInit();
                             bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                            bitmap.UriSource = icon.Path;
+                            bitmap.UriSource = new Uri(icon.Path);
                             bitmap.EndInit();
                             ImageIconView.Source = bitmap;
                         }
                     }
                     else
                     {
+                        Log.Logger.Warning(
+                            "Custom icon not found: {Path}",
+                            icon.Path,
+                            token.dBToken.Id
+                        );
                         icon = IconManager.GetIcon("default", IconManager.IconType.Default);
                         SvgIconView.SvgSource = icon.Svg;
                     }
