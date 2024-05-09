@@ -9,7 +9,7 @@ namespace Guard.Test.Core
         private List<XDocument> resources = [];
         private readonly string translationFolder = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,
-            "../../../../../Guard/Resources/"
+            "../../../../Guard/Resources/"
         );
 
         public Translations()
