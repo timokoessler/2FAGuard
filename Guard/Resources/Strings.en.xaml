@@ -126,7 +126,7 @@
     <system:String x:Key="i.add.qr">Import QR code</system:String>
     <system:String x:Key="i.add.qr.description">Scan a QR code by importing an image file</system:String>
     <system:String x:Key="i.add.qrscreen">Scan QR code from the screen</system:String>
-    <system:String x:Key="i.add.qrscreen.description">Select a screen area to scan the QR code</system:String>
+    <system:String x:Key="i.add.qrscreen.description">Detects a visible QR code on the screen</system:String>
     <system:String x:Key="i.add.clipboard">Add from clipboard</system:String>
     <system:String x:Key="i.add.clipboard.description">Paste a QR code image or a TOTP URI</system:String>
     <system:String x:Key="i.add.import">Import</system:String>
@@ -140,6 +140,8 @@
     <system:String x:Key="i.import.failed.title">Import failed</system:String>
     <system:String x:Key="i.import.failed.content">An error occurred while importing:</system:String>
     <system:String x:Key="i.import.noqrfound">Could not detect a QR code</system:String>
+    <system:String x:Key="i.import.noqrfound.screen">No QR code was detected. Please make sure that no window is covering the QR code and that the QR code is clearly visible.</system:String>
+    <system:String x:Key="i.import.invalidqr.screen">The QR code does not contain valid information about a token. Please also make sure that only one QR code is visible on the screen.</system:String>
     <system:String x:Key="i.import.clipboard.invalid">The clipboard does not contain an image or text.</system:String>
     <system:String x:Key="i.import.clipboard.invalid.multifiles">Currently only one file can be imported from the clipboard at a time.</system:String>
     <system:String x:Key="i.import.duplicate">A token with the same secret key already exists</system:String>

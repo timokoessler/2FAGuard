@@ -126,7 +126,7 @@
     <system:String x:Key="i.add.qr">导入二维码</system:String>
     <system:String x:Key="i.add.qr.description">通过导入图像文件扫描二维码</system:String>
     <system:String x:Key="i.add.qrscreen">从屏幕上扫描二维码</system:String>
-    <system:String x:Key="i.add.qrscreen.description">选择一个屏幕区域扫描二维码</system:String>
+    <system:String x:Key="i.add.qrscreen.description">Detects a visible QR code on the screen</system:String>
     <system:String x:Key="i.add.clipboard">从剪贴板添加</system:String>
     <system:String x:Key="i.add.clipboard.description">粘贴二维码图像或TOTP URI</system:String>
     <system:String x:Key="i.add.import">导入</system:String>
@@ -140,6 +140,8 @@
     <system:String x:Key="i.import.failed.title">导入失败</system:String>
     <system:String x:Key="i.import.failed.content">导入时发生错误：</system:String>
     <system:String x:Key="i.import.noqrfound">未能检测到二维码</system:String>
+    <system:String x:Key="i.import.noqrfound.screen">No QR code was detected. Please make sure that no window is covering the QR code and that the QR code is clearly visible.</system:String>
+    <system:String x:Key="i.import.invalidqr.screen">The QR code does not contain valid information about a token. Please also make sure that only one QR code is visible on the screen.</system:String>
     <system:String x:Key="i.import.clipboard.invalid">剪贴板不包含图像或文本。</system:String>
     <system:String x:Key="i.import.clipboard.invalid.multifiles">目前一次只能从剪贴板导入一个文件。</system:String>
     <system:String x:Key="i.import.duplicate">已存在具有相同密钥的令牌</system:String>

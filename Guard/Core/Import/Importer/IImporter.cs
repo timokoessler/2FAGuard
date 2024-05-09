@@ -5,7 +5,8 @@
         internal enum ImportType
         {
             File,
-            Clipboard
+            Clipboard,
+            ScreenCapture
         }
 
         internal abstract string Name { get; }

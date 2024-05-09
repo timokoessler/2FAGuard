@@ -81,6 +81,16 @@ namespace Guard.Views.Pages.Add
                     }
                     (total, duplicate, tokenID) = importer.Parse(null, null);
                 }
+                else if (importer.Type == IImporter.ImportType.ScreenCapture)
+                {
+                    if (importer.RequiresPassword(""))
+                    {
+                        throw new NotImplementedException(
+                            "Importers that require a password are not supported for screen capture"
+                        );
+                    }
+                    (total, duplicate, tokenID) = importer.Parse(null, null);
+                }
                 else
                 {
                     throw new Exception("Invalid Importer Type");
@@ -180,6 +190,11 @@ namespace Guard.Views.Pages.Add
         private void Aegis_Click(object sender, RoutedEventArgs e)
         {
             Import(new AegisAuthenticatorImporter());
+        }
+
+        private void QR_ScreenCapture_Click(object sender, RoutedEventArgs e)
+        {
+            Import(new QRScreenCaptureImporter());
         }
     }
 }

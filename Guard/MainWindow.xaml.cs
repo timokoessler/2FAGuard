@@ -389,5 +389,18 @@ namespace Guard
             }
             base.OnClosing(e);
         }
+
+        internal void MinimizeWindow()
+        {
+            WindowStyle tempStyle = WindowStyle;
+            WindowStyle = WindowStyle.None;
+            WindowState = WindowState.Minimized;
+            WindowStyle = tempStyle;
+        }
+
+        internal void RestoreWindow()
+        {
+            WindowState = WindowState.Normal;
+        }
     }
 }

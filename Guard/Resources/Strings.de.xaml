@@ -132,7 +132,7 @@
     <system:String x:Key="i.add.qr">QR-Code importieren</system:String>
     <system:String x:Key="i.add.qr.description">Importiere einen QR-Code aus einer Bilddatei</system:String>
     <system:String x:Key="i.add.qrscreen">QR-Code vom Bildschirm scannen</system:String>
-    <system:String x:Key="i.add.qrscreen.description">Wähle einen Bildschirmbereich aus, um den QR-Code zu scannen</system:String>
+    <system:String x:Key="i.add.qrscreen.description">Erkennt einen sichtbaren QR-Code auf dem Bildschirm</system:String>
     <system:String x:Key="i.add.clipboard">Aus Zwischenablage hinzufügen</system:String>
     <system:String x:Key="i.add.clipboard.description">Bild eines QR-Codes oder TOTP URI einfügen</system:String>
     <system:String x:Key="i.add.import">Importieren</system:String>
@@ -146,6 +146,8 @@
     <system:String x:Key="i.import.failed.title">Import fehlgeschlagen</system:String>
     <system:String x:Key="i.import.failed.content">Beim Import ist ein Fehler aufgetreten:</system:String>
     <system:String x:Key="i.import.noqrfound">Es wurde kein QR-Code erkannt</system:String>
+    <system:String x:Key="i.import.noqrfound.screen">Es wurde kein QR-Code erkannt. Bitte stelle sicher, dass kein Fenster den QR-Code verdeckt und dass der QR-Code gut sichtbar ist.</system:String>
+    <system:String x:Key="i.import.invalidqr.screen">Der QR-Code enthält keine gültigen Informationen über einen Token. Bitte stelle auch sicher, dass nur ein QR-Code auf dem Bildschirm sichtbar ist.</system:String>
     <system:String x:Key="i.import.clipboard.invalid">Die Zwischenablage enthält kein Bild und keinen gültigen Text</system:String>
     <system:String x:Key="i.import.clipboard.invalid.multifiles">Es wird aktuell nur eine Datei gleichzeitig unterstützt.</system:String>
     <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
