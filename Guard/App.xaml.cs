@@ -6,7 +6,6 @@ using Guard.Core.Installation;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using NSec.Cryptography;
-using Serilog.Core;
 using Windows.ApplicationModel.Activation;
 
 namespace Guard

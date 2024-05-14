@@ -6,7 +6,7 @@ namespace Guard.Test.Core
 {
     public class Translations
     {
-        private List<XDocument> resources = [];
+        private readonly List<XDocument> resources = [];
         private readonly string translationFolder = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,
             "../../../../Guard/Resources/"
@@ -23,7 +23,7 @@ namespace Guard.Test.Core
             Assert.NotEmpty(resources);
         }
 
-        private string GetXKey(XElement e)
+        private static string GetXKey(XElement e)
         {
             return e.Attribute(
                     XName.Get("Key", "http://schemas.microsoft.com/winfx/2006/xaml")
@@ -73,7 +73,7 @@ namespace Guard.Test.Core
             {
                 Assert.NotNull(resource);
                 Assert.NotNull(resource.Root);
-                HashSet<string> keys = new();
+                HashSet<string> keys = [];
                 foreach (XElement element in resource.Root.Elements())
                 {
                     Assert.NotNull(element);
