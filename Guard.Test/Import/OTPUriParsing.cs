@@ -1,5 +1,5 @@
-﻿using Guard.Core.Import;
-using Guard.Core.Models;
+﻿using Guard.WPF.Core.Import;
+using Guard.WPF.Core.Models;
 
 namespace Guard.Test.Import
 {

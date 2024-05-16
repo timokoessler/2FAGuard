@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guard", "Guard\Guard.csproj", "{1FAC1723-FF69-4891-9F37-A596F56417AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guard.WPF", "Guard.WPF\Guard.WPF.csproj", "{1FAC1723-FF69-4891-9F37-A596F56417AF}"
 EndProject
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "Guard.Package", "Guard.Package\Guard.Package.wapproj", "{FB6272B6-3FA4-42D2-8E86-BC5A2A4F0879}"
 EndProject

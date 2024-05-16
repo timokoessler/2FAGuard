@@ -7,7 +7,7 @@
         {
             Assert.Equal(
                 "https://2faguard.app/api/update",
-                Guard.Core.Installation.Updater.updateApiUrl
+                Guard.WPF.Core.Installation.Updater.updateApiUrl
             );
         }
     }
