@@ -129,6 +129,10 @@ namespace Guard.WPF
                 }
             }
             this.WindowBackdropType = WindowBackdropType.Mica;
+            if (Environment.OSVersion.Version.Build > 22621)
+            {
+                WindowBackdrop.RemoveBackground(this);
+            }
         }
 
         private void OnNavigated(object sender, NavigatedEventArgs e)

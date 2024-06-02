@@ -169,6 +169,10 @@ namespace Guard.WPF.Views.Pages
                 {
                     I18n.ChangeLanguage(result);
                     mainWindow.UpdatePageTitle("settings");
+                    if (Environment.OSVersion.Version.Build > 22621)
+                    {
+                        WindowBackdrop.RemoveBackground(mainWindow);
+                    }
                 }
             }
         }
