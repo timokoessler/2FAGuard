@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using System.Web;
-
-namespace Guard.WPF.Core.Aptabase;
+﻿namespace Guard.WPF.Core.Aptabase;
 
 internal class SystemInfo
 {

@@ -76,7 +76,7 @@ namespace Guard.WPF
 
             StatsClient = new(
                 "A-SH-2619747927",
-                new InitOptions { Host = "https://aptabase.tkoessler.de" }
+                new AptabaseOptions { Host = "https://aptabase.tkoessler.de" }
             );
 
             if (!Auth.FileExists())
