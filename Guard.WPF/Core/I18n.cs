@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Guard.WPF.Core.Models;
 using Guard.WPF.Core.Storage;
+using Guard.Core;
 
 namespace Guard.WPF.Core
 {

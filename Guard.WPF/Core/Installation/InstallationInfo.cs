@@ -1,17 +1,11 @@
-﻿using Guard.WPF.Core.Models;
+﻿using Guard.Core;
 
 namespace Guard.WPF.Core.Installation
 {
-    internal enum InstallationType
-    {
-        CLASSIC_INSTALLER,
-        CLASSIC_PORTABLE,
-        MICROSOFT_STORE
-    }
 
-    class InstallationInfo
+    public class InstallationInfo
     {
-        internal static bool IsPortable()
+        private static bool IsPortable()
         {
 #if PORTABLE
             return true;
@@ -23,7 +17,7 @@ namespace Guard.WPF.Core.Installation
 #pragma warning restore IDE0079
         }
 
-        internal static InstallationType GetInstallationType()
+        private static InstallationType GetInstallationType()
         {
             if (IsPortable())
             {
@@ -39,49 +33,15 @@ namespace Guard.WPF.Core.Installation
             }
         }
 
-        internal static string GetInstallationTypeString()
-        {
-            return GetInstallationType() switch
-            {
-                InstallationType.CLASSIC_INSTALLER => "Desktop Installation",
-                InstallationType.CLASSIC_PORTABLE => "Portable",
-                InstallationType.MICROSOFT_STORE => "Microsoft Store",
-                _ => "Unknown",
-            };
-        }
-
-        internal static string GetVersionString()
-        {
-            return GetVersion().ToString() ?? "????";
-        }
-
-        internal static Version GetVersion()
+        private static Version GetVersion()
         {
             return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
                 ?? new Version(0, 0);
         }
 
-        internal static string GetAppDataFolderPath()
+        public static (InstallationType installationType, bool isPortable, Version version) GetInstallationContext()
         {
-            if (IsPortable())
-            {
-                return System.IO.Path.Combine(
-                    AppContext.BaseDirectory
-                        ?? throw new Exception("Could not get process directory"),
-                    "2FAGuard-Data"
-                );
-            }
-            if (GetInstallationType() == InstallationType.MICROSOFT_STORE)
-            {
-                return System.IO.Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "2FAGuardStoreApp"
-                );
-            }
-            return System.IO.Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "2FAGuard"
-            );
+            return (GetInstallationType(), IsPortable(), GetVersion());
         }
     }
 }

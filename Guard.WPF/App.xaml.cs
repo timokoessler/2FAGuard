@@ -2,11 +2,12 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using Guard.WPF.Core;
-using Guard.WPF.Core.Installation;
+using Guard.Core;
 using Guard.WPF.Core.Security;
 using Guard.WPF.Core.Storage;
 using NSec.Cryptography;
 using Windows.ApplicationModel.Activation;
+using Guard.WPF.Core.Installation;
 
 namespace Guard.WPF
 {
@@ -23,12 +24,14 @@ namespace Guard.WPF
             base.OnStartup(e);
             string mutexName = "2FAGuard";
 
-            InstallationType installationType = InstallationInfo.GetInstallationType();
-            if (installationType == InstallationType.CLASSIC_PORTABLE)
+            var installationInfo = InstallationInfo.GetInstallationContext();
+            InstallationContext.Init(installationInfo.installationType, installationInfo.isPortable, installationInfo.version);
+
+            if (installationInfo.installationType == InstallationType.CLASSIC_PORTABLE)
             {
                 mutexName += "Portable";
             }
-            else if (installationType == InstallationType.MICROSOFT_STORE)
+            else if (installationInfo.installationType == InstallationType.MICROSOFT_STORE)
             {
                 mutexName += "Store";
             }
@@ -110,7 +113,7 @@ namespace Guard.WPF
                 return;
             }
 
-            Version currentVersion = InstallationInfo.GetVersion();
+            Version currentVersion = installationInfo.version;
             if (
                 SettingsManager.Settings.LastUsedAppVersion.Major == 0
                 && SettingsManager.Settings.LastUsedAppVersion.Minor == 0

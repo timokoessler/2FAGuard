@@ -10,7 +10,6 @@ using System.Windows.Media.Imaging;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Aptabase;
 using Guard.WPF.Core.Icons;
-using Guard.WPF.Core.Installation;
 using Guard.WPF.Core.Models;
 using Guard.WPF.Core.Security;
 using Guard.WPF.Core.Storage;
@@ -20,6 +19,7 @@ using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Input;
 using Wpf.Ui.Tray.Controls;
+using Guard.Core;
 
 namespace Guard.WPF
 {
@@ -81,7 +81,7 @@ namespace Guard.WPF
 
             if (!Auth.FileExists())
             {
-                StatsClient.TrackEvent($"AppSetup{InstallationInfo.GetInstallationTypeString()}");
+                StatsClient.TrackEvent($"AppSetup{InstallationContext.GetInstallationTypeString()}");
                 FullContentFrame.Content = new Welcome();
             }
             else
@@ -247,7 +247,7 @@ namespace Guard.WPF
                 string errorMessage = HttpUtility.UrlEncode(e.Message + "\n" + e.StackTrace);
                 Process.Start(
                     new ProcessStartInfo(
-                        $"https://github.com/timokoessler/totp-token-guard/issues/new?template=bug.yml&title=%5BBug%5D%3A+&error-message={errorMessage}&win-version={windowsVersion}&app-version={InstallationInfo.GetVersionString()} ({InstallationInfo.GetInstallationTypeString()})"
+                        $"https://github.com/timokoessler/totp-token-guard/issues/new?template=bug.yml&title=%5BBug%5D%3A+&error-message={errorMessage}&win-version={windowsVersion}&app-version={InstallationContext.GetVersionString()} ({InstallationContext.GetInstallationTypeString()})"
                     )
                     {
                         UseShellExecute = true

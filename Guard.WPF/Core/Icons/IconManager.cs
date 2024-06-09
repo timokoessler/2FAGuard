@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Guard.WPF.Core.Installation;
+using Guard.Core;
 
 namespace Guard.WPF.Core.Icons
 {
@@ -22,7 +22,7 @@ namespace Guard.WPF.Core.Icons
         }
 
         private static readonly string customIconsPath = Path.Combine(
-            InstallationInfo.GetAppDataFolderPath(),
+            InstallationContext.GetAppDataFolderPath(),
             "icons"
         );
 

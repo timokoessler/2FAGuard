@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-using Guard.WPF.Core.Installation;
 using Windows.Security.Credentials;
 using Windows.Security.Cryptography;
+using Guard.Core;
 
 namespace Guard.WPF.Core.Security
 {
@@ -9,7 +9,7 @@ namespace Guard.WPF.Core.Security
     {
         private static string GetAccountName()
         {
-            return $"2FAGuard{(InstallationInfo.IsPortable() ? "Portable" : "")}{Auth.GetInstallationID()}";
+            return $"2FAGuard{(InstallationContext.IsPortable() ? "Portable" : "")}{Auth.GetInstallationID()}";
         }
 
         public static async Task<KeyCredentialRetrievalResult> Register()

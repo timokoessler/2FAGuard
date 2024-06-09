@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using System.Windows;
-using Guard.WPF.Core.Installation;
+using Guard.Core;
 using Guard.WPF.Core.Models;
 using Guard.WPF.Core.Storage;
 using Microsoft.Win32;
@@ -12,7 +12,7 @@ namespace Guard.WPF.Core.Security
     internal class Auth
     {
         private static readonly string authFilePath = System.IO.Path.Combine(
-            InstallationInfo.GetAppDataFolderPath(),
+            InstallationContext.GetAppDataFolderPath(),
             "auth-keys"
         );
         private static AuthFileData? authData;
@@ -42,9 +42,9 @@ namespace Guard.WPF.Core.Security
             }
             else
             {
-                if (!System.IO.Directory.Exists(InstallationInfo.GetAppDataFolderPath()))
+                if (!System.IO.Directory.Exists(InstallationContext.GetAppDataFolderPath()))
                 {
-                    System.IO.Directory.CreateDirectory(InstallationInfo.GetAppDataFolderPath());
+                    System.IO.Directory.CreateDirectory(InstallationContext.GetAppDataFolderPath());
                 }
                 authData = new AuthFileData
                 {

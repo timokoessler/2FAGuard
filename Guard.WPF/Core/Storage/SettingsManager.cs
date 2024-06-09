@@ -1,13 +1,13 @@
 ﻿using System.Text.Json;
-using Guard.WPF.Core.Installation;
 using Guard.WPF.Core.Models;
+using Guard.Core;
 
 namespace Guard.WPF.Core.Storage
 {
     internal class SettingsManager
     {
         private static readonly string settingsFilePath = System.IO.Path.Combine(
-            InstallationInfo.GetAppDataFolderPath(),
+            InstallationContext.GetAppDataFolderPath(),
             "settings"
         );
 

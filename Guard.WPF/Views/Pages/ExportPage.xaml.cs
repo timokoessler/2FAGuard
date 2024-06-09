@@ -6,6 +6,7 @@ using Guard.WPF.Core;
 using Guard.WPF.Core.Export.Exporter;
 using Guard.WPF.Views.Controls;
 using Wpf.Ui.Controls;
+using Guard.Core;
 
 namespace Guard.WPF.Views.Pages
 {

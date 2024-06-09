@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Guard.WPF.Core.Icons;
-using Guard.WPF.Core.Installation;
 using Guard.WPF.Core.Security;
+using Guard.Core;
 
 namespace Guard.WPF.Core.Storage
 {
@@ -9,7 +9,7 @@ namespace Guard.WPF.Core.Storage
     {
         internal static void DeleteEverything()
         {
-            string path = InstallationInfo.GetAppDataFolderPath();
+            string path = InstallationContext.GetAppDataFolderPath();
             Database.Deinit();
             _ = WindowsHello.Unregister();
             Auth.DeleteWindowsHelloProtectedKey();

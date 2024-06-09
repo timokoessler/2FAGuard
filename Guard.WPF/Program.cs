@@ -1,5 +1,5 @@
-﻿using Guard.WPF.Core.Models;
-using Windows.ApplicationModel;
+﻿using Windows.ApplicationModel;
+using Guard.WPF.Core.Installation;
 
 namespace Guard.WPF
 {

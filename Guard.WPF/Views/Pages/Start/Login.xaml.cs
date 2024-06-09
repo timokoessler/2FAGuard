@@ -4,9 +4,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Installation;
-using Guard.WPF.Core.Models;
 using Guard.WPF.Core.Security;
 using Guard.WPF.Core.Storage;
+using Guard.Core;
 
 namespace Guard.WPF.Views.Pages.Start
 {
@@ -38,7 +38,7 @@ namespace Guard.WPF.Views.Pages.Start
 
         private async void CheckForUpdate()
         {
-            if (InstallationInfo.GetInstallationType() == InstallationType.MICROSOFT_STORE)
+            if (InstallationContext.GetInstallationType() == InstallationType.MICROSOFT_STORE)
             {
                 return;
             }

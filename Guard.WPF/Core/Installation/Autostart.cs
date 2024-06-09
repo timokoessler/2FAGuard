@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Windows.ApplicationModel;
+using Guard.Core;
 
 namespace Guard.WPF.Core.Installation
 {
@@ -13,7 +14,7 @@ namespace Guard.WPF.Core.Installation
 
         internal static async Task Enable()
         {
-            InstallationType installationType = InstallationInfo.GetInstallationType();
+            InstallationType installationType = InstallationContext.GetInstallationType();
             if (installationType == InstallationType.MICROSOFT_STORE)
             {
                 var status = await StartupTask.GetAsync(PackagedTaskId);
@@ -59,7 +60,7 @@ namespace Guard.WPF.Core.Installation
 
         internal static async Task Disable()
         {
-            InstallationType installationType = InstallationInfo.GetInstallationType();
+            InstallationType installationType = InstallationContext.GetInstallationType();
             if (installationType == InstallationType.MICROSOFT_STORE)
             {
                 var status = await StartupTask.GetAsync(PackagedTaskId);
@@ -88,7 +89,7 @@ namespace Guard.WPF.Core.Installation
 
         internal static async Task<bool> IsEnabled()
         {
-            InstallationType installationType = InstallationInfo.GetInstallationType();
+            InstallationType installationType = InstallationContext.GetInstallationType();
             if (installationType == InstallationType.MICROSOFT_STORE)
             {
                 var status = await StartupTask.GetAsync(PackagedTaskId);

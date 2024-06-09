@@ -1,4 +1,4 @@
-﻿using Guard.WPF.Core.Installation;
+﻿using Guard.Core;
 using Guard.WPF.Core.Models;
 using LiteDB;
 
@@ -12,7 +12,7 @@ namespace Guard.WPF.Core.Storage
         private static string GetDBPath()
         {
             return System.IO.Path.Combine(
-                InstallationInfo.GetAppDataFolderPath(),
+                InstallationContext.GetAppDataFolderPath(),
                 "TokenDatabase.db"
             );
         }

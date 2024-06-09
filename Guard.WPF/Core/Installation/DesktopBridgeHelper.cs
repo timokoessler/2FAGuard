@@ -7,9 +7,9 @@ using System.Text;
  * https://github.com/microsoft/Windows-AppConsult-Tools-DesktopBridgeHelpers/
  * Modified methods to be static
  */
-namespace Guard.WPF.Core.Models
+namespace Guard.WPF.Core.Installation
 {
-    internal class DesktopBridgeHelper
+    public class DesktopBridgeHelper
     {
         const long APPMODEL_ERROR_NO_PACKAGE = 15700L;
 

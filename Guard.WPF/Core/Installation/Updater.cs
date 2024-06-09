@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Windows;
 using Microsoft.Security.Extensions;
+using Guard.Core;
 
 namespace Guard.WPF.Core.Installation
 {
@@ -34,7 +35,7 @@ namespace Guard.WPF.Core.Installation
                 .GetName()
                 .Version;
             string currentVersionString = currentVersion?.ToString() ?? "";
-            bool isPortable = InstallationInfo.IsPortable();
+            bool isPortable = InstallationContext.IsPortable();
 
             try
             {
@@ -69,7 +70,7 @@ namespace Guard.WPF.Core.Installation
 
         internal static async Task Update(UpdateInfo updateInfo)
         {
-            bool isPortable = InstallationInfo.IsPortable();
+            bool isPortable = InstallationContext.IsPortable();
             string downloadUrl = isPortable ? updateInfo.Urls.Portable : updateInfo.Urls.Installer;
 
             string downloadFileName = Path.GetFullPath(
@@ -144,7 +145,7 @@ namespace Guard.WPF.Core.Installation
                     Directory.Delete(extractDir, true);
                 });
                 startFilePath = portableExePath;
-                arguments = $"--updated-from {InstallationInfo.GetVersionString()} --portable";
+                arguments = $"--updated-from {InstallationContext.GetVersionString()} --portable";
             }
 
             if (!IsFileTrusted(startFilePath))

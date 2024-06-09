@@ -15,6 +15,7 @@ using Guard.WPF.Views.Pages.Add;
 using Microsoft.Win32;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using Guard.Core;
 
 namespace Guard.WPF.Views.UIComponents
 {

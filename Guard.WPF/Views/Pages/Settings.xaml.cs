@@ -7,6 +7,7 @@ using Guard.WPF.Core.Security;
 using Guard.WPF.Core.Storage;
 using Guard.WPF.Views.Controls;
 using Wpf.Ui.Controls;
+using Guard.Core;
 
 namespace Guard.WPF.Views.Pages
 {
@@ -28,7 +29,7 @@ namespace Guard.WPF.Views.Pages
             AppCopyrightText.Text =
                 $"Copyright © {DateTime.Now.Year} Timo Kössler and Open Source Contributors\n";
             AppVersionText.Text =
-                $"Version {InstallationInfo.GetVersionString()} ({InstallationInfo.GetInstallationTypeString()})";
+                $"Version {InstallationContext.GetVersionString()} ({InstallationContext.GetInstallationTypeString()})";
 
             SetSelectedTheme(SettingsManager.Settings.Theme);
 
@@ -53,7 +54,7 @@ namespace Guard.WPF.Views.Pages
             LanguagesComboBox.SelectionChanged += OnLanguageSelectionChanged;
             ThemeComboBox.SelectionChanged += OnThemeSelectionChanged;
 
-            if (InstallationInfo.IsPortable())
+            if (InstallationContext.IsPortable())
             {
                 AutoStartSwitch.IsEnabled = false;
             }
@@ -319,7 +320,7 @@ namespace Guard.WPF.Views.Pages
 
         private async void SetAutostartStatus()
         {
-            if (InstallationInfo.IsPortable())
+            if (InstallationContext.IsPortable())
             {
                 return;
             }

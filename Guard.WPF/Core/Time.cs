@@ -1,4 +1,5 @@
 ﻿using GuerrillaNtp;
+using Guard.Core;
 
 namespace Guard.WPF.Core
 {

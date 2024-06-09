@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Channels;
-using Guard.WPF.Core.Installation;
+using Guard.Core;
 
 namespace Guard.WPF.Core.Aptabase;
 
@@ -162,7 +162,7 @@ public class AptabaseClient : IAptabaseClient, IAsyncDisposable
                 OsName = SystemInfo.GetOsName(),
                 OsVersion = SystemInfo.GetOsVersion(),
                 Locale = SystemInfo.GetLocale(),
-                AppVersion = InstallationInfo.GetVersionString(),
+                AppVersion = InstallationContext.GetVersionString(),
                 AppBuildNumber = "",
                 SdkVersion = "0.0.9",
                 DeviceModel = ""

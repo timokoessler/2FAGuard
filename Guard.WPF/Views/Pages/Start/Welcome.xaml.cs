@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Guard.WPF.Core;
-using Guard.WPF.Core.Installation;
 using Guard.WPF.Core.Security;
+using Guard.Core;
 
 namespace Guard.WPF.Views.Pages.Start
 {
@@ -33,7 +33,7 @@ namespace Guard.WPF.Views.Pages.Start
                 }.ShowDialogAsync();
                 return;
             }
-            if (InstallationInfo.IsPortable())
+            if (InstallationContext.IsPortable())
             {
                 Wpf.Ui.Controls.MessageBoxResult sucessDialogResult =
                     await new Wpf.Ui.Controls.MessageBox

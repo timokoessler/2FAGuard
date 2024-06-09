@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Security;
+using Guard.Core;
 
 namespace Guard.WPF.Views.Pages.Start
 {

@@ -1,10 +1,9 @@
-﻿using Guard.WPF.Core.Installation;
-using Serilog;
+﻿using Serilog;
 using Serilog.Core;
 
-namespace Guard.WPF.Core
+namespace Guard.Core
 {
-    internal class Log
+    public class Log
     {
         private static Logger? log;
 
@@ -13,8 +12,8 @@ namespace Guard.WPF.Core
             log = new LoggerConfiguration()
                 .WriteTo.Debug()
                 .WriteTo.File(
-                    System.IO.Path.Combine(
-                        InstallationInfo.GetAppDataFolderPath(),
+                    Path.Combine(
+                        InstallationContext.GetAppDataFolderPath(),
                         "logs",
                         "log.txt"
                     ),
