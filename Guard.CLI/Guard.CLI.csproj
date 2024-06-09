@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
+    <ApplicationIcon>totp.ico</ApplicationIcon>
+    <Version>1.3.1</Version>
+	  <Authors>Timo Kössler and Open Source Contributors</Authors>
+	  <Copyright>$(Authors)</Copyright>
+	  <RepositoryType>git</RepositoryType>
+	  <RepositoryUrl>https://github.com/timokoessler/2FAGuard</RepositoryUrl>
+	  <FileVersion>$(Version)</FileVersion>
+	  <AssemblyVersion>$(Version)</AssemblyVersion>
+	  <SelfContained>true</SelfContained>
+	  <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+	  <PackageProjectUrl>https://2faguard.app</PackageProjectUrl>
+	  <StartupObject>Guard.CLI.Program</StartupObject>
+	  <AssemblyName>2fa</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="totp.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.49.1" />
+    <PackageReference Include="Spectre.Console.Analyzer" Version="0.49.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Spectre.Console.Cli" Version="0.49.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Guard.Core\Guard.Core.csproj" />
+  </ItemGroup>
+
+</Project>
