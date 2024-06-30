@@ -1,9 +1,8 @@
 ﻿using GuerrillaNtp;
-using Guard.Core;
 
-namespace Guard.WPF.Core
+namespace Guard.Core
 {
-    internal class Time
+    public class Time
     {
         public static async Task<TimeSpan> GetLocalUTCTimeOffset()
         {

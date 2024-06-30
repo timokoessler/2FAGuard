@@ -1,7 +1,8 @@
-﻿using Guard.CLI.Commands;
+﻿using System.Globalization;
+using Guard.CLI.Commands;
 using Guard.Core;
+using Guard.Core.Storage;
 using Spectre.Console.Cli;
-using System.Globalization;
 
 namespace Guard.CLI
 {
@@ -10,7 +11,15 @@ namespace Guard.CLI
         public static int Main(string[] args)
         {
             // Todo: Detect InstallationType and isPortable and set it here
-            InstallationContext.Init(InstallationType.CLASSIC_PORTABLE, false, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version ?? new Version(0, 0));
+            InstallationType installationType = InstallationType.CLASSIC_PORTABLE;
+            InstallationContext.Init(
+                installationType,
+                false,
+                System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
+                    ?? new Version(0, 0)
+            );
+
+            Log.Init();
 
             var app = new CommandApp();
             app.Configure(config =>
@@ -18,10 +27,11 @@ namespace Guard.CLI
                 config.SetApplicationName("2fa");
                 config.SetApplicationVersion(InstallationContext.GetVersionString());
                 config.SetApplicationCulture(CultureInfo.GetCultureInfo("en"));
-                config.AddCommand<GetCodeCommand>("get")
+                config
+                    .AddCommand<GetCodeCommand>("get")
                     .WithDescription("Get a two-factor authentication code.");
             });
-            
+
             return app.Run(args);
         }
     }

@@ -1,15 +1,14 @@
-﻿using Guard.Core.Models;
-using Guard.Core.Security;
+﻿using Guard.Core.Security;
 using OtpNet;
 
-namespace Guard.WPF.Core.Models
+namespace Guard.Core.Models
 {
-    internal class TOTPTokenHelper
+    public class TOTPTokenHelper
     {
-        internal readonly string DecryptedSecret;
+        public readonly string DecryptedSecret;
         private readonly Totp totp;
-        internal readonly DBTOTPToken dBToken;
-        internal readonly string? Username;
+        public readonly DBTOTPToken dBToken;
+        public readonly string? Username;
 
         public TOTPTokenHelper(DBTOTPToken dBToken)
         {

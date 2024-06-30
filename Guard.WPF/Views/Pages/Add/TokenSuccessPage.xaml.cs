@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Guard.Core.Models;
 using Guard.WPF.Core;
-using Guard.WPF.Core.Models;
 using Guard.WPF.Views.UIComponents;
 
 namespace Guard.WPF.Views.Pages
