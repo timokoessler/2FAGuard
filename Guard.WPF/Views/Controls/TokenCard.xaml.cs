@@ -10,7 +10,6 @@ using Guard.Core.Models;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Export;
 using Guard.WPF.Core.Icons;
-using Guard.WPF.Core.Models;
 using Guard.WPF.Views.Controls;
 using Guard.WPF.Views.Pages;
 using Guard.WPF.Views.Pages.Add;

@@ -113,6 +113,11 @@ namespace Guard.CLI.Core
             await Auth.Init();
 
             await CLIAuth.Login();
+            if (!Auth.IsLoggedIn())
+            {
+                throw new Exception("Login failed.");
+            }
+            Database.Init();
         }
 
         private static void onExit()

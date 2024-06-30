@@ -66,5 +66,23 @@ namespace Guard.Core.Storage
             }
             tokens.Delete(id);
         }
+
+        public static List<DBTOTPToken> GetTokensByIssuer(string issuer)
+        {
+            if (tokens == null)
+            {
+                throw new Exception("Database not initialized");
+            }
+            return tokens.Find(t => t.Issuer == issuer).ToList();
+        }
+
+        public static DBTOTPToken GetTokenById(int id)
+        {
+            if (tokens == null)
+            {
+                throw new Exception("Database not initialized");
+            }
+            return tokens.FindById(id);
+        }
     }
 }

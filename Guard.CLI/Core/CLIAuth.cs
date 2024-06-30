@@ -34,6 +34,7 @@ namespace Guard.CLI.Core
                     Auth.LoginWithPassword(pass);
                 }
 
+                AnsiConsole.MarkupLine("Logged in successfully.");
                 return true;
             }
             catch (Exception ex)
@@ -41,6 +42,11 @@ namespace Guard.CLI.Core
                 if (ex.Message.Contains("UserCanceled"))
                 {
                     return await Login(false);
+                }
+                if (ex.Message.Contains("Failed to decrypt keys"))
+                {
+                    AnsiConsole.MarkupLine("[red]Error:[/] Invalid password.");
+                    return false;
                 }
                 AnsiConsole.MarkupLine("[red]Error:[/] " + ex.Message);
                 return false;
