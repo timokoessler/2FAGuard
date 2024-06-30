@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Text.Json;
+using Guard.Core.Models;
 using Wpf.Ui.Appearance;
-using static Guard.WPF.Core.Icons.IconManager;
 
 namespace Guard.WPF.Core.Icons
 {

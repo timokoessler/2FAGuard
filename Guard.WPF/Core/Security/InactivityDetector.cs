@@ -1,9 +1,8 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows;
-using Guard.WPF.Core.Models;
-using Guard.WPF.Core.Storage;
+using Guard.Core.Models;
+using Guard.Core.Storage;
 
 namespace Guard.WPF.Core.Security
 {

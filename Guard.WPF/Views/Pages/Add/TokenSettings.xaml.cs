@@ -4,11 +4,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
+using Guard.Core.Models;
+using Guard.Core.Security;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Import;
 using Guard.WPF.Core.Models;
-using Guard.Core.Security;
 using Guard.WPF.Views.UIComponents;
 using Microsoft.Win32;
 using Wpf.Ui.Controls;
@@ -20,8 +21,8 @@ namespace Guard.WPF.Views.Pages.Add
     /// </summary>
     public partial class TokenSettings : Page
     {
-        private IconManager.TotpIcon? selectedIcon;
-        private readonly IconManager.TotpIcon defaultIcon;
+        private TotpIcon? selectedIcon;
+        private readonly TotpIcon defaultIcon;
         private readonly MainWindow mainWindow;
         private readonly string action;
         private readonly TOTPTokenHelper? existingToken;
@@ -48,7 +49,7 @@ namespace Guard.WPF.Views.Pages.Add
 
             NavigationContextManager.ClearContext();
 
-            defaultIcon = IconManager.GetIcon("default", IconManager.IconType.Default);
+            defaultIcon = IconManager.GetIcon("default", IconType.Default);
             IconSvgView.SvgSource = defaultIcon.Svg;
             Issuer.OriginalItemsSource = IconManager.GetIconNames();
 
@@ -74,12 +75,12 @@ namespace Guard.WPF.Views.Pages.Add
                 {
                     selectedIcon = IconManager.GetIcon(
                         existingToken.dBToken.Icon,
-                        existingToken.dBToken.IconType ?? IconManager.IconType.Any
+                        existingToken.dBToken.IconType ?? IconType.Any
                     );
 
                     NoIconText.Visibility = Visibility.Collapsed;
 
-                    if (selectedIcon.Type == IconManager.IconType.Custom)
+                    if (selectedIcon.Type == IconType.Custom)
                     {
                         ShowCustomImage();
                     }
@@ -163,7 +164,7 @@ namespace Guard.WPF.Views.Pages.Add
             if (args.SelectedItem is not string selectedSuggestBoxItem)
                 return;
 
-            if (selectedIcon != null && selectedIcon.Type == IconManager.IconType.Custom)
+            if (selectedIcon != null && selectedIcon.Type == IconType.Custom)
             {
                 IconManager.RemoveCustomIcon(selectedIcon.Name);
             }
@@ -171,7 +172,7 @@ namespace Guard.WPF.Views.Pages.Add
             ImageIconView.Source = null;
             ImageIconView.Visibility = Visibility.Collapsed;
             IconSvgView.Visibility = Visibility.Visible;
-            selectedIcon = IconManager.GetIcon(selectedSuggestBoxItem, IconManager.IconType.Any);
+            selectedIcon = IconManager.GetIcon(selectedSuggestBoxItem, IconType.Any);
             IconSvgView.Source = null;
             IconSvgView.SvgSource = selectedIcon.Svg;
             ImageLicense.Text = IconManager.GetLicense(selectedIcon);
@@ -188,7 +189,7 @@ namespace Guard.WPF.Views.Pages.Add
                 return;
             }
 
-            if (selectedIcon != null && selectedIcon.Type == IconManager.IconType.Custom)
+            if (selectedIcon != null && selectedIcon.Type == IconType.Custom)
             {
                 return;
             }
@@ -387,12 +388,12 @@ namespace Guard.WPF.Views.Pages.Add
                 IconSvgView.SvgSource = null;
                 IconSvgView.Source = null;
 
-                if (selectedIcon != null && selectedIcon.Type == IconManager.IconType.Custom)
+                if (selectedIcon != null && selectedIcon.Type == IconType.Custom)
                 {
                     IconManager.RemoveCustomIcon(selectedIcon.Name);
                 }
 
-                selectedIcon = IconManager.GetIcon(name, IconManager.IconType.Custom);
+                selectedIcon = IconManager.GetIcon(name, IconType.Custom);
 
                 ShowCustomImage();
             }

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows;
-using Guard.WPF.Core.Models;
+using Guard.Core.Models;
 
 namespace Guard.WPF.Core.Import.Importer
 {

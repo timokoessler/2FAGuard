@@ -2,9 +2,10 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using Guard.Core.Models;
+using Guard.Core.Security;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Models;
-using Guard.Core.Security;
 
 namespace Guard.WPF.Core.Import.Importer
 {
@@ -127,10 +128,7 @@ namespace Guard.WPF.Core.Import.Importer
                         throw new Exception("Invalid Bitwarden export file: No item name found");
                     }
 
-                    IconManager.TotpIcon icon = IconManager.GetIcon(
-                        item.Name,
-                        IconManager.IconType.Any
-                    );
+                    TotpIcon icon = IconManager.GetIcon(item.Name, IconType.Any);
 
                     string normalizedSecret = OTPUriParser.NormalizeSecret(item.Login.Totp);
 
@@ -154,7 +152,7 @@ namespace Guard.WPF.Core.Import.Importer
                         );
                     }
 
-                    if (icon != null && icon.Type != IconManager.IconType.Default)
+                    if (icon != null && icon.Type != IconType.Default)
                     {
                         dbToken.Icon = icon.Name;
                         dbToken.IconType = icon.Type;

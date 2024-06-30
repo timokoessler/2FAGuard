@@ -1,6 +1,6 @@
-﻿using Guard.WPF.Core.Icons;
-using Guard.WPF.Core.Models;
+﻿using Guard.Core.Models;
 using Guard.Core.Security;
+using Guard.WPF.Core.Icons;
 using OtpNet;
 
 namespace Guard.WPF.Core.Import
@@ -144,10 +144,7 @@ namespace Guard.WPF.Core.Import
             ArgumentNullException.ThrowIfNull(otpUri.Issuer);
             ArgumentNullException.ThrowIfNull(otpUri.Secret);
 
-            IconManager.TotpIcon icon = IconManager.GetIcon(
-                otpUri.Issuer,
-                IconManager.IconType.Any
-            );
+            TotpIcon icon = IconManager.GetIcon(otpUri.Issuer, IconType.Any);
 
             EncryptionHelper encryption = Auth.GetMainEncryptionHelper();
 
@@ -168,7 +165,7 @@ namespace Guard.WPF.Core.Import
                 dbToken.EncryptedUsername = encryption.EncryptStringToBytes(otpUri.Account);
             }
 
-            if (icon != null && icon.Type != IconManager.IconType.Default)
+            if (icon != null && icon.Type != IconType.Default)
             {
                 dbToken.Icon = icon.Name;
                 dbToken.IconType = icon.Type;

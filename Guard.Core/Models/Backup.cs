@@ -1,10 +1,8 @@
-﻿using Guard.WPF.Core.Icons;
-
-namespace Guard.WPF.Core.Models
+﻿namespace Guard.Core.Models
 {
-    internal class Backup
+    public class Backup
     {
-        internal class Token
+        public class Token
         {
             public required string Issuer { get; set; }
             public string? Username { get; set; }
@@ -13,7 +11,7 @@ namespace Guard.WPF.Core.Models
             public int? Digits { get; set; }
             public int? Period { get; set; }
             public string? Icon { get; set; }
-            public IconManager.IconType? IconType { get; set; }
+            public IconType? IconType { get; set; }
             public string? Notes { get; set; }
             public DateTime? UpdatedTime { get; set; }
             public required DateTime CreationTime { get; set; }

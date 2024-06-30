@@ -1,5 +1,6 @@
-﻿using OtpNet;
+﻿using Guard.Core.Models;
 using Guard.Core.Security;
+using OtpNet;
 
 namespace Guard.WPF.Core.Models
 {

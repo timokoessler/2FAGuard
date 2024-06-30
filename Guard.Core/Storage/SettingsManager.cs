@@ -1,12 +1,11 @@
 ﻿using System.Text.Json;
-using Guard.WPF.Core.Models;
-using Guard.Core;
+using Guard.Core.Models;
 
-namespace Guard.WPF.Core.Storage
+namespace Guard.Core.Storage
 {
-    internal class SettingsManager
+    public class SettingsManager
     {
-        private static readonly string settingsFilePath = System.IO.Path.Combine(
+        private static readonly string settingsFilePath = Path.Combine(
             InstallationContext.GetAppDataFolderPath(),
             "settings"
         );
@@ -15,9 +14,9 @@ namespace Guard.WPF.Core.Storage
 
         public static void Init()
         {
-            if (System.IO.File.Exists(settingsFilePath))
+            if (File.Exists(settingsFilePath))
             {
-                byte[] fileData = System.IO.File.ReadAllBytes(settingsFilePath);
+                byte[] fileData = File.ReadAllBytes(settingsFilePath);
                 string fileContent = System.Text.Encoding.UTF8.GetString(fileData);
                 AppSettings? appSettings = JsonSerializer.Deserialize<AppSettings>(fileContent);
                 if (appSettings != null)
@@ -31,7 +30,7 @@ namespace Guard.WPF.Core.Storage
         {
             string fileContent = JsonSerializer.Serialize(Settings);
             byte[] fileData = System.Text.Encoding.UTF8.GetBytes(fileContent);
-            await System.IO.File.WriteAllBytesAsync(settingsFilePath, fileData);
+            await File.WriteAllBytesAsync(settingsFilePath, fileData);
         }
     }
 }

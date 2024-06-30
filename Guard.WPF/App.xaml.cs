@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
-using Guard.WPF.Core;
 using Guard.Core;
-using Guard.WPF.Core.Security;
-using Guard.WPF.Core.Storage;
-using NSec.Cryptography;
-using Windows.ApplicationModel.Activation;
+using Guard.Core.Security;
+using Guard.Core.Storage;
+using Guard.WPF.Core;
 using Guard.WPF.Core.Installation;
+using Guard.WPF.Core.Security;
+using Windows.ApplicationModel.Activation;
 
 namespace Guard.WPF
 {
@@ -25,7 +25,11 @@ namespace Guard.WPF
             string mutexName = "2FAGuard";
 
             var installationInfo = InstallationInfo.GetInstallationContext();
-            InstallationContext.Init(installationInfo.installationType, installationInfo.isPortable, installationInfo.version);
+            InstallationContext.Init(
+                installationInfo.installationType,
+                installationInfo.isPortable,
+                installationInfo.version
+            );
 
             if (installationInfo.installationType == InstallationType.CLASSIC_PORTABLE)
             {
@@ -81,17 +85,8 @@ namespace Guard.WPF
                 Shutdown();
                 return;
             }
-            try
+            if (!EncryptionHelper.IsSupported())
             {
-                _ = new Aegis256();
-            }
-            catch (Exception ex)
-            {
-                Log.Logger.Error(
-                    "Failed to initialize NSec.Cryptography.Aegis256 {0} {1}",
-                    ex.Message,
-                    ex.StackTrace
-                );
                 var uiMessageBox = new Wpf.Ui.Controls.MessageBox
                 {
                     Title = I18n.GetString("i.unsupported.vcpp.title"),

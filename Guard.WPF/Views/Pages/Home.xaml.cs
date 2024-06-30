@@ -1,8 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Guard.Core.Models;
+using Guard.Core.Storage;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Models;
-using Guard.WPF.Core.Storage;
 using Guard.WPF.Views.Pages.Add;
 using Guard.WPF.Views.UIComponents;
 

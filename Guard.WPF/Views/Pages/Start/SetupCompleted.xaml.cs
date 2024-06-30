@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Guard.Core.Security;
+using Guard.Core.Storage;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Security;
-using Guard.WPF.Core.Storage;
 using Guard.WPF.Views.Pages.Add;
-using Guard.Core.Security;
 
 namespace Guard.WPF.Views.Pages.Start
 {

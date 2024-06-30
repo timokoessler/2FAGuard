@@ -2,9 +2,10 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using Guard.Core.Models;
+using Guard.Core.Security;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Models;
-using Guard.Core.Security;
 using NSec.Cryptography;
 
 namespace Guard.WPF.Core.Import.Importer
@@ -80,10 +81,7 @@ namespace Guard.WPF.Core.Import.Importer
                     throw new Exception("Invalid 2FAS backup: No secret found");
                 }
 
-                IconManager.TotpIcon icon = IconManager.GetIcon(
-                    service.OTP.Issuer,
-                    IconManager.IconType.Any
-                );
+                TotpIcon icon = IconManager.GetIcon(service.OTP.Issuer, IconType.Any);
 
                 string normalizedSecret = OTPUriParser.NormalizeSecret(service.Secret);
 
@@ -121,7 +119,7 @@ namespace Guard.WPF.Core.Import.Importer
                     );
                 }
 
-                if (icon != null && icon.Type != IconManager.IconType.Default)
+                if (icon != null && icon.Type != IconType.Default)
                 {
                     dbToken.Icon = icon.Name;
                     dbToken.IconType = icon.Type;

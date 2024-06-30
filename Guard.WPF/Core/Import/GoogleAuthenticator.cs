@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Google.Protobuf;
+using Guard.Core.Models;
 using Guard.WPF.Core.Import.GoogleOTPMigration;
-using Guard.WPF.Core.Models;
 using OtpNet;
 
 namespace Guard.WPF.Core.Import

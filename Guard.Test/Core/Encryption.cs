@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using Guard.WPF.Core.Security;
+using Guard.Core.Security;
 
 namespace Guard.Test.Core
 {

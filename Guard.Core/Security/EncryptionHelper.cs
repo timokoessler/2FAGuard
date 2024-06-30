@@ -118,5 +118,23 @@ namespace Guard.Core.Security
                 .Replace("-", "")
                 .ToLower();
         }
+
+        public static bool IsSupported()
+        {
+            try
+            {
+                _ = new Aegis256();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(
+                    "Failed to initialize NSec.Cryptography.Aegis256 (IsSupported) {0} {1}",
+                    ex.Message,
+                    ex.StackTrace
+                );
+                return false;
+            }
+        }
     }
 }

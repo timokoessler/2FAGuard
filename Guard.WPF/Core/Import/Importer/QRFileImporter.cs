@@ -1,4 +1,4 @@
-﻿using Guard.WPF.Core.Models;
+﻿using Guard.Core.Models;
 
 namespace Guard.WPF.Core.Import.Importer
 {

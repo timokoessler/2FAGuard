@@ -1,9 +1,10 @@
 ﻿using System.IO;
 using System.Text;
 using System.Text.Json;
+using Guard.Core.Models;
+using Guard.Core.Security;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Models;
-using Guard.Core.Security;
 using NSec.Cryptography;
 
 namespace Guard.WPF.Core.Import.Importer
@@ -85,10 +86,7 @@ namespace Guard.WPF.Core.Import.Importer
                     throw new Exception("Invalid AuthenticatorPro backup: No secret found");
                 }
 
-                IconManager.TotpIcon icon = IconManager.GetIcon(
-                    token.Issuer,
-                    IconManager.IconType.Any
-                );
+                TotpIcon icon = IconManager.GetIcon(token.Issuer, IconType.Any);
 
                 string normalizedSecret = OTPUriParser.NormalizeSecret(token.Secret);
 
@@ -118,7 +116,7 @@ namespace Guard.WPF.Core.Import.Importer
                     dbToken.EncryptedUsername = encryption.EncryptStringToBytes(token.Username);
                 }
 
-                if (icon != null && icon.Type != IconManager.IconType.Default)
+                if (icon != null && icon.Type != IconType.Default)
                 {
                     dbToken.Icon = icon.Name;
                     dbToken.IconType = icon.Type;

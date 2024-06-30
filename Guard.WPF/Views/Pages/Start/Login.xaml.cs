@@ -2,12 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Guard.Core;
+using Guard.Core.Security;
+using Guard.Core.Storage;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Installation;
-using Guard.Core.Security;
 using Guard.WPF.Core.Security;
-using Guard.WPF.Core.Storage;
-using Guard.Core;
 
 namespace Guard.WPF.Views.Pages.Start
 {

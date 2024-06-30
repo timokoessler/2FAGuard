@@ -1,5 +1,4 @@
 ﻿using Guard.WPF.Core;
-using Guard.WPF.Core.Import.Importer;
 
 namespace Guard.Test.Import
 {

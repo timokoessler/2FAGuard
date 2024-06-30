@@ -1,14 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Guard.Core;
+using Guard.Core.Models;
+using Guard.Core.Security;
+using Guard.Core.Storage;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Installation;
-using Guard.WPF.Core.Models;
 using Guard.WPF.Core.Security;
-using Guard.WPF.Core.Storage;
 using Guard.WPF.Views.Controls;
-using Guard.Core.Security;
 using Wpf.Ui.Controls;
-using Guard.Core;
 
 namespace Guard.WPF.Views.Pages
 {

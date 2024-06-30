@@ -5,6 +5,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using Guard.Core;
+using Guard.Core.Models;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Export;
 using Guard.WPF.Core.Icons;
@@ -15,7 +17,6 @@ using Guard.WPF.Views.Pages.Add;
 using Microsoft.Win32;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
-using Guard.Core;
 
 namespace Guard.WPF.Views.UIComponents
 {
@@ -28,7 +29,7 @@ namespace Guard.WPF.Views.UIComponents
         private DoubleAnimation? doubleAnimation;
         private readonly MainWindow mainWindow;
         internal readonly string SearchString;
-        private readonly IconManager.TotpIcon? icon;
+        private readonly TotpIcon? icon;
 
         internal TokenCard(TOTPTokenHelper token)
         {
@@ -59,10 +60,10 @@ namespace Guard.WPF.Views.UIComponents
             {
                 icon = IconManager.GetIcon(
                     token.dBToken.Icon,
-                    token.dBToken.IconType ?? IconManager.IconType.Any
+                    token.dBToken.IconType ?? IconType.Any
                 );
 
-                if (icon.Type != IconManager.IconType.Custom)
+                if (icon.Type != IconType.Custom)
                 {
                     SvgIconView.SvgSource = icon.Svg;
                 }
@@ -94,14 +95,14 @@ namespace Guard.WPF.Views.UIComponents
                             icon.Path,
                             token.dBToken.Id
                         );
-                        icon = IconManager.GetIcon("default", IconManager.IconType.Default);
+                        icon = IconManager.GetIcon("default", IconType.Default);
                         SvgIconView.SvgSource = icon.Svg;
                     }
                 }
             }
             else
             {
-                icon = IconManager.GetIcon("default", IconManager.IconType.Default);
+                icon = IconManager.GetIcon("default", IconType.Default);
                 SvgIconView.SvgSource = icon.Svg;
             }
 
@@ -220,7 +221,7 @@ namespace Guard.WPF.Views.UIComponents
                 if (
                     token.dBToken.Icon != null
                     && token.dBToken.IconType != null
-                    && token.dBToken.IconType == IconManager.IconType.Custom
+                    && token.dBToken.IconType == IconType.Custom
                 )
                 {
                     IconManager.RemoveCustomIcon(token.dBToken.Icon);

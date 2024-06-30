@@ -1,6 +1,7 @@
-﻿using Guard.WPF.Core.Models;
-using Guard.WPF.Core.Storage;
-using Guard.Core;
+﻿using Guard.Core;
+using Guard.Core.Models;
+using Guard.Core.Storage;
+using Guard.WPF.Core.Models;
 
 namespace Guard.WPF.Core
 {

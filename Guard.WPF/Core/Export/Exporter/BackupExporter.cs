@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using System.Text.Json;
-using Guard.WPF.Core.Models;
+using Guard.Core.Models;
 using Guard.Core.Security;
 
 namespace Guard.WPF.Core.Export.Exporter

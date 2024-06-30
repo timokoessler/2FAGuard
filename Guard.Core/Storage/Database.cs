@@ -1,23 +1,19 @@
-﻿using Guard.Core;
-using Guard.WPF.Core.Models;
+﻿using Guard.Core.Models;
 using LiteDB;
 
-namespace Guard.WPF.Core.Storage
+namespace Guard.Core.Storage
 {
-    class Database
+    public class Database
     {
         private static LiteDatabase? db;
         private static ILiteCollection<DBTOTPToken>? tokens;
 
         private static string GetDBPath()
         {
-            return System.IO.Path.Combine(
-                InstallationContext.GetAppDataFolderPath(),
-                "TokenDatabase.db"
-            );
+            return Path.Combine(InstallationContext.GetAppDataFolderPath(), "TokenDatabase.db");
         }
 
-        internal static void Init()
+        public static void Init()
         {
             if (db != null)
             {
@@ -28,7 +24,7 @@ namespace Guard.WPF.Core.Storage
             tokens = db.GetCollection<DBTOTPToken>("tokens");
         }
 
-        internal static void Deinit()
+        public static void Deinit()
         {
             if (db == null)
             {
@@ -39,12 +35,12 @@ namespace Guard.WPF.Core.Storage
             tokens = null;
         }
 
-        internal static bool FileExists()
+        public static bool FileExists()
         {
-            return System.IO.File.Exists(GetDBPath());
+            return File.Exists(GetDBPath());
         }
 
-        internal static List<DBTOTPToken> GetAllTokens()
+        public static List<DBTOTPToken> GetAllTokens()
         {
             if (tokens == null)
             {
@@ -53,7 +49,7 @@ namespace Guard.WPF.Core.Storage
             return tokens.FindAll().ToList();
         }
 
-        internal static void AddToken(DBTOTPToken token)
+        public static void AddToken(DBTOTPToken token)
         {
             if (tokens == null)
             {
@@ -62,7 +58,7 @@ namespace Guard.WPF.Core.Storage
             tokens.Insert(token);
         }
 
-        internal static void DeleteTokenById(int id)
+        public static void DeleteTokenById(int id)
         {
             if (tokens == null)
             {

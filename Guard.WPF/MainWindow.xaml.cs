@@ -7,20 +7,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Guard.Core;
+using Guard.Core.Models;
+using Guard.Core.Security;
+using Guard.Core.Storage;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Aptabase;
 using Guard.WPF.Core.Icons;
-using Guard.WPF.Core.Models;
-using Guard.Core.Security;
-using Guard.WPF.Core.Storage;
+using Guard.WPF.Core.Security;
 using Guard.WPF.Views.Pages.Start;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Input;
 using Wpf.Ui.Tray.Controls;
-using Guard.Core;
-using Guard.WPF.Core.Security;
 
 namespace Guard.WPF
 {
@@ -84,7 +84,9 @@ namespace Guard.WPF
 
             if (!Auth.FileExists())
             {
-                StatsClient.TrackEvent($"AppSetup{InstallationContext.GetInstallationTypeString()}");
+                StatsClient.TrackEvent(
+                    $"AppSetup{InstallationContext.GetInstallationTypeString()}"
+                );
                 FullContentFrame.Content = new Welcome();
             }
             else

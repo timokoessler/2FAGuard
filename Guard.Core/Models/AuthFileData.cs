@@ -1,6 +1,6 @@
 ﻿namespace Guard.Core.Models
 {
-    internal class AuthFileData
+    public class AuthFileData
     {
         public required int Version { get; set; }
 

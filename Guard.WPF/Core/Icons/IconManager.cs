@@ -1,26 +1,11 @@
 ﻿using System.IO;
 using Guard.Core;
+using Guard.Core.Models;
 
 namespace Guard.WPF.Core.Icons
 {
     class IconManager
     {
-        internal enum IconType
-        {
-            Default,
-            Any,
-            SimpleIcons,
-            Custom
-        }
-
-        internal class TotpIcon
-        {
-            public required IconType Type { get; set; }
-            public required string Name { get; set; }
-            public string? Svg { get; set; }
-            public string? Path { get; set; }
-        }
-
         private static readonly string customIconsPath = Path.Combine(
             InstallationContext.GetAppDataFolderPath(),
             "icons"
@@ -123,14 +108,6 @@ namespace Guard.WPF.Core.Icons
             if (File.Exists(path))
             {
                 File.Delete(path);
-            }
-        }
-
-        public static void RemoveAllCustomIcons()
-        {
-            if (Directory.Exists(customIconsPath))
-            {
-                Directory.Delete(customIconsPath, true);
             }
         }
     }

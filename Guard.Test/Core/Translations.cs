@@ -1,6 +1,4 @@
-﻿using System.Text;
-using System.Xml.Linq;
-using SharpVectors.Dom;
+﻿using System.Xml.Linq;
 
 namespace Guard.Test.Core
 {

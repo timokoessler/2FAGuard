@@ -1,6 +1,6 @@
-﻿using Guard.WPF.Core.Storage;
+﻿using Guard.Core.Security;
+using Guard.Core.Storage;
 using Microsoft.Win32;
-using Guard.Core.Security;
 
 namespace Guard.WPF.Core.Security
 {

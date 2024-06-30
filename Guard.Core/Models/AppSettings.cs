@@ -1,15 +1,13 @@
-﻿using Guard.WPF.Core.Installation;
-
-namespace Guard.WPF.Core.Models
+﻿namespace Guard.Core.Models
 {
-    internal enum ThemeSetting
+    public enum ThemeSetting
     {
         System,
         Light,
         Dark
     }
 
-    internal enum LanguageSetting
+    public enum LanguageSetting
     {
         System,
         EN,
@@ -18,7 +16,7 @@ namespace Guard.WPF.Core.Models
         ZH_TW
     }
 
-    internal enum SortOrderSetting
+    public enum SortOrderSetting
     {
         ISSUER_ASC,
         ISSUER_DESC,
@@ -26,7 +24,7 @@ namespace Guard.WPF.Core.Models
         CREATED_DESC
     }
 
-    internal enum LockTimeSetting
+    public enum LockTimeSetting
     {
         Never,
         ThirtySeconds,
@@ -37,7 +35,7 @@ namespace Guard.WPF.Core.Models
         OneHour
     }
 
-    internal class AppSettings
+    public class AppSettings
     {
         public ThemeSetting Theme { get; set; } = ThemeSetting.System;
         public LanguageSetting Language { get; set; } = LanguageSetting.System;
