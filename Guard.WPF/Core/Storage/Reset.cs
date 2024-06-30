@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using Guard.WPF.Core.Icons;
-using Guard.WPF.Core.Security;
+using Guard.Core.Security;
 using Guard.Core;
 
 namespace Guard.WPF.Core.Storage

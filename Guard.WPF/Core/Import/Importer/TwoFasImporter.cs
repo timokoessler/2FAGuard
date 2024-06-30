@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Models;
-using Guard.WPF.Core.Security;
+using Guard.Core.Security;
 using NSec.Cryptography;
 
 namespace Guard.WPF.Core.Import.Importer

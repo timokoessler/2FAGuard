@@ -1,17 +1,13 @@
 ﻿using System.Text;
 using System.Text.Json;
-using System.Windows;
-using Guard.Core;
-using Guard.WPF.Core.Models;
-using Guard.WPF.Core.Storage;
-using Microsoft.Win32;
+using Guard.Core.Models;
 using Windows.Security.Credentials;
 
-namespace Guard.WPF.Core.Security
+namespace Guard.Core.Security
 {
-    internal class Auth
+    public class Auth
     {
-        private static readonly string authFilePath = System.IO.Path.Combine(
+        private static readonly string authFilePath = Path.Combine(
             InstallationContext.GetAppDataFolderPath(),
             "auth-keys"
         );
@@ -19,7 +15,6 @@ namespace Guard.WPF.Core.Security
         private static string? mainEncryptionKey;
         private static EncryptionHelper? mainEncryptionHelper;
         private static readonly int currentVersion = 1;
-        private static MainWindow? mainWindow;
         private static bool registrationFinished = false;
 
         /// <summary>
@@ -28,7 +23,7 @@ namespace Guard.WPF.Core.Security
         /// </summary>
         private static PasswordVault? passwordVault;
 
-        internal static async Task Init()
+        public static async Task Init()
         {
             if (authData != null)
             {
@@ -42,9 +37,9 @@ namespace Guard.WPF.Core.Security
             }
             else
             {
-                if (!System.IO.Directory.Exists(InstallationContext.GetAppDataFolderPath()))
+                if (!Directory.Exists(InstallationContext.GetAppDataFolderPath()))
                 {
-                    System.IO.Directory.CreateDirectory(InstallationContext.GetAppDataFolderPath());
+                    Directory.CreateDirectory(InstallationContext.GetAppDataFolderPath());
                 }
                 authData = new AuthFileData
                 {
@@ -52,27 +47,25 @@ namespace Guard.WPF.Core.Security
                     Version = currentVersion
                 };
             }
-            mainWindow = (MainWindow)Application.Current.MainWindow;
             passwordVault = new();
-            SystemEvents.SessionSwitch += OnSessionSwitch;
         }
 
-        internal static bool FileExists()
+        public static bool FileExists()
         {
-            return System.IO.File.Exists(authFilePath);
+            return File.Exists(authFilePath);
         }
 
-        internal static async Task LoadFile()
+        public static async Task LoadFile()
         {
-            byte[] fileData = await System.IO.File.ReadAllBytesAsync(authFilePath);
-            string fileContent = System.Text.Encoding.UTF8.GetString(fileData);
+            byte[] fileData = await File.ReadAllBytesAsync(authFilePath);
+            string fileContent = Encoding.UTF8.GetString(fileData);
             authData = JsonSerializer.Deserialize<AuthFileData>(fileContent);
         }
 
-        internal static async Task SaveFile()
+        public static async Task SaveFile()
         {
             byte[] fileData = JsonSerializer.SerializeToUtf8Bytes(authData);
-            await System.IO.File.WriteAllBytesAsync(authFilePath, fileData);
+            await File.WriteAllBytesAsync(authFilePath, fileData);
         }
 
         /// <summary>
@@ -81,7 +74,7 @@ namespace Guard.WPF.Core.Security
         /// </summary>
         /// <param name="password">The user chosen password to encrypt the key with</param>
         /// <param name="enableWindowsHello">If Windows Hello should be enabled</param>
-        internal static async Task Register(byte[] password, bool enableWindowsHello)
+        public static async Task Register(byte[] password, bool enableWindowsHello)
         {
             if (authData == null)
             {
@@ -107,7 +100,7 @@ namespace Guard.WPF.Core.Security
             registrationFinished = true;
         }
 
-        internal static async Task RegisterWindowsHello()
+        public static async Task RegisterWindowsHello()
         {
             if (authData == null || mainEncryptionKey == null || authData.LoginSalt == null)
             {
@@ -168,7 +161,7 @@ namespace Guard.WPF.Core.Security
             SetWindowsHelloProtectedKey(encryptionHelper.EncryptString(mainEncryptionKey));
         }
 
-        internal static async Task RegisterInsecure()
+        public static async Task RegisterInsecure()
         {
             ArgumentNullException.ThrowIfNull(authData);
             if (registrationFinished)
@@ -185,17 +178,17 @@ namespace Guard.WPF.Core.Security
             registrationFinished = true;
         }
 
-        internal static bool IsLoggedIn()
+        public static bool IsLoggedIn()
         {
             return mainEncryptionKey != null;
         }
 
-        internal static bool IsLoginEnabled()
+        public static bool IsLoginEnabled()
         {
             return authData?.InsecureMainKey == null;
         }
 
-        internal static bool IsWindowsHelloRegistered()
+        public static bool IsWindowsHelloRegistered()
         {
             try
             {
@@ -208,7 +201,7 @@ namespace Guard.WPF.Core.Security
             }
         }
 
-        internal static string GetWindowsHelloProtectedKey()
+        public static string GetWindowsHelloProtectedKey()
         {
             ArgumentNullException.ThrowIfNull(authData);
             ArgumentNullException.ThrowIfNull(passwordVault);
@@ -218,7 +211,7 @@ namespace Guard.WPF.Core.Security
             return cred.Password;
         }
 
-        internal static void SetWindowsHelloProtectedKey(string key)
+        public static void SetWindowsHelloProtectedKey(string key)
         {
             ArgumentNullException.ThrowIfNull(authData);
             ArgumentNullException.ThrowIfNull(passwordVault);
@@ -227,7 +220,7 @@ namespace Guard.WPF.Core.Security
             passwordVault.Add(cred);
         }
 
-        internal static void DeleteWindowsHelloProtectedKey()
+        public static void DeleteWindowsHelloProtectedKey()
         {
             ArgumentNullException.ThrowIfNull(authData);
             ArgumentNullException.ThrowIfNull(passwordVault);
@@ -236,7 +229,7 @@ namespace Guard.WPF.Core.Security
             passwordVault.Remove(cred);
         }
 
-        internal static async Task LoginWithWindowsHello()
+        public static async Task LoginWithWindowsHello()
         {
             if (authData == null || authData.LoginSalt == null)
             {
@@ -265,7 +258,7 @@ namespace Guard.WPF.Core.Security
             }
         }
 
-        internal static void LoginWithPassword(byte[] password)
+        public static void LoginWithPassword(byte[] password)
         {
             if (authData == null || authData.LoginSalt == null)
             {
@@ -291,7 +284,7 @@ namespace Guard.WPF.Core.Security
             }
         }
 
-        internal static void LoginInsecure()
+        public static void LoginInsecure()
         {
             if (authData == null)
             {
@@ -304,7 +297,7 @@ namespace Guard.WPF.Core.Security
             mainEncryptionKey = authData.InsecureMainKey;
         }
 
-        internal static EncryptionHelper GetMainEncryptionHelper()
+        public static EncryptionHelper GetMainEncryptionHelper()
         {
             if (mainEncryptionKey == null)
             {
@@ -321,7 +314,7 @@ namespace Guard.WPF.Core.Security
             return mainEncryptionHelper;
         }
 
-        internal static string GetWindowsHelloChallenge()
+        public static string GetWindowsHelloChallenge()
         {
             if (authData == null || authData.WindowsHelloChallenge == null)
             {
@@ -330,14 +323,13 @@ namespace Guard.WPF.Core.Security
             return authData.WindowsHelloChallenge;
         }
 
-        internal static void Logout()
+        public static void Logout()
         {
             mainEncryptionKey = null;
             mainEncryptionHelper = null;
-            TokenManager.ClearTokens();
         }
 
-        internal static async void UnregisterWindowsHello()
+        public static async void UnregisterWindowsHello()
         {
             if (authData == null)
             {
@@ -351,7 +343,7 @@ namespace Guard.WPF.Core.Security
             await WindowsHello.Unregister();
         }
 
-        internal static bool CheckPassword(byte[] password)
+        public static bool CheckPassword(byte[] password)
         {
             if (authData == null || authData.LoginSalt == null)
             {
@@ -376,7 +368,7 @@ namespace Guard.WPF.Core.Security
             return true;
         }
 
-        internal static async Task ChangePassword(byte[] newPassword)
+        public static async Task ChangePassword(byte[] newPassword)
         {
             if (authData == null || authData.LoginSalt == null)
             {
@@ -393,19 +385,7 @@ namespace Guard.WPF.Core.Security
             await SaveFile();
         }
 
-        private static void OnSessionSwitch(object sender, SessionSwitchEventArgs e)
-        {
-            if (
-                e.Reason == SessionSwitchReason.SessionLock
-                && mainEncryptionKey != null
-                && SettingsManager.Settings.LockOnScreenLock
-            )
-            {
-                mainWindow?.Logout();
-            }
-        }
-
-        internal static string GetInstallationID()
+        public static string GetInstallationID()
         {
             ArgumentNullException.ThrowIfNull(authData);
             return authData.InstallationID;

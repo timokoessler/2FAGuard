@@ -1,6 +1,6 @@
 ﻿using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Models;
-using Guard.WPF.Core.Security;
+using Guard.Core.Security;
 using OtpNet;
 
 namespace Guard.WPF.Core.Import

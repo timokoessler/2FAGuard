@@ -6,6 +6,7 @@ using Guard.WPF.Core.Models;
 using Guard.WPF.Core.Security;
 using Guard.WPF.Core.Storage;
 using Guard.WPF.Views.Controls;
+using Guard.Core.Security;
 using Wpf.Ui.Controls;
 using Guard.Core;
 

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using Guard.WPF.Core.Models;
-using Guard.WPF.Core.Security;
+using Guard.Core.Security;
 
 namespace Guard.WPF.Core.Import.Importer
 {

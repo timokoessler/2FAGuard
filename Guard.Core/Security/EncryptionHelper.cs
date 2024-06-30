@@ -2,7 +2,7 @@
 using System.Text;
 using NSec.Cryptography;
 
-namespace Guard.WPF.Core.Security
+namespace Guard.Core.Security
 {
     public class EncryptionHelper
     {

@@ -1,11 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using Windows.Security.Credentials;
 using Windows.Security.Cryptography;
-using Guard.Core;
 
-namespace Guard.WPF.Core.Security
+namespace Guard.Core.Security
 {
-    internal partial class WindowsHello
+    public partial class WindowsHello
     {
         private static string GetAccountName()
         {

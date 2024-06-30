@@ -1,4 +1,4 @@
-﻿namespace Guard.WPF.Core.Models
+﻿namespace Guard.Core.Models
 {
     internal class AuthFileData
     {

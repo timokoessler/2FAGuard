@@ -11,7 +11,7 @@ using Guard.WPF.Core;
 using Guard.WPF.Core.Aptabase;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Models;
-using Guard.WPF.Core.Security;
+using Guard.Core.Security;
 using Guard.WPF.Core.Storage;
 using Guard.WPF.Views.Pages.Start;
 using Wpf.Ui;
@@ -20,6 +20,7 @@ using Wpf.Ui.Controls;
 using Wpf.Ui.Input;
 using Wpf.Ui.Tray.Controls;
 using Guard.Core;
+using Guard.WPF.Core.Security;
 
 namespace Guard.WPF
 {
@@ -53,6 +54,8 @@ namespace Guard.WPF
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(
                 OnUnhandledException
             );
+
+            SessionSwitchEvent.Register(this);
         }
 
         [DllImport("user32.dll")]
@@ -171,7 +174,6 @@ namespace Guard.WPF
                 : NavigationViewBackButtonVisible.Collapsed;
         }
 
-        // TODO: Bug: Mica Backdrop is not visible after Theme change
         private void ToggleThemeClicked(object sender, System.Windows.RoutedEventArgs e)
         {
             ThemeSetting targetTheme =
@@ -198,6 +200,7 @@ namespace Guard.WPF
             Navigate(typeof(Welcome));
             HideNavigation();
             Auth.Logout();
+            TokenManager.ClearTokens();
             FullContentFrame.Visibility = Visibility.Visible;
             FullContentFrame.Content = new Login(false);
         }
