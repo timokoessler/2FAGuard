@@ -4,6 +4,7 @@ using Guard.Core.Models;
 using Guard.Core.Storage;
 using Spectre.Console;
 using Spectre.Console.Cli;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace Guard.CLI.Commands
 {
@@ -67,10 +68,29 @@ namespace Guard.CLI.Commands
 
             if (settings.Copy)
             {
-                // Todo
-                throw new NotImplementedException();
-                AnsiConsole.MarkupLine($"Code for {dbToken.Issuer} copied to clipboard.");
-                return 0;
+                try
+                {
+                    Thread thread = new Thread(() =>
+                    {
+                        DataPackage package = new DataPackage();
+                        package.SetText(token.GenerateToken());
+                        Clipboard.SetContent(package);
+                        Thread.Sleep(60); // Not working without this :(
+                    });
+                    thread.SetApartmentState(ApartmentState.STA); //Set the thread to STA
+                    thread.Start();
+                    thread.Join();
+
+                    AnsiConsole.MarkupLine($"Code for {dbToken.Issuer} copied to clipboard.");
+                    return 0;
+                }
+                catch (Exception ex)
+                {
+                    AnsiConsole.MarkupLine(
+                        $"[red]Error:[/] Failed to copy code to clipboard: {ex}"
+                    );
+                    return 1;
+                }
             }
 
             AnsiConsole.MarkupLine($"Token for {dbToken.Issuer}: [bold]{token.GenerateToken()}[/]");
