@@ -81,7 +81,9 @@ namespace Guard.CLI.Commands
                     thread.Start();
                     thread.Join();
 
-                    AnsiConsole.MarkupLine($"Code for {dbToken.Issuer} copied to clipboard.");
+                    AnsiConsole.MarkupLine(
+                        $"Code for {dbToken.Issuer} copied to clipboard. It's still valid for {token.GetRemainingSeconds()} seconds."
+                    );
                     return 0;
                 }
                 catch (Exception ex)
@@ -94,6 +96,7 @@ namespace Guard.CLI.Commands
             }
 
             AnsiConsole.MarkupLine($"Token for {dbToken.Issuer}: [bold]{token.GenerateToken()}[/]");
+            AnsiConsole.MarkupLine($"It's still valid for {token.GetRemainingSeconds()} seconds.");
 
             return 0;
         }
