@@ -7,19 +7,21 @@
     <Nullable>enable</Nullable>
     <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
     <ApplicationIcon>totp.ico</ApplicationIcon>
+	<Title>2FAGuard CLI</Title>
     <Version>1.3.1</Version>
-	  <Authors>Timo Kössler and Open Source Contributors</Authors>
-	  <Copyright>$(Authors)</Copyright>
-	  <RepositoryType>git</RepositoryType>
-	  <RepositoryUrl>https://github.com/timokoessler/2FAGuard</RepositoryUrl>
-	  <FileVersion>$(Version)</FileVersion>
-	  <AssemblyVersion>$(Version)</AssemblyVersion>
-	  <SelfContained>true</SelfContained>
-	  <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-	  <PackageProjectUrl>https://2faguard.app</PackageProjectUrl>
-	  <StartupObject>Guard.CLI.Program</StartupObject>
-	  <AssemblyName>2fa</AssemblyName>
+	<Authors>Timo Kössler and Open Source Contributors</Authors>
+	<Copyright>$(Authors)</Copyright>
+	<RepositoryType>git</RepositoryType>
+	<RepositoryUrl>https://github.com/timokoessler/2FAGuard</RepositoryUrl>
+	<FileVersion>$(Version)</FileVersion>
+	<AssemblyVersion>$(Version)</AssemblyVersion>
+	<SelfContained>true</SelfContained>
+	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+	<PackageProjectUrl>https://2faguard.app</PackageProjectUrl>
+	<StartupObject>Guard.CLI.Program</StartupObject>
+	<AssemblyName>2fa</AssemblyName>
     <DebugType>embedded</DebugType>
+	<DefineConstants Condition=" '$(IsPortable)' == 'true' ">$(DefineConstants);PORTABLE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

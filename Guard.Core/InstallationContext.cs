@@ -1,5 +1,4 @@
-﻿
-namespace Guard.Core
+﻿namespace Guard.Core
 {
     public enum InstallationType
     {
@@ -10,37 +9,36 @@ namespace Guard.Core
 
     public static class InstallationContext
     {
-
         private static string? appDataFolderPath;
         private static InstallationType? installationType;
-        private static bool isPortable;
         private static Version? version;
 
-        public static void Init(InstallationType installationType, bool isPortable, Version version)
+        public static void Init(InstallationType installationType, Version version)
         {
             InstallationContext.installationType = installationType;
-            InstallationContext.isPortable = isPortable;
             InstallationContext.version = version;
 
-            if(isPortable)
+            if (IsPortable())
             {
                 appDataFolderPath = Path.Combine(
                     AppContext.BaseDirectory
                         ?? throw new Exception("Could not get process directory"),
                     "2FAGuard-Data"
-                    );
-            } else if(installationType == InstallationType.MICROSOFT_STORE)
+                );
+            }
+            else if (installationType == InstallationType.MICROSOFT_STORE)
             {
                 appDataFolderPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "2FAGuardStoreApp"
                 );
-            } else
+            }
+            else
             {
                 appDataFolderPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "2FAGuard"
-            );
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "2FAGuard"
+                );
             }
         }
 
@@ -77,8 +75,7 @@ namespace Guard.Core
 
         public static bool IsPortable()
         {
-            return isPortable;
+            return installationType == InstallationType.CLASSIC_PORTABLE;
         }
-
     }
 }

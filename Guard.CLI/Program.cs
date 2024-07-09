@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using Guard.CLI.Commands;
 using Guard.Core;
-using Guard.Core.Storage;
 using Spectre.Console.Cli;
 
 namespace Guard.CLI
@@ -10,11 +9,15 @@ namespace Guard.CLI
     {
         public static int Main(string[] args)
         {
-            // Todo: Detect InstallationType and isPortable and set it here
-            InstallationType installationType = InstallationType.CLASSIC_PORTABLE;
+            InstallationType installationType = InstallationType.CLASSIC_INSTALLER;
+#if PORTABLE
+            installationType = InstallationType.CLASSIC_PORTABLE;
+#endif
+
+            // Todo support UWP
+
             InstallationContext.Init(
                 installationType,
-                false,
                 System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
                     ?? new Version(0, 0)
             );

@@ -25,11 +25,7 @@ namespace Guard.WPF
             string mutexName = "2FAGuard";
 
             var installationInfo = InstallationInfo.GetInstallationContext();
-            InstallationContext.Init(
-                installationInfo.installationType,
-                installationInfo.isPortable,
-                installationInfo.version
-            );
+            InstallationContext.Init(installationInfo.installationType, installationInfo.version);
 
             if (installationInfo.installationType == InstallationType.CLASSIC_PORTABLE)
             {

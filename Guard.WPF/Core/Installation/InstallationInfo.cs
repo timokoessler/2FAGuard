@@ -2,7 +2,6 @@
 
 namespace Guard.WPF.Core.Installation
 {
-
     public class InstallationInfo
     {
         private static bool IsPortable()
@@ -39,9 +38,9 @@ namespace Guard.WPF.Core.Installation
                 ?? new Version(0, 0);
         }
 
-        public static (InstallationType installationType, bool isPortable, Version version) GetInstallationContext()
+        public static (InstallationType installationType, Version version) GetInstallationContext()
         {
-            return (GetInstallationType(), IsPortable(), GetVersion());
+            return (GetInstallationType(), GetVersion());
         }
     }
 }
