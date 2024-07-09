@@ -19,6 +19,7 @@
 	  <PackageProjectUrl>https://2faguard.app</PackageProjectUrl>
 	  <StartupObject>Guard.CLI.Program</StartupObject>
 	  <AssemblyName>2fa</AssemblyName>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

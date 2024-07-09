@@ -19,9 +19,9 @@ DefaultDirName={autopf}\{#MyAppName}
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
-OutputDir=..\bin\installer
+OutputDir=.\bin\installer
 OutputBaseFilename=2FAGuard-Installer-{#MyAppVersion}
-SetupIconFile=..\totp.ico
+SetupIconFile=..\Guard.WPF\totp.ico
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
@@ -50,7 +50,7 @@ Name: "chinesetraditional"; MessagesFile: "compiler:Languages\ChineseTraditional
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: "..\bin\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\bin\standalone\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
