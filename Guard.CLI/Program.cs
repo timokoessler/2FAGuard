@@ -33,6 +33,9 @@ namespace Guard.CLI
                 config
                     .AddCommand<ListCommand>("list")
                     .WithDescription("List all two-factor authentication tokens.");
+                config
+                    .AddCommand<AboutCommand>("about")
+                    .WithDescription("Show information about the application.");
             });
 
             return app.Run(args);
