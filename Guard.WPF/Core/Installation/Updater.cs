@@ -4,8 +4,8 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Windows;
-using Microsoft.Security.Extensions;
 using Guard.Core;
+using Microsoft.Security.Extensions;
 
 namespace Guard.WPF.Core.Installation
 {
@@ -59,6 +59,7 @@ namespace Guard.WPF.Core.Installation
             }
         }
 
+        // Checks if the file is signed with a valid code signing certificate
         // https://stackoverflow.com/a/75291260/8425220
         internal static bool IsFileTrusted(string path)
         {
@@ -112,6 +113,8 @@ namespace Guard.WPF.Core.Installation
 
             string startFilePath = downloadFileName;
             string arguments = "/SILENT";
+
+            // If is portable version
             if (isPortable)
             {
                 string extractDir = Path.Combine(
@@ -127,20 +130,31 @@ namespace Guard.WPF.Core.Installation
                     }
                     Directory.CreateDirectory(extractDir);
                     System.IO.Compression.ZipFile.ExtractToDirectory(downloadFileName, extractDir);
-                    string[] fileNames = Directory.GetFiles(
+                    string[] extractedExePaths = Directory.GetFiles(
                         extractDir,
                         "*.exe",
                         SearchOption.AllDirectories
                     );
-                    if (fileNames.Length == 0)
+                    if (extractedExePaths.Length == 0)
                     {
                         throw new Exception("Did not find any executable in the zip file");
                     }
-                    if (fileNames.Length > 1)
+
+                    foreach (string exePath in extractedExePaths)
                     {
-                        throw new Exception("Found more than one executable in the zip file");
+                        if (!IsFileTrusted(exePath))
+                        {
+                            throw new Exception(
+                                "The downloaded archive contains a file that is not signed and therefore not trusted. This may be a error or a security risk."
+                            );
+                        }
+                        File.Move(
+                            exePath,
+                            Path.Combine(AppContext.BaseDirectory, Path.GetFileName(exePath)),
+                            true
+                        );
                     }
-                    File.Move(fileNames[0], portableExePath);
+
                     File.Delete(downloadFileName);
                     Directory.Delete(extractDir, true);
                 });
