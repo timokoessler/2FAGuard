@@ -365,7 +365,6 @@ namespace Guard.WPF
 
         private void Tray_Lock_Click(object? sender)
         {
-            RemoveTrayIcon();
             Logout();
         }
 
