@@ -71,9 +71,24 @@ namespace Guard.WPF.Core.Import.Importer
 
             foreach (var service in services)
             {
-                if (service.OTP?.Issuer == null)
+                if (service.OTP == null)
                 {
-                    throw new Exception("Invalid 2FAS backup: No issuer found");
+                    throw new Exception("Invalid 2FAS backup format: OTP object not found");
+                }
+
+                string issuer;
+
+                if (service.OTP?.Issuer != null && service.OTP.Issuer.Length > 0)
+                {
+                    issuer = service.OTP.Issuer;
+                }
+                else if (service.Name != null && service.Name.Length > 0)
+                {
+                    issuer = service.Name;
+                }
+                else
+                {
+                    throw new Exception("Invalid 2FAS backup: No issuer or name found");
                 }
 
                 if (service.Secret == null)
@@ -81,33 +96,31 @@ namespace Guard.WPF.Core.Import.Importer
                     throw new Exception("Invalid 2FAS backup: No secret found");
                 }
 
-                TotpIcon icon = IconManager.GetIcon(service.OTP.Issuer, IconType.Any);
+                TotpIcon icon = IconManager.GetIcon(issuer, IconType.Any);
+
+                if (service.OTP?.TokenType?.ToLower() != "totp")
+                {
+                    if (service.OTP?.TokenType?.ToLower() == "hotp")
+                    {
+                        throw new Exception(I18n.GetString("i.import.hotp.notsupported"));
+                    }
+                    throw new Exception(
+                        $"Only TOTP tokens are supported. Backup contains {service.OTP?.TokenType} token."
+                    );
+                }
 
                 string normalizedSecret = OTPUriParser.NormalizeSecret(service.Secret);
 
                 if (!OTPUriParser.IsValidSecret(normalizedSecret))
                 {
-                    throw new Exception(
-                        $"{I18n.GetString("td.invalidsecret")} ({service.OTP.Issuer})"
-                    );
-                }
-
-                if (service.OTP.TokenType?.ToLower() != "totp")
-                {
-                    if (service.OTP.TokenType?.ToLower() == "hotp")
-                    {
-                        throw new Exception(I18n.GetString("i.import.hotp.notsupported"));
-                    }
-                    throw new Exception(
-                        $"Only TOTP tokens are supported. Backup contains {service.OTP.TokenType} token."
-                    );
+                    throw new Exception($"{I18n.GetString("td.invalidsecret")} ({issuer})");
                 }
 
                 DBTOTPToken dbToken =
                     new()
                     {
                         Id = TokenManager.GetNextId(),
-                        Issuer = service.OTP.Issuer,
+                        Issuer = issuer,
                         EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
                         CreationTime = DateTime.Now
                     };
