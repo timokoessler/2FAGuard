@@ -70,5 +70,13 @@ namespace Guard.Test.Import
             Assert.Equal("ABCDEFG", otpUri.Secret);
             Assert.Equal(OtpUriType.TOTP, otpUri.Type);
         }
+
+        [Fact]
+        public void ParseInvalidUri()
+        {
+            string uri = "otpauth://totp/ExampleUser?secret=SECRET&algorithm=SHA256";
+            Exception ex = Assert.Throws<Exception>(() => OTPUriParser.Parse(uri));
+            Assert.Equal("Missing issuer in URI", ex.Message);
+        }
     }
 }

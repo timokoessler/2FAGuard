@@ -148,11 +148,14 @@ namespace Guard.WPF.Core.Installation
                                 "The downloaded archive contains a file that is not signed and therefore not trusted. This may be a error or a security risk."
                             );
                         }
-                        File.Move(
-                            exePath,
-                            Path.Combine(AppContext.BaseDirectory, Path.GetFileName(exePath)),
-                            true
-                        );
+
+                        string fileName = Path.GetFileName(exePath);
+                        if (fileName.ToLower().Equals("2faguard-portable.exe"))
+                        {
+                            fileName = $"2FAGuard-Portable-{updateInfo.Version}.exe";
+                        }
+
+                        File.Move(exePath, Path.Combine(AppContext.BaseDirectory, fileName), true);
                     }
 
                     File.Delete(downloadFileName);
