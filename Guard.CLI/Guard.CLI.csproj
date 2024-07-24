@@ -21,7 +21,6 @@
 	<StartupObject>Guard.CLI.Program</StartupObject>
 	<AssemblyName>2fa</AssemblyName>
     <DebugType>embedded</DebugType>
-	<DefineConstants Condition=" '$(IsPortable)' == 'true' ">$(DefineConstants);PORTABLE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

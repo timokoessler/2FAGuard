@@ -10,11 +10,19 @@ namespace Guard.CLI
         public static int Main(string[] args)
         {
             InstallationType installationType = InstallationType.CLASSIC_INSTALLER;
-#if PORTABLE
-            installationType = InstallationType.CLASSIC_PORTABLE;
-#endif
 
-            // Todo support UWP
+            if (
+                Directory.Exists(
+                    Path.Combine(
+                        AppContext.BaseDirectory
+                            ?? throw new Exception("Could not get process directory"),
+                        "2FAGuard-Data"
+                    )
+                )
+            )
+            {
+                installationType = InstallationType.CLASSIC_PORTABLE;
+            }
 
             InstallationContext.Init(
                 installationType,

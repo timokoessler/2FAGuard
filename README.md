@@ -11,7 +11,7 @@ A modern and secure Windows app for managing your 2FA authentification codes.
 - 🔒 **Supports Windows Hello**: Use your fingerprint, face or hardware security key to access your tokens quickly and securely.
 - 💡 **Dark Mode**: A modern and sleek design that looks great in both light and dark mode.
 - 📦 **Portable Version**: You can use 2FAGuard as a portable application without installation, e.g. on a USB stick
-- 🌍 **Multilingual**: 2FAGuard is currently available in English, German and Chinese.
+- 🌍 **Multilingual**: 2FAGuard is currently available in English, German, French and Chinese.
 
 ## Download
 
