@@ -1,0 +1,282 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Nav  -->
+    <system:String x:Key="i.title">2FAGuard</system:String>
+    <system:String x:Key="i.page.home">Tokens</system:String>
+    <system:String x:Key="i.page.settings">Paramètres</system:String>
+    <system:String x:Key="i.language">Langue</system:String>
+    <system:String x:Key="i.nav.add">Ajouter un token</system:String>
+
+    <!--  Settings  -->
+    <system:String x:Key="i.settings.personalisation">Personnalisation</system:String>
+    <system:String x:Key="i.settings.theme">Thème de l'application</system:String>
+    <system:String x:Key="i.settings.theme.description">Choisissez un thème pour l'application</system:String>
+    <system:String x:Key="i.settings.theme.system">Système</system:String>
+    <system:String x:Key="i.settings.theme.light">Clair</system:String>
+    <system:String x:Key="i.settings.theme.dark">Sombre</system:String>
+    <system:String x:Key="i.settings.language">Langue</system:String>
+    <system:String x:Key="i.settings.language.description">Sélectionnez la langue de l'application</system:String>
+    <system:String x:Key="i.settings.about">À propos</system:String>
+    <system:String x:Key="i.settings.issue">Signaler un problème</system:String>
+    <system:String x:Key="i.settings.security">Sécurité</system:String>
+    <system:String x:Key="i.settings.winhello">Windows Hello</system:String>
+    <system:String x:Key="i.settings.winhello.description">Autoriser les connexions avec Windows Hello</system:String>
+    <system:String x:Key="i.settings.winhello.failed.title">Une erreur est survenue</system:String>
+    <system:String x:Key="i.settings.winhello.failed.content">Une erreur est survenue lors de la configuration de Windows Hello :</system:String>
+    <system:String x:Key="i.passdialog.title">Entrez votre mot de passe</system:String>
+    <system:String x:Key="i.passdialog.content">Veuillez entrer votre mot de passe pour confirmer l'action</system:String>
+    <system:String x:Key="i.passdialog.input">Votre mot de passe</system:String>
+    <system:String x:Key="i.passdialog.next">Suivant</system:String>
+    <system:String x:Key="i.passdialog.incorrect">Le mot de passe est incorrect</system:String>
+    <system:String x:Key="i.settings.password">Mot de passe</system:String>
+    <system:String x:Key="i.settings.password.description">Changez votre mot de passe</system:String>
+    <system:String x:Key="i.settings.password.button">Changer</system:String>
+    <system:String x:Key="i.changepass.title">Changer le mot de passe</system:String>
+    <system:String x:Key="i.changepass.currentbox">Mot de passe actuel</system:String>
+    <system:String x:Key="i.changepass.newbox">Entrez un nouveau mot de passe</system:String>
+    <system:String x:Key="i.changepass.newbox.repeat">Répétez le nouveau mot de passe</system:String>
+    <system:String x:Key="i.changepass.current.notempty">Veuillez entrer votre mot de passe actuel</system:String>
+    <system:String x:Key="i.changepass.current.incorrect">Le mot de passe actuel que vous avez entré est incorrect</system:String>
+    <system:String x:Key="i.settings.record">Empêcher l'enregistrement</system:String>
+    <system:String x:Key="i.settings.record.description">Bloque l'enregistrement de l'écran et les captures d'écran de l'application</system:String>
+    <system:String x:Key="i.settings.autolock">Verrouillage automatique</system:String>
+    <system:String x:Key="i.settings.autolock.description">Verrouillez l'application si Windows est verrouillé</system:String>
+    <system:String x:Key="i.settings.oss">Logiciel open source utilisé</system:String>
+    <system:String x:Key="i.settings.autostart">Démarrage automatique</system:String>
+    <system:String x:Key="i.settings.autostart.description">Ouvre automatiquement l'application lorsque Windows démarre</system:String>
+    <system:String x:Key="i.settings.autostart.error.title">Une erreur est survenue</system:String>
+    <system:String x:Key="i.settings.autostart.error.disabled.policy">Le démarrage automatique de l'application a été désactivé par une politique de groupe</system:String>
+    <system:String x:Key="i.settings.autostart.error.disabled.user">Le démarrage automatique de l'application a été désactivé dans le Gestionnaire des tâches de Windows et ne peut être modifié que là-bas</system:String>
+    <system:String x:Key="i.settings.autostart.error.alreadyenabled">Le démarrage automatique de l'application est déjà activé</system:String>
+    <system:String x:Key="i.settings.autostart.error.notenabled">Le démarrage automatique de l'application ne peut pas être désactivé car il est déjà désactivé</system:String>
+    <system:String x:Key="i.settings.tray">Minimiser et fermer dans la barre d'état</system:String>
+    <system:String x:Key="i.settings.tray.description">Déplacez l'application dans la barre d'état système lors de la minimisation et de la fermeture</system:String>
+    <system:String x:Key="i.settings.imprint">Empreinte</system:String>
+    <system:String x:Key="i.settings.privacy">Confidentialité</system:String>
+    <system:String x:Key="i.settings.reset">Réinitialiser l'application</system:String>
+    <system:String x:Key="i.settings.reset.description">Supprime tous les jetons et les paramètres</system:String>
+    <system:String x:Key="i.settings.reset.button">Réinitialiser</system:String>
+    <system:String x:Key="i.settings.reset.confirm.title">Êtes-vous sûr ?</system:String>
+    <system:String x:Key="i.settings.reset.confirm.content">Voulez-vous vraiment supprimer tous les jetons et les paramètres ? Cette action ne peut pas être annulée.</system:String>
+    <system:String x:Key="i.settings.reset.confirm.btn">Réinitialiser</system:String>
+    <system:String x:Key="i.settings.locktime">Minuteur de verrouillage</system:String>
+    <system:String x:Key="i.settings.locktime.description">Verrouillez l'application après un certain temps d'inactivité</system:String>
+    <system:String x:Key="i.settings.locktime.never">Jamais</system:String>
+    <system:String x:Key="i.settings.locktime.thirtyseconds">30 secondes</system:String>
+    <system:String x:Key="i.settings.locktime.oneminute">1 minute</system:String>
+    <system:String x:Key="i.settings.locktime.fiveminutes">5 minutes</system:String>
+    <system:String x:Key="i.settings.locktime.tenminutes">10 minutes</system:String>
+    <system:String x:Key="i.settings.locktime.thirtyminutes">30 minutes</system:String>
+    <system:String x:Key="i.settings.locktime.onehour">1 heure</system:String>
+    <system:String x:Key="i.page.changepasswordpage">Changer le mot de passe</system:String>
+
+    <!--  Application setup  -->
+    <system:String x:Key="i.welcome.subtext">Merci pour le téléchargement ! Veuillez choisir comment vous souhaitez sécuriser vos jetons.</system:String>
+    <system:String x:Key="i.welcome.hello">Windows Hello ou Mot de passe</system:String>
+    <system:String x:Key="i.welcome.hello.description">Simple et sécurisé, Mot de passe comme solution de secours</system:String>
+    <system:String x:Key="i.welcome.hello.notavailable">Windows Hello n'est pas disponible</system:String>
+    <system:String x:Key="i.welcome.hello.notavailable.content">Veuillez configurer Windows Hello dans les paramètres système de Windows pour pouvoir utiliser cette fonction.</system:String>
+    <system:String x:Key="i.welcome.pass">Seulement Mot de passe</system:String>
+    <system:String x:Key="i.welcome.pass.description">Sécurisez vos jetons avec un mot de passe</system:String>
+    <system:String x:Key="i.welcome.skip">Passer</system:String>
+    <system:String x:Key="i.welcome.pass.title">Définir un mot de passe</system:String>
+    <system:String x:Key="i.welcome.pass.subtext">Veuillez entrer un mot de passe sécurisé qui sera utilisé pour chiffrer vos jetons. Si vous oubliez ce mot de passe, vous ne pourrez plus accéder à vos jetons.</system:String>
+    <system:String x:Key="i.welcome.pass.box">Entrez un mot de passe sécurisé</system:String>
+    <system:String x:Key="i.welcome.pass.box.repeat">Répétez le mot de passe</system:String>
+    <system:String x:Key="i.welcome.pass.notempty">Le mot de passe ne peut pas être vide</system:String>
+    <system:String x:Key="i.welcome.pass.notmatch">Les mots de passe ne correspondent pas</system:String>
+    <system:String x:Key="i.welcome.pass.length">Le mot de passe doit contenir au moins 8 caractères et au maximum 128 caractères</system:String>
+    <system:String x:Key="i.setup.finished.title">Configuration terminée</system:String>
+    <system:String x:Key="i.setup.finished.subtext">Vous avez configuré avec succès 2FAGuard. Vous pouvez maintenant commencer à ajouter vos jetons.</system:String>
+    <system:String x:Key="i.setup.finished.action.token">Ajouter un jeton</system:String>
+    <system:String x:Key="i.setup.finished.action.token.description">Ajoutez le premier jeton à votre collection</system:String>
+    <system:String x:Key="i.setup.finished.action.settings">Paramètres</system:String>
+    <system:String x:Key="i.setup.finished.action.settings.description">Modifier les paramètres de l'application</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.title">Êtes-vous sûr ?</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.content">Vous avez choisi d'utiliser 2FAGuard sans aucune sécurité. Cela signifie que vos jetons ne sont pas chiffrés et peuvent être accessibles par toute personne ayant accès à votre ordinateur. Êtes-vous sûr de vouloir continuer ?</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.continue">Continuer (non recommandé)</system:String>
+    <system:String x:Key="i.welcome.portable.winhello.title">Remarque</system:String>
+    <system:String x:Key="i.welcome.portable.winhello.content">Si vous utilisez la version portable de 2FAGuard sur une clé USB ou un autre dispositif de stockage portable, vous ne pouvez pas vous connecter automatiquement avec Windows Hello avec d'autres utilisateurs Windows ou sur d'autres appareils. Vous devez d'abord activer Windows Hello sur d'autres appareils dans les paramètres de 2FAGuard. Vous pouvez toujours vous connecter avec votre mot de passe.</system:String>
+    <system:String x:Key="i.page.welcome">Bienvenue</system:String>
+
+    <!--  Login  -->
+    <system:String x:Key="i.login.subtext">Veuillez prouver votre identité pour accéder à vos jetons</system:String>
+    <system:String x:Key="i.login.passbox">Entrez votre mot de passe</system:String>
+    <system:String x:Key="i.login.button">Connexion avec mot de passe</system:String>
+    <system:String x:Key="i.login.pass.error">Le mot de passe est incorrect</system:String>
+    <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
+    <system:String x:Key="i.login.warning.capslock.title">Attention</system:String>
+    <system:String x:Key="i.login.warning.capslock.content">La touche Majuscule est activée</system:String>
+
+    <!--  Home  -->
+    <system:String x:Key="i.home.loading">Chargement...</system:String>
+    <system:String x:Key="i.home.notokens">Aucun jeton trouvé</system:String>
+    <system:String x:Key="i.home.notokens.button">Ajouter un jeton</system:String>
+    <system:String x:Key="i.home.search.placeholder">Rechercher des jetons</system:String>
+    <system:String x:Key="i.home.intro.title">Remarque</system:String>
+    <system:String x:Key="i.home.intro.content">Vous pouvez effectuer d'autres actions, telles que modifier ou supprimer, en cliquant avec le bouton droit sur un jeton.</system:String>
+
+    <!--  Add  -->
+    <system:String x:Key="i.page.addoverview">Ajouter des jetons</system:String>
+    <system:String x:Key="i.add.manual">Entrée manuelle</system:String>
+    <system:String x:Key="i.add.manual.description">Entrez la clé secrète et d'autres informations</system:String>
+    <system:String x:Key="i.add.qr">Importer un code QR</system:String>
+    <system:String x:Key="i.add.qr.description">Scannez un code QR en important un fichier image</system:String>
+    <system:String x:Key="i.add.qrscreen">Scanner un code QR depuis l'écran</system:String>
+    <system:String x:Key="i.add.qrscreen.description">Détecte un code QR visible à l'écran</system:String>
+    <system:String x:Key="i.add.clipboard">Ajouter depuis le presse-papiers</system:String>
+    <system:String x:Key="i.add.clipboard.description">Collez une image de code QR ou une URI TOTP</system:String>
+    <system:String x:Key="i.add.import">Importer</system:String>
+    <system:String x:Key="i.import.backup">Sauvegarde</system:String>
+    <system:String x:Key="i.import.backup.description">Importer un fichier de sauvegarde créé avec 2FAGuard</system:String>
+    <system:String x:Key="i.import.uri">Liste d'URI</system:String>
+    <system:String x:Key="i.import.uri.description">Importer une liste d'URI TOTP</system:String>
+    <system:String x:Key="i.import.bitwarden">Bitwarden</system:String>
+    <system:String x:Key="i.import.bitwarden.description">Importer des jetons depuis le gestionnaire de mots de passe Bitwarden</system:String>
+    <system:String x:Key="i.import.bitwarden.accountencryption">La sauvegarde sélectionnée est limitée à votre compte Bitwarden et ne peut pas être importée par d'autres applications. Veuillez créer une sauvegarde protégée par mot de passe pour l'importer dans 2FAGuard.</system:String>
+    <system:String x:Key="i.import.failed.title">Échec de l'importation</system:String>
+    <system:String x:Key="i.import.failed.content">Une erreur est survenue lors de l'importation :</system:String>
+    <system:String x:Key="i.import.noqrfound">Aucun code QR détecté</system:String>
+    <system:String x:Key="i.import.noqrfound.screen">Aucun code QR n'a été détecté. Veuillez vous assurer qu'aucune fenêtre ne couvre le code QR et que le code QR est clairement visible.</system:String>
+    <system:String x:Key="i.import.invalidqr.screen">Le code QR ne contient pas d'informations valides sur un jeton. Veuillez également vous assurer qu'un seul code QR est visible à l'écran.</system:String>
+    <system:String x:Key="i.import.clipboard.invalid">Le presse-papiers ne contient pas d'image ou de texte.</system:String>
+    <system:String x:Key="i.import.clipboard.invalid.multifiles">Actuellement, un seul fichier peut être importé depuis le presse-papiers à la fois.</system:String>
+    <system:String x:Key="i.import.duplicate">Un jeton avec la même clé secrète existe déjà</system:String>
+    <system:String x:Key="i.home.sort">Ordre de tri</system:String>
+    <system:String x:Key="i.home.sort.issuer.asc">Émetteur, ascendant</system:String>
+    <system:String x:Key="i.home.sort.issuer.desc">Émetteur, descendant</system:String>
+    <system:String x:Key="i.home.sort.createdat.asc">Date de création, ascendante</system:String>
+    <system:String x:Key="i.home.sort.createdat.desc">Date de création, descendante</system:String>
+    <system:String x:Key="i.import.notokens">Aucun jeton trouvé dans le fichier importé</system:String>
+    <system:String x:Key="i.import.authpro">Authenticator Pro</system:String>
+    <system:String x:Key="i.import.authpro.description">Importer un fichier de sauvegarde de l'application Authenticator Pro</system:String>
+    <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
+    <system:String x:Key="i.import.gauthenticator.description">Importer des jetons depuis l'application Google Authenticator</system:String>
+    <system:String x:Key="i.import.gauthenticator.msgbox.content">Pour importer des jetons depuis Google Authenticator, ouvrez l'application sur votre smartphone ou tablette et sélectionnez "Transférer des comptes" dans le menu, puis "Exporter des comptes".@nEnsuite, prenez une capture d'écran du code QR affiché et copiez le fichier image sur cet appareil.@nImportez ce fichier en sélectionnant "Importer un code QR" en haut de cette application.@n@nNote : Un code QR ne peut stocker qu'une quantité limitée d'informations. Veuillez sélectionner un maximum de 5 jetons à la fois dans l'application Google Authenticator pour l'exportation.</system:String>
+    <system:String x:Key="i.import.authpro.invalid">Le fichier sélectionné n'est pas une sauvegarde valide de l'application Authenticator Pro.</system:String>
+    <system:String x:Key="i.import.authpro.legacy">La sauvegarde sélectionnée est dans un format obsolète et ne peut pas être importée. Veuillez créer la sauvegarde avec une version actuelle de l'application Authenticator Pro.</system:String>
+    <system:String x:Key="i.import.password">Veuillez entrer le mot de passe pour le fichier de sauvegarde</system:String>
+    <system:String x:Key="i.import.password.invalid">Le mot de passe entré est incorrect</system:String>
+    <system:String x:Key="i.import.hotp.notsupported">Les jetons basés sur un compteur (HOTP) ne sont pas pris en charge</system:String>
+    <system:String x:Key="i.import.twofas">2FAS</system:String>
+    <system:String x:Key="i.import.twofas.description">Importer un fichier de sauvegarde de l'application 2FAS</system:String>
+    <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
+    <system:String x:Key="i.import.aegis.description">Importer une exportation d'Aegis Authenticator</system:String>
+    <system:String x:Key="i.page.tokensettings">Jeton</system:String>
+    <system:String x:Key="i.page.tokensettings.add">Ajouter un jeton</system:String>
+    <system:String x:Key="i.page.tokensettings.edit">Modifier le jeton</system:String>
+
+    <!--  Export  -->
+    <system:String x:Key="i.page.exportpage">Exporter des jetons</system:String>
+    <system:String x:Key="i.export.failed.title">Échec de l'exportation</system:String>
+    <system:String x:Key="i.export.failed.content">Une erreur est survenue lors de l'exportation :</system:String>
+    <system:String x:Key="i.export.password">Veuillez entrer un mot de passe pour le fichier de sauvegarde</system:String>
+    <system:String x:Key="i.export.password.invalid">Veuillez entrer un mot de passe valide</system:String>
+    <system:String x:Key="i.export.backup">Sauvegarde</system:String>
+    <system:String x:Key="i.export.backup.description">Fichier de sauvegarde complet, uniquement compatible avec 2FAGuard</system:String>
+    <system:String x:Key="i.export.uri">Liste d'URI</system:String>
+    <system:String x:Key="i.export.uri.description">Exporter une liste d'URI TOTP sans notes et non chiffrées</system:String>
+    <system:String x:Key="i.export.success.title">Jetons exportés</system:String>
+    <system:String x:Key="i.export.success.content">Vos jetons ont été exportés avec succès.</system:String>
+    <system:String x:Key="i.export.success.open">Ouvrir le dossier</system:String>
+    <system:String x:Key="i.export.notokens">Aucun jeton à exporter</system:String>
+    <system:String x:Key="i.export.authpro">Authenticator Pro</system:String>
+    <system:String x:Key="i.export.authpro.description">Exporter les jetons sous forme de fichier de sauvegarde Authenticator Pro</system:String>
+
+    <!--  Token Details  -->
+    <system:String x:Key="i.td.general">Informations générales</system:String>
+    <system:String x:Key="i.td.issuer">Nom de l'émetteur</system:String>
+    <system:String x:Key="i.td.issuer.placeholder">Par exemple : Google ou Apple</system:String>
+    <system:String x:Key="i.td.username">Nom d'utilisateur</system:String>
+    <system:String x:Key="i.td.username.placeholder">Généralement votre adresse e-mail</system:String>
+    <system:String x:Key="i.td.secret">Clé secrète</system:String>
+    <system:String x:Key="i.td.secret.placeholder">Collez ou entrez la clé secrète</system:String>
+    <system:String x:Key="i.td.expert">Paramètres avancés</system:String>
+    <system:String x:Key="i.td.expert.warning.title">Attention</system:String>
+    <system:String x:Key="i.td.expert.warning.text">Ne changez ces paramètres que si vous savez ce que vous faites</system:String>
+    <system:String x:Key="i.td.expert.warning.button">Continuer quand même</system:String>
+    <system:String x:Key="i.td.expert.algorithm">Algorithme</system:String>
+    <system:String x:Key="i.td.expert.digits">Chiffres</system:String>
+    <system:String x:Key="i.td.expert.digits.placeholder">6 est la norme</system:String>
+    <system:String x:Key="i.td.expert.period">Validité en secondes</system:String>
+    <system:String x:Key="i.td.expert.period.placeholder">30s est la norme</system:String>
+    <system:String x:Key="i.td.icon.text">Entrez un nom d'émetteur pour obtenir une icône correspondante</system:String>
+    <system:String x:Key="i.td.note">Note (facultatif)</system:String>
+    <system:String x:Key="i.td.format">Format</system:String>
+    <system:String x:Key="i.td.noissuer">Veuillez entrer le nom de l'émetteur</system:String>
+    <system:String x:Key="i.td.nosecret">Veuillez entrer la clé secrète</system:String>
+    <system:String x:Key="i.td.invalidsecret">La clé secrète est invalide</system:String>
+    <system:String x:Key="i.td.invaliddigits">Le nombre de chiffres est invalide</system:String>
+    <system:String x:Key="i.td.invalidperiod">La période de validité est invalide</system:String>
+    <system:String x:Key="i.settings.license">Licence</system:String>
+    <system:String x:Key="i.td.customicon.btn">Icône personnalisée</system:String>
+    <system:String x:Key="i.td.customicon.dialog.title">Sélectionnez une icône</system:String>
+    <system:String x:Key="i.td.customicon.tolarge">Seules les images d'une taille maximale de 1 Mo sont prises en charge</system:String>
+
+    <!--  Page de réussite du jeton  -->
+    <system:String x:Key="i.page.tokensuccesspage">Jeton</system:String>
+    <system:String x:Key="i.stp.added">Jeton ajouté</system:String>
+    <system:String x:Key="i.stp.home">Voir tous les jetons</system:String>
+    <system:String x:Key="i.stp.edited">Jeton modifié</system:String>
+    <system:String x:Key="i.stp.added.multiple">Jetons ajoutés</system:String>
+    <system:String x:Key="i.stp.added.multiple.description">@Count jetons ont été ajoutés avec succès</system:String>
+    <system:String x:Key="i.stp.added.multiple.duplicate">@Count jetons n'ont pas été ajoutés car ils existent déjà</system:String>
+
+    <!--  Text Formatting Dialog  -->
+    <system:String x:Key="i.txtfd.title">Formater le texte</system:String>
+    <system:String x:Key="i.txtfd.content">Ctrl+B : Gras@nCtrl+I : Italique@nCtrl+U : Souligné@nCtrl+Shift+L : Puces@nCtrl+Shift+N : Numérotation@nCtrl+E : Centrer le texte@nCtrl+L : Texte à gauche@nCtrl+R : Texte à droite</system:String>
+
+    <!--  Token card  -->
+    <system:String x:Key="i.tokencard.copy">Copier</system:String>
+    <system:String x:Key="i.tokencard.edit">Modifier</system:String>
+    <system:String x:Key="i.tokencard.delete">Supprimer</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.title">Supprimer le jeton</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.content">Êtes-vous sûr de vouloir supprimer le jeton @Name ? Cette action ne peut pas être annulée.</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.yes">Supprimer</system:String>
+    <system:String x:Key="i.tokencard.qr">Afficher le code QR</system:String>
+    <system:String x:Key="i.tokencard.save">Enregistrer</system:String>
+    <system:String x:Key="i.tokencard.qr.keepsecure">Ce code QR contient des informations sensibles. Gardez-le en sécurité.</system:String>
+
+    <!--  Update  -->
+    <system:String x:Key="i.update.title">Mise à jour disponible</system:String>
+    <system:String x:Key="i.update.content">Une nouvelle version de 2FAGuard est disponible. Voulez-vous l'installer maintenant ?</system:String>
+    <system:String x:Key="i.update.install">Installer la mise à jour</system:String>
+    <system:String x:Key="i.update.skip">Passer</system:String>
+    <system:String x:Key="i.update.loading">Téléchargement de la mise à jour...</system:String>
+    <system:String x:Key="i.update.error.title">Échec de la mise à jour</system:String>
+    <system:String x:Key="i.update.error.content">Une erreur est survenue lors de la mise à jour</system:String>
+
+    <!--  Tray  -->
+    <system:String x:Key="i.tray.exit">Quitter</system:String>
+    <system:String x:Key="i.tray.lock">Verrouiller</system:String>
+
+    <!--  Other  -->
+    <system:String x:Key="i.win.hello.request">L'application 2FAGuard souhaite prouver votre identité</system:String>
+    <system:String x:Key="i.error">Erreur</system:String>
+    <system:String x:Key="i.save">Enregistrer</system:String>
+    <system:String x:Key="i.dialog.close">Fermer</system:String>
+    <system:String x:Key="i.dialog.next">Suivant</system:String>
+    <system:String x:Key="i.dialog.cancel">Annuler</system:String>
+    <system:String x:Key="i.error.unhandled.title">Exception non gérée</system:String>
+    <system:String x:Key="i.error.unhandled.content">Une erreur inattendue s'est produite. Veuillez signaler cette erreur afin qu'elle puisse être corrigée. Vous pouvez trouver plus d'informations dans le fichier journal.</system:String>
+    <system:String x:Key="i.error.unhandled.openbug">Signaler un bug</system:String>
+    <system:String x:Key="i.error.time.title">Attention : Heure du système non synchronisée</system:String>
+    <system:String x:Key="i.error.time.content">L'heure de votre système diffère de l'heure correcte de plus de 10 secondes. Cela peut entraîner des problèmes avec la génération de codes TOTP. Veuillez vous assurer que l'heure de votre système est correcte.</system:String>
+    <system:String x:Key="i.running.title">L'application est déjà en cours d'exécution</system:String>
+    <system:String x:Key="i.running.content">Cette application ne peut être exécutée qu'une seule fois à la fois.</system:String>
+    <system:String x:Key="i.running.exit">Quitter</system:String>
+
+    <system:String x:Key="i.unsupported.os.title">Système d'exploitation non pris en charge</system:String>
+    <system:String x:Key="i.unsupported.os.content">Veuillez mettre à jour vers Windows 10 1903 (18362) ou une version ultérieure pour utiliser 2FAGuard.</system:String>
+    <system:String x:Key="i.unsupported.exit">Quitter</system:String>
+    <system:String x:Key="i.unsupported.arch.title">Architecture non prise en charge</system:String>
+    <system:String x:Key="i.unsupported.arch.content">L'architecture de votre système n'est pas prise en charge. 2FAGuard ne prend en charge que les systèmes 64 bits.</system:String>
+    <system:String x:Key="i.unsupported.vcpp.title">Visual C++ Redistributable non installé</system:String>
+    <system:String x:Key="i.unsupported.vcpp.content">Le package Microsoft Visual C++ Redistributable 2015-2022 est requis pour exécuter 2FAGuard. Veuillez installer le package pour pouvoir utiliser 2FAGuard. Si vous avez utilisé l'installateur 2FAGuard ou venez d'installer le package, vous devrez peut-être redémarrer votre appareil.</system:String>
+    <system:String x:Key="i.unsupported.vcpp.download">Télécharger</system:String>
+    <system:String x:Key="i.unsupported.olderversion.title">Version de l'application obsolète</system:String>
+    <system:String x:Key="i.unsupported.olderversion.content">Vous utilisez une version obsolète de 2FAGuard. Les données qui ont déjà été modifiées avec une version plus récente de l'application ne peuvent pas être ouvertes. Veuillez mettre à jour l'application pour utiliser les données.</system:String>
+</ResourceDictionary>

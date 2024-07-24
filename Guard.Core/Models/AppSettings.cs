@@ -13,7 +13,8 @@
         EN,
         DE,
         ZH_CN,
-        ZH_TW
+        ZH_TW,
+        FR
     }
 
     public enum SortOrderSetting

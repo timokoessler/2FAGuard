@@ -12,7 +12,7 @@
     d:DesignHeight="700"
     d:DesignWidth="1150"
     mc:Ignorable="d">
-    <StackPanel>
+    <StackPanel Margin="0,0,15,15">
         <WrapPanel
             Margin="0,30"
             VerticalAlignment="Top"
