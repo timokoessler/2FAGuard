@@ -1,5 +1,9 @@
 # Script to build the WPF and CLI app, sign the executables and build the installer
 
+Param (
+    [switch]$dev
+)
+
 function Confirm-Requirements {
     # Check if current directory is the publish directory
     if (-not (Test-Path .\publish.ps1)) {
@@ -60,14 +64,24 @@ function Build-Installer {
 
 Write-Host "Checking Requirements"
 Confirm-Requirements
+
 Write-Host "Running Tests"
 Invoke-Tests
+
 Write-Host "Building WPF App"
 Build-WPF-App
+
 Write-Host "Building CLI App"
 Build-CLI-App
+
+if ($dev) {
+    Write-Host "Dev mode enabled, skipping signing and installer"
+    Exit 0
+}
+
 Write-Host "Signing Code"
 Invoke-Code-Signing
+
 Write-Host "Building Installer"
 Build-Installer
 Write-Host "Done"
