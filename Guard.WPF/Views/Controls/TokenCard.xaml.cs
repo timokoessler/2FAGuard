@@ -37,6 +37,11 @@ namespace Guard.WPF.Views.UIComponents
 
             mainWindow = (MainWindow)Application.Current.MainWindow;
 
+            if (string.IsNullOrEmpty(token.dBToken.Issuer))
+            {
+                token.dBToken.Issuer = "???";
+            }
+
             Issuer.Text = token.dBToken.Issuer;
             if (token.dBToken.Issuer.Length > 18)
             {

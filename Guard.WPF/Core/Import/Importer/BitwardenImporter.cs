@@ -123,7 +123,7 @@ namespace Guard.WPF.Core.Import.Importer
                 }
                 else
                 {
-                    if (item.Name == null)
+                    if (string.IsNullOrEmpty(item.Name))
                     {
                         throw new Exception("Invalid Bitwarden export file: No item name found");
                     }

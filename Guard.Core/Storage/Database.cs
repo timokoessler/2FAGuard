@@ -19,6 +19,9 @@ namespace Guard.Core.Storage
             {
                 return;
             }
+            // Prevent empty strings from being converted to null
+            BsonMapper.Global.EmptyStringToNull = false;
+            // Initialize the database
             db = new LiteDatabase($"Filename={GetDBPath()}") { UserVersion = 1 };
 
             tokens = db.GetCollection<DBTOTPToken>("tokens");

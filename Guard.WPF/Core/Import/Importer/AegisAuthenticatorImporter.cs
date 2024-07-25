@@ -260,7 +260,7 @@ namespace Guard.WPF.Core.Import.Importer
                     new()
                     {
                         Id = TokenManager.GetNextId(),
-                        Issuer = string.IsNullOrEmpty(token.Issuer) ? "???" : token.Issuer,
+                        Issuer = string.IsNullOrEmpty(token.Issuer) ? "" : token.Issuer,
                         EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
                         CreationTime = DateTime.Now
                     };
@@ -268,6 +268,11 @@ namespace Guard.WPF.Core.Import.Importer
                 if (!string.IsNullOrEmpty(token.Name))
                 {
                     dbToken.EncryptedUsername = encryption.EncryptStringToBytes(token.Name);
+                }
+
+                if (string.IsNullOrEmpty(token.Issuer) && string.IsNullOrEmpty(token.Name))
+                {
+                    throw new Exception("Token must have either issuer or name set.");
                 }
 
                 if (icon != null && icon.Type != IconType.Default)

@@ -34,7 +34,7 @@ namespace Guard.WPF.Core.Icons
 
         public static TotpIcon GetIcon(string name, IconType type)
         {
-            if (name == null || name == "default" || type == IconType.Default)
+            if (string.IsNullOrEmpty(name) || name == "default" || type == IconType.Default)
             {
                 return defaultIcon;
             }

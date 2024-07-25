@@ -76,7 +76,7 @@ namespace Guard.WPF.Core.Import.Importer
             EncryptionHelper encryption = Auth.GetMainEncryptionHelper();
             foreach (var token in backup.Authenticators)
             {
-                if (token.Issuer == null)
+                if (string.IsNullOrEmpty(token.Issuer))
                 {
                     throw new Exception("Invalid AuthenticatorPro backup: No issuer found");
                 }

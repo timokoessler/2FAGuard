@@ -118,12 +118,12 @@ namespace Guard.WPF.Core.Import
                 }
             }
 
-            if (otpUri.Issuer == null)
+            if (string.IsNullOrEmpty(otpUri.Issuer))
             {
                 throw new Exception($"Missing issuer in URI");
             }
 
-            if (otpUri.Secret == null)
+            if (string.IsNullOrEmpty(otpUri.Secret))
             {
                 throw new Exception($"Missing secret in URI from {otpUri.Issuer}");
             }

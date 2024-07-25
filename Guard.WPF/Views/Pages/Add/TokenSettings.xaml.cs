@@ -66,6 +66,10 @@ namespace Guard.WPF.Views.Pages.Add
             // Set values if action is edit
             if (existingToken != null)
             {
+                if (string.IsNullOrEmpty(existingToken.dBToken.Issuer))
+                {
+                    existingToken.dBToken.Issuer = "???";
+                }
                 EncryptionHelper encryptionHelper = Auth.GetMainEncryptionHelper();
                 Issuer.Text = existingToken.dBToken.Issuer;
                 Secret.Password = encryptionHelper.DecryptBytesToString(
