@@ -14,6 +14,12 @@ If you would like to report a security vulnerability, please take a look at [SEC
 
 Read our [Code of Conduct](CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
 
-## PRs and code contributions
+## Translations
 
-`To-Do`
+If you would like to help translate the app, you can find the translation files in the `Guard.WPF/Resources' folder. Once you have made your changes, create a pull request. Don't worry if you don't know how to integrate the translations into the application code. If you are not familiar with Git, you can also email me the files.
+
+## Code contributions
+
+I am happy to accept code contributions. Please make sure that your changes are understandable and well tested.
+If you want to add breaking changes or completely new features, please open an issue first to discuss it.
+If you are unsure about something, feel free to reach out to me.

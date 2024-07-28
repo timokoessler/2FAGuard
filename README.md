@@ -15,7 +15,7 @@ A modern and secure Windows app for managing your 2FA authentification codes.
 
 ## Download
 
-You can download the latest version of 2FAGuard [here](https://2faguard.app#download) or directly from the Releases section of this repository.
+You can download the latest version of 2FAGuard [from the official website](https://2faguard.app#download) or directly from the Releases section of this repository. The app is also available on the Microsoft Store and supports Windows 10 (1903+) and 11.
 
 ## FAQ
 
