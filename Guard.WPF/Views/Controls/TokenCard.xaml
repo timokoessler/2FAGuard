@@ -11,6 +11,8 @@
     Height="120"
     Margin="5"
     d:Background="White"
+    Focusable="True"
+    IsTabStop="True"
     mc:Ignorable="d">
     <Border x:Name="Card" CornerRadius="10">
         <Border.Style>

@@ -121,6 +121,29 @@ namespace Guard.WPF.Views.UIComponents
                 CopyToken();
             };
 
+            KeyDown += (sender, e) =>
+            {
+                if (IsKeyboardFocused)
+                {
+                    if (e.Key == Key.Enter || e.Key == Key.C || e.Key == Key.Space)
+                    {
+                        CopyToken();
+                    }
+                    else if (e.Key == Key.Q)
+                    {
+                        MenuItem_Qr_Click(sender, e);
+                    }
+                    else if (e.Key == Key.E)
+                    {
+                        MenuItem_Edit_Click(sender, e);
+                    }
+                    else if (e.Key == Key.Delete)
+                    {
+                        MenuItem_Delete_Click(sender, e);
+                    }
+                }
+            };
+
             Cursor = Cursors.Hand;
         }
 
