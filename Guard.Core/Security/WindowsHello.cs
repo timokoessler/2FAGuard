@@ -13,7 +13,7 @@ namespace Guard.Core.Security
 
         public static async Task<KeyCredentialRetrievalResult> Register()
         {
-            _ = FocusSecurityPrompt();
+            FocusSecurityPrompt();
             return await KeyCredentialManager.RequestCreateAsync(
                 GetAccountName(),
                 KeyCredentialCreationOption.FailIfExists
@@ -27,7 +27,7 @@ namespace Guard.Core.Security
 
         /*public static async Task<bool> RequestSimpleVerification()
         {
-            _ = FocusSecurityPrompt();
+            FocusSecurityPrompt();
             UserConsentVerificationResult consentResult =
                 await UserConsentVerifier.RequestVerificationAsync(
                     I18n.GetString("win.hello.request")
@@ -43,7 +43,7 @@ namespace Guard.Core.Security
         /// <returns>A string used as key with argon2id</returns>
         public static async Task<string> GetSignedChallenge()
         {
-            _ = FocusSecurityPrompt();
+            FocusSecurityPrompt();
             var openKeyResult = await KeyCredentialManager.OpenAsync(GetAccountName());
             if (openKeyResult.Status != KeyCredentialStatus.Success)
             {
@@ -74,7 +74,7 @@ namespace Guard.Core.Security
             await KeyCredentialManager.DeleteAsync(GetAccountName());
         }
 
-        public static async Task FocusSecurityPrompt()
+        public static async void FocusSecurityPrompt()
         {
             const string className = "Credential Dialog Xaml Host";
             const int maxTries = 3;

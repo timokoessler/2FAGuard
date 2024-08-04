@@ -3,11 +3,13 @@ using System.Windows.Controls;
 using Guard.Core;
 using Guard.Core.Models;
 using Guard.Core.Security;
+using Guard.Core.Security.WebAuthn;
 using Guard.Core.Storage;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Installation;
 using Guard.WPF.Core.Security;
 using Guard.WPF.Views.Controls;
+using Serilog.Core;
 using Wpf.Ui.Controls;
 
 namespace Guard.WPF.Views.Pages
@@ -476,12 +478,35 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
                 Log.Logger.Error("Error resetting app: {0} {1}", ex.Message, ex.StackTrace);
                 _ = await new Wpf.Ui.Controls.MessageBox
                 {
-                    Title = "Error",
+                    Title = I18n.GetString("error"),
                     Content = ex.Message,
                     CloseButtonText = I18n.GetString("dialog.close"),
                     MaxWidth = 500
                 }.ShowDialogAsync();
             }
+        }
+
+        private async void WebAuthn_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!WebAuthnHelper.IsSupported())
+            {
+                _ = new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = I18n.GetString("error"),
+                    Content = I18n.GetString("settings.webauthn.notsupported"),
+                    CloseButtonText = I18n.GetString("dialog.close"),
+                    MaxWidth = 400
+                }.ShowDialogAsync();
+                return;
+            }
+
+            Log.Logger.Information(
+                "Starting WebAuthn registration with webauthn.dll version {0}",
+                WebAuthnHelper.GetApiVersion()
+            );
+
+            //var result = await WebAuthnHelper.Register(mainWindow.GetWindowHandle());
+            //var result = await WebAuthnHelper.Assert(mainWindow.GetWindowHandle());
         }
     }
 }

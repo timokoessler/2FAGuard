@@ -72,6 +72,10 @@
     <system:String x:Key="i.settings.locktime.thirtyminutes">30分鐘</system:String>
     <system:String x:Key="i.settings.locktime.onehour">1小時</system:String>
     <system:String x:Key="i.page.changepasswordpage">更改密碼</system:String>
+    <system:String x:Key="i.settings.webauthn">安全密钥 (FIDO2)</system:String>
+    <system:String x:Key="i.settings.webauthn.description">使用硬件安全密钥登录</system:String>
+    <system:String x:Key="i.settings.webauthn.button">配置</system:String>
+    <system:String x:Key="i.settings.webauthn.notsupported">您的操作系统似乎不支持WebAuthn。</system:String>
 
     <!--  應用設定  -->
     <system:String x:Key="i.welcome.subtext">感謝下載！請選擇您想要如何保護您的令牌。</system:String>

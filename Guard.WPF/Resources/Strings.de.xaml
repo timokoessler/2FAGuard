@@ -73,6 +73,10 @@
     <system:String x:Key="i.settings.locktime.thirtyminutes">30 Minuten</system:String>
     <system:String x:Key="i.settings.locktime.onehour">1 Stunde</system:String>
     <system:String x:Key="i.page.changepasswordpage">Passwort ändern</system:String>
+    <system:String x:Key="i.settings.webauthn">Sicherheitsschlüssel (FIDO2)</system:String>
+    <system:String x:Key="i.settings.webauthn.description">Melde dich mit einem Sicherheitsschlüssel an</system:String>
+    <system:String x:Key="i.settings.webauthn.button">Konfigurieren</system:String>
+    <system:String x:Key="i.settings.webauthn.notsupported">Dein Betriebssystem scheint WebAuthn nicht zu unterstützen.</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wähle, wie du deine Token sichern möchtest.</system:String>
