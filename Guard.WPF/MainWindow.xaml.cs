@@ -410,5 +410,10 @@ namespace Guard.WPF
         {
             WindowState = WindowState.Normal;
         }
+
+        internal IntPtr GetWindowHandle()
+        {
+            return windowInteropHandle;
+        }
     }
 }
