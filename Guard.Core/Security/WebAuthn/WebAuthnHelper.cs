@@ -2,7 +2,6 @@
 using System.Text.Json;
 using Guard.Core.Security.WebAuthn.entities;
 using NeoSmart.Utils;
-using OtpNet;
 
 namespace Guard.Core.Security.WebAuthn
 {
@@ -18,7 +17,7 @@ namespace Guard.Core.Security.WebAuthn
             return WebAuthnInterop.GetApiVersion();
         }
 
-        public static void Register(IntPtr windowHandle)
+        public static async Task<(bool success, string? error)> Register(IntPtr windowHandle)
         {
             if (!IsSupported())
             {
@@ -27,97 +26,105 @@ namespace Guard.Core.Security.WebAuthn
                 );
             }
 
-            RelayingPartyInfo relayingPartyInfo =
-                new() { Id = "win.2faguard.app", Name = "2FAGuard", };
+            var challenge = EncryptionHelper.GetRandomBytes(32);
+            var extensions = new List<WebAuthnCreationExtensionInput>
+            {
+                new HmacSecretCreationExtension()
+            };
 
-            UserInfo userInfo =
-                new()
-                {
-                    UserId = Encoding.UTF8.GetBytes(Auth.GetInstallationID()),
-                    Name = "2FAGuard",
-                    DisplayName = "2FAGuard"
-                };
+            WindowsHello.FocusSecurityPrompt();
 
-            List<CoseCredentialParameter> coseCredentialParameters =
-                new()
+            return await Task.Run<(bool success, string? error)>(() =>
+            {
+                /*
+                 * ToDo:
+                 * - excludeCredentials
+                 * - authenticatorSelection
+                 * - PreferResidentKey
+                 * - cancellation
+                 * - credential protection
+                 */
+                var res = WebAuthnInterop.CreateCredential(
+                    windowHandle,
+                    WebAuthnSettings.RelayingPartyInfo,
+                    WebAuthnSettings.UserInfo,
+                    WebAuthnSettings.CoseCredentialParameters,
+                    WebAuthnSettings.GetClientData(
+                        challenge,
+                        WebAuthnSettings.ClientDataType.Create
+                    ),
+                    new AuthenticatorMakeCredentialOptions
+                    {
+                        AuthenticatorAttachment = AuthenticatorAttachment.CrossPlatform,
+                        Extensions = extensions,
+                        UserVerificationRequirement = UserVerificationRequirement.Preferred
+                    },
+                    out var credential
+                );
+
+                if (res != WebAuthnHResult.Ok)
                 {
-                    new CoseCredentialParameter
-                    {
-                        Algorithm = CoseAlgorithm.ECDSA_P521_WITH_SHA512
-                    },
-                    new CoseCredentialParameter
-                    {
-                        Algorithm = CoseAlgorithm.ECDSA_P384_WITH_SHA384
-                    },
-                    new CoseCredentialParameter { Algorithm = CoseAlgorithm.EDDSA },
-                    new CoseCredentialParameter
-                    {
-                        Algorithm = CoseAlgorithm.ECDSA_P256_WITH_SHA256
-                    },
-                    new CoseCredentialParameter
-                    {
-                        Algorithm = CoseAlgorithm.RSASSA_PKCS1_V1_5_WITH_SHA512,
-                    },
-                    new CoseCredentialParameter { Algorithm = CoseAlgorithm.RSA_PSS_WITH_SHA512 },
-                    new CoseCredentialParameter
-                    {
-                        Algorithm = CoseAlgorithm.RSASSA_PKCS1_V1_5_WITH_SHA384,
-                    },
-                    new CoseCredentialParameter { Algorithm = CoseAlgorithm.RSA_PSS_WITH_SHA384 },
-                    new CoseCredentialParameter
-                    {
-                        Algorithm = CoseAlgorithm.RSASSA_PKCS1_V1_5_WITH_SHA256,
-                    },
-                    new CoseCredentialParameter { Algorithm = CoseAlgorithm.RSA_PSS_WITH_SHA256 },
-                };
+                    return (false, res.ToString());
+                }
+
+                // Todo check challenge
+
+
+                Log.Logger.Information(
+                    "WebAuthn credential registered successfully: {credential}",
+                    credential
+                );
+
+                return (true, null);
+            });
+        }
+
+        public static async Task<(bool success, string? error)> Assert(IntPtr windowHandle)
+        {
+            if (!IsSupported())
+            {
+                throw new PlatformNotSupportedException(
+                    "WebAuthn API is not available on this platform."
+                );
+            }
 
             var challenge = EncryptionHelper.GetRandomBytes(32);
 
-            var extensions = new List<WebAuthnCreationExtensionInput>();
+            var extensions = new List<WebAuthnAssertionExtensionInput>
+            {
+                new HmacSecretAssertionExtension()
+            };
+
+            WindowsHello.FocusSecurityPrompt();
 
             /*
-             * ToDo:
-             * - excludeCredentials
-             * - authenticatorSelection
-             * - PreferResidentKey
-             * - cancellation
-             * - credential protection
+             * Todos:
+             * - AllowedCredentials
              */
-            var res = WebAuthnInterop.AuthenticatorMakeCredential(
-                windowHandle,
-                relayingPartyInfo,
-                userInfo,
-                coseCredentialParameters,
-                new ClientData()
-                {
-                    ClientDataJSON = JsonSerializer.SerializeToUtf8Bytes(
-                        new
-                        {
-                            type = "webauthn.create",
-                            challenge = UrlBase64.Encode(challenge),
-                            origin = "win.2faguard.app"
-                        }
-                    ),
-                    HashAlgorithm = HashAlgorithm.Sha512
-                },
-                new AuthenticatorMakeCredentialOptions
-                {
-                    AuthenticatorAttachment = AuthenticatorAttachment.CrossPlatform,
-                    Extensions = extensions,
-                    UserVerificationRequirement = UserVerificationRequirement.Preferred
-                },
-                out var credential
-            );
-
-            if (res != WebAuthnHResult.Ok)
+            return await Task.Run<(bool success, string? error)>(() =>
             {
-                throw new Exception($"Failed to register WebAuthn credential: {res}");
-            }
+                var res = WebAuthnInterop.GetAssertion(
+                    windowHandle,
+                    WebAuthnSettings.Origin,
+                    WebAuthnSettings.GetClientData(challenge, WebAuthnSettings.ClientDataType.Get),
+                    new AuthenticatorGetAssertionOptions
+                    {
+                        UserVerificationRequirement = UserVerificationRequirement.Preferred
+                    },
+                    out var assertion
+                );
 
-            Log.Logger.Information(
-                "WebAuthn credential registered successfully: {credential}",
-                credential
-            );
+                if (res != WebAuthnHResult.Ok)
+                {
+                    return (false, res.ToString());
+                }
+
+                // Todo check challenge
+
+                Log.Logger.Information("WebAuthn assertion successful: {assertion}", assertion);
+
+                return (true, null);
+            });
         }
     }
 }

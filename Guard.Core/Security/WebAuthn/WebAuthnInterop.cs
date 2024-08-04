@@ -74,7 +74,7 @@ namespace Guard.Core.Security.WebAuthn
             IntPtr rawCredentialAttestation
         );
 
-        public static WebAuthnHResult AuthenticatorMakeCredential(
+        public static WebAuthnHResult CreateCredential(
             IntPtr window,
             RelayingPartyInfo rp,
             UserInfo user,
@@ -119,5 +119,52 @@ namespace Guard.Core.Security.WebAuthn
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         public static extern IntPtr FindWindow(string lpClassName, IntPtr ZeroOnly);
+
+        [DllImport("webauthn.dll", CharSet = CharSet.Unicode)]
+        private static extern WebAuthnHResult WebAuthNAuthenticatorGetAssertion(
+            [In] IntPtr hWnd,
+            [In, Optional] string rpId,
+            [In] RawClientData rawClientData,
+            [In, Optional] RawAuthenticatorGetAssertionOptions rawGetAssertionOptions,
+            [Out] out IntPtr rawAssertionPtr
+        );
+
+        [DllImport("webauthn.dll", EntryPoint = "WebAuthNFreeAssertion")]
+        private static extern void FreeRawAssertion(IntPtr rawAssertion);
+
+        public static WebAuthnHResult GetAssertion(
+            IntPtr window,
+            string rpId,
+            ClientData clientData,
+            AuthenticatorGetAssertionOptions getOptions,
+            out Assertion? assertion
+        )
+        {
+            assertion = null;
+
+            var rawClientData = new RawClientData(clientData);
+            var rawGetOptions =
+                getOptions == null ? null : new RawAuthenticatorGetAssertionOptions(getOptions);
+
+            var res = WebAuthNAuthenticatorGetAssertion(
+                window,
+                rpId,
+                rawClientData,
+                rawGetOptions,
+                out var rawAsnPtr
+            );
+
+            if (rawAsnPtr != IntPtr.Zero)
+            {
+                var rawAssertion = Marshal.PtrToStructure<RawAssertion>(rawAsnPtr);
+                assertion = rawAssertion?.MarshalToPublic();
+                FreeRawAssertion(rawAsnPtr);
+            }
+
+            rawClientData.Dispose();
+            rawGetOptions?.Dispose();
+
+            return res;
+        }
     }
 }

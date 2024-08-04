@@ -1,5 +1,12 @@
 ﻿namespace Guard.Core.Models
 {
+    public class WebauthnDevice
+    {
+        public required string Id { get; set; }
+        public string? EncryptedName { get; set; }
+        public required string PublicKey { get; set; }
+    }
+
     public class AuthFileData
     {
         public required int Version { get; set; }
@@ -24,5 +31,10 @@
         /// Additionally, this makes it slightly harder to access the sensitive data.
         /// </summary>
         public string? InsecureMainKey { get; set; }
+
+        /// <summary>
+        /// Stores a list of WebAuthn devices (external FIDO2 security keys, e.g. YubiKey).
+        /// </summary>
+        public List<WebauthnDevice>? WebAuthn { get; set; }
     }
 }

@@ -390,5 +390,22 @@ namespace Guard.Core.Security
             ArgumentNullException.ThrowIfNull(authData);
             return authData.InstallationID;
         }
+
+        internal static List<WebauthnDevice>? GetWebAuthnDevices()
+        {
+            ArgumentNullException.ThrowIfNull(authData);
+            return authData.WebAuthn;
+        }
+
+        internal static async void AddWebAuthnDevice(WebauthnDevice device)
+        {
+            ArgumentNullException.ThrowIfNull(authData);
+            if (authData.WebAuthn == null)
+            {
+                authData.WebAuthn = new();
+            }
+            authData.WebAuthn.Add(device);
+            await SaveFile();
+        }
     }
 }
