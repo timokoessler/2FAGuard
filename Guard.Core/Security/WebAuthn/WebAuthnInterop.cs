@@ -25,6 +25,7 @@ namespace Guard.Core.Security.WebAuthn
                     );
                 }
                 _apiVersion = WebAuthNGetApiVersionNumber();
+                Log.Logger.Debug("WebAuthn API version: {ApiVersion}", _apiVersion);
             }
             return _apiVersion
                 ?? throw new PlatformNotSupportedException("Can not get WebAuthn API version.");
@@ -116,9 +117,6 @@ namespace Guard.Core.Security.WebAuthn
 
             return (WebAuthnHResult)res;
         }
-
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        public static extern IntPtr FindWindow(string lpClassName, IntPtr ZeroOnly);
 
         [DllImport("webauthn.dll", CharSet = CharSet.Unicode)]
         private static extern WebAuthnHResult WebAuthNAuthenticatorGetAssertion(

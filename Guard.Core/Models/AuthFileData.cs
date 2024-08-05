@@ -2,9 +2,11 @@
 {
     public class WebauthnDevice
     {
-        public required string Id { get; set; }
+        public string? Id { get; set; }
         public string? EncryptedName { get; set; }
-        public required string PublicKey { get; set; }
+        public string? ProtectedKey { get; set; }
+        public string? Salt1 { get; set; }
+        public string? Salt2 { get; set; }
     }
 
     public class AuthFileData

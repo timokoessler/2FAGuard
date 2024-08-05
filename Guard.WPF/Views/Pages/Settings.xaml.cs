@@ -500,13 +500,8 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
                 return;
             }
 
-            Log.Logger.Information(
-                "Starting WebAuthn registration with webauthn.dll version {0}",
-                WebAuthnHelper.GetApiVersion()
-            );
-
             //var result = await WebAuthnHelper.Register(mainWindow.GetWindowHandle());
-            //var result = await WebAuthnHelper.Assert(mainWindow.GetWindowHandle());
+            //await Auth.LoginWithWebAuthn(mainWindow.GetWindowHandle());
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using Guard.Core.Models;
+using Guard.Core.Security.WebAuthn;
 using Windows.Security.Credentials;
 
 namespace Guard.Core.Security
@@ -391,21 +392,65 @@ namespace Guard.Core.Security
             return authData.InstallationID;
         }
 
-        internal static List<WebauthnDevice>? GetWebAuthnDevices()
+        internal static List<WebauthnDevice> GetWebAuthnDevices()
         {
             ArgumentNullException.ThrowIfNull(authData);
-            return authData.WebAuthn;
+            return authData.WebAuthn ?? [];
         }
 
-        internal static async void AddWebAuthnDevice(WebauthnDevice device)
+        internal static async Task AddWebAuthnDevice(WebauthnDevice device, AssertionResult result)
         {
             ArgumentNullException.ThrowIfNull(authData);
-            if (authData.WebAuthn == null)
-            {
-                authData.WebAuthn = new();
-            }
+            ArgumentNullException.ThrowIfNull(authData.LoginSalt);
+            ArgumentNullException.ThrowIfNull(mainEncryptionKey);
+
+            authData.WebAuthn ??= [];
+
+            EncryptionHelper encryptionHelper =
+                new(result.HmacSecret, Convert.FromBase64String(authData.LoginSalt));
+
+            device.ProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
+
             authData.WebAuthn.Add(device);
             await SaveFile();
+        }
+
+        public static async Task LoginWithWebAuthn(IntPtr windowHandle)
+        {
+            if (authData == null || authData.LoginSalt == null)
+            {
+                throw new Exception("Auth data not initialized");
+            }
+
+            var result = await WebAuthnHelper.Assert(windowHandle, GetWebAuthnDevices());
+
+            if (!result.success)
+            {
+                throw new Exception("WebAuthn assertion failed: " + result.error);
+            }
+
+            if (result.result == null)
+            {
+                throw new Exception("Assertion result is null");
+            }
+
+            var device =
+                (
+                    authData.WebAuthn?.Find(d =>
+                        d.Id == Convert.ToBase64String(result.result.CredentialId)
+                    )
+                ) ?? throw new Exception("Can not find webauthn device in auth file");
+
+            EncryptionHelper encryptionHelper =
+                new(result.result.HmacSecret, Convert.FromBase64String(authData.LoginSalt));
+            mainEncryptionKey = encryptionHelper.DecryptString(
+                device.ProtectedKey ?? throw new Exception("Protected key not set")
+            );
+
+            if (mainEncryptionKey == null)
+            {
+                throw new Exception("Failed to decrypt encryption keys");
+            }
         }
     }
 }

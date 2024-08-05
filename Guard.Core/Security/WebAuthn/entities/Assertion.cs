@@ -135,6 +135,6 @@ namespace Guard.Core.Security.WebAuthn.entities
 
         public LargeBlobStatus LargeBlobStatus;
         public byte[] LargeBlob;
-        public HmacSecret HmacSecret;
+        public HmacSecret? HmacSecret;
     }
 }
