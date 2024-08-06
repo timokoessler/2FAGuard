@@ -9,7 +9,7 @@ using Guard.WPF.Core;
 using Guard.WPF.Core.Installation;
 using Guard.WPF.Core.Security;
 using Guard.WPF.Views.Controls;
-using Serilog.Core;
+using Guard.WPF.Views.Pages.Preferences;
 using Wpf.Ui.Controls;
 
 namespace Guard.WPF.Views.Pages

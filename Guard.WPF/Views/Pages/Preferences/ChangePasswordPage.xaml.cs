@@ -2,10 +2,10 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Guard.WPF.Core;
 using Guard.Core.Security;
+using Guard.WPF.Core;
 
-namespace Guard.WPF.Views.Pages
+namespace Guard.WPF.Views.Pages.Preferences
 {
     /// <summary>
     /// Interaktionslogik für ChangePasswordPage.xaml

@@ -32,6 +32,10 @@ namespace Guard.Core.Security.WebAuthn
             List<Credential> excludeCredentials = [];
             foreach (var device in webauthnDevices)
             {
+                if (device.Id == null)
+                {
+                    continue;
+                }
                 byte[] id = Convert.FromBase64String(device.Id);
                 excludeCredentials.Add(new Credential(id));
             }
@@ -116,10 +120,7 @@ namespace Guard.Core.Security.WebAuthn
                 return (false, "WebAuthn API is not available on this platform.", null);
             }
 
-            if (webauthnDevices == null)
-            {
-                webauthnDevices = Auth.GetWebAuthnDevices();
-            }
+            webauthnDevices ??= Auth.GetWebAuthnDevices();
 
             var challenge = EncryptionHelper.GetRandomBytes(32);
 
@@ -127,6 +128,10 @@ namespace Guard.Core.Security.WebAuthn
             List<Credential> allowedCredentials = [];
             foreach (var device in webauthnDevices)
             {
+                if (device.Id == null || device.Salt1 == null || device.Salt2 == null)
+                {
+                    continue;
+                }
                 byte[] id = Convert.FromBase64String(device.Id);
                 allowedCredentials.Add(new Credential(id));
                 saltMap.Add(
