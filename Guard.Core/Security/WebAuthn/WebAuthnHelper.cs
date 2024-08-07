@@ -15,7 +15,10 @@ namespace Guard.Core.Security.WebAuthn
             return WebAuthnInterop.GetApiVersion();
         }
 
-        public static async Task<(bool success, string? error)> Register(IntPtr windowHandle)
+        public static async Task<(bool success, string? error)> Register(
+            IntPtr windowHandle,
+            string keyName
+        )
         {
             if (!IsSupported())
             {
@@ -82,7 +85,7 @@ namespace Guard.Core.Security.WebAuthn
                 var device = new WebauthnDevice()
                 {
                     Id = Convert.ToBase64String(credential.CredentialId),
-                    EncryptedName = null,
+                    EncryptedName = Auth.GetMainEncryptionHelper().EncryptString(keyName),
                     ProtectedKey = "",
                     Salt1 = EncryptionHelper.GetRandomBase64String(32),
                     Salt2 = EncryptionHelper.GetRandomBase64String(32),

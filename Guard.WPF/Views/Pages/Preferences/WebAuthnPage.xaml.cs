@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Guard.Core.Security.WebAuthn;
+using Guard.WPF.Views.Dialogs;
+using Wpf.Ui.Controls;
 
 namespace Guard.WPF.Views.Pages.Preferences
 {
@@ -24,9 +26,21 @@ namespace Guard.WPF.Views.Pages.Preferences
             }
         }
 
-        private void Add_Click(object sender, RoutedEventArgs e)
+        private async void Add_Click(object sender, RoutedEventArgs e)
         {
-            //WebAuthnHelper.Register(mainWindow.GetWindowHandle());
+            var dialog = new WebAuthnNameDialog(mainWindow.GetRootContentDialogPresenter());
+            var result = await dialog.ShowAsync();
+
+            if (!result.Equals(ContentDialogResult.Primary))
+            {
+                return;
+            }
+            string keyName = dialog.GetName();
+            var creationResult = await WebAuthnHelper.Register(
+                mainWindow.GetWindowHandle(),
+                keyName
+            );
+            // Todo add dialogs
         }
     }
 }
