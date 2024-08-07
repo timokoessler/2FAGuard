@@ -27,12 +27,12 @@ namespace Guard.CLI.Core
 
             Console.CancelKeyPress += (sender, args) =>
             {
-                onExit();
+                OnExit();
             };
 
             AppDomain.CurrentDomain.ProcessExit += (sender, args) =>
             {
-                onExit();
+                OnExit();
             };
 
             if (!createdNewMutex)
@@ -120,7 +120,7 @@ namespace Guard.CLI.Core
             Database.Init();
         }
 
-        private static void onExit()
+        private static void OnExit()
         {
             singleInstanceMutex?.Dispose();
         }

@@ -1,6 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using Guard.Core;
+using Microsoft.Win32;
 using Windows.ApplicationModel;
-using Guard.Core;
 
 namespace Guard.WPF.Core.Installation
 {

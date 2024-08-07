@@ -4,7 +4,6 @@ using Guard.Core.Models;
 using Guard.Core.Storage;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using Windows.ApplicationModel.DataTransfer;
 
 namespace Guard.CLI.Commands
 {

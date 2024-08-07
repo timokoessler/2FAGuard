@@ -1,5 +1,4 @@
 ﻿using Guard.Core.Models;
-using Guard.WPF.Core.Models;
 
 namespace Guard.WPF.Core.Export
 {

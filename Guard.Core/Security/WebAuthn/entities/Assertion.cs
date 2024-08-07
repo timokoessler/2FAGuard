@@ -43,7 +43,7 @@ namespace Guard.Core.Security.WebAuthn.entities
 
         // @@ WEBAUTHN_ASSERTION_VERSION_3 (API v4)
 
-        IntPtr HmacSecret;
+        public IntPtr HmacSecret;
 
         public Assertion MarshalToPublic()
         {
@@ -73,7 +73,7 @@ namespace Guard.Core.Security.WebAuthn.entities
             else
             {
                 ext = new List<WebAuthnExtensionOutput>();
-                largeBlob = new byte[0];
+                largeBlob = [];
             }
 
             HmacSecret hmacSecret = null;

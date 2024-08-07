@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Guard.WPF.Core;
-using Guard.Core.Security;
 using Guard.Core;
+using Guard.Core.Security;
+using Guard.WPF.Core;
 
 namespace Guard.WPF.Views.Pages.Start
 {
