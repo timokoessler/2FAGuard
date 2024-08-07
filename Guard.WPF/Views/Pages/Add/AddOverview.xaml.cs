@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Guard.Core;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Import.Importer;
-using Guard.WPF.Views.Controls;
+using Guard.WPF.Views.Dialogs;
 using Wpf.Ui.Controls;
-using Guard.Core;
 
 namespace Guard.WPF.Views.Pages.Add
 {

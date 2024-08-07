@@ -76,6 +76,10 @@
     <system:String x:Key="i.settings.webauthn.description">Se connecter avec une clé de sécurité matérielle</system:String>
     <system:String x:Key="i.settings.webauthn.button">Configurer</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">Votre système d'exploitation ne semble pas prendre en charge WebAuthn.</system:String>
+    <system:String x:Key="i.page.webauthnpage">Clé de sécurité (FIDO2)</system:String>
+    <system:String x:Key="i.webauthn.add.title">Ajouter une clé de sécurité</system:String>
+    <system:String x:Key="i.webauthn.add.description">Enregistrer une nouvelle clé</system:String>
+    <system:String x:Key="i.webauthn.existing">Clés existantes</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Merci pour le téléchargement ! Veuillez choisir comment vous souhaitez sécuriser vos jetons.</system:String>

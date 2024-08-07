@@ -77,6 +77,10 @@
     <system:String x:Key="i.settings.webauthn.description">Melde dich mit einem Sicherheitsschlüssel an</system:String>
     <system:String x:Key="i.settings.webauthn.button">Konfigurieren</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">Dein Betriebssystem scheint WebAuthn nicht zu unterstützen.</system:String>
+    <system:String x:Key="i.page.webauthnpage">Sicherheitsschlüssel (FIDO2)</system:String>
+    <system:String x:Key="i.webauthn.add.title">Sicherheitsschlüssel hinzufügen</system:String>
+    <system:String x:Key="i.webauthn.add.description">Registriere einen neuen Schlüssel</system:String>
+    <system:String x:Key="i.webauthn.existing">Vorhandene Schlüssel</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wähle, wie du deine Token sichern möchtest.</system:String>

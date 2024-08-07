@@ -10,7 +10,7 @@ using Guard.WPF.Core;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Import;
 using Guard.WPF.Core.Models;
-using Guard.WPF.Views.UIComponents;
+using Guard.WPF.Views.Dialogs;
 using Microsoft.Win32;
 using Wpf.Ui.Controls;
 

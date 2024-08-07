@@ -3,7 +3,7 @@ using Guard.WPF.Core;
 using Wpf.Ui;
 using Wpf.Ui.Extensions;
 
-namespace Guard.WPF.Views.UIComponents
+namespace Guard.WPF.Views.Dialogs
 {
     internal class TextFormattingDialog
     {

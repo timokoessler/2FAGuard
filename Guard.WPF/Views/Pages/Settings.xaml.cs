@@ -8,7 +8,7 @@ using Guard.Core.Storage;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Installation;
 using Guard.WPF.Core.Security;
-using Guard.WPF.Views.Controls;
+using Guard.WPF.Views.Dialogs;
 using Guard.WPF.Views.Pages.Preferences;
 using Wpf.Ui.Controls;
 
@@ -486,7 +486,7 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
             }
         }
 
-        private async void WebAuthn_Button_Click(object sender, RoutedEventArgs e)
+        private void WebAuthn_Button_Click(object sender, RoutedEventArgs e)
         {
             if (!WebAuthnHelper.IsSupported())
             {
@@ -500,8 +500,7 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
                 return;
             }
 
-            //var result = await WebAuthnHelper.Register(mainWindow.GetWindowHandle());
-            //await Auth.LoginWithWebAuthn(mainWindow.GetWindowHandle());
+            mainWindow.Navigate(typeof(WebAuthnPage), true);
         }
     }
 }

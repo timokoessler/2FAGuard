@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
-namespace Guard.WPF.Views.Controls;
+namespace Guard.WPF.Views.Dialogs;
 
 public partial class PasswordDialog : ContentDialog
 {
