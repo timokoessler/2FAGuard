@@ -25,7 +25,8 @@ namespace Guard.Core.Security.WebAuthn
             var challenge = EncryptionHelper.GetRandomBytes(32);
             var extensions = new List<WebAuthnCreationExtensionInput>
             {
-                new HmacSecretCreationExtension()
+                new HmacSecretCreationExtension(),
+                new CredProtectExtensionIn(UserVerification.Required, false)
             };
 
             var webauthnDevices = Auth.GetWebAuthnDevices();
