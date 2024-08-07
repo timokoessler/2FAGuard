@@ -80,6 +80,10 @@
     <system:String x:Key="i.webauthn.add.title">Ajouter une clé de sécurité</system:String>
     <system:String x:Key="i.webauthn.add.description">Enregistrer une nouvelle clé</system:String>
     <system:String x:Key="i.webauthn.existing">Clés existantes</system:String>
+    <system:String x:Key="i.webauthn.dialog1.title">Ajouter une clé de sécurité</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content">Veuillez entrer un nom pour la clé de sécurité que vous souhaitez ajouter</system:String>
+    <system:String x:Key="i.webauthn.dialog1.input">Un nom pour identifier la clé</system:String>
+    <system:String x:Key="i.webauthn.dialog1.next">Suivant</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Merci pour le téléchargement ! Veuillez choisir comment vous souhaitez sécuriser vos jetons.</system:String>
