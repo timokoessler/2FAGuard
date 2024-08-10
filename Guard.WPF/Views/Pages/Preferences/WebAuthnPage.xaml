@@ -44,7 +44,7 @@
             FontWeight="Medium"
             Text="{DynamicResource i.webauthn.existing}" />
         <WrapPanel
-            x:Name="ExistingContainer"
+            x:Name="KeysContainer"
             VerticalAlignment="Top"
             Orientation="Horizontal" />
     </StackPanel>

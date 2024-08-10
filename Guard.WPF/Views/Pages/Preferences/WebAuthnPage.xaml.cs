@@ -28,7 +28,39 @@ namespace Guard.WPF.Views.Pages.Preferences
             }
 
             var keys = Auth.GetWebAuthnDevices();
-            foreach (var key in keys) { }
+            var encryptionHelper = Auth.GetMainEncryptionHelper();
+            foreach (var key in keys)
+            {
+                KeysContainer.Children.Add(
+                    new CardAction()
+                    {
+                        Width = 350,
+                        Height = 95,
+                        Margin = new Thickness(0, 15, 15, 0),
+                        Icon = new SymbolIcon()
+                        {
+                            FontSize = 32,
+                            Symbol = SymbolRegular.UsbStick24
+                        },
+                        Content = new StackPanel()
+                        {
+                            Margin = new Thickness(0, 0, 8, 0),
+                            Children =
+                            {
+                                new Wpf.Ui.Controls.TextBlock()
+                                {
+                                    Text =
+                                        key.EncryptedName != null
+                                            ? encryptionHelper.DecryptString(key.EncryptedName)
+                                            : "???",
+                                    FontTypography = FontTypography.BodyStrong,
+                                    TextWrapping = TextWrapping.WrapWithOverflow
+                                },
+                            }
+                        },
+                    }
+                );
+            }
         }
 
         private async void Add_Click(object sender, RoutedEventArgs e)
