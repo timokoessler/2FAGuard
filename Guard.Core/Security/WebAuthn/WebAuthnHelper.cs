@@ -29,7 +29,7 @@ namespace Guard.Core.Security.WebAuthn
             var extensions = new List<WebAuthnCreationExtensionInput>
             {
                 new HmacSecretCreationExtension(),
-                new CredProtectExtensionIn(UserVerification.Required, false)
+                //new CredProtectExtensionIn(UserVerification.Required, false)
             };
 
             var webauthnDevices = Auth.GetWebAuthnDevices();
@@ -150,7 +150,7 @@ namespace Guard.Core.Security.WebAuthn
 
             var extensions = new List<WebAuthnAssertionExtensionInput>
             {
-                new HmacSecretAssertionExtension() { SaltsByCredential = saltMap, }
+                new HmacSecretAssertionExtension() { SaltsByCredential = saltMap, },
             };
 
             WindowsHello.FocusSecurityPrompt();

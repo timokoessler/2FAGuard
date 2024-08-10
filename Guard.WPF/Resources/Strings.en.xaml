@@ -83,7 +83,8 @@
     <system:String x:Key="i.webauthn.dialog1.title">Add Security Key</system:String>
     <system:String x:Key="i.webauthn.dialog1.content">Please enter a name for the security key you want to add</system:String>
     <system:String x:Key="i.webauthn.dialog1.input">A name to identify the key</system:String>
-    <system:String x:Key="i.webauthn.dialog1.next">Next</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content2">Please note that after the system pop-up says that you can now log in with the security key, you have to complete the directly following authentication step to finish the registration.</system:String>
+    <system:String x:Key="i.webauthn.dialog1.namerequired">You have to enter a name for the security key</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Thanks for downloading! Please choose how you would like to secure your tokens.</system:String>

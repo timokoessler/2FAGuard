@@ -143,6 +143,8 @@ namespace Guard.WPF.Views.Pages
                     )
                 );
             LockTimeComboBox.SelectionChanged += OnLockTimeSelectionChanged;
+
+            WebAuthnBtn.IsEnabled = Auth.IsLoginEnabled();
         }
 
         private void SetSelectedLanguage(LanguageSetting lang)

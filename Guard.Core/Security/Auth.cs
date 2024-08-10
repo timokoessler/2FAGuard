@@ -392,7 +392,7 @@ namespace Guard.Core.Security
             return authData.InstallationID;
         }
 
-        internal static List<WebauthnDevice> GetWebAuthnDevices()
+        public static List<WebauthnDevice> GetWebAuthnDevices()
         {
             ArgumentNullException.ThrowIfNull(authData);
             return authData.WebAuthn ?? [];

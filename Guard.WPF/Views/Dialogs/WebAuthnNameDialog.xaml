@@ -17,7 +17,7 @@
     IsPrimaryButtonEnabled="True"
     PrimaryButtonIcon="{ui:SymbolIcon ArrowCircleRight24,
                                       Filled=True}"
-    PrimaryButtonText="{DynamicResource i.webauthn.dialog1.next}"
+    PrimaryButtonText="{DynamicResource i.dialog.next}"
     mc:Ignorable="d">
 
     <ui:ContentDialog.Resources>
@@ -25,16 +25,18 @@
     </ui:ContentDialog.Resources>
 
     <StackPanel>
-        <ui:TextBlock
-            x:Name="Description"
-            Text="{DynamicResource i.webauthn.dialog1.content}"
-            TextWrapping="Wrap" />
+        <ui:TextBlock Text="{DynamicResource i.webauthn.dialog1.content}" TextWrapping="Wrap" />
         <ui:TextBox
             x:Name="NameBox"
-            Margin="0,15,0,0"
+            Margin="0,12,0,0"
             Icon="{ui:SymbolIcon UsbStick24}"
+            MaxLength="32"
             PlaceholderEnabled="True"
             PlaceholderText="{DynamicResource i.webauthn.dialog1.input}" />
+        <ui:TextBlock
+            Margin="0,12,0,0"
+            Text="{DynamicResource i.webauthn.dialog1.content2}"
+            TextWrapping="Wrap" />
 
     </StackPanel>
 </ui:ContentDialog>

@@ -290,6 +290,7 @@
                     </Grid>
                 </ui:CardControl.Header>
                 <ui:Button
+                    x:Name="WebAuthnBtn"
                     Grid.Column="1"
                     Click="WebAuthn_Button_Click"
                     Content="{DynamicResource i.settings.webauthn.button}"
