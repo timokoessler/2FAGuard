@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Security.WebAuthn;
 using Guard.WPF.Core;
@@ -14,53 +15,22 @@ namespace Guard.WPF.Views.Pages.Preferences
     public partial class WebAuthnPage : Page
     {
         private readonly MainWindow mainWindow;
+        private readonly EncryptionHelper encryptionHelper;
+        private List<WebauthnDevice> keys = [];
 
         public WebAuthnPage()
         {
             InitializeComponent();
 
             mainWindow = (MainWindow)Application.Current.MainWindow;
+            encryptionHelper = Auth.GetMainEncryptionHelper();
 
             if (!WebAuthnHelper.IsSupported())
             {
                 mainWindow.Navigate(typeof(Home));
                 return;
             }
-
-            var keys = Auth.GetWebAuthnDevices();
-            var encryptionHelper = Auth.GetMainEncryptionHelper();
-            foreach (var key in keys)
-            {
-                KeysContainer.Children.Add(
-                    new CardAction()
-                    {
-                        Width = 350,
-                        Height = 95,
-                        Margin = new Thickness(0, 15, 15, 0),
-                        Icon = new SymbolIcon()
-                        {
-                            FontSize = 32,
-                            Symbol = SymbolRegular.UsbStick24
-                        },
-                        Content = new StackPanel()
-                        {
-                            Margin = new Thickness(0, 0, 8, 0),
-                            Children =
-                            {
-                                new Wpf.Ui.Controls.TextBlock()
-                                {
-                                    Text =
-                                        key.EncryptedName != null
-                                            ? encryptionHelper.DecryptString(key.EncryptedName)
-                                            : "???",
-                                    FontTypography = FontTypography.BodyStrong,
-                                    TextWrapping = TextWrapping.WrapWithOverflow
-                                },
-                            }
-                        },
-                    }
-                );
-            }
+            LoadKeys();
         }
 
         private async void Add_Click(object sender, RoutedEventArgs e)
@@ -84,6 +54,26 @@ namespace Guard.WPF.Views.Pages.Preferences
                 }.ShowDialogAsync();
                 return;
             }
+
+            // Check that the key name is unique
+            foreach (var key in keys)
+            {
+                if (
+                    !string.IsNullOrEmpty(key.EncryptedName)
+                    && encryptionHelper.DecryptString(key.EncryptedName) == keyName
+                )
+                {
+                    _ = new Wpf.Ui.Controls.MessageBox
+                    {
+                        Title = I18n.GetString("webauthn.dialog1.title"),
+                        Content = I18n.GetString("webauthn.dialog.nameexists"),
+                        CloseButtonText = I18n.GetString("dialog.close"),
+                        MaxWidth = 400
+                    }.ShowDialogAsync();
+                    return;
+                }
+            }
+
             try
             {
                 var creationResult = await WebAuthnHelper.Register(
@@ -105,11 +95,14 @@ namespace Guard.WPF.Views.Pages.Preferences
                     }.ShowDialogAsync();
                     return;
                 }
-                // Show success dialog?
-                // Todo reload list
+                LoadKeys();
             }
             catch (Exception ex)
             {
+                if (ex.Message == "Cancelled")
+                {
+                    return;
+                }
                 _ = new Wpf.Ui.Controls.MessageBox
                 {
                     Title = I18n.GetString("error"),
@@ -117,6 +110,49 @@ namespace Guard.WPF.Views.Pages.Preferences
                     CloseButtonText = I18n.GetString("dialog.close"),
                     MaxWidth = 400
                 }.ShowDialogAsync();
+            }
+        }
+
+        private void LoadKeys()
+        {
+            keys = Auth.GetWebAuthnDevices();
+            KeysContainer.Children.Clear();
+            foreach (var key in keys)
+            {
+                KeysContainer.Children.Add(
+                    new CardControl()
+                    {
+                        Width = 320,
+                        Margin = new Thickness(0, 15, 15, 0),
+                        Icon = new SymbolIcon()
+                        {
+                            //FontSize = 32,
+                            Symbol = SymbolRegular.UsbStick24
+                        },
+                        Header = new Grid()
+                        {
+                            Margin = new Thickness(0, 0, 35, 0),
+                            Children =
+                            {
+                                new Wpf.Ui.Controls.TextBlock()
+                                {
+                                    Text =
+                                        key.EncryptedName != null
+                                            ? encryptionHelper.DecryptString(key.EncryptedName)
+                                            : "???",
+                                    FontTypography = FontTypography.BodyStrong,
+                                    TextWrapping = TextWrapping.WrapWithOverflow
+                                },
+                            }
+                        },
+                        Content = new Wpf.Ui.Controls.Button()
+                        {
+                            Margin = new Thickness(0, 0, 8, 0),
+
+                            Icon = new SymbolIcon() { Symbol = SymbolRegular.Delete24 },
+                        },
+                    }
+                );
             }
         }
     }

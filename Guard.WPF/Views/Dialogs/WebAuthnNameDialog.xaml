@@ -13,7 +13,7 @@
     ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
     ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     CloseButtonText="{DynamicResource i.dialog.close}"
-    DialogMaxHeight="250"
+    DialogMaxWidth="500"
     IsPrimaryButtonEnabled="True"
     PrimaryButtonIcon="{ui:SymbolIcon ArrowCircleRight24,
                                       Filled=True}"

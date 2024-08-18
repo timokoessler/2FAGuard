@@ -83,7 +83,8 @@
     <system:String x:Key="i.webauthn.dialog1.title">添加安全金鑰</system:String>
     <system:String x:Key="i.webauthn.dialog1.content">請輸入要添加的安全金鑰的名稱</system:String>
     <system:String x:Key="i.webauthn.dialog1.input">一個用於識別金鑰的名稱</system:String>
-    <system:String x:Key="i.webauthn.dialog1.next">下一步</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content2">請注意，系統彈出提示您可以使用安全密鑰登錄後，您必須完成隨後的驗證步驟以完成註冊。</system:String>
+    <system:String x:Key="i.webauthn.dialog.nameexists">已經存在具有此名稱的安全密鑰</system:String>
 
     <!--  应用设置  -->
     <system:String x:Key="i.welcome.subtext">感谢下载！请选择您想要如何保护您的令牌。</system:String>
