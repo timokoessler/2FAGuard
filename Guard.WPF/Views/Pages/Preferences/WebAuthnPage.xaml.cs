@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Guard.Core;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Security.WebAuthn;
@@ -99,6 +100,7 @@ namespace Guard.WPF.Views.Pages.Preferences
             }
             catch (Exception ex)
             {
+                Log.Logger.Error("Unhandled WebAuthn exception on key creation: {0}", ex.Message);
                 if (ex.Message == "Cancelled")
                 {
                     return;
@@ -119,16 +121,41 @@ namespace Guard.WPF.Views.Pages.Preferences
             KeysContainer.Children.Clear();
             foreach (var key in keys)
             {
+                var delBtn = new Wpf.Ui.Controls.Button()
+                {
+                    Margin = new Thickness(0, 0, 8, 0),
+                    Icon = new SymbolIcon() { Symbol = SymbolRegular.Delete24 },
+                };
+                delBtn.Click += async (sender, e) =>
+                {
+                    var deleteMessageBox = new Wpf.Ui.Controls.MessageBox
+                    {
+                        Title = I18n.GetString("webauthn.delete.title"),
+                        Content = I18n.GetString("webauthn.delete.content")
+                            .Replace(
+                                "@Name",
+                                !string.IsNullOrEmpty(key.EncryptedName)
+                                    ? encryptionHelper.DecryptString(key.EncryptedName)
+                                    : "???"
+                            ),
+                        IsPrimaryButtonEnabled = true,
+                        PrimaryButtonText = I18n.GetString("webauthn.delete.yes"),
+                        CloseButtonText = I18n.GetString("dialog.close"),
+                        MaxWidth = 400
+                    };
+
+                    var result = await deleteMessageBox.ShowDialogAsync();
+                    if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
+                    {
+                        DeleteKey(key);
+                    }
+                };
                 KeysContainer.Children.Add(
                     new CardControl()
                     {
                         Width = 320,
                         Margin = new Thickness(0, 15, 15, 0),
-                        Icon = new SymbolIcon()
-                        {
-                            //FontSize = 32,
-                            Symbol = SymbolRegular.UsbStick24
-                        },
+                        Icon = new SymbolIcon() { Symbol = SymbolRegular.UsbStick24 },
                         Header = new Grid()
                         {
                             Margin = new Thickness(0, 0, 35, 0),
@@ -145,15 +172,16 @@ namespace Guard.WPF.Views.Pages.Preferences
                                 },
                             }
                         },
-                        Content = new Wpf.Ui.Controls.Button()
-                        {
-                            Margin = new Thickness(0, 0, 8, 0),
-
-                            Icon = new SymbolIcon() { Symbol = SymbolRegular.Delete24 },
-                        },
+                        Content = delBtn
                     }
                 );
             }
+        }
+
+        private async void DeleteKey(WebauthnDevice key)
+        {
+            await Auth.RemoveWebAuthnDevice(key);
+            LoadKeys();
         }
     }
 }

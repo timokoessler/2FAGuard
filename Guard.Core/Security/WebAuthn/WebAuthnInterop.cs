@@ -25,7 +25,7 @@ namespace Guard.Core.Security.WebAuthn
                     );
                 }
                 _apiVersion = WebAuthNGetApiVersionNumber();
-                Log.Logger.Debug("WebAuthn API version: {ApiVersion}", _apiVersion);
+                Log.Logger.Information("WebAuthn API version: {ApiVersion}", _apiVersion);
             }
             return _apiVersion
                 ?? throw new PlatformNotSupportedException("Can not get WebAuthn API version.");

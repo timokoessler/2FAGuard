@@ -415,6 +415,16 @@ namespace Guard.Core.Security
             await SaveFile();
         }
 
+        public static async Task RemoveWebAuthnDevice(WebauthnDevice device)
+        {
+            ArgumentNullException.ThrowIfNull(authData);
+
+            authData.WebAuthn ??= [];
+
+            authData.WebAuthn.Remove(device);
+            await SaveFile();
+        }
+
         public static async Task LoginWithWebAuthn(IntPtr windowHandle)
         {
             if (authData == null || authData.LoginSalt == null)

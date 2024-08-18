@@ -77,6 +77,8 @@
     <system:String x:Key="i.settings.webauthn.description">Melde dich mit einem Sicherheitsschlüssel an</system:String>
     <system:String x:Key="i.settings.webauthn.button">Konfigurieren</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">Dein Betriebssystem scheint WebAuthn nicht zu unterstützen.</system:String>
+
+    <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Sicherheitsschlüssel (FIDO2)</system:String>
     <system:String x:Key="i.webauthn.add.title">Sicherheitsschlüssel hinzufügen</system:String>
     <system:String x:Key="i.webauthn.add.description">Registriere einen neuen Schlüssel</system:String>
@@ -87,6 +89,9 @@
     <system:String x:Key="i.webauthn.dialog1.input">Name zur Identifikation des Schlüssels</system:String>
     <system:String x:Key="i.webauthn.dialog1.namerequired">Es muss ein Name für den Sicherheitsschlüssel eingegeben werden</system:String>
     <system:String x:Key="i.webauthn.dialog.nameexists">Es existiert bereits ein Sicherheitsschlüssel mit diesem Namen</system:String>
+    <system:String x:Key="i.webauthn.delete.title">Sicherheitsschlüssel entfernen</system:String>
+    <system:String x:Key="i.webauthn.delete.content">Bist du sicher, dass du den Sicherheitsschlüssel @Name entfernen möchten? Du kannst diesen Schlüssel nicht mehr für die Authentifizierung verwenden.</system:String>
+    <system:String x:Key="i.webauthn.delete.yes">Entfernen</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">Vielen Dank fürs Herunterladen! Bitte wähle, wie du deine Token sichern möchtest.</system:String>
