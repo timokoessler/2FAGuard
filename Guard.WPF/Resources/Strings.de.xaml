@@ -125,6 +125,7 @@
     <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
     <system:String x:Key="i.login.warning.capslock.title">Warnung</system:String>
     <system:String x:Key="i.login.warning.capslock.content">Die Feststelltaste ist aktiviert</system:String>
+    <system:String x:Key="i.login.webauthn">Sicherheitsschlüssel</system:String>
 
     <!--  Home  -->
     <system:String x:Key="i.home.loading">Lade Daten...</system:String>

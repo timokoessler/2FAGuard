@@ -57,6 +57,13 @@
                 Content="{DynamicResource i.login.winhellobutton}"
                 Icon="{ui:SymbolIcon FingerPrint24,
                                      Filled=True}" />
+            <ui:Button
+                x:Name="WebAuthnBtn"
+                Margin="0,15,0,0"
+                HorizontalAlignment="Center"
+                Click="WebAuthnBtn_Click"
+                Content="{DynamicResource i.login.webauthn}"
+                Icon="{ui:SymbolIcon UsbStick24}" />
             <ui:InfoBar
                 x:Name="InfoBar"
                 Margin="0,20,0,0"

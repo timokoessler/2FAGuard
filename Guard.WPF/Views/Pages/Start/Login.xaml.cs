@@ -67,18 +67,21 @@ namespace Guard.WPF.Views.Pages.Start
                 await Auth.Init();
                 if (!Auth.IsLoginEnabled())
                 {
-                    LoginButton.IsEnabled = false;
                     PasswordBox.IsEnabled = false;
+                    DisableButtons();
                     Auth.LoginInsecure();
                     OnLoggedIn();
                     return;
+                }
+                if (!Auth.GetWebAuthnDevices().Any())
+                {
+                    WebAuthnBtn.Visibility = Visibility.Collapsed;
                 }
                 if (Auth.IsWindowsHelloRegistered())
                 {
                     if (promptWinHello)
                     {
-                        LoginButton.IsEnabled = false;
-                        WinHelloButton.IsEnabled = false;
+                        DisableButtons();
                         LoginProgressBar.Visibility = Visibility.Visible;
                         await Auth.LoginWithWindowsHello();
                         OnLoggedIn();
@@ -91,8 +94,7 @@ namespace Guard.WPF.Views.Pages.Start
             }
             catch (Exception ex)
             {
-                LoginButton.IsEnabled = true;
-                WinHelloButton.IsEnabled = true;
+                EnableButtons();
                 LoginProgressBar.Visibility = Visibility.Hidden;
                 if (ex.Message.Contains("UserCanceled"))
                 {
@@ -132,8 +134,7 @@ namespace Guard.WPF.Views.Pages.Start
                 return;
             }
 
-            LoginButton.IsEnabled = false;
-            WinHelloButton.IsEnabled = false;
+            DisableButtons();
             LoginProgressBar.Visibility = Visibility.Visible;
 
             try
@@ -145,8 +146,7 @@ namespace Guard.WPF.Views.Pages.Start
             {
                 LoginProgressBar.Visibility = Visibility.Collapsed;
                 ShowEror("Error", ex.Message);
-                LoginButton.IsEnabled = true;
-                WinHelloButton.IsEnabled = true;
+                EnableButtons();
             }
         }
 
@@ -174,8 +174,7 @@ namespace Guard.WPF.Views.Pages.Start
         private async void WinHelloButton_Click(object sender, RoutedEventArgs e)
         {
             InfoBar.IsOpen = false;
-            LoginButton.IsEnabled = false;
-            WinHelloButton.IsEnabled = false;
+            DisableButtons();
             LoginProgressBar.Visibility = Visibility.Visible;
 
             try
@@ -186,10 +185,47 @@ namespace Guard.WPF.Views.Pages.Start
             catch (Exception ex)
             {
                 LoginProgressBar.Visibility = Visibility.Collapsed;
-                LoginButton.IsEnabled = true;
-                WinHelloButton.IsEnabled = true;
+                EnableButtons();
 
                 if (ex.Message.Contains("UserCanceled"))
+                {
+                    return;
+                }
+                ShowEror("Error", ex.Message);
+            }
+        }
+
+        private void EnableButtons()
+        {
+            LoginButton.IsEnabled = true;
+            WinHelloButton.IsEnabled = true;
+            WebAuthnBtn.IsEnabled = true;
+        }
+
+        private void DisableButtons()
+        {
+            LoginButton.IsEnabled = false;
+            WinHelloButton.IsEnabled = false;
+            WebAuthnBtn.IsEnabled = false;
+        }
+
+        private async void WebAuthnBtn_Click(object sender, RoutedEventArgs e)
+        {
+            InfoBar.IsOpen = false;
+            DisableButtons();
+            LoginProgressBar.Visibility = Visibility.Visible;
+
+            try
+            {
+                await Auth.LoginWithWebAuthn(mainWindow.GetWindowHandle());
+                OnLoggedIn();
+            }
+            catch (Exception ex)
+            {
+                LoginProgressBar.Visibility = Visibility.Collapsed;
+                EnableButtons();
+
+                if (ex.Message.Contains("Canceled"))
                 {
                     return;
                 }

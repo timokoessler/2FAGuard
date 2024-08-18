@@ -124,6 +124,7 @@
     <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
     <system:String x:Key="i.login.warning.capslock.title">警告</system:String>
     <system:String x:Key="i.login.warning.capslock.content">Caps Lock已啟動</system:String>
+    <system:String x:Key="i.login.webauthn">安全密钥</system:String>
 
     <!--  首頁  -->
     <system:String x:Key="i.home.loading">正在載入...</system:String>

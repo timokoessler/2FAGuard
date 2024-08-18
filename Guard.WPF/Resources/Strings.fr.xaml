@@ -124,6 +124,7 @@
     <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
     <system:String x:Key="i.login.warning.capslock.title">Attention</system:String>
     <system:String x:Key="i.login.warning.capslock.content">La touche Majuscule est activée</system:String>
+    <system:String x:Key="i.login.webauthn">Clé de sécurité</system:String>
 
     <!--  Home  -->
     <system:String x:Key="i.home.loading">Chargement...</system:String>
