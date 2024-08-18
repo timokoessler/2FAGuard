@@ -85,6 +85,7 @@
     <system:String x:Key="i.webauthn.dialog1.content">Bitte gebe einen Namen für den Sicherheitsschlüssel ein, den du hinzufügen möchtest</system:String>
     <system:String x:Key="i.webauthn.dialog1.content2">Bitte beachte, dass nach der Systemmeldung das jetzt eine Anmeldung mit dem Sicherheitsschlüssel möglich ist, der unmittelbar folgende Authentifizierungsschritt durchgeführt werden muss, um die Registrierung abzuschließen.</system:String>
     <system:String x:Key="i.webauthn.dialog1.input">Name zur Identifikation des Schlüssels</system:String>
+    <system:String x:Key="i.webauthn.dialog1.namerequired">Es muss ein Name für den Sicherheitsschlüssel eingegeben werden</system:String>
     <system:String x:Key="i.webauthn.dialog.nameexists">Es existiert bereits ein Sicherheitsschlüssel mit diesem Namen</system:String>
 
     <!--  Application setup  -->
