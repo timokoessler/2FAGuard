@@ -58,9 +58,6 @@ namespace Guard.WPF
             SessionSwitchEvent.Register(this);
         }
 
-        [DllImport("user32.dll")]
-        internal static extern uint SetWindowDisplayAffinity(IntPtr hwnd, uint dwAffinity);
-
         private void OnWindowLoaded()
         {
             ContentDialogService.SetDialogHost(RootContentDialogPresenter);
@@ -281,11 +278,11 @@ namespace Guard.WPF
         {
             if (allow)
             {
-                _ = SetWindowDisplayAffinity(windowInteropHandle, 0);
+                _ = NativeWindow.SetWindowDisplayAffinity(windowInteropHandle, 0);
             }
             else
             {
-                _ = SetWindowDisplayAffinity(windowInteropHandle, 1);
+                _ = NativeWindow.SetWindowDisplayAffinity(windowInteropHandle, 1);
             }
         }
 

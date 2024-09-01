@@ -36,22 +36,72 @@ namespace Guard.WPF
                 mutexName += "Store";
             }
 
-            singleInstanceMutex = new Mutex(true, mutexName, out bool createdNew);
+            singleInstanceMutex = new Mutex(true, mutexName, out bool notAlreadyRunning);
 
             Log.Init();
             SettingsManager.Init();
             I18n.Init();
 
-            if (!createdNew)
+            if (!notAlreadyRunning)
             {
                 // Another instance is already running
-                var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+                // Try to bring it to the front
+                bool focusedOtherProcess = false;
+
+                try
                 {
-                    Title = I18n.GetString("i.running.title"),
-                    Content = I18n.GetString("i.running.content"),
-                    CloseButtonText = I18n.GetString("i.running.exit"),
-                };
-                await uiMessageBox.ShowDialogAsync();
+                    Process currentProcess = Process.GetCurrentProcess();
+                    if (currentProcess.MainModule != null)
+                    {
+                        foreach (
+                            Process process in Process.GetProcessesByName(
+                                currentProcess.ProcessName
+                            )
+                        )
+                        {
+                            if (
+                                process.Id != currentProcess.Id
+                                && process.MainModule != null
+                                && process.MainModule.FileName.Equals(
+                                    currentProcess.MainModule.FileName
+                                )
+                                && !process.MainWindowHandle.Equals(IntPtr.Zero)
+                            )
+                            {
+                                IntPtr existingWindowHandle = process.MainWindowHandle;
+
+                                if (NativeWindow.IsIconic(existingWindowHandle))
+                                {
+                                    NativeWindow.ShowWindow(
+                                        existingWindowHandle,
+                                        NativeWindow.ShowWindowCommand.Restore
+                                    );
+                                }
+
+                                NativeWindow.SetForegroundWindow(existingWindowHandle);
+
+                                focusedOtherProcess = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error("Failed to focus existing instance: {0}", ex.Message);
+                }
+
+                if (!focusedOtherProcess)
+                {
+                    var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+                    {
+                        Title = I18n.GetString("i.running.title"),
+                        Content = I18n.GetString("i.running.content"),
+                        CloseButtonText = I18n.GetString("i.running.exit"),
+                    };
+                    await uiMessageBox.ShowDialogAsync();
+                }
+
                 Shutdown();
                 return;
             }
