@@ -49,8 +49,16 @@
                     <ui:Button
                         HorizontalAlignment="Center"
                         Click="Skip_Click"
-                        Content="{DynamicResource i.update.skip}" />
+                        Content="{DynamicResource i.update.skip}"
+                        Icon="{ui:SymbolIcon ChevronDoubleRight20,
+                                             Filled=True}" />
                 </StackPanel>
+                <ui:HyperlinkButton
+                    Margin="0,25,0,0"
+                    HorizontalAlignment="Center"
+                    Content="{DynamicResource i.update.changelog}"
+                    Icon="{ui:SymbolIcon Link24}"
+                    NavigateUri="https://2faguard.app/changelog" />
             </StackPanel>
             <StackPanel
                 x:Name="ProgressPanel"

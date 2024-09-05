@@ -268,6 +268,7 @@
     <system:String x:Key="i.update.loading">Téléchargement de la mise à jour...</system:String>
     <system:String x:Key="i.update.error.title">Échec de la mise à jour</system:String>
     <system:String x:Key="i.update.error.content">Une erreur est survenue lors de la mise à jour</system:String>
+    <system:String x:Key="i.update.changelog">查看更新日志</system:String>
 
     <!--  Tray  -->
     <system:String x:Key="i.tray.exit">Quitter</system:String>

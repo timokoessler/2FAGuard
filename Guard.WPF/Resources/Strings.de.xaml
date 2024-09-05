@@ -268,6 +268,7 @@
     <system:String x:Key="i.update.loading">Update wird heruntergeladen...</system:String>
     <system:String x:Key="i.update.error.title">Update fehlgeschlagen</system:String>
     <system:String x:Key="i.update.error.content">Beim Aktualisieren ist ein Fehler aufgetreten</system:String>
+    <system:String x:Key="i.update.changelog">Neuerungen ansehen</system:String>
 
     <!--  Tray  -->
     <system:String x:Key="i.tray.exit">Beenden</system:String>
