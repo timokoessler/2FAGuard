@@ -82,6 +82,7 @@
     <system:String x:Key="i.webauthn.add.title">Add Security Key</system:String>
     <system:String x:Key="i.webauthn.add.description">Register a new key</system:String>
     <system:String x:Key="i.webauthn.existing">Existing keys</system:String>
+    <system:String x:Key="i.webauthn.existing.none">No keys available</system:String>
     <system:String x:Key="i.webauthn.dialog1.title">Add Security Key</system:String>
     <system:String x:Key="i.webauthn.dialog1.content">Please enter a name for the security key you want to add</system:String>
     <system:String x:Key="i.webauthn.dialog1.input">A name to identify the key</system:String>

@@ -119,6 +119,19 @@ namespace Guard.WPF.Views.Pages.Preferences
         {
             keys = Auth.GetWebAuthnDevices();
             KeysContainer.Children.Clear();
+
+            if (keys.Count == 0)
+            {
+                KeysContainer.Children.Add(
+                    new Wpf.Ui.Controls.TextBlock()
+                    {
+                        Text = I18n.GetString("webauthn.existing.none"),
+                        Margin = new Thickness(0, 15, 0, 0)
+                    }
+                );
+                return;
+            }
+
             foreach (var key in keys)
             {
                 var delBtn = new Wpf.Ui.Controls.Button()
