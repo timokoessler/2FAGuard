@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿#nullable disable
+using System.Runtime.InteropServices;
 
 // Based on https://github.com/dbeinder/Yoq.WindowsWebAuthn - Copyright (c) 2019 David Beinder - MIT License
 
@@ -18,7 +19,7 @@ namespace Guard.Core.Security.WebAuthn.entities
         public IntPtr ClientDataJSON;
 
         // Hash algorithm ID used to hash the pbClientDataJSON field.
-        public string? HashAlgId;
+        public string HashAlgId;
 
         public RawClientData() { }
 

@@ -66,7 +66,7 @@ namespace Guard.Core.Security.WebAuthn
             [In] RawUserInfo rawUserInfo,
             [In] RawCoseCredentialParameters rawCoseCredParams,
             [In] RawClientData rawClientData,
-            [In, Optional] RawAuthenticatorMakeCredentialOptions rawMakeCredentialOptions,
+            [In, Optional] RawAuthenticatorMakeCredentialOptions? rawMakeCredentialOptions,
             [Out] out IntPtr rawCredentialAttestation
         );
 
@@ -123,7 +123,7 @@ namespace Guard.Core.Security.WebAuthn
             [In] IntPtr hWnd,
             [In, Optional] string rpId,
             [In] RawClientData rawClientData,
-            [In, Optional] RawAuthenticatorGetAssertionOptions rawGetAssertionOptions,
+            [In, Optional] RawAuthenticatorGetAssertionOptions? rawGetAssertionOptions,
             [Out] out IntPtr rawAssertionPtr
         );
 

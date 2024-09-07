@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿#nullable disable
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 
 // Based on https://github.com/dbeinder/Yoq.WindowsWebAuthn - Copyright (c) 2019 David Beinder - MIT License

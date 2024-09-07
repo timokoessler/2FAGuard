@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿#nullable disable
+using System.Runtime.InteropServices;
 
 // Based on https://github.com/dbeinder/Yoq.WindowsWebAuthn - Copyright (c) 2019 David Beinder - MIT License
 
@@ -82,15 +83,27 @@ namespace Guard.Core.Security.WebAuthn.entities
                 if (HmacSecret != IntPtr.Zero)
                 {
                     var rawSecret = Marshal.PtrToStructure<RawHmacSecretSalt>(HmacSecret);
-                    hmacSecret = new HmacSecret()
+                    if (rawSecret != null)
                     {
-                        First = new byte[rawSecret.FirstSize],
-                        Second = new byte[rawSecret.SecondSize]
-                    };
-                    if (rawSecret.FirstSize > 0 && rawSecret.First != IntPtr.Zero)
-                        Marshal.Copy(rawSecret.First, hmacSecret.First, 0, rawSecret.FirstSize);
-                    if (rawSecret.SecondSize > 0 && rawSecret.Second != IntPtr.Zero)
-                        Marshal.Copy(rawSecret.Second, hmacSecret.Second, 0, rawSecret.SecondSize);
+                        hmacSecret = new HmacSecret()
+                        {
+                            First = new byte[rawSecret.FirstSize],
+                            Second = new byte[rawSecret.SecondSize]
+                        };
+                        if (rawSecret.FirstSize > 0 && rawSecret.First != IntPtr.Zero)
+                        {
+                            Marshal.Copy(rawSecret.First, hmacSecret.First, 0, rawSecret.FirstSize);
+                        }
+                        if (rawSecret.SecondSize > 0 && rawSecret.Second != IntPtr.Zero)
+                        {
+                            Marshal.Copy(
+                                rawSecret.Second,
+                                hmacSecret.Second,
+                                0,
+                                rawSecret.SecondSize
+                            );
+                        }
+                    }
                 }
             }
 
@@ -135,6 +148,6 @@ namespace Guard.Core.Security.WebAuthn.entities
 
         public LargeBlobStatus LargeBlobStatus;
         public byte[] LargeBlob;
-        public HmacSecret? HmacSecret;
+        public HmacSecret HmacSecret;
     }
 }
