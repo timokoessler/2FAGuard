@@ -74,6 +74,13 @@ namespace Guard.WPF
 
             SimpleIconsManager.LoadIcons();
 
+            CheckWindowSizeAndPosition();
+
+            if (SettingsManager.Settings.MinimizeToTray)
+            {
+                AddTrayIcon();
+            }
+
             StatsClient = new(
                 "A-SH-2619747927",
                 new AptabaseOptions { Host = "https://aptabase.tkoessler.de" }
@@ -93,11 +100,6 @@ namespace Guard.WPF
             }
 
             CheckLocalTime();
-
-            if (SettingsManager.Settings.MinimizeToTray)
-            {
-                AddTrayIcon();
-            }
         }
 
         internal void ApplyTheme(ThemeSetting theme)
@@ -411,6 +413,38 @@ namespace Guard.WPF
         internal IntPtr GetWindowHandle()
         {
             return windowInteropHandle;
+        }
+
+        private void CheckWindowSizeAndPosition()
+        {
+            try
+            {
+                if (Left < 0)
+                {
+                    Left = 0;
+                }
+                if (Top < 0)
+                {
+                    Top = 0;
+                }
+                int screenWidth = (int)SystemParameters.WorkArea.Width;
+                int screenHeight = (int)SystemParameters.WorkArea.Height;
+                if (Left + Width > screenWidth)
+                {
+                    Width = screenWidth - Left;
+                }
+                if (Top + Height > screenHeight)
+                {
+                    Height = screenHeight - Top;
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Logger.Warning(
+                    "Failed to check window size and position: {Exception}",
+                    e.Message
+                );
+            }
         }
     }
 }
