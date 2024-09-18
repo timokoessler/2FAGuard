@@ -73,6 +73,8 @@ namespace Guard.WPF.Views.Pages
             WinHelloSwitch.Checked += (sender, e) => EnableWinHello();
             WinHelloSwitch.Unchecked += (sender, e) => DisableWinHello();
 
+            CheckWindowsHelloAvailability();
+
             ScreenRecordingSwitch.IsChecked = SettingsManager.Settings.PreventRecording;
             ScreenRecordingSwitch.Checked += (sender, e) =>
             {
@@ -503,6 +505,23 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
             }
 
             mainWindow.Navigate(typeof(WebAuthnPage), true);
+        }
+
+        private async void CheckWindowsHelloAvailability()
+        {
+            if (!Auth.IsLoginEnabled())
+            {
+                // Switch already disabled
+                return;
+            }
+
+            var supported = await WindowsHello.IsAvailable();
+            if (!supported)
+            {
+                ignoreWinHelloSwitchEvents = true;
+                WinHelloSwitch.IsEnabled = false;
+                ignoreWinHelloSwitchEvents = false;
+            }
         }
     }
 }
