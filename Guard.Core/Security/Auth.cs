@@ -111,7 +111,7 @@ namespace Guard.Core.Security
             {
                 throw new Exception("Windows Hello already registered");
             }
-            authData.WindowsHelloChallenge = EncryptionHelper.GetRandomBase64String(128);
+            authData.WindowsHelloChallenge ??= EncryptionHelper.GetRandomBase64String(128);
             var windowsHelloResult = await WindowsHello.Register();
             if (
                 windowsHelloResult.Status
