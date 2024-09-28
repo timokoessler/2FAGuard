@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <Title>2FAGuard</Title>
-    <Version>1.4.0</Version>
+    <Version>1.5.0</Version>
     <Authors>Timo Kössler and Open Source Contributors</Authors>
     <Copyright>$(Authors)</Copyright>
     <RepositoryType>git</RepositoryType>
@@ -89,10 +89,6 @@
     <Resource Include="Assets\padlock-gradient.svg" />
     <Resource Include="Assets\twofas.svg" />
     <Resource Include="Assets\update.svg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Core\Stats\" />
   </ItemGroup>
 
   <ItemGroup>

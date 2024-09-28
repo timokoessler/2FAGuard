@@ -216,7 +216,7 @@ namespace Guard.WPF.Views.Pages.Add
                 return;
             }
             // Validate secret
-            if (string.IsNullOrWhiteSpace(Secret.Password))
+            if (string.IsNullOrWhiteSpace(Secret.Password) || Secret.Password.Length < 2)
             {
                 ShowEror(I18n.GetString("td.nosecret"));
                 return;

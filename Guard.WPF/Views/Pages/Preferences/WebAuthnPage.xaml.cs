@@ -83,7 +83,7 @@ namespace Guard.WPF.Views.Pages.Preferences
                 );
                 if (!creationResult.success)
                 {
-                    if (creationResult.error == "Cancelled")
+                    if (creationResult.error == "Canceled")
                     {
                         return;
                     }
@@ -101,7 +101,7 @@ namespace Guard.WPF.Views.Pages.Preferences
             catch (Exception ex)
             {
                 Log.Logger.Error("Unhandled WebAuthn exception on key creation: {0}", ex.Message);
-                if (ex.Message == "Cancelled")
+                if (ex.Message == "Canceled")
                 {
                     return;
                 }
