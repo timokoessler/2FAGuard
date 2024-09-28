@@ -22,14 +22,7 @@ namespace Guard.WPF.Views.Pages.Start
             Database.Init();
             // Inits empty token list
             _ = TokenManager.GetAllTokens();
-            if (Auth.IsLoginEnabled())
-            {
-                mainWindow.GetStatsClient()?.TrackEvent("SetupCompleted");
-            }
-            else
-            {
-                mainWindow.GetStatsClient()?.TrackEvent("SetupCompletedInsecure");
-            }
+            Stats.TrackEvent(Stats.EventType.SetupCompleted);
             InactivityDetector.Start();
         }
 

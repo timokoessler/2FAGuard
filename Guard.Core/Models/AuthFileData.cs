@@ -13,9 +13,6 @@
     {
         public required int Version { get; set; }
 
-        /// <summary>
-        /// The installation ID of the current Guard installation is only used for supporting multiple Windows Hello accounts with the portable version.
-        /// </summary>
         public required string InstallationID { get; set; }
 
         /// <summary>

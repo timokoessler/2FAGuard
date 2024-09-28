@@ -290,6 +290,8 @@
     <system:String x:Key="i.running.title">应用已在运行</system:String>
     <system:String x:Key="i.running.content">此应用一次只能执行一次。</system:String>
     <system:String x:Key="i.running.exit">退出</system:String>
+    <system:String x:Key="i.error.unhandled.github">感谢您的报告！如果您愿意，随时可以在 GitHub 上创建问题，以了解进展情况。</system:String>
+    <system:String x:Key="i.error.unhandled.github.open">创建问题</system:String>
 
     <system:String x:Key="i.unsupported.os.title">操作系统不支持</system:String>
     <system:String x:Key="i.unsupported.os.content">请更新到Windows 10 1903 (18362)或更高版本以使用2FAGuard。</system:String>

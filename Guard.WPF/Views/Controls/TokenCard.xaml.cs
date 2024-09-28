@@ -202,9 +202,9 @@ namespace Guard.WPF.Views.UIComponents
         {
             try
             {
-                Clipboard.SetText(token.GenerateToken());
                 TimeProgressRing.Visibility = Visibility.Collapsed;
                 SvgIconRingView.Visibility = Visibility.Visible;
+                Clipboard.SetText(token.GenerateToken());
                 await Task.Delay(1000);
                 SvgIconRingView.Visibility = Visibility.Collapsed;
                 TimeProgressRing.Visibility = Visibility.Visible;

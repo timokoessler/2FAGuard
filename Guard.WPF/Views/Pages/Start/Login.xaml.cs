@@ -65,6 +65,7 @@ namespace Guard.WPF.Views.Pages.Start
             try
             {
                 await Auth.Init();
+                Stats.TrackEvent(Stats.EventType.AppStarted);
                 if (!Auth.IsLoginEnabled())
                 {
                     PasswordBox.IsEnabled = false;
@@ -73,7 +74,7 @@ namespace Guard.WPF.Views.Pages.Start
                     OnLoggedIn();
                     return;
                 }
-                if (!Auth.GetWebAuthnDevices().Any())
+                if (Auth.GetWebAuthnDevices().Count == 0)
                 {
                     WebAuthnBtn.Visibility = Visibility.Collapsed;
                 }

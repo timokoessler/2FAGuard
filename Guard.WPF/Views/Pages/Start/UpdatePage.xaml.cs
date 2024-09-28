@@ -39,7 +39,7 @@ namespace Guard.WPF.Views.Pages.Start
             QuestionPanel.Visibility = Visibility.Collapsed;
             ProgressPanel.Visibility = Visibility.Visible;
 
-            mainWindow.GetStatsClient()?.TrackEvent("UpdateStarted");
+            Stats.TrackEvent(Stats.EventType.UpdateStarted);
 
             try
             {

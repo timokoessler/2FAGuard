@@ -290,6 +290,8 @@
     <system:String x:Key="i.running.title">L'application est déjà en cours d'exécution</system:String>
     <system:String x:Key="i.running.content">Cette application ne peut être exécutée qu'une seule fois à la fois.</system:String>
     <system:String x:Key="i.running.exit">Quitter</system:String>
+    <system:String x:Key="i.error.unhandled.github">Merci pour votre rapport ! Si vous le souhaitez, n'hésitez pas à créer un problème sur GitHub pour être informé des progrès.</system:String>
+    <system:String x:Key="i.error.unhandled.github.open">Créer un problème</system:String>
 
     <system:String x:Key="i.unsupported.os.title">Système d'exploitation non pris en charge</system:String>
     <system:String x:Key="i.unsupported.os.content">Veuillez mettre à jour vers Windows 10 1903 (18362) ou une version ultérieure pour utiliser 2FAGuard.</system:String>

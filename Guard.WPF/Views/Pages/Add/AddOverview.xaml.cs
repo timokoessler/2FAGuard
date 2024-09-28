@@ -119,7 +119,6 @@ namespace Guard.WPF.Views.Pages.Add
                     NavigationContextManager.CurrentContext["duplicateCount"] = duplicate;
                 }
 
-                mainWindow.GetStatsClient()?.TrackEvent("TokenImported" + importer.Name);
                 mainWindow.Navigate(typeof(TokenSuccessPage));
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿#nullable disable
+#pragma warning disable CS0649
 using System.Runtime.InteropServices;
 
 // Based on https://github.com/dbeinder/Yoq.WindowsWebAuthn - Copyright (c) 2019 David Beinder - MIT License

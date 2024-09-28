@@ -42,5 +42,15 @@ namespace Guard.WPF.Core.Installation
         {
             return (GetInstallationType(), GetVersion());
         }
+
+        public static bool IsInDebugMode()
+        {
+#if DEBUG
+            return true;
+#endif
+#pragma warning disable CS0162 // Unerreichbarer Code wurde entdeckt.
+            return false;
+#pragma warning restore CS0162 // Unerreichbarer Code wurde entdeckt.
+        }
     }
 }

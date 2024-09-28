@@ -77,5 +77,35 @@
         {
             return installationType == InstallationType.CLASSIC_PORTABLE;
         }
+
+        public static int GetOsBuildVersion()
+        {
+            return Environment.OSVersion.Version.Build;
+        }
+
+        public static string GetLocaleCode()
+        {
+            return System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+        }
+
+        public static string GetOsVersionString()
+        {
+            if (Environment.OSVersion.Version.Build >= 22000)
+            {
+                return $"Windows 11 {Environment.OSVersion.Version.Build}";
+            }
+            return $"Windows 10 {Environment.OSVersion.Version.Build}";
+        }
+
+        public static string GetAppEditionString()
+        {
+            return InstallationContext.GetInstallationType() switch
+            {
+                InstallationType.CLASSIC_PORTABLE => "portable",
+                InstallationType.CLASSIC_INSTALLER => "installer",
+                InstallationType.MICROSOFT_STORE => "store",
+                _ => "unknown"
+            };
+        }
     }
 }

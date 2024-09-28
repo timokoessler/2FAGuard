@@ -314,7 +314,6 @@ namespace Guard.WPF.Views.Pages.Add
                     dbToken.CreationTime = existingToken.dBToken.CreationTime;
                     dbToken.UpdatedTime = DateTime.Now;
                     TokenManager.AddToken(dbToken);
-                    mainWindow.GetStatsClient()?.TrackEvent("TokenEdited");
 
                     NavigationContextManager.CurrentContext["tokenID"] = dbToken.Id;
                     NavigationContextManager.CurrentContext["type"] = "edited";
@@ -328,8 +327,6 @@ namespace Guard.WPF.Views.Pages.Add
                 {
                     throw new Exception(I18n.GetString("import.duplicate"));
                 }
-
-                mainWindow.GetStatsClient()?.TrackEvent("TokenAddedManually");
 
                 NavigationContextManager.CurrentContext["tokenID"] = dbToken.Id;
                 NavigationContextManager.CurrentContext["type"] = "added";

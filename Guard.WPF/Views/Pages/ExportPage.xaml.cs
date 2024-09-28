@@ -62,8 +62,6 @@ namespace Guard.WPF.Views.Pages
                     }
                     await exporter.Export(saveFileDialog.FileName, password);
 
-                    mainWindow.GetStatsClient()?.TrackEvent("TokenExported" + exporter.Name);
-
                     Wpf.Ui.Controls.MessageBoxResult sucessDialogResult =
                         await new Wpf.Ui.Controls.MessageBox
                         {

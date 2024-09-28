@@ -12,7 +12,6 @@ namespace Guard.WPF.Core.Installation
     public class Updater
     {
         public static readonly string updateApiUrl = "https://2faguard.app/api/update";
-        public static readonly HttpClient httpClient = new();
         private static readonly JsonSerializerOptions jsonSerializerOptions =
             new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
@@ -39,6 +38,7 @@ namespace Guard.WPF.Core.Installation
 
             try
             {
+                var httpClient = HTTP.GetHttpClient();
                 string url =
                     $"{updateApiUrl}?current={currentVersionString}&isPortable={isPortable}";
                 UpdateInfo updateInfo =
@@ -104,6 +104,7 @@ namespace Guard.WPF.Core.Installation
                 );
             }
 
+            var httpClient = HTTP.GetHttpClient();
             using var stream = await httpClient.GetStreamAsync(downloadUrl);
             using FileStream fileStream =
                 new(downloadFileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);

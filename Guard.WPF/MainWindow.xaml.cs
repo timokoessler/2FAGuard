@@ -1,8 +1,5 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -12,7 +9,6 @@ using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.WPF.Core;
-using Guard.WPF.Core.Aptabase;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Security;
 using Guard.WPF.Views.Pages.Start;
@@ -30,7 +26,6 @@ namespace Guard.WPF
     public partial class MainWindow : FluentWindow
     {
         private readonly ContentDialogService ContentDialogService;
-        private AptabaseClient? StatsClient;
         private IntPtr windowInteropHandle;
         private readonly bool isAutostart;
         private string currentPageName = "";
@@ -52,7 +47,7 @@ namespace Guard.WPF
                 RootNavigation.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
 
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(
-                OnUnhandledException
+                ExceptionHandler.OnUnhandledException
             );
 
             SessionSwitchEvent.Register(this);
@@ -81,21 +76,12 @@ namespace Guard.WPF
                 AddTrayIcon();
             }
 
-            StatsClient = new(
-                "A-SH-2619747927",
-                new AptabaseOptions { Host = "https://aptabase.tkoessler.de" }
-            );
-
             if (!Auth.FileExists())
             {
-                StatsClient.TrackEvent(
-                    $"AppSetup{InstallationContext.GetInstallationTypeString()}"
-                );
                 FullContentFrame.Content = new Welcome();
             }
             else
             {
-                StatsClient.TrackEvent("AppOpened");
                 FullContentFrame.Content = new Login(!isAutostart);
             }
 
@@ -223,47 +209,6 @@ namespace Guard.WPF
                 NavLock.Visibility = Visibility.Collapsed;
             }
             RootNavigation.Visibility = Visibility.Visible;
-        }
-
-        private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
-        {
-            Exception e = (Exception)args.ExceptionObject;
-            string content = $"{I18n.GetString("error.unhandled.content")}\n\n{e.Message}";
-            if (e.StackTrace != null)
-            {
-                content += e.StackTrace[..450] + "...";
-            }
-            var uiMessageBox = new Wpf.Ui.Controls.MessageBox
-            {
-                Title = I18n.GetString("error.unhandled.title"),
-                Content = content,
-                IsPrimaryButtonEnabled = true,
-                PrimaryButtonText = I18n.GetString("error.unhandled.openbug"),
-                CloseButtonText = I18n.GetString("dialog.close"),
-                MaxWidth = 600
-            };
-
-            Log.Logger.Error("Unhandled Exception {Exception}", e);
-            var result = await uiMessageBox.ShowDialogAsync();
-            if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
-            {
-                string windowsVersion = HttpUtility.UrlEncode(SystemInfo.GetOsVersion());
-                string errorMessage = HttpUtility.UrlEncode(e.Message + "\n" + e.StackTrace);
-                Process.Start(
-                    new ProcessStartInfo(
-                        $"https://github.com/timokoessler/totp-token-guard/issues/new?template=bug.yml&title=%5BBug%5D%3A+&error-message={errorMessage}&win-version={windowsVersion}&app-version={InstallationContext.GetVersionString()} ({InstallationContext.GetInstallationTypeString()})"
-                    )
-                    {
-                        UseShellExecute = true
-                    }
-                );
-            }
-            Environment.Exit(1);
-        }
-
-        internal AptabaseClient? GetStatsClient()
-        {
-            return StatsClient;
         }
 
         internal string GetActivePage()
