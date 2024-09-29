@@ -51,6 +51,8 @@ namespace Guard.WPF
             );
 
             SessionSwitchEvent.Register(this);
+
+            IPC.InitPipeServer();
         }
 
         private void OnWindowLoaded()

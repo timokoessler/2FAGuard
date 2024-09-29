@@ -22,19 +22,11 @@ namespace Guard.WPF
         protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            string mutexName = "2FAGuard";
 
             var installationInfo = InstallationInfo.GetInstallationContext();
             InstallationContext.Init(installationInfo.installationType, installationInfo.version);
 
-            if (installationInfo.installationType == InstallationType.CLASSIC_PORTABLE)
-            {
-                mutexName += "Portable";
-            }
-            else if (installationInfo.installationType == InstallationType.MICROSOFT_STORE)
-            {
-                mutexName += "Store";
-            }
+            string mutexName = InstallationContext.GetMutexName();
 
             singleInstanceMutex = new Mutex(true, mutexName, out bool notAlreadyRunning);
 
@@ -65,23 +57,31 @@ namespace Guard.WPF
                                 && process.MainModule.FileName.Equals(
                                     currentProcess.MainModule.FileName
                                 )
-                                && !process.MainWindowHandle.Equals(IntPtr.Zero)
                             )
                             {
                                 IntPtr existingWindowHandle = process.MainWindowHandle;
 
-                                if (NativeWindow.IsIconic(existingWindowHandle))
+                                if (existingWindowHandle != IntPtr.Zero)
                                 {
-                                    NativeWindow.ShowWindow(
-                                        existingWindowHandle,
-                                        NativeWindow.ShowWindowCommand.Restore
-                                    );
+                                    if (NativeWindow.IsIconic(existingWindowHandle))
+                                    {
+                                        NativeWindow.ShowWindow(
+                                            existingWindowHandle,
+                                            NativeWindow.ShowWindowCommand.Restore
+                                        );
+                                    }
+
+                                    NativeWindow.SetForegroundWindow(existingWindowHandle);
+                                    focusedOtherProcess = true;
+                                    break;
                                 }
 
-                                NativeWindow.SetForegroundWindow(existingWindowHandle);
-
-                                focusedOtherProcess = true;
-                                break;
+                                // If the process has no main window, try to bring it to the front using IPC
+                                if (IPC.SendToFront())
+                                {
+                                    focusedOtherProcess = true;
+                                    break;
+                                }
                             }
                         }
                     }

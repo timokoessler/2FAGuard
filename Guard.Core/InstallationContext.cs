@@ -99,13 +99,27 @@
 
         public static string GetAppEditionString()
         {
-            return InstallationContext.GetInstallationType() switch
+            return GetInstallationType() switch
             {
                 InstallationType.CLASSIC_PORTABLE => "portable",
                 InstallationType.CLASSIC_INSTALLER => "installer",
                 InstallationType.MICROSOFT_STORE => "store",
                 _ => "unknown"
             };
+        }
+
+        public static string GetMutexName()
+        {
+            if (installationType == InstallationType.CLASSIC_PORTABLE)
+            {
+                return "2FAGuardPortable";
+            }
+            else if (installationType == InstallationType.MICROSOFT_STORE)
+            {
+                return "2FAGuardStore";
+            }
+
+            return "2FAGuard";
         }
     }
 }
