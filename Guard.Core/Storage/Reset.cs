@@ -8,8 +8,12 @@ namespace Guard.Core.Storage
         {
             string path = InstallationContext.GetAppDataFolderPath();
             Database.Deinit();
-            _ = WindowsHello.Unregister();
-            Auth.DeleteWindowsHelloProtectedKey();
+
+            if (Auth.IsWindowsHelloRegistered())
+            {
+                _ = WindowsHello.Unregister();
+                Auth.DeleteWindowsHelloProtectedKey();
+            }
 
             string[] files = ["auth-keys", "settings", "TokenDatabase.db", "TokenDatabase-log.db"];
             string[] dirs = ["icons"];
