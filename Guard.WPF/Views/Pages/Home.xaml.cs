@@ -88,6 +88,8 @@ namespace Guard.WPF.Views.Pages
             TOTPTokenContainer.Visibility = Visibility.Visible;
             SearchPanel.Visibility = Visibility.Visible;
 
+            SearchBox.Focus();
+
             RunTimer();
 
             if (SettingsManager.Settings.ShowTokenCardIntro)
