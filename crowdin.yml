@@ -1,3 +1,0 @@
-files:
-  - source: /Guard.WPF/Resources/*.xaml
-    translation: /Guard.WPF/Resources/Strings.%two_letters_code%.xaml
