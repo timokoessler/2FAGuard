@@ -4,7 +4,7 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Nav  -->
-    <system:String x:Key="i.title">2FAGuard for Ekinex</system:String>
+    <system:String x:Key="i.title">2FAGuard</system:String>
     <system:String x:Key="i.page.home">Token</system:String>
     <system:String x:Key="i.page.settings">Impostazioni</system:String>
     <system:String x:Key="i.language">Lingua</system:String>
