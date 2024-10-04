@@ -1,7 +1,5 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Nav  -->
     <system:String x:Key="i.title">2FAGuard</system:String>
@@ -18,7 +16,7 @@
     <system:String x:Key="i.settings.theme.light">Hell</system:String>
     <system:String x:Key="i.settings.theme.dark">Dunkel</system:String>
     <system:String x:Key="i.settings.language">Sprache</system:String>
-    <system:String x:Key="i.settings.language.description">Legt die Sprache der App fest</system:String>
+    <system:String x:Key="i.settings.language.description">Lege die Sprache der App fest</system:String>
     <system:String x:Key="i.settings.about">Über diese Software</system:String>
     <system:String x:Key="i.settings.issue">Melde einen Fehler</system:String>
     <system:String x:Key="i.settings.security">Sicherheit</system:String>
@@ -44,10 +42,9 @@
     <system:String x:Key="i.settings.record.description">Blockiert Screenshots und Videoaufnahmen der App</system:String>
     <system:String x:Key="i.settings.autolock">Automatisch Sperren</system:String>
     <system:String x:Key="i.settings.autolock.description">App sperren, wenn Windows gesperrt wird</system:String>
-    <system:String x:Key="i.settings.license">Lizenz</system:String>
     <system:String x:Key="i.settings.oss">Verwendete Open Source Software</system:String>
     <system:String x:Key="i.settings.autostart">Automatischer Start</system:String>
-    <system:String x:Key="i.settings.autostart.description">Startet die App automatisch mit Windows</system:String>
+    <system:String x:Key="i.settings.autostart.description">Starte die App automatisch mit Windows</system:String>
     <system:String x:Key="i.settings.autostart.error.title">Es ist ein Fehler aufgetreten</system:String>
     <system:String x:Key="i.settings.autostart.error.disabled.policy">Der automatische Start der App wurde durch eine Gruppenrichtlinie deaktiviert</system:String>
     <system:String x:Key="i.settings.autostart.error.disabled.user">Der automatische Start der App wurde im Windows Task-Manager deaktiviert und kann nur dort geändert werden</system:String>
@@ -86,8 +83,8 @@
     <system:String x:Key="i.webauthn.existing.none">Keine Schlüssel vorhanden</system:String>
     <system:String x:Key="i.webauthn.dialog1.title">Sicherheitsschlüssel hinzufügen</system:String>
     <system:String x:Key="i.webauthn.dialog1.content">Bitte gebe einen Namen für den Sicherheitsschlüssel ein, den du hinzufügen möchtest</system:String>
-    <system:String x:Key="i.webauthn.dialog1.content2">Bitte beachte, dass nach der Systemmeldung das jetzt eine Anmeldung mit dem Sicherheitsschlüssel möglich ist, der unmittelbar folgende Authentifizierungsschritt durchgeführt werden muss, um die Registrierung abzuschließen.</system:String>
     <system:String x:Key="i.webauthn.dialog1.input">Name zur Identifikation des Schlüssels</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content2">Bitte beachte, dass nach der Systemmeldung das jetzt eine Anmeldung mit dem Sicherheitsschlüssel möglich ist, der unmittelbar folgende Authentifizierungsschritt durchgeführt werden muss, um die Registrierung abzuschließen.</system:String>
     <system:String x:Key="i.webauthn.dialog1.namerequired">Es muss ein Name für den Sicherheitsschlüssel eingegeben werden</system:String>
     <system:String x:Key="i.webauthn.dialog.nameexists">Es existiert bereits ein Sicherheitsschlüssel mit diesem Namen</system:String>
     <system:String x:Key="i.webauthn.delete.title">Sicherheitsschlüssel entfernen</system:String>
@@ -113,10 +110,10 @@
     <system:String x:Key="i.setup.finished.title">Einrichtung abgeschlossen</system:String>
     <system:String x:Key="i.setup.finished.subtext">Die Einrichtung wurde erfolgreich abgeschlossen. Du kannst jetzt deine Tokens hinzufügen.</system:String>
     <system:String x:Key="i.setup.finished.action.token">Token hinzufügen</system:String>
-    <system:String x:Key="i.setup.finished.action.token.description">Füge den ersten TOTP Token hinzu</system:String>
+    <system:String x:Key="i.setup.finished.action.token.description">Füge deinen ersten Token hinzu</system:String>
     <system:String x:Key="i.setup.finished.action.settings">Einstellungen</system:String>
     <system:String x:Key="i.setup.finished.action.settings.description">Passe die Einstellungen an</system:String>
-    <system:String x:Key="i.welcome.insecure.dialog.title">Bitte beachten</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.title">Bist du sicher?</system:String>
     <system:String x:Key="i.welcome.insecure.dialog.content">Du hast dich für die Verwendung von 2FAGuard ohne jegliche Sicherheit entschieden. Das bedeutet, dass deine Tokens nicht verschlüsselt sind und von jedem, der Zugang zu deinem Computer hat, eingesehen werden können. Bist du sicher, dass du fortfahren möchtest?</system:String>
     <system:String x:Key="i.welcome.insecure.dialog.continue">Fortfahren (nicht empfohlen)</system:String>
     <system:String x:Key="i.welcome.portable.winhello.title">Hinweis</system:String>
@@ -138,11 +135,6 @@
     <system:String x:Key="i.home.notokens">Keine Tokens vorhanden</system:String>
     <system:String x:Key="i.home.notokens.button">Token hinzufügen</system:String>
     <system:String x:Key="i.home.search.placeholder">Tokens durchsuchen</system:String>
-    <system:String x:Key="i.home.sort">Sortierung</system:String>
-    <system:String x:Key="i.home.sort.issuer.asc">Aussteller, aufsteigend</system:String>
-    <system:String x:Key="i.home.sort.issuer.desc">Aussteller, absteigend</system:String>
-    <system:String x:Key="i.home.sort.createdat.asc">Erstellungsdatum, aufsteigend</system:String>
-    <system:String x:Key="i.home.sort.createdat.desc">Erstellungsdatum, absteigend</system:String>
     <system:String x:Key="i.home.intro.title">Tipp</system:String>
     <system:String x:Key="i.home.intro.content">Du kannst mit einem Rechtsklick auf ein Token weitere Aktionen ausführen, wie z.B. einen Token bearbeiten oder löschen.</system:String>
 
@@ -169,15 +161,20 @@
     <system:String x:Key="i.import.noqrfound">Es wurde kein QR-Code erkannt</system:String>
     <system:String x:Key="i.import.noqrfound.screen">Es wurde kein QR-Code erkannt. Bitte stelle sicher, dass kein Fenster den QR-Code verdeckt und dass der QR-Code gut sichtbar ist.</system:String>
     <system:String x:Key="i.import.invalidqr.screen">Der QR-Code enthält keine gültigen Informationen über einen Token. Bitte stelle auch sicher, dass nur ein QR-Code auf dem Bildschirm sichtbar ist.</system:String>
-    <system:String x:Key="i.import.clipboard.invalid">Die Zwischenablage enthält kein Bild und keinen gültigen Text</system:String>
+    <system:String x:Key="i.import.clipboard.invalid">Die Zwischenablage enthält kein Bild und keinen gültigen Text.</system:String>
     <system:String x:Key="i.import.clipboard.invalid.multifiles">Es wird aktuell nur eine Datei gleichzeitig unterstützt.</system:String>
-    <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
-    <system:String x:Key="i.import.gauthenticator.description">Importiere Tokens aus der Google Authenticator App</system:String>
-    <system:String x:Key="i.import.gauthenticator.msgbox.content">Um Tokens aus Google Authenticator zu importieren, öffne die App auf deinem Smartphone oder Tablet und wähle im Menü "Konten übertragen" und dann "Konten exportieren" aus.@nAnschließend erstelle einen Screenshot von dem angezeigten QR-Code und kopiere die Bilddatei auf dieses Gerät.@nImportiere diese Datei, indem du oben in dieser Anwendung "QR-Code importieren" auswählst.@n@nHinweis: Ein QR-Code kann nur eine begrenzte Anzahl an Informationen speichern. Bitte wähle maximal 5 Tokens gleichzeitig in der Google Authenticator App für den Export aus.</system:String>
     <system:String x:Key="i.import.duplicate">Es existiert bereits ein Token mit einem identischen geheimen Schlüssel</system:String>
+    <system:String x:Key="i.home.sort">Sortierung</system:String>
+    <system:String x:Key="i.home.sort.issuer.asc">Aussteller, aufsteigend</system:String>
+    <system:String x:Key="i.home.sort.issuer.desc">Aussteller, absteigend</system:String>
+    <system:String x:Key="i.home.sort.createdat.asc">Erstellungsdatum, aufsteigend</system:String>
+    <system:String x:Key="i.home.sort.createdat.desc">Erstellungsdatum, absteigend</system:String>
     <system:String x:Key="i.import.notokens">Es konnte keine Tokens importiert werden</system:String>
     <system:String x:Key="i.import.authpro">Authenticator Pro</system:String>
     <system:String x:Key="i.import.authpro.description">Importiere ein Backup der App Authenticator Pro</system:String>
+    <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
+    <system:String x:Key="i.import.gauthenticator.description">Importiere Tokens aus der Google Authenticator App</system:String>
+    <system:String x:Key="i.import.gauthenticator.msgbox.content">Um Tokens aus Google Authenticator zu importieren, öffne die App auf deinem Smartphone oder Tablet und wähle im Menü &quot;Konten übertragen&quot; und dann &quot;Konten exportieren&quot; aus.@nAnschließend erstelle einen Screenshot von dem angezeigten QR-Code und kopiere die Bilddatei auf dieses Gerät.@nImportiere diese Datei, indem du oben in dieser Anwendung &quot;QR-Code importieren&quot; auswählst.@n@nHinweis: Ein QR-Code kann nur eine begrenzte Anzahl an Informationen speichern. Bitte wähle maximal 5 Tokens gleichzeitig in der Google Authenticator App für den Export aus.</system:String>
     <system:String x:Key="i.import.authpro.invalid">Die ausgewählte Datei ist kein gültiges Backup der App Authenticator Pro.</system:String>
     <system:String x:Key="i.import.authpro.legacy">Das ausgewählte Backup ist in einem veralteten Format und kann nicht importiert werden. Bitte erstelle das Backup mit einer aktuellen Version der App Authenticator Pro.</system:String>
     <system:String x:Key="i.import.password">Bitte gebe das Passwort für das Backup ein</system:String>
@@ -200,7 +197,7 @@
     <system:String x:Key="i.export.backup">Backup</system:String>
     <system:String x:Key="i.export.backup.description">Vollständige Sicherungsdatei, nur mit 2FAGuard kompatibel</system:String>
     <system:String x:Key="i.export.uri">URI-Liste</system:String>
-    <system:String x:Key="i.export.uri.description">Exportiere eine Liste von TOTP-URIs ohne Notizen und unverschlüsselt</system:String>
+    <system:String x:Key="i.export.uri.description">Exportiere eine unverschlüsselte Liste von TOTP-URIs ohne Notizen</system:String>
     <system:String x:Key="i.export.success.title">Tokens exportiert</system:String>
     <system:String x:Key="i.export.success.content">Die Tokens wurden erfolgreich exportiert.</system:String>
     <system:String x:Key="i.export.success.open">Ordner öffnen</system:String>
@@ -218,7 +215,7 @@
     <system:String x:Key="i.td.secret.placeholder">Den Schlüssel einfügen oder eingeben</system:String>
     <system:String x:Key="i.td.expert">Experten-Einstellungen</system:String>
     <system:String x:Key="i.td.expert.warning.title">Warnung</system:String>
-    <system:String x:Key="i.td.expert.warning.text">Ändere diese Einstellungen nur, wenn du weißt, was du tust.</system:String>
+    <system:String x:Key="i.td.expert.warning.text">Ändere diese Einstellungen nur, wenn du weißt, was du tust</system:String>
     <system:String x:Key="i.td.expert.warning.button">Trotzdem fortfahren</system:String>
     <system:String x:Key="i.td.expert.algorithm">Algorithmus</system:String>
     <system:String x:Key="i.td.expert.digits">Anzahl Ziffern</system:String>
@@ -233,6 +230,7 @@
     <system:String x:Key="i.td.invalidsecret">Der geheime Schlüssel ist ungültig</system:String>
     <system:String x:Key="i.td.invaliddigits">Die Anzahl der Ziffern ist ungültig</system:String>
     <system:String x:Key="i.td.invalidperiod">Die Gültigkeitsdauer ist ungültig</system:String>
+    <system:String x:Key="i.settings.license">Lizenz</system:String>
     <system:String x:Key="i.td.customicon.btn">Eigenes Icon</system:String>
     <system:String x:Key="i.td.customicon.dialog.title">Eigenes Icon auswählen</system:String>
     <system:String x:Key="i.td.customicon.tolarge">Ein Icon darf maximal 1 MB groß sein</system:String>
@@ -293,7 +291,6 @@
     <system:String x:Key="i.error.unhandled.github">Vielen Dank für deine Meldung! Wenn du möchtest, erstelle gerne ein Issue auf GitHub, um über den Fortschritt informiert zu werden.</system:String>
     <system:String x:Key="i.error.unhandled.github.open">Issue erstellen</system:String>
 
-
     <system:String x:Key="i.unsupported.os.title">Nicht unterstütztes Betriebssystem</system:String>
     <system:String x:Key="i.unsupported.os.content">Bitte aktualisiere auf Windows 10 1903 (18362) oder höher, um 2FAGuard verwenden zu können.</system:String>
     <system:String x:Key="i.unsupported.exit">Beenden</system:String>
@@ -303,5 +300,5 @@
     <system:String x:Key="i.unsupported.vcpp.content">Die Software Microsoft Visual C++ Redistributable 2015-2022 ist nicht installiert. Bitte installiere das Paket, um 2FAGuard verwenden zu können. Falls du den 2FAGuard Installer verwendet hast oder das Paket gerade installiert hast, musst du eventuell dein Gerät neu starten.</system:String>
     <system:String x:Key="i.unsupported.vcpp.download">Herunterladen</system:String>
     <system:String x:Key="i.unsupported.olderversion.title">Veraltete App-Version</system:String>
-    <system:String x:Key="i.unsupported.olderversion.content">Du verwendest eine verwendest eine veraltete Version von 2FAGuard. Es können keine Daten geöffnet werden, die bereits mit einer neueren Version der App bearbeitet wurden. Bitte aktualisiere die App, um die Daten zu verwenden.</system:String>
+    <system:String x:Key="i.unsupported.olderversion.content">Du verwendest eine veraltete Version von 2FAGuard. Es können keine Daten geöffnet werden, die bereits mit einer neueren Version der App bearbeitet wurden. Bitte aktualisiere die App, um die Daten zu verwenden.</system:String>
 </ResourceDictionary>

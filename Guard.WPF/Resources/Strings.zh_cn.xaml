@@ -1,16 +1,14 @@
-<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <!--  导航  -->
+    <!--  Nav  -->
     <system:String x:Key="i.title">2FAGuard</system:String>
     <system:String x:Key="i.page.home">令牌</system:String>
     <system:String x:Key="i.page.settings">设置</system:String>
     <system:String x:Key="i.language">语言</system:String>
     <system:String x:Key="i.nav.add">添加令牌</system:String>
 
-    <!--  设置  -->
+    <!--  Settings  -->
     <system:String x:Key="i.settings.personalisation">个性化</system:String>
     <system:String x:Key="i.settings.theme">应用主题</system:String>
     <system:String x:Key="i.settings.theme.description">为应用选择一个主题</system:String>
@@ -72,28 +70,28 @@
     <system:String x:Key="i.settings.locktime.thirtyminutes">30分钟</system:String>
     <system:String x:Key="i.settings.locktime.onehour">1小时</system:String>
     <system:String x:Key="i.page.changepasswordpage">更改密码</system:String>
-    <system:String x:Key="i.settings.webauthn">安全密鑰 (FIDO2)</system:String>
-    <system:String x:Key="i.settings.webauthn.description">使用硬件安全密鑰登錄</system:String>
+    <system:String x:Key="i.settings.webauthn">安全密钥 (FIDO2)</system:String>
+    <system:String x:Key="i.settings.webauthn.description">使用硬件安全密钥登录</system:String>
     <system:String x:Key="i.settings.webauthn.button">配置</system:String>
-    <system:String x:Key="i.settings.webauthn.notsupported">您的操作系統似乎不支持WebAuthn。</system:String>
+    <system:String x:Key="i.settings.webauthn.notsupported">您的操作系统似乎不支持WebAuthn。</system:String>
 
     <!--  WebAuthn  -->
-    <system:String x:Key="i.page.webauthnpage">安全密鑰 (FIDO2)</system:String>
-    <system:String x:Key="i.webauthn.add.title">添加安全密鑰</system:String>
-    <system:String x:Key="i.webauthn.add.description">註冊新密鑰</system:String>
-    <system:String x:Key="i.webauthn.existing">現有密鑰</system:String>
-    <system:String x:Key="i.webauthn.existing.none">沒有可用的密鑰</system:String>
-    <system:String x:Key="i.webauthn.dialog1.title">添加安全金鑰</system:String>
-    <system:String x:Key="i.webauthn.dialog1.content">請輸入要添加的安全金鑰的名稱</system:String>
-    <system:String x:Key="i.webauthn.dialog1.input">一個用於識別金鑰的名稱</system:String>
-    <system:String x:Key="i.webauthn.dialog1.content2">請注意，系統彈出提示您可以使用安全密鑰登錄後，您必須完成隨後的驗證步驟以完成註冊。</system:String>
+    <system:String x:Key="i.page.webauthnpage">安全密钥 (FIDO2)</system:String>
+    <system:String x:Key="i.webauthn.add.title">添加安全密钥</system:String>
+    <system:String x:Key="i.webauthn.add.description">注册新密钥</system:String>
+    <system:String x:Key="i.webauthn.existing">现有密钥</system:String>
+    <system:String x:Key="i.webauthn.existing.none">没有可用的密钥</system:String>
+    <system:String x:Key="i.webauthn.dialog1.title">添加安全密钥</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content">请输入要添加的安全密钥的名称</system:String>
+    <system:String x:Key="i.webauthn.dialog1.input">用于识别密钥的名称</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content2">请注意，系统弹窗提示您现在可以使用安全密钥登录后，您必须完成接下来的认证步骤才能完成注册。</system:String>
+    <system:String x:Key="i.webauthn.dialog1.namerequired">您必须输入安全密钥的名称</system:String>
     <system:String x:Key="i.webauthn.dialog.nameexists">已經存在具有此名稱的安全密鑰</system:String>
-    <system:String x:Key="i.webauthn.dialog1.namerequired">您必須輸入安全金鑰的名稱</system:String>
     <system:String x:Key="i.webauthn.delete.title">移除安全密鑰</system:String>
     <system:String x:Key="i.webauthn.delete.content">您確定要移除安全密鑰 @Name 嗎？您將無法再使用此密鑰進行身份驗證。</system:String>
     <system:String x:Key="i.webauthn.delete.yes">移除</system:String>
 
-    <!--  应用设置  -->
+    <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">感谢下载！请选择您想要如何保护您的令牌。</system:String>
     <system:String x:Key="i.welcome.hello">Windows Hello或密码</system:String>
     <system:String x:Key="i.welcome.hello.description">简单安全，密码作为后备</system:String>
@@ -122,7 +120,7 @@
     <system:String x:Key="i.welcome.portable.winhello.content">如果您在USB闪存盘或其他便携式存储设备上使用2FAGuard的便携式版本，您无法与其他Windows用户或在其他设备上自动使用Windows Hello登录。您必须首先在2FAGuard设置中激活其他设备上的Windows Hello。您始终可以使用密码登录。</system:String>
     <system:String x:Key="i.page.welcome">欢迎</system:String>
 
-    <!--  登录  -->
+    <!--  Login  -->
     <system:String x:Key="i.login.subtext">请证明您的身份以访问您的令牌</system:String>
     <system:String x:Key="i.login.passbox">输入您的密码</system:String>
     <system:String x:Key="i.login.button">使用密码登录</system:String>
@@ -132,7 +130,7 @@
     <system:String x:Key="i.login.warning.capslock.content">Caps Lock已激活</system:String>
     <system:String x:Key="i.login.webauthn">安全密鑰</system:String>
 
-    <!--  首页  -->
+    <!--  Home  -->
     <system:String x:Key="i.home.loading">正在加载...</system:String>
     <system:String x:Key="i.home.notokens">未找到令牌</system:String>
     <system:String x:Key="i.home.notokens.button">添加令牌</system:String>
@@ -140,14 +138,14 @@
     <system:String x:Key="i.home.intro.title">通知</system:String>
     <system:String x:Key="i.home.intro.content">您可以通过右键单击令牌执行进一步的操作，如编辑或删除。</system:String>
 
-    <!--  添加  -->
+    <!--  Add  -->
     <system:String x:Key="i.page.addoverview">添加令牌</system:String>
     <system:String x:Key="i.add.manual">手动输入</system:String>
     <system:String x:Key="i.add.manual.description">输入密钥和进一步的信息</system:String>
     <system:String x:Key="i.add.qr">导入二维码</system:String>
     <system:String x:Key="i.add.qr.description">通过导入图像文件扫描二维码</system:String>
     <system:String x:Key="i.add.qrscreen">从屏幕上扫描二维码</system:String>
-    <system:String x:Key="i.add.qrscreen.description">Detects a visible QR code on the screen</system:String>
+    <system:String x:Key="i.add.qrscreen.description">检测屏幕上可见的二维码</system:String>
     <system:String x:Key="i.add.clipboard">从剪贴板添加</system:String>
     <system:String x:Key="i.add.clipboard.description">粘贴二维码图像或TOTP URI</system:String>
     <system:String x:Key="i.add.import">导入</system:String>
@@ -161,8 +159,8 @@
     <system:String x:Key="i.import.failed.title">导入失败</system:String>
     <system:String x:Key="i.import.failed.content">导入时发生错误：</system:String>
     <system:String x:Key="i.import.noqrfound">未能检测到二维码</system:String>
-    <system:String x:Key="i.import.noqrfound.screen">No QR code was detected. Please make sure that no window is covering the QR code and that the QR code is clearly visible.</system:String>
-    <system:String x:Key="i.import.invalidqr.screen">The QR code does not contain valid information about a token. Please also make sure that only one QR code is visible on the screen.</system:String>
+    <system:String x:Key="i.import.noqrfound.screen">未检测到二维码。请确保没有窗口遮挡二维码，并且二维码清晰可见。</system:String>
+    <system:String x:Key="i.import.invalidqr.screen">二维码不包含有关令牌的有效信息。另请确保屏幕上只有一个二维码可见。</system:String>
     <system:String x:Key="i.import.clipboard.invalid">剪贴板不包含图像或文本。</system:String>
     <system:String x:Key="i.import.clipboard.invalid.multifiles">目前一次只能从剪贴板导入一个文件。</system:String>
     <system:String x:Key="i.import.duplicate">已存在具有相同密钥的令牌</system:String>
@@ -190,7 +188,7 @@
     <system:String x:Key="i.page.tokensettings.add">添加令牌</system:String>
     <system:String x:Key="i.page.tokensettings.edit">编辑令牌</system:String>
 
-    <!--  导出  -->
+    <!--  Export  -->
     <system:String x:Key="i.page.exportpage">导出令牌</system:String>
     <system:String x:Key="i.export.failed.title">导出失败</system:String>
     <system:String x:Key="i.export.failed.content">导出时发生错误：</system:String>
@@ -207,7 +205,7 @@
     <system:String x:Key="i.export.authpro">Authenticator Pro</system:String>
     <system:String x:Key="i.export.authpro.description">将令牌导出为Authenticator Pro备份文件</system:String>
 
-    <!--  令牌详细信息  -->
+    <!--  Token Details  -->
     <system:String x:Key="i.td.general">一般信息</system:String>
     <system:String x:Key="i.td.issuer">发行者名称</system:String>
     <system:String x:Key="i.td.issuer.placeholder">例如：Google或Apple</system:String>
@@ -237,7 +235,7 @@
     <system:String x:Key="i.td.customicon.dialog.title">选择一个图标</system:String>
     <system:String x:Key="i.td.customicon.tolarge">仅支持最大1MB大小的图像</system:String>
 
-    <!--  令牌成功页面  -->
+    <!--  Token Success Page  -->
     <system:String x:Key="i.page.tokensuccesspage">令牌</system:String>
     <system:String x:Key="i.stp.added">已添加令牌</system:String>
     <system:String x:Key="i.stp.home">查看所有令牌</system:String>
@@ -246,11 +244,11 @@
     <system:String x:Key="i.stp.added.multiple.description">@Count个令牌已成功添加</system:String>
     <system:String x:Key="i.stp.added.multiple.duplicate">@Count个令牌未添加，因为它们已存在</system:String>
 
-    <!--  文本格式对话框  -->
+    <!--  Text Formatting Dialog  -->
     <system:String x:Key="i.txtfd.title">格式化文本</system:String>
     <system:String x:Key="i.txtfd.content">Ctrl+B: 加粗@nCtrl+I: 斜体@nCtrl+U: 下划线@nCtrl+Shift+L: 项目符号@nCtrl+Shift+N: 编号@nCtrl+E: 居中文本@nCtrl+L: 文本左对齐@nCtrl+R: 文本右对齐</system:String>
 
-    <!--  令牌卡片  -->
+    <!--  Token card  -->
     <system:String x:Key="i.tokencard.copy">复制</system:String>
     <system:String x:Key="i.tokencard.edit">编辑</system:String>
     <system:String x:Key="i.tokencard.delete">删除</system:String>
@@ -261,7 +259,7 @@
     <system:String x:Key="i.tokencard.save">保存</system:String>
     <system:String x:Key="i.tokencard.qr.keepsecure">此二维码包含敏感信息。请保持其安全。</system:String>
 
-    <!--  更新  -->
+    <!--  Update  -->
     <system:String x:Key="i.update.title">可用更新</system:String>
     <system:String x:Key="i.update.content">2FAGuard的新版本可用。您现在要安装吗？</system:String>
     <system:String x:Key="i.update.install">安装更新</system:String>
@@ -271,11 +269,11 @@
     <system:String x:Key="i.update.error.content">更新时发生错误</system:String>
     <system:String x:Key="i.update.changelog">查看更新日誌</system:String>
 
-    <!--  托盘  -->
+    <!--  Tray  -->
     <system:String x:Key="i.tray.exit">退出</system:String>
     <system:String x:Key="i.tray.lock">锁定</system:String>
 
-    <!--  其他  -->
+    <!--  Other  -->
     <system:String x:Key="i.win.hello.request">应用2FAGuard想要证明您的身份</system:String>
     <system:String x:Key="i.error">错误</system:String>
     <system:String x:Key="i.save">保存</system:String>
