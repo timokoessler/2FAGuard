@@ -48,5 +48,6 @@
         public bool MinimizeToTray { get; set; } = false;
         public LockTimeSetting LockTime { get; set; } = LockTimeSetting.TenMinutes;
         public Version LastUsedAppVersion { get; set; } = new(0, 0);
+        public DateTime LastAppStartEvent { get; set; } = DateTime.MinValue;
     }
 }

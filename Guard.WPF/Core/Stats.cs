@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using Guard.Core;
 using Guard.Core.Security;
+using Guard.Core.Storage;
 using Guard.WPF.Core.Installation;
 
 namespace Guard.WPF.Core
@@ -39,6 +40,19 @@ namespace Guard.WPF.Core
                 return;
             }
 
+            if (type == EventType.AppStarted)
+            {
+                if (
+                    DateTime.Compare(
+                        SettingsManager.Settings.LastAppStartEvent.Date,
+                        DateTime.Now.Date
+                    ) == 0
+                )
+                {
+                    return;
+                }
+            }
+
             try
             {
                 var content = new
@@ -62,6 +76,12 @@ namespace Guard.WPF.Core
                     throw new Exception(
                         $"Failed to get update info (status code: {response.StatusCode})"
                     );
+                }
+
+                if (type == EventType.AppStarted)
+                {
+                    SettingsManager.Settings.LastAppStartEvent = DateTime.Now;
+                    _ = SettingsManager.Save();
                 }
             }
             catch

@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Windows;
@@ -14,6 +13,9 @@ namespace Guard.WPF.Core.Installation
         public static readonly string updateApiUrl = "https://2faguard.app/api/update";
         private static readonly JsonSerializerOptions jsonSerializerOptions =
             new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
+        private static DateTime lastUpdateCheck = DateTime.MinValue;
+        private static UpdateInfo? lastUpdateInfo = null;
 
         public class UpdateInfoDownloadUrls
         {
@@ -36,6 +38,12 @@ namespace Guard.WPF.Core.Installation
             string currentVersionString = currentVersion?.ToString() ?? "";
             bool isPortable = InstallationContext.IsPortable();
 
+            // Cache last update check for 1 hour
+            if (lastUpdateCheck.AddHours(1) > DateTime.Now)
+            {
+                return lastUpdateInfo;
+            }
+
             try
             {
                 var httpClient = HTTP.GetHttpClient();
@@ -45,15 +53,20 @@ namespace Guard.WPF.Core.Installation
                     await httpClient.GetFromJsonAsync<UpdateInfo>(url, jsonSerializerOptions)
                     ?? throw new Exception("Failed to get update info (is null)");
 
+                lastUpdateCheck = DateTime.Now;
+
                 Version newVersion = new(updateInfo.Version);
                 if (newVersion.CompareTo(currentVersion) <= 0)
                 {
+                    lastUpdateInfo = null;
                     return null;
                 }
+                lastUpdateInfo = updateInfo;
                 return updateInfo;
             }
             catch (Exception e)
             {
+                lastUpdateInfo = null;
                 Log.Logger.Error("Error while checking for updates: {0}", e.Message);
                 return null;
             }
