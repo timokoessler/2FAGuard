@@ -59,7 +59,7 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall; Parameters: setup
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall; Parameters: setup; Check: LaunchChecked
 
 [Code]
 function InitializeSetup: Boolean;
@@ -73,4 +73,21 @@ begin
     WizardForm.NextButton.Caption := SetupMessage(msgButtonInstall)
   else
     WizardForm.NextButton.Caption := SetupMessage(msgButtonNext);
+end;
+function CmdLineParamExists(const Value: string): Boolean;
+var
+  I: Integer;  
+begin
+  Result := False;
+  for I := 1 to ParamCount do
+    if CompareText(ParamStr(I), Value) = 0 then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+function LaunchChecked: Boolean;
+begin
+  Result := not CmdLineParamExists('/NOSTART');
 end;
