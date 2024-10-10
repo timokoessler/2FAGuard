@@ -79,6 +79,8 @@ namespace Guard.WPF.Views.Pages
 
             SortTokenCardList(tokenCards);
 
+            TOTPTokenContainer.Children.Clear();
+
             foreach (var card in tokenCards)
             {
                 TOTPTokenContainer.Children.Add(card);
