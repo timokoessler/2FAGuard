@@ -16,7 +16,11 @@ A modern and secure Windows app for managing your 2FA authentification codes.
 
 ## Download
 
-You can download the latest version of 2FAGuard [from the official website](https://2faguard.app#download) or directly from the Releases section of this repository. The app is also available on the [Microsoft Store](https://apps.microsoft.com/detail/9p6hr4gszjrm) and supports Windows 10 (1903+) and 11.
+You can download the latest version of 2FAGuard [from the official website](https://2faguard.app#download) or directly from the Releases section of this repository. The app is also available on the [Microsoft Store](https://apps.microsoft.com/detail/9p6hr4gszjrm) and supports Windows 10 (1903+) and 11. Another options is to use the winget package manager:
+
+```sh
+winget install timokoessler.2FAGuard
+```
 
 ## FAQ
 
@@ -34,6 +38,10 @@ This app is only available for Windows 10 1903 and higher. For Android I recomme
 
 **What can I do if I lost my login data?**
 If you lost your password and cannot use an additional login method like Windows Hello, you will no longer have access to your tokens. If you want to reset the app and start over, you can delete the app data. Note that this will delete all your tokens and settings. For the Windows Store version, you can delete the app data in the Windows settings under Apps -> 2FAGuard -> Advanced Options -> Reset. If you are using the classic installation, delete the directory C:\Users\%username%\AppData\Local\2FAGuard.
+
+## Contributing
+
+Any contribution is greatly appreciated 🥳. Please take a look at [Contributing](https://github.com/timokoessler/2FAGuard/blob/main/CONTRIBUTING.md) for more information.
 
 ## Contact
 
