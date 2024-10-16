@@ -7,7 +7,21 @@ namespace Guard.Core.Security.WebAuthn
     {
         public static bool IsSupported()
         {
-            return WebAuthnInterop.CheckApiAvailable();
+            bool apiAvailable = WebAuthnInterop.CheckApiAvailable();
+            if (!apiAvailable)
+            {
+                Log.Logger.Warning("WebAuthn API is not available on this platform.");
+                return false;
+            }
+
+            int version = GetApiVersion();
+            if (version < 4)
+            {
+                Log.Logger.Warning("WebAuthn API version {ApiVersion} is not supported.", version);
+                return false;
+            }
+
+            return true;
         }
 
         public static int GetApiVersion()
@@ -20,9 +34,17 @@ namespace Guard.Core.Security.WebAuthn
             string keyName
         )
         {
+            Log.Logger.Information(
+                "Registering WebAuthn device with Win32 WebAuthn api version {ApiVersion}",
+                GetApiVersion()
+            );
+
             if (!IsSupported())
             {
-                return (false, "WebAuthn API is not available on this platform.");
+                return (
+                    false,
+                    "Either the WebAuthn API is not available on this platform or the version is not supported."
+                );
             }
 
             var challenge = EncryptionHelper.GetRandomBytes(32);
@@ -121,7 +143,11 @@ namespace Guard.Core.Security.WebAuthn
         {
             if (!IsSupported())
             {
-                return (false, "WebAuthn API is not available on this platform.", null);
+                return (
+                    false,
+                    "Either the WebAuthn API is not available on this platform or the version is not supported.",
+                    null
+                );
             }
 
             webauthnDevices ??= Auth.GetWebAuthnDevices();
@@ -187,7 +213,11 @@ namespace Guard.Core.Security.WebAuthn
                     || assertion.HmacSecret.Second == null
                 )
                 {
-                    return (false, "HmacSecret is null", null);
+                    return (
+                        false,
+                        "HmacSecret is null. This normally means that your device does not support the HMAC secret extension.",
+                        null
+                    );
                 }
 
                 if (
