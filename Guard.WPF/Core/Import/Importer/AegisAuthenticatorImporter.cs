@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using System.Text.Json;
+using Guard.Core;
 using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.WPF.Core.Icons;
@@ -75,6 +76,13 @@ namespace Guard.WPF.Core.Import.Importer
                 {
                     throw new Exception(
                         "Invalid JSON format of encrypted Aegis Export (slots is null)"
+                    );
+                }
+
+                if (!Aes256Gcm.IsSupported)
+                {
+                    throw new Exception(
+                        "AES256-GCM is not supported on this platform. The reason may be that your CPU does not support hardware-accelerated AES256-GCM encryption."
                     );
                 }
 
@@ -170,14 +178,18 @@ namespace Guard.WPF.Core.Import.Importer
                             );
                         break;
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        Log.Logger.Error(
+                            $"Failed to decrypt Aegis master key: {e.Message}\n{e.StackTrace}"
+                        );
                         continue;
                     }
                 }
 
                 if (masterKey == null)
                 {
+                    Log.Logger.Error("Failed to decrypt Aegis master key: master key is null");
                     throw new Exception(I18n.GetString("import.password.invalid"));
                 }
 

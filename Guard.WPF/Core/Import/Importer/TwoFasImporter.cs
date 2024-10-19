@@ -223,7 +223,7 @@ namespace Guard.WPF.Core.Import.Importer
             if (!Aes256Gcm.IsSupported)
             {
                 throw new Exception(
-                    "This platform does not support hardware-accelerated AES (GCM) encryption that is required to import this file."
+                    "AES256-GCM is not supported on this platform. The reason may be that your CPU does not support hardware-accelerated AES256-GCM encryption."
                 );
             }
 
