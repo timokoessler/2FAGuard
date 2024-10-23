@@ -24,7 +24,7 @@ namespace Guard.WPF.Core
                 catch (Exception e)
                 {
                     Log.Logger.Error("Error loading tokens: {0} {1}", e.Message, e.StackTrace);
-                    throw new Exception("Error loading tokens");
+                    throw new Exception($"Error loading tokens: {e.Message} {e.StackTrace}");
                 }
             });
         }
