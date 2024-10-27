@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using Guard.Core.Models;
 using Guard.Core.Security;
+using Guard.WPF.Core.Icons;
 
 namespace Guard.WPF.Core.Import.Importer
 {
@@ -88,6 +89,16 @@ namespace Guard.WPF.Core.Import.Importer
                                 ? internalEncryption.EncryptStringToBytes(token.Notes)
                                 : null
                     };
+
+                if (
+                    token.IconType == IconType.Custom
+                    && token.IconBase64 != null
+                    && token.Icon != null
+                )
+                {
+                    IconManager.ImportCustomIcon(token.IconBase64, token.Icon);
+                }
+
                 if (!TokenManager.AddToken(dbToken))
                 {
                     throw new Exception("Failed to add token");

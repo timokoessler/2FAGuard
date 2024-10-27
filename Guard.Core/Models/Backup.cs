@@ -15,6 +15,7 @@
             public string? Notes { get; set; }
             public DateTime? UpdatedTime { get; set; }
             public required DateTime CreationTime { get; set; }
+            public string? IconBase64 { get; set; }
         }
 
         public int Version { get; set; }

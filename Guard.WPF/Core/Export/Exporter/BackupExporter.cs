@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using Guard.Core.Models;
 using Guard.Core.Security;
+using Guard.WPF.Core.Icons;
 
 namespace Guard.WPF.Core.Export.Exporter
 {
@@ -54,6 +55,15 @@ namespace Guard.WPF.Core.Export.Exporter
                 {
                     token.Notes = Auth.GetMainEncryptionHelper()
                         .DecryptBytesToString(tokenHelper.dBToken.EncryptedNotes);
+                }
+                if (
+                    tokenHelper.dBToken.IconType == IconType.Custom
+                    && tokenHelper.dBToken.Icon != null
+                )
+                {
+                    token.IconBase64 = await IconManager.GetCustomIconAsBase64(
+                        tokenHelper.dBToken.Icon
+                    );
                 }
                 tokens.Add(token);
             }

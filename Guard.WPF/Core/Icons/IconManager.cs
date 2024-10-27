@@ -110,5 +110,34 @@ namespace Guard.WPF.Core.Icons
                 File.Delete(path);
             }
         }
+
+        public static async Task<string?> GetCustomIconAsBase64(string name)
+        {
+            string path = Path.Combine(customIconsPath, name);
+            if (!File.Exists(path))
+            {
+                return null;
+            }
+
+            byte[] bytes = await File.ReadAllBytesAsync(path);
+            return Convert.ToBase64String(bytes);
+        }
+
+        public static void ImportCustomIcon(string base64, string name)
+        {
+            if (!Directory.Exists(customIconsPath))
+            {
+                Directory.CreateDirectory(customIconsPath);
+            }
+
+            string path = Path.Combine(customIconsPath, name);
+            if (File.Exists(path))
+            {
+                return;
+            }
+
+            byte[] bytes = Convert.FromBase64String(base64);
+            File.WriteAllBytes(path, bytes);
+        }
     }
 }
