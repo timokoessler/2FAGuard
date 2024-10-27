@@ -102,11 +102,11 @@ namespace Guard.WPF.Views.Pages.Start
                     return;
                 }
                 Log.Logger.Error("Error during login setup: {0}", ex.Message);
-                ShowEror("Error", ex.Message);
+                ShowError("Error", ex.Message);
             }
         }
 
-        private void ShowEror(string title, string message)
+        private void ShowError(string title, string message)
         {
             if (message.Contains("Failed to decrypt keys"))
             {
@@ -131,7 +131,7 @@ namespace Guard.WPF.Views.Pages.Start
             InfoBar.IsOpen = false;
             if (string.IsNullOrWhiteSpace(PasswordBox.Password))
             {
-                ShowEror("Error", I18n.GetString("welcome.pass.notempty"));
+                ShowError("Error", I18n.GetString("welcome.pass.notempty"));
                 return;
             }
 
@@ -146,7 +146,7 @@ namespace Guard.WPF.Views.Pages.Start
             catch (Exception ex)
             {
                 LoginProgressBar.Visibility = Visibility.Collapsed;
-                ShowEror("Error", ex.Message);
+                ShowError("Error", ex.Message);
                 EnableButtons();
             }
         }
@@ -192,7 +192,7 @@ namespace Guard.WPF.Views.Pages.Start
                 {
                     return;
                 }
-                ShowEror("Error", ex.Message);
+                ShowError("Error", ex.Message);
             }
         }
 
@@ -230,7 +230,7 @@ namespace Guard.WPF.Views.Pages.Start
                 {
                     return;
                 }
-                ShowEror("Error", ex.Message);
+                ShowError("Error", ex.Message);
             }
         }
     }

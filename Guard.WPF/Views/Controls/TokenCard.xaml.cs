@@ -28,7 +28,7 @@ namespace Guard.WPF.Views.UIComponents
         private DoubleAnimation? doubleAnimation;
         private readonly MainWindow mainWindow;
         internal readonly string SearchString;
-        private readonly TotpIcon? icon;
+        private TotpIcon? icon;
 
         internal TokenCard(TOTPTokenHelper token)
         {
@@ -60,58 +60,16 @@ namespace Guard.WPF.Views.UIComponents
                 Username.Visibility = Visibility.Collapsed;
             }
 
-            if (token.dBToken.Icon != null && token.dBToken.IconType != null)
-            {
-                icon = IconManager.GetIcon(
-                    token.dBToken.Icon,
-                    token.dBToken.IconType ?? IconType.Any
-                );
-
-                if (icon.Type != IconType.Custom)
-                {
-                    SvgIconView.SvgSource = icon.Svg;
-                }
-                else
-                {
-                    if (icon.Path != null && File.Exists(icon.Path))
-                    {
-                        if (icon.Path.EndsWith(".svg"))
-                        {
-                            SvgIconView.Source = new Uri(icon.Path);
-                        }
-                        else
-                        {
-                            ImageIconView.Visibility = Visibility.Visible;
-                            SvgIconView.Visibility = Visibility.Collapsed;
-
-                            var bitmap = new BitmapImage();
-                            bitmap.BeginInit();
-                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                            bitmap.UriSource = new Uri(icon.Path);
-                            bitmap.EndInit();
-                            ImageIconView.Source = bitmap;
-                        }
-                    }
-                    else
-                    {
-                        Log.Logger.Warning(
-                            "Custom icon not found: {Path}",
-                            icon.Path,
-                            token.dBToken.Id
-                        );
-                        icon = IconManager.GetIcon("default", IconType.Default);
-                        SvgIconView.SvgSource = icon.Svg;
-                    }
-                }
-            }
-            else
-            {
-                icon = IconManager.GetIcon("default", IconType.Default);
-                SvgIconView.SvgSource = icon.Svg;
-            }
-
+            SetIcon();
             UpdateTokenText();
             InitProgressRing();
+
+            Core.EventManager.AppThemeChanged += OnAppThemeChanged;
+
+            Unloaded += (object? sender, RoutedEventArgs e) =>
+            {
+                Core.EventManager.AppThemeChanged -= OnAppThemeChanged;
+            };
 
             SearchString = $"{token.dBToken.Issuer.ToLower()} {token.Username?.ToLower()}";
 
@@ -196,6 +154,67 @@ namespace Guard.WPF.Views.UIComponents
                 tokenStr = tokenStr[..4] + " " + tokenStr[4..];
             }
             TokenTextBlock.Text = tokenStr;
+        }
+
+        internal void SetIcon()
+        {
+            if (token.dBToken.Icon != null && token.dBToken.IconType != null)
+            {
+                icon = IconManager.GetIcon(
+                    token.dBToken.Icon,
+                    token.dBToken.IconType ?? IconType.Any
+                );
+
+                if (icon.Type != IconType.Custom)
+                {
+                    SvgIconView.SvgSource = icon.Svg;
+                }
+                else
+                {
+                    if (icon.Path != null && File.Exists(icon.Path))
+                    {
+                        if (icon.Path.EndsWith(".svg"))
+                        {
+                            SvgIconView.Source = new Uri(icon.Path);
+                        }
+                        else
+                        {
+                            ImageIconView.Visibility = Visibility.Visible;
+                            SvgIconView.Visibility = Visibility.Collapsed;
+
+                            var bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmap.UriSource = new Uri(icon.Path);
+                            bitmap.EndInit();
+                            ImageIconView.Source = bitmap;
+                        }
+                    }
+                    else
+                    {
+                        Log.Logger.Warning(
+                            "Custom icon not found: {Path}",
+                            icon.Path,
+                            token.dBToken.Id
+                        );
+                        icon = IconManager.GetIcon("default", IconType.Default);
+                        SvgIconView.SvgSource = icon.Svg;
+                    }
+                }
+            }
+            else
+            {
+                icon = IconManager.GetIcon("default", IconType.Default);
+                SvgIconView.SvgSource = icon.Svg;
+            }
+        }
+
+        private void OnAppThemeChanged(object? sender, Core.EventManager.AppThemeChangedEventArgs e)
+        {
+            if (icon != null && icon.Type == IconType.SimpleIcons)
+            {
+                SetIcon();
+            }
         }
 
         private async void CopyToken()

@@ -80,24 +80,7 @@ namespace Guard.WPF.Core.Icons
                 return null;
             }
 
-            string hexColor = simpleIcon.H;
-            if (hexColor == null)
-            {
-                bool isDarkMode = ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Dark;
-                if (isDarkMode)
-                {
-                    hexColor = "#ffffff";
-                }
-                else
-                {
-                    hexColor = "#313131";
-                }
-            }
-
-            if (!hexColor.StartsWith('#'))
-            {
-                hexColor = $"#{hexColor}";
-            }
+            string hexColor = IconColor.GetIconColor(simpleIcon.H);
 
             return new TotpIcon
             {
