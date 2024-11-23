@@ -31,7 +31,7 @@ There are many ways to add a token. You can import a QR code, enter the token de
 The secret keys, the account names and your notes are encrypted using the AEGIS-256 algorithm. The encryption key is derived via Argon2id.
 
 **Can I export my tokens?**
-Yes, you can export your tokens at any time. Currently you have three options: encrypted 2FAGuard backup, generic TOTP Uri list or Authenticator Pro backup. But it is also possible to export single tokens as QR codes or view the secret key.
+Yes, you can export your tokens at any time. Currently you have three options: encrypted 2FAGuard backup, generic TOTP Uri list or Stratum backup. But it is also possible to export single tokens as QR codes or view the secret key.
 
 **Which devices are supported?**
 This app is only available for Windows 10 1903 and higher. It also requires the C++ Redistributable Runtimes by Microsoft to be installed, but they are usually already installed on most systems. If not, the installer will take care of it.
