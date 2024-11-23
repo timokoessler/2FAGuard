@@ -10,16 +10,16 @@ namespace Guard.WPF.Core.Export.Exporter
 {
     internal class AuthenticatorProExporter : IExporter
     {
-        public string Name => "AuthenticatorPro";
+        public string Name => "Stratum";
 
         public IExporter.ExportType Type => IExporter.ExportType.File;
-        public string ExportFileExtensions => "Authenticator Pro Backup (*.authpro) | *.authpro";
+        public string ExportFileExtensions => "Stratum Backup (*.stratum) | *.stratum";
 
         public bool RequiresPassword() => true;
 
         public string GetDefaultFileName()
         {
-            return $"2FAGuard-AuthenticatorPro-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.authpro";
+            return $"2FAGuard-Stratum-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.stratum";
         }
 
         private const string StrongHeader = "AUTHENTICATORPRO";

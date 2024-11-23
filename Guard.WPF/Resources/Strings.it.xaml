@@ -1,4 +1,5 @@
-﻿<ResourceDictionary
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
@@ -48,7 +49,7 @@
     <system:String x:Key="i.settings.autostart">Avvio automatico</system:String>
     <system:String x:Key="i.settings.autostart.description">Apre automaticamente l'applicazione all'avvio di Windows</system:String>
     <system:String x:Key="i.settings.autostart.error.title">Si è verificato un problema</system:String>
-    <system:String x:Key="i.settings.autostart.error.disabled.policy">The automatic start of the app has been deactivated by a group policy</system:String>
+    <system:String x:Key="i.settings.autostart.error.disabled.policy">L'avvio automatico dell'applicazione è stato disabilito da una policy di gruppo</system:String>
     <system:String x:Key="i.settings.autostart.error.disabled.user">L'avvio automatico dell'applicazione è stato disattivato nel Task Manager di Windows e può essere cambiato solo da lì</system:String>
     <system:String x:Key="i.settings.autostart.error.alreadyenabled">L'avvio automatico dell'applicazione è già attivo</system:String>
     <system:String x:Key="i.settings.autostart.error.notenabled">L'avvio automatico dell'applicazione non può essere disattivato in quanto è già disattivato</system:String>
@@ -149,7 +150,7 @@
     <system:String x:Key="i.add.qrscreen">Scansiona QR code dallo schermo</system:String>
     <system:String x:Key="i.add.qrscreen.description">Rileva QR code visibile sullo schermo</system:String>
     <system:String x:Key="i.add.clipboard">Aggiungi dagli appunti</system:String>
-    <system:String x:Key="i.add.clipboard.description">Incolla un'immagine QR code o un URI TOTP </system:String>
+    <system:String x:Key="i.add.clipboard.description">Incolla un'immagine QR code o un URI TOTP</system:String>
     <system:String x:Key="i.add.import">Importa</system:String>
     <system:String x:Key="i.import.backup">Backup</system:String>
     <system:String x:Key="i.import.backup.description">Importa un file di backup precedentemente creato con 2FAGuard</system:String>
@@ -172,13 +173,13 @@
     <system:String x:Key="i.home.sort.createdat.asc">Data di creazione, crescente</system:String>
     <system:String x:Key="i.home.sort.createdat.desc">Data di creazione, decrescente</system:String>
     <system:String x:Key="i.import.notokens">Non sono stati trovati token dal file di importazione</system:String>
-    <system:String x:Key="i.import.authpro">Authenticator Pro</system:String>
-    <system:String x:Key="i.import.authpro.description">Importa un file di backup dall'applicazione Authenticator Pro</system:String>
+    <system:String x:Key="i.import.authpro">Stratum</system:String>
+    <system:String x:Key="i.import.authpro.description">Importa un file di backup dall'applicazione Stratum</system:String>
     <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
     <system:String x:Key="i.import.gauthenticator.description">Importa token dall'applicazione Google Authenticator</system:String>
     <system:String x:Key="i.import.gauthenticator.msgbox.content">Per importare token da Google Authenticator, apri l'applicazione sul tuo telefono o table e seleziona "Trasferisi account" nel menu e poi "Esporta account". @nSuccessivamente fai uno screenshot del QR code visualizzato e copia il file immagine in questo dispositivo.@nImporta questo file selezionando "Importazione QR code"Import this file by selecting "Import QR code" nella parte superiore di questa applicazione.@n@nNota: Un QR code può contenere un quantità limitata di informazioni. Per favore seleziona al massimo 5 token alla volta nell'applicazione Google Authenticator per l'esportazione.</system:String>
-    <system:String x:Key="i.import.authpro.invalid">Il file selezionato non è un backup valido dell'applicazione Authenticator Pro.</system:String>
-    <system:String x:Key="i.import.authpro.legacy">Il backup selezionato è in un formato obsoleto e non può essere importato. Per favore crea un backup con la versione corrente dell'applicazione Authenticator Pro.</system:String>
+    <system:String x:Key="i.import.authpro.invalid">Il file selezionato non è un backup valido dell'applicazione Stratum.</system:String>
+    <system:String x:Key="i.import.authpro.legacy">Il backup selezionato è in un formato obsoleto e non può essere importato. Per favore crea un backup con la versione corrente dell'applicazione Stratum.</system:String>
     <system:String x:Key="i.import.password">Per favore inserisci una password per il file di backup</system:String>
     <system:String x:Key="i.import.password.invalid">La password inserita non è corretta</system:String>
     <system:String x:Key="i.import.hotp.notsupported">I token basati su contatore (HOTP) non sono supportati</system:String>
@@ -204,8 +205,8 @@
     <system:String x:Key="i.export.success.content">I tuoi token sono stati esportati con successo.</system:String>
     <system:String x:Key="i.export.success.open">Apri cartella</system:String>
     <system:String x:Key="i.export.notokens">Non ci sono token da esportare</system:String>
-    <system:String x:Key="i.export.authpro">Authenticator Pro</system:String>
-    <system:String x:Key="i.export.authpro.description">Esporta token come file di backup di Authenticator Pro</system:String>
+    <system:String x:Key="i.export.authpro">Stratum</system:String>
+    <system:String x:Key="i.export.authpro.description">Esporta token come file di backup di Stratum</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">Informazioni generali</system:String>
@@ -248,7 +249,7 @@
 
     <!--  Text Formatting Dialog  -->
     <system:String x:Key="i.txtfd.title">Formatta testo</system:String>
-    <system:String x:Key="i.txtfd.content">Ctrl+B: Bold@nCtrl+I: Italic@nCtrl+U: Underline@nCtrl+Shift+L: Bullet points@nCtrl+Shift+N: Numbering@nCtrl+E: Center text@nCtrl+L: Text left@nCtrl+R: Text right</system:String>
+    <system:String x:Key="i.txtfd.content">Ctrl+B: Grassetto@nCtrl+I: Italico@nCtrl+U: Sottolineato@nCtrl+Shift+L: Elenco puntato@nCtrl+Shift+N: Elenco numerato@nCtrl+E: Testo centrato@nCtrl+L: Testo a sinistra@nCtrl+R: Testo a destra</system:String>
 
     <!--  Token card  -->
     <system:String x:Key="i.tokencard.copy">Copia</system:String>

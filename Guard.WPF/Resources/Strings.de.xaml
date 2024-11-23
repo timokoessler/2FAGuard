@@ -170,13 +170,13 @@
     <system:String x:Key="i.home.sort.createdat.asc">Erstellungsdatum, aufsteigend</system:String>
     <system:String x:Key="i.home.sort.createdat.desc">Erstellungsdatum, absteigend</system:String>
     <system:String x:Key="i.import.notokens">Es konnte keine Tokens importiert werden</system:String>
-    <system:String x:Key="i.import.authpro">Authenticator Pro</system:String>
-    <system:String x:Key="i.import.authpro.description">Importiere ein Backup der App Authenticator Pro</system:String>
+    <system:String x:Key="i.import.authpro">Stratum</system:String>
+    <system:String x:Key="i.import.authpro.description">Importiere ein Backup der App Stratum</system:String>
     <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
     <system:String x:Key="i.import.gauthenticator.description">Importiere Tokens aus der Google Authenticator App</system:String>
     <system:String x:Key="i.import.gauthenticator.msgbox.content">Um Tokens aus Google Authenticator zu importieren, öffne die App auf deinem Smartphone oder Tablet und wähle im Menü &quot;Konten übertragen&quot; und dann &quot;Konten exportieren&quot; aus.@nAnschließend erstelle einen Screenshot von dem angezeigten QR-Code und kopiere die Bilddatei auf dieses Gerät.@nImportiere diese Datei, indem du oben in dieser Anwendung &quot;QR-Code importieren&quot; auswählst.@n@nHinweis: Ein QR-Code kann nur eine begrenzte Anzahl an Informationen speichern. Bitte wähle maximal 5 Tokens gleichzeitig in der Google Authenticator App für den Export aus.</system:String>
-    <system:String x:Key="i.import.authpro.invalid">Die ausgewählte Datei ist kein gültiges Backup der App Authenticator Pro.</system:String>
-    <system:String x:Key="i.import.authpro.legacy">Das ausgewählte Backup ist in einem veralteten Format und kann nicht importiert werden. Bitte erstelle das Backup mit einer aktuellen Version der App Authenticator Pro.</system:String>
+    <system:String x:Key="i.import.authpro.invalid">Die ausgewählte Datei ist kein gültiges Backup der App Stratum.</system:String>
+    <system:String x:Key="i.import.authpro.legacy">Das ausgewählte Backup ist in einem veralteten Format und kann nicht importiert werden. Bitte erstelle das Backup mit einer aktuellen Version der App Stratum.</system:String>
     <system:String x:Key="i.import.password">Bitte gebe das Passwort für das Backup ein</system:String>
     <system:String x:Key="i.import.password.invalid">Das eingegebene Passwort ist nicht korrekt</system:String>
     <system:String x:Key="i.import.hotp.notsupported">Zählerbasierte Tokens (HOTP) werden nicht unterstützt</system:String>
@@ -202,8 +202,8 @@
     <system:String x:Key="i.export.success.content">Die Tokens wurden erfolgreich exportiert.</system:String>
     <system:String x:Key="i.export.success.open">Ordner öffnen</system:String>
     <system:String x:Key="i.export.notokens">Es sind keine Tokens vorhanden, die exportiert werden können</system:String>
-    <system:String x:Key="i.export.authpro">Authenticator Pro</system:String>
-    <system:String x:Key="i.export.authpro.description">Exportiere die Tokens als Authenticator Pro Backup</system:String>
+    <system:String x:Key="i.export.authpro">Stratum</system:String>
+    <system:String x:Key="i.export.authpro.description">Exportiere die Tokens als Stratum Backup</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">Allgemeine Informationen</system:String>

@@ -13,7 +13,8 @@ namespace Guard.WPF.Core.Import.Importer
     {
         public string Name => "AuthenticatorPro";
         public IImporter.ImportType Type => IImporter.ImportType.File;
-        public string SupportedFileExtensions => "Authenticator Pro Backup (*.authpro) | *.authpro";
+        public string SupportedFileExtensions =>
+            "Stratum / Authenticator Pro Backup (*.stratum, *.authpro) | *.stratum; *.authpro";
 
         private enum BackupType
         {

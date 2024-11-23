@@ -170,13 +170,13 @@
     <system:String x:Key="i.home.sort.createdat.asc">建立日期，升序</system:String>
     <system:String x:Key="i.home.sort.createdat.desc">建立日期，降序</system:String>
     <system:String x:Key="i.import.notokens">匯入檔案中未找到Token</system:String>
-    <system:String x:Key="i.import.authpro">Authenticator Pro</system:String>
-    <system:String x:Key="i.import.authpro.description">從Authenticator Pro應用程式匯入備份檔案</system:String>
+    <system:String x:Key="i.import.authpro">Stratum</system:String>
+    <system:String x:Key="i.import.authpro.description">從Stratum應用程式匯入備份檔案</system:String>
     <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
     <system:String x:Key="i.import.gauthenticator.description">從Google Authenticator應用程式匯入Token</system:String>
     <system:String x:Key="i.import.gauthenticator.msgbox.content">要從Google Authenticator匯入Token，請在智慧型手機或平板電腦上打開應用程式，選擇菜單中的“轉移帳戶”，然後選擇“匯出帳戶”。@n然後拍攝顯示的QR碼的螢幕截圖，並將圖像檔案複製到此裝置。@n通過在此應用程式的頂部選擇“匯入QR碼”來匯入此檔案。@n@n注意：QR碼只能儲存有限的資訊。請在Google Authenticator應用程式中一次選擇最多5個令牌進行匯出。</system:String>
-    <system:String x:Key="i.import.authpro.invalid">所選檔案不是Authenticator Pro應用程式的有效備份。</system:String>
-    <system:String x:Key="i.import.authpro.legacy">所選備份是過時的格式，無法匯入。請使用Authenticator Pro應用程式的當前版本建立備份。</system:String>
+    <system:String x:Key="i.import.authpro.invalid">所選檔案不是Stratum應用程式的有效備份。</system:String>
+    <system:String x:Key="i.import.authpro.legacy">所選備份是過時的格式，無法匯入。請使用Stratum應用程式的當前版本建立備份。</system:String>
     <system:String x:Key="i.import.password">請輸入備份檔案的密碼</system:String>
     <system:String x:Key="i.import.password.invalid">輸入的密碼不正確</system:String>
     <system:String x:Key="i.import.hotp.notsupported">不支援基於計數器的Token(HOTP)</system:String>
@@ -202,8 +202,8 @@
     <system:String x:Key="i.export.success.content">您的Token已成功匯出。</system:String>
     <system:String x:Key="i.export.success.open">打開資料夾</system:String>
     <system:String x:Key="i.export.notokens">沒有可以匯出的Token</system:String>
-    <system:String x:Key="i.export.authpro">Authenticator Pro</system:String>
-    <system:String x:Key="i.export.authpro.description">將令牌匯出為Authenticator Pro備份檔案</system:String>
+    <system:String x:Key="i.export.authpro">Stratum</system:String>
+    <system:String x:Key="i.export.authpro.description">將令牌匯出為Stratum備份檔案</system:String>
 
     <!--  Token Details  -->
     <system:String x:Key="i.td.general">一般資訊</system:String>
