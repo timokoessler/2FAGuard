@@ -106,7 +106,7 @@ namespace Guard.WPF
                 return;
             }
 
-            if (Environment.OSVersion.Version.Build < 18362)
+            if (Environment.OSVersion.Version.Build < 17763)
             {
                 var uiMessageBox = new Wpf.Ui.Controls.MessageBox
                 {

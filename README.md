@@ -34,7 +34,7 @@ The secret keys, the account names and your notes are encrypted using the AEGIS-
 Yes, you can export your tokens at any time. Currently you have three options: encrypted 2FAGuard backup, generic TOTP Uri list or Authenticator Pro backup. But it is also possible to export single tokens as QR codes or view the secret key.
 
 **Which devices are supported?**
-This app is only available for Windows 10 1903 and higher. For Android I recommend [Authenticator Pro](https://github.com/jamie-mh/AuthenticatorPro) that is fully compatible with 2FAGuard. It also requires the C++ Redistributable Runtimes by Microsoft to be installed, but they are usually already installed on most systems. If not, the installer will take care of it.
+This app is only available for Windows 10 1903 and higher. It also requires the C++ Redistributable Runtimes by Microsoft to be installed, but they are usually already installed on most systems. If not, the installer will take care of it.
 
 **What can I do if I lost my login data?**
 If you lost your password and cannot use an additional login method like Windows Hello, you will no longer have access to your tokens. If you want to reset the app and start over, you can delete the app data. Note that this will delete all your tokens and settings. For the Windows Store version, you can delete the app data in the Windows settings under Apps -> 2FAGuard -> Advanced Options -> Reset. If you are using the classic installation, delete the directory C:\Users\%username%\AppData\Local\2FAGuard.

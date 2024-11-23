@@ -1,5 +1,5 @@
 ﻿#define MyAppName "2FAGuard"
-#define MyAppVersion "1.5.1"
+#define MyAppVersion "1.5.2"
 #define MyAppPublisher "Timo Kössler"
 #define MyAppURL "https://2faguard.app"
 #define MyAppExeName "2FAGuard.exe"
@@ -28,7 +28,7 @@ WizardStyle=modern
 ArchitecturesAllowed=x64compatible
 UninstallDisplayIcon={app}\{#MyAppExeName}
 AppCopyright=Timo Kössler and Open Source Contributors
-MinVersion=10.0.18362
+MinVersion=10.0.17763
 ShowLanguageDialog=auto
 DisableReadyPage=yes
 UsePreviousTasks=yes

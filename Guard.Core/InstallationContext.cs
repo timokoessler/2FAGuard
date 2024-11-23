@@ -1,4 +1,8 @@
-﻿namespace Guard.Core
+﻿using System.Security.Cryptography;
+using System.Text;
+using Guard.Core.Security;
+
+namespace Guard.Core
 {
     public enum InstallationType
     {
@@ -110,16 +114,22 @@
 
         public static string GetMutexName()
         {
+            string prefix = "2FAGuard-";
+            // Used for Mutex to allow multiple users on the same machine or multiple portable installations to run at the same time
+            string hashContent = Environment.UserDomainName + Environment.UserName;
+
             if (installationType == InstallationType.CLASSIC_PORTABLE)
             {
-                return "2FAGuardPortable";
+                prefix = "2FAGuardPortable-";
+                hashContent += AppContext.BaseDirectory;
             }
             else if (installationType == InstallationType.MICROSOFT_STORE)
             {
-                return "2FAGuardStore";
+                prefix = "2FAGuardStore-";
             }
 
-            return "2FAGuard";
+            return prefix
+                + Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(hashContent)));
         }
     }
 }

@@ -4,11 +4,11 @@
     <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <DebugType>embedded</DebugType>
     <Authors>Timo Kössler and Open Source Contributors</Authors>
     <Title>Guard.Core</Title>
-    <Version>1.5.1</Version>
+    <Version>1.5.2</Version>
     <Copyright>$(Authors)</Copyright>
     <PackageProjectUrl>https://2faguard.app</PackageProjectUrl>
     <FileVersion>$(Version)</FileVersion>
