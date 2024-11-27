@@ -10,6 +10,7 @@ using Guard.WPF.Core.Installation;
 using Guard.WPF.Core.Security;
 using Guard.WPF.Views.Dialogs;
 using Guard.WPF.Views.Pages.Preferences;
+using Guard.WPF.Views.UIComponents;
 using Wpf.Ui.Controls;
 
 namespace Guard.WPF.Views.Pages
@@ -147,6 +148,28 @@ namespace Guard.WPF.Views.Pages
             LockTimeComboBox.SelectionChanged += OnLockTimeSelectionChanged;
 
             WebAuthnBtn.IsEnabled = Auth.IsLoginEnabled();
+
+            ApplyRegistrySettings();
+            FixSecuritySettingsGridSpacing();
+        }
+
+        private void ApplyRegistrySettings()
+        {
+            (bool hideWinHello, bool hidePreventScreenRecording, bool hideSecurityKey) =
+                RegistrySettings.GetSettingsPageOptions();
+
+            if (hideWinHello)
+            {
+                WindowsHelloCard.Visibility = Visibility.Collapsed;
+            }
+            if (hidePreventScreenRecording)
+            {
+                PreventRecordingCard.Visibility = Visibility.Collapsed;
+            }
+            if (hideSecurityKey)
+            {
+                SecurityKeyCard.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void SetSelectedLanguage(LanguageSetting lang)
@@ -521,6 +544,24 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
                 ignoreWinHelloSwitchEvents = true;
                 WinHelloSwitch.IsEnabled = false;
                 ignoreWinHelloSwitchEvents = false;
+            }
+        }
+
+        private void FixSecuritySettingsGridSpacing()
+        {
+            int i = 0;
+            foreach (CardControl card in SecuritySettingsGrid.Children)
+            {
+                if (card.Visibility == Visibility.Collapsed)
+                {
+                    continue;
+                }
+
+                if (i % 2 != 0)
+                {
+                    card.Margin = new Thickness(15, 0, 0, 15);
+                }
+                ++i;
             }
         }
     }

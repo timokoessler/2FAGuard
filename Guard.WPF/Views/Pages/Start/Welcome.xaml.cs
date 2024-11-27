@@ -18,9 +18,48 @@ namespace Guard.WPF.Views.Pages.Start
             InitializeComponent();
             mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.HideNavigation();
+
+            Loaded += (sender, e) => ApplyRegistrySettings();
         }
 
-        private async void CardAction_WinHello_Click(object sender, RoutedEventArgs e)
+        private void ApplyRegistrySettings()
+        {
+            (bool hideSkip, bool hideWinHello, bool hidePassword) =
+                RegistrySettings.GetSetupHideOptions();
+
+            if (hideSkip)
+            {
+                SkipBtn.Visibility = Visibility.Collapsed;
+            }
+            if (hideWinHello)
+            {
+                WinHelloBtn.Visibility = Visibility.Collapsed;
+            }
+            if (hidePassword)
+            {
+                PasswordBtn.Visibility = Visibility.Collapsed;
+            }
+
+            if (hideSkip && hidePassword)
+            {
+                SetupWithWinHello();
+            }
+            if (hideSkip && hideWinHello)
+            {
+                SetupWithPassword();
+            }
+            if (hideWinHello && hidePassword)
+            {
+                SetupInsecure(false);
+            }
+        }
+
+        private void CardAction_WinHello_Click(object sender, RoutedEventArgs e)
+        {
+            SetupWithWinHello();
+        }
+
+        private async void SetupWithWinHello()
         {
             if (!await WindowsHello.IsAvailable())
             {
@@ -55,24 +94,37 @@ namespace Guard.WPF.Views.Pages.Start
 
         private void CardAction_Password_Click(object sender, RoutedEventArgs e)
         {
+            SetupWithPassword();
+        }
+
+        private void SetupWithPassword()
+        {
             mainWindow.FullContentFrame.Content = new SetupPassword(false);
         }
 
-        private async void Button_Skip_Click(object sender, RoutedEventArgs e)
+        private void Button_Skip_Click(object sender, RoutedEventArgs e)
         {
-            Wpf.Ui.Controls.MessageBoxResult sucessDialogResult =
-                await new Wpf.Ui.Controls.MessageBox
-                {
-                    Title = I18n.GetString("welcome.insecure.dialog.title"),
-                    Content = I18n.GetString("welcome.insecure.dialog.content"),
-                    CloseButtonText = I18n.GetString("dialog.close"),
-                    PrimaryButtonText = I18n.GetString("welcome.insecure.dialog.continue"),
-                    MaxWidth = 500
-                }.ShowDialogAsync();
+            SetupInsecure();
+        }
 
-            if (sucessDialogResult != Wpf.Ui.Controls.MessageBoxResult.Primary)
+        private async void SetupInsecure(bool showWarning = true)
+        {
+            if (showWarning)
             {
-                return;
+                Wpf.Ui.Controls.MessageBoxResult sucessDialogResult =
+                    await new Wpf.Ui.Controls.MessageBox
+                    {
+                        Title = I18n.GetString("welcome.insecure.dialog.title"),
+                        Content = I18n.GetString("welcome.insecure.dialog.content"),
+                        CloseButtonText = I18n.GetString("dialog.close"),
+                        PrimaryButtonText = I18n.GetString("welcome.insecure.dialog.continue"),
+                        MaxWidth = 500
+                    }.ShowDialogAsync();
+
+                if (sucessDialogResult != Wpf.Ui.Controls.MessageBoxResult.Primary)
+                {
+                    return;
+                }
             }
 
             try

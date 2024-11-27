@@ -39,6 +39,14 @@ namespace Guard.Core
             }
             else
             {
+                // Check if the app data path is set in the registry
+                string? registryAppDataPath = RegistrySettings.GetAppDataPath();
+                if (registryAppDataPath != null)
+                {
+                    appDataFolderPath = registryAppDataPath;
+                    return;
+                }
+
                 appDataFolderPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "2FAGuard"
@@ -130,6 +138,31 @@ namespace Guard.Core
 
             return prefix
                 + Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(hashContent)));
+        }
+
+        public static (bool, string?) CheckAppDataFolder()
+        {
+            try
+            {
+                string path = GetAppDataFolderPath();
+                if (!Path.IsPathRooted(path))
+                {
+                    return (false, "The application data path is not an absolute path");
+                }
+
+                if (Directory.Exists(path))
+                {
+                    return (true, null);
+                }
+
+                Directory.CreateDirectory(path);
+
+                return (true, null);
+            }
+            catch (Exception e)
+            {
+                return (false, e.Message);
+            }
         }
     }
 }

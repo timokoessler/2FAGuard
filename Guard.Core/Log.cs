@@ -12,11 +12,7 @@ namespace Guard.Core
             log = new LoggerConfiguration()
                 .WriteTo.Debug()
                 .WriteTo.File(
-                    Path.Combine(
-                        InstallationContext.GetAppDataFolderPath(),
-                        "logs",
-                        "log.txt"
-                    ),
+                    Path.Combine(InstallationContext.GetAppDataFolderPath(), "logs", "log.txt"),
                     rollingInterval: RollingInterval.Day,
                     retainedFileCountLimit: 3
                 )

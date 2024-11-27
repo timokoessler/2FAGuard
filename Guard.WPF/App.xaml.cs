@@ -30,9 +30,25 @@ namespace Guard.WPF
 
             singleInstanceMutex = new Mutex(true, mutexName, out bool notAlreadyRunning);
 
+            I18n.Init();
+
+            (bool appDataFolderOk, string? appDataFolderError) =
+                InstallationContext.CheckAppDataFolder();
+            if (!appDataFolderOk)
+            {
+                var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = "Error checking app data folder",
+                    Content = appDataFolderError,
+                    CloseButtonText = I18n.GetString("i.unsupported.exit"),
+                };
+                await uiMessageBox.ShowDialogAsync();
+                Shutdown();
+                return;
+            }
+
             Log.Init();
             SettingsManager.Init();
-            I18n.Init();
 
             if (!notAlreadyRunning)
             {
@@ -131,6 +147,7 @@ namespace Guard.WPF
                 Shutdown();
                 return;
             }
+
             if (!EncryptionHelper.IsSupported())
             {
                 var uiMessageBox = new Wpf.Ui.Controls.MessageBox
