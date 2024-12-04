@@ -10,6 +10,8 @@ All of the registry keys are located in the following path:
 HKEY_CURRENT_USER\Software\Policies\2FAGuard
 ```
 
+A group policy ADMX template provided by a user from the community can be downloaded [here](https://2faguard.app/static-content/2FAGuard-ADMX-Template.zip).
+
 ### Modify app data path
 
 Create a value named `AppDataPath` in the path above. The value should be of type `REG_SZ` and contain the path to the folder where the application data will be stored. It's possible to use environment variables in the path, e.g. `%APPDATA%` or `%USERNAME%`.
