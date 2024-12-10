@@ -42,7 +42,7 @@ namespace Guard.WPF.Core
             var result = await uiMessageBox.ShowDialogAsync();
             if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
             {
-                SendBugReport($"{e.Message}\n\n{e.StackTrace}");
+                /*SendBugReport($"{e.Message}\n\n{e.StackTrace}");
 
                 var uiMessageBox2 = new Wpf.Ui.Controls.MessageBox
                 {
@@ -56,14 +56,14 @@ namespace Guard.WPF.Core
 
                 var result2 = await uiMessageBox2.ShowDialogAsync();
                 if (result2 == Wpf.Ui.Controls.MessageBoxResult.Primary)
-                {
-                    Process.Start(
-                        new ProcessStartInfo(GetGitHubIssueUrl($"{e.Message}\n\n{e.StackTrace}"))
-                        {
-                            UseShellExecute = true,
-                        }
-                    );
-                }
+                {*/
+                Process.Start(
+                    new ProcessStartInfo(GetGitHubIssueUrl($"{e.Message}\n\n{e.StackTrace}"))
+                    {
+                        UseShellExecute = true,
+                    }
+                );
+                //}
             }
             Environment.Exit(1);
         }

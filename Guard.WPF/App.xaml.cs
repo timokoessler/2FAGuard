@@ -30,8 +30,6 @@ namespace Guard.WPF
 
             singleInstanceMutex = new Mutex(true, mutexName, out bool notAlreadyRunning);
 
-            I18n.Init();
-
             (bool appDataFolderOk, string? appDataFolderError) =
                 InstallationContext.CheckAppDataFolder();
             if (!appDataFolderOk)
@@ -40,7 +38,7 @@ namespace Guard.WPF
                 {
                     Title = "Error checking app data folder",
                     Content = appDataFolderError,
-                    CloseButtonText = I18n.GetString("i.unsupported.exit"),
+                    CloseButtonText = "Exit",
                 };
                 await uiMessageBox.ShowDialogAsync();
                 Shutdown();
@@ -49,6 +47,7 @@ namespace Guard.WPF
 
             Log.Init();
             SettingsManager.Init();
+            I18n.Init();
 
             if (!notAlreadyRunning)
             {
