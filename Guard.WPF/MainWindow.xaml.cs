@@ -29,6 +29,7 @@ namespace Guard.WPF
         private IntPtr windowInteropHandle;
         private readonly bool isAutostart;
         private string currentPageName = "";
+        public bool SkipApplyRegistrySettings = false;
 
         public MainWindow(bool autostart)
         {
@@ -186,8 +187,8 @@ namespace Guard.WPF
 
         internal void Logout()
         {
+            SkipApplyRegistrySettings = true;
             Navigate(typeof(Welcome));
-            HideNavigation();
             Auth.Logout();
             TokenManager.ClearTokens();
             FullContentFrame.Visibility = Visibility.Visible;

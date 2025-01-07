@@ -24,6 +24,11 @@ namespace Guard.WPF.Views.Pages.Start
 
         private void ApplyRegistrySettings()
         {
+            if(mainWindow.SkipApplyRegistrySettings)
+            {
+                mainWindow.SkipApplyRegistrySettings = false;
+                return;
+            }
             (bool hideSkip, bool hideWinHello, bool hidePassword) =
                 RegistrySettings.GetSetupHideOptions();
 
