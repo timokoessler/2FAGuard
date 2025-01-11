@@ -212,7 +212,7 @@
     <system:String x:Key="i.td.issuer">Name of the issuer</system:String>
     <system:String x:Key="i.td.issuer.placeholder">For example: Google or Apple</system:String>
     <system:String x:Key="i.td.username">Username</system:String>
-    <system:String x:Key="i.td.username.placeholder">Usally your email address</system:String>
+    <system:String x:Key="i.td.username.placeholder">Usually your email address</system:String>
     <system:String x:Key="i.td.secret">Secret key</system:String>
     <system:String x:Key="i.td.secret.placeholder">Paste or enter the secret key</system:String>
     <system:String x:Key="i.td.expert">Expert settings</system:String>
