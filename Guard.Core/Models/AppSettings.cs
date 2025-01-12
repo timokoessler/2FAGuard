@@ -15,7 +15,9 @@
         ZH_CN,
         ZH_TW,
         FR,
-        IT
+        IT,
+        EL,
+        AR
     }
 
     public enum SortOrderSetting
