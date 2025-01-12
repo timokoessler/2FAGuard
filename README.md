@@ -41,7 +41,7 @@ If you lost your password and cannot use an additional login method like Windows
 
 ## Contributing
 
-Any contribution is greatly appreciated 🥳. Please take a look at [Contributing](https://github.com/timokoessler/2FAGuard/blob/main/CONTRIBUTING.md) for more information.
+Any contribution is greatly appreciated 🥳. Please take a look at [Contributing](https://github.com/timokoessler/2FAGuard/blob/main/CONTRIBUTING.md) for more information. Thanks to all existing [contributors](CONTRIBUTORS.md).
 
 ## Contact
 

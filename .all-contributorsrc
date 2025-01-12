@@ -1,0 +1,97 @@
+{
+  "projectName": "2FAGuard",
+  "projectOwner": "timokoessler",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "CONTRIBUTORS.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "timokoessler",
+      "name": "Timo Kössler",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33259218?v=4",
+      "profile": "https://github.com/timokoessler",
+      "contributions": [
+        "code",
+        "maintenance",
+        "review",
+        "design",
+        "translation"
+      ]
+    },
+    {
+      "login": "Cristian9828",
+      "name": "Cristian9828",
+      "avatar_url": "https://avatars.githubusercontent.com/u/51407503?v=4",
+      "profile": "https://github.com/Cristian9828",
+      "contributions": [
+        "translation",
+        "bug"
+      ]
+    },
+    {
+      "login": "reg-chen",
+      "name": "Reg Chen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34430957?v=4",
+      "profile": "https://github.com/reg-chen",
+      "contributions": [
+        "translation",
+        "bug"
+      ]
+    },
+    {
+      "login": "epver",
+      "name": "Epver",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8299627?v=4",
+      "profile": "https://github.com/epver",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "leftertrp",
+      "name": "Lefteris T.",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15330686/large/4230178a6a5663e2704f0822c60cb74c_default.png",
+      "profile": "https://crowdin.com/profile/leftertrp",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "jdunham22",
+      "name": "Jason Dunham",
+      "avatar_url": "https://avatars.githubusercontent.com/u/723070?v=4",
+      "profile": "https://github.com/jdunham22",
+      "contributions": [
+        "bug",
+        "ideas"
+      ]
+    },
+    {
+      "login": "PascalReintjensDSGF",
+      "name": "PascalReintjensDSGF",
+      "avatar_url": "https://avatars.githubusercontent.com/u/186927574?v=4",
+      "profile": "https://github.com/PascalReintjensDSGF",
+      "contributions": [
+        "ideas",
+        "bug"
+      ]
+    },
+    {
+      "login": "ThatGuyJon",
+      "name": "ThatGuyJon",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54686106?v=4",
+      "profile": "https://github.com/ThatGuyJon",
+      "contributions": [
+        "ideas",
+        "bug"
+      ]
+    }
+  ],
+  "contributorsPerLine": 6,
+  "linkToUsage": false
+}

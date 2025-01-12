@@ -1,0 +1,30 @@
+## Contributors ✨
+
+Thanks to all the people who have already contributed to 2FAGuard ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/timokoessler"><img src="https://avatars.githubusercontent.com/u/33259218?v=4?s=100" width="100px;" alt="Timo Kössler"/><br /><sub><b>Timo Kössler</b></sub></a><br /><a href="https://github.com/timokoessler/2FAGuard/commits?author=timokoessler" title="Code">💻</a> <a href="#maintenance-timokoessler" title="Maintenance">🚧</a> <a href="https://github.com/timokoessler/2FAGuard/pulls?q=is%3Apr+reviewed-by%3Atimokoessler" title="Reviewed Pull Requests">👀</a> <a href="#design-timokoessler" title="Design">🎨</a> <a href="#translation-timokoessler" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/Cristian9828"><img src="https://avatars.githubusercontent.com/u/51407503?v=4?s=100" width="100px;" alt="Cristian9828"/><br /><sub><b>Cristian9828</b></sub></a><br /><a href="#translation-Cristian9828" title="Translation">🌍</a> <a href="https://github.com/timokoessler/2FAGuard/issues?q=author%3ACristian9828" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/reg-chen"><img src="https://avatars.githubusercontent.com/u/34430957?v=4?s=100" width="100px;" alt="Reg Chen"/><br /><sub><b>Reg Chen</b></sub></a><br /><a href="#translation-reg-chen" title="Translation">🌍</a> <a href="https://github.com/timokoessler/2FAGuard/issues?q=author%3Areg-chen" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/epver"><img src="https://avatars.githubusercontent.com/u/8299627?v=4?s=100" width="100px;" alt="Epver"/><br /><sub><b>Epver</b></sub></a><br /><a href="#translation-epver" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://crowdin.com/profile/leftertrp"><img src="https://crowdin-static.downloads.crowdin.com/avatar/15330686/large/4230178a6a5663e2704f0822c60cb74c_default.png?s=100" width="100px;" alt="Lefteris T."/><br /><sub><b>Lefteris T.</b></sub></a><br /><a href="#translation-leftertrp" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/jdunham22"><img src="https://avatars.githubusercontent.com/u/723070?v=4?s=100" width="100px;" alt="Jason Dunham"/><br /><sub><b>Jason Dunham</b></sub></a><br /><a href="https://github.com/timokoessler/2FAGuard/issues?q=author%3Ajdunham22" title="Bug reports">🐛</a> <a href="#ideas-jdunham22" title="Ideas, Planning, & Feedback">🤔</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/PascalReintjensDSGF"><img src="https://avatars.githubusercontent.com/u/186927574?v=4?s=100" width="100px;" alt="PascalReintjensDSGF"/><br /><sub><b>PascalReintjensDSGF</b></sub></a><br /><a href="#ideas-PascalReintjensDSGF" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/timokoessler/2FAGuard/issues?q=author%3APascalReintjensDSGF" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://github.com/ThatGuyJon"><img src="https://avatars.githubusercontent.com/u/54686106?v=4?s=100" width="100px;" alt="ThatGuyJon"/><br /><sub><b>ThatGuyJon</b></sub></a><br /><a href="#ideas-ThatGuyJon" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/timokoessler/2FAGuard/issues?q=author%3AThatGuyJon" title="Bug reports">🐛</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+Any kind of contribution is welcome! 🎉 This list includes everyone who has contributed code or translations or created multiple valid bug reports/feature requests.

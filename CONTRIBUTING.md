@@ -1,6 +1,7 @@
 # Contributing
 
 Any contribution is greatly appreciated 🥳. You don't need to be a developer to contribute. You can help by translating the app, reporting issues, or simply sharing your ideas for new features.
+All contributors are listed in [CONTRIBUTORS.md](CONTRIBUTORS.md).
 
 If you have any questions, please do not hesitate to contact me. You can find my contact information in the README and on my website.
 

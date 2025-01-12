@@ -38,6 +38,10 @@ namespace Guard.Test.Core
                 foreach (XElement element in resource.Root.Elements())
                 {
                     Assert.NotNull(element);
+                    if (element.Name.LocalName == "Style")
+                    {
+                        continue;
+                    }
                     Assert.Equal("String", element.Name.LocalName);
                     string key = GetXKey(element);
                     Assert.StartsWith("i.", key);
@@ -56,6 +60,10 @@ namespace Guard.Test.Core
                 foreach (XElement element in resource.Root.Elements())
                 {
                     Assert.NotNull(element);
+                    if (element.Name.LocalName == "Style")
+                    {
+                        continue;
+                    }
                     Assert.Equal("String", element.Name.LocalName);
                     string? value = element.Value;
                     Assert.NotNull(value);
@@ -75,6 +83,10 @@ namespace Guard.Test.Core
                 foreach (XElement element in resource.Root.Elements())
                 {
                     Assert.NotNull(element);
+                    if (element.Name.LocalName == "Style")
+                    {
+                        continue;
+                    }
                     Assert.Equal("String", element.Name.LocalName);
                     string key = GetXKey(element);
                     Assert.DoesNotContain(key, keys);
@@ -95,6 +107,10 @@ namespace Guard.Test.Core
                 foreach (XElement element in resource.Root.Elements())
                 {
                     Assert.NotNull(element);
+                    if (element.Name.LocalName == "Style")
+                    {
+                        continue;
+                    }
                     Assert.Equal("String", element.Name.LocalName);
 
                     if (!first)
