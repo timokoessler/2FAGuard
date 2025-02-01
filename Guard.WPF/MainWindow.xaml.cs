@@ -31,6 +31,7 @@ namespace Guard.WPF
         private readonly bool isAutostart;
         private string currentPageName = "";
         public bool SkipApplyRegistrySettings = false;
+        private const double WindowThresholdWidth = 700;
 
         public MainWindow(bool autostart)
         {
@@ -91,6 +92,8 @@ namespace Guard.WPF
             }
 
             CheckLocalTime();
+
+            this.SizeChanged += OnSizeChanged;
         }
 
         internal void ApplyTheme(ThemeSetting theme)
@@ -410,6 +413,25 @@ namespace Guard.WPF
             catch (Exception e)
             {
                 Log.Logger.Error("Failed to set animation FPS: {Exception}", e.Message);
+            }
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (HomeNavigationItem != null)
+            {
+                HomeNavigationItem.Content =
+                    ActualWidth < WindowThresholdWidth ? null : FindResource("i.page.home");
+            }
+            if (AddNavigationItem != null)
+            {
+                AddNavigationItem.Content =
+                    ActualWidth < WindowThresholdWidth ? null : FindResource("i.nav.add");
+            }
+            if (SettingsNavigationItem != null)
+            {
+                SettingsNavigationItem.Content =
+                    ActualWidth < WindowThresholdWidth ? null : FindResource("i.page.settings");
             }
         }
     }

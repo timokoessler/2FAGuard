@@ -11,8 +11,8 @@
     Title="2FAGuard"
     Width="1200"
     Height="725"
-    MinWidth="800"
-    MinHeight="500"
+    MinWidth="580"
+    MinHeight="420"
     ExtendsContentIntoTitleBar="True"
     WindowCornerPreference="Round"
     WindowStartupLocation="CenterScreen"
@@ -40,10 +40,12 @@
             </ui:NavigationView.PaneHeader>
             <ui:NavigationView.FooterMenuItems>
                 <ui:NavigationViewItem
+                    x:Name="HomeNavigationItem"
                     Content="{DynamicResource i.page.home}"
                     Icon="{ui:SymbolIcon Key24}"
                     TargetPageType="{x:Type pages:Home}" />
                 <ui:NavigationViewItem
+                    x:Name="AddNavigationItem"
                     Content="{DynamicResource i.nav.add}"
                     Icon="{ui:SymbolIcon Add24}"
                     TargetPageType="{x:Type pagesadd:AddOverview}" />
@@ -55,6 +57,7 @@
                     Icon="{ui:SymbolIcon LockClosed24}" />
                 <ui:NavigationViewItem Click="ToggleThemeClicked" Icon="{ui:SymbolIcon DarkTheme24}" />
                 <ui:NavigationViewItem
+                    x:Name="SettingsNavigationItem"
                     Content="{DynamicResource i.page.settings}"
                     Icon="{ui:SymbolIcon Settings24}"
                     TargetPageType="{x:Type pages:Settings}" />
