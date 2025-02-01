@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Guard.Core;
 using Guard.Core.Models;
@@ -54,6 +55,7 @@ namespace Guard.WPF
             SessionSwitchEvent.Register(this);
 
             IPC.InitPipeServer();
+            SetAnimationFPS();
         }
 
         private void OnWindowLoaded()
@@ -392,6 +394,22 @@ namespace Guard.WPF
                     "Failed to check window size and position: {Exception}",
                     e.Message
                 );
+            }
+        }
+
+        private static void SetAnimationFPS()
+        {
+            try
+            {
+                // Update the FPS of the animations to reduce CPU usage
+                Timeline.DesiredFrameRateProperty.OverrideMetadata(
+                    typeof(Timeline),
+                    new FrameworkPropertyMetadata { DefaultValue = 20 }
+                );
+            }
+            catch (Exception e)
+            {
+                Log.Logger.Error("Failed to set animation FPS: {Exception}", e.Message);
             }
         }
     }

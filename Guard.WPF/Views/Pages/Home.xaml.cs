@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
 using Guard.Core.Models;
 using Guard.Core.Storage;
 using Guard.WPF.Core;
@@ -56,12 +55,6 @@ namespace Guard.WPF.Views.Pages
                     }
                 }
             };
-
-            // Update the FPS of the animations to reduce CPU usage
-            Timeline.DesiredFrameRateProperty.OverrideMetadata(
-                typeof(Timeline),
-                new FrameworkPropertyMetadata { DefaultValue = 20 }
-            );
         }
 
         private async void LoadTokens()
