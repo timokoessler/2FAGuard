@@ -1,5 +1,5 @@
 ﻿#define MyAppName "2FAGuard"
-#define MyAppVersion "1.5.4"
+#define MyAppVersion "1.5.5"
 #define MyAppPublisher "Timo Kössler"
 #define MyAppURL "https://2faguard.app"
 #define MyAppExeName "2FAGuard.exe"
@@ -35,7 +35,7 @@ UsePreviousTasks=yes
 DisableFinishedPage=yes
 PrivilegesRequiredOverridesAllowed=dialog
 ArchitecturesInstallIn64BitMode=x64compatible
-SignTool=mysigntool sign /n $qOpen Source Developer, Timo Kössler$q /t $qhttp://time.certum.pl/$q /fd sha256 /d $q2FAGuard Installer$q /du $qhttps://2faguard.app$q $f
+SignTool=mysigntool sign /sha1 0839626A858F4D2E44EDC99708362609E432DA5A /t $qhttp://time.certum.pl/$q /fd sha256 /d $q2FAGuard Installer$q /du $qhttps://2faguard.app$q $f
 SignedUninstaller=yes
 SignToolRetryCount=0
 
@@ -49,6 +49,7 @@ Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.i
 Name: "chinesetraditional"; MessagesFile: "compiler:Languages\ChineseTraditional.isl"
 Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
 Name: "arabic"; MessagesFile: "compiler:Languages\Arabic.isl"
+Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
