@@ -420,18 +420,36 @@ namespace Guard.WPF
         {
             if (HomeNavigationItem != null)
             {
-                HomeNavigationItem.Content =
-                    ActualWidth < WindowThresholdWidth ? null : FindResource("i.page.home");
+                if (ActualWidth < WindowThresholdWidth)
+                {
+                    HomeNavigationItem.Content = null;
+                }
+                else
+                {
+                    HomeNavigationItem.SetResourceReference(ContentProperty, "i.page.home");
+                }
             }
             if (AddNavigationItem != null)
             {
-                AddNavigationItem.Content =
-                    ActualWidth < WindowThresholdWidth ? null : FindResource("i.nav.add");
+                if (ActualWidth < WindowThresholdWidth)
+                {
+                    AddNavigationItem.Content = null;
+                }
+                else
+                {
+                    AddNavigationItem.SetResourceReference(ContentProperty, "i.nav.add");
+                }
             }
             if (SettingsNavigationItem != null)
             {
-                SettingsNavigationItem.Content =
-                    ActualWidth < WindowThresholdWidth ? null : FindResource("i.page.settings");
+                if (ActualWidth < WindowThresholdWidth)
+                {
+                    SettingsNavigationItem.Content = null;
+                }
+                else
+                {
+                    SettingsNavigationItem.SetResourceReference(ContentProperty, "i.page.settings");
+                }
             }
         }
     }

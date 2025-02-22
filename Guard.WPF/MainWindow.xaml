@@ -11,7 +11,7 @@
     Title="2FAGuard"
     Width="1200"
     Height="725"
-    MinWidth="580"
+    MinWidth="600"
     MinHeight="420"
     ExtendsContentIntoTitleBar="True"
     WindowCornerPreference="Round"
