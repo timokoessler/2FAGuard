@@ -1,0 +1,305 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Nav  -->
+    <system:String x:Key="i.title">2FAGuard</system:String>
+    <system:String x:Key="i.page.home">トークン</system:String>
+    <system:String x:Key="i.page.settings">設定</system:String>
+    <system:String x:Key="i.language">言語</system:String>
+    <system:String x:Key="i.nav.add">トークンの追加</system:String>
+
+    <!--  Settings  -->
+    <system:String x:Key="i.settings.personalisation">全般</system:String>
+    <system:String x:Key="i.settings.theme">アプリのテーマ</system:String>
+    <system:String x:Key="i.settings.theme.description">アプリのテーマを選択します</system:String>
+    <system:String x:Key="i.settings.theme.system">デフォルト</system:String>
+    <system:String x:Key="i.settings.theme.light">ライト</system:String>
+    <system:String x:Key="i.settings.theme.dark">ダーク</system:String>
+    <system:String x:Key="i.settings.language">言語</system:String>
+    <system:String x:Key="i.settings.language.description">使用する言語を選択します</system:String>
+    <system:String x:Key="i.settings.about">このアプリについて</system:String>
+    <system:String x:Key="i.settings.issue">問題を報告</system:String>
+    <system:String x:Key="i.settings.license">ライセンス</system:String>
+    <system:String x:Key="i.settings.security">セキュリティ</system:String>
+    <system:String x:Key="i.settings.winhello">Windows Hello</system:String>
+    <system:String x:Key="i.settings.winhello.description">Windows Helloでのログインを許可する</system:String>
+    <system:String x:Key="i.settings.winhello.failed.title">問題が発生しました</system:String>
+    <system:String x:Key="i.settings.winhello.failed.content">Windows Helloのセットアップ中に問題が発生しました:</system:String>
+    <system:String x:Key="i.passdialog.title">パスワードを入力</system:String>
+    <system:String x:Key="i.passdialog.content">パスワードを入力して完了</system:String>
+    <system:String x:Key="i.passdialog.input">パスワードを入力</system:String>
+    <system:String x:Key="i.passdialog.next">次へ</system:String>
+    <system:String x:Key="i.passdialog.incorrect">パスワードが正しくありません</system:String>
+    <system:String x:Key="i.settings.password">パスワード</system:String>
+    <system:String x:Key="i.settings.password.description">ログインパスワードを変更します</system:String>
+    <system:String x:Key="i.settings.password.button">変更</system:String>
+    <system:String x:Key="i.changepass.title">パスワードの変更</system:String>
+    <system:String x:Key="i.changepass.currentbox">現在のパスワード</system:String>
+    <system:String x:Key="i.changepass.newbox">新しいパスワードを入力してください</system:String>
+    <system:String x:Key="i.changepass.newbox.repeat">もう一度入力してください</system:String>
+    <system:String x:Key="i.changepass.current.notempty">現在のパスワードを入力してください</system:String>
+    <system:String x:Key="i.changepass.current.incorrect">現在のパスワードが正しくありません</system:String>
+    <system:String x:Key="i.settings.record">録画の停止</system:String>
+    <system:String x:Key="i.settings.record.description">録画とスクリーンショットを禁止する</system:String>
+    <system:String x:Key="i.settings.autolock">オートロック</system:String>
+    <system:String x:Key="i.settings.autolock.description">システムのロック時にアプリをロックする</system:String>
+    <system:String x:Key="i.settings.oss">オープンソースソフトウェア</system:String>
+    <system:String x:Key="i.settings.autostart">スタートアップ</system:String>
+    <system:String x:Key="i.settings.autostart.description">サインイン時にアプリを自動的に起動する</system:String>
+    <system:String x:Key="i.settings.autostart.error.title">問題が発生しました</system:String>
+    <system:String x:Key="i.settings.autostart.error.disabled.policy">スタートアップは管理者によって無効化されています。</system:String>
+    <system:String x:Key="i.settings.autostart.error.disabled.user">スタートアップはシステムによって無効化されています。Windowsの設定から変更を行ってください。</system:String>
+    <system:String x:Key="i.settings.autostart.error.alreadyenabled">スタートアップはすでに有効化されています。</system:String>
+    <system:String x:Key="i.settings.autostart.error.notenabled">スタートアップはすでに無効化されています。</system:String>
+    <system:String x:Key="i.settings.tray">システムトレイに格納</system:String>
+    <system:String x:Key="i.settings.tray.description">最小化、終了でアプリをタスクトレイに移動する</system:String>
+    <system:String x:Key="i.settings.imprint">運営情報</system:String>
+    <system:String x:Key="i.settings.privacy">プライバシー</system:String>
+    <system:String x:Key="i.settings.reset">リセット</system:String>
+    <system:String x:Key="i.settings.reset.description">すべてのトークンと設定を消去します</system:String>
+    <system:String x:Key="i.settings.reset.button">リセット</system:String>
+    <system:String x:Key="i.settings.reset.confirm.title">本当によろしいですか？</system:String>
+    <system:String x:Key="i.settings.reset.confirm.content">すべてのトークンと設定を消去します。この操作は取り消せません。</system:String>
+    <system:String x:Key="i.settings.reset.confirm.btn">リセット</system:String>
+    <system:String x:Key="i.settings.locktime">タイマーによるロック</system:String>
+    <system:String x:Key="i.settings.locktime.description">一定時間操作がない場合、アプリを自動的にロックします</system:String>
+    <system:String x:Key="i.settings.locktime.never">ロックしない</system:String>
+    <system:String x:Key="i.settings.locktime.thirtyseconds">30秒</system:String>
+    <system:String x:Key="i.settings.locktime.oneminute">1分</system:String>
+    <system:String x:Key="i.settings.locktime.fiveminutes">5分</system:String>
+    <system:String x:Key="i.settings.locktime.tenminutes">10分</system:String>
+    <system:String x:Key="i.settings.locktime.thirtyminutes">30分</system:String>
+    <system:String x:Key="i.settings.locktime.onehour">1時間</system:String>
+    <system:String x:Key="i.page.changepasswordpage">パスワードの変更</system:String>
+    <system:String x:Key="i.settings.webauthn">セキュリティーキー (FIDO2)</system:String>
+    <system:String x:Key="i.settings.webauthn.description">物理キーでログインします</system:String>
+    <system:String x:Key="i.settings.webauthn.button">設定</system:String>
+    <system:String x:Key="i.settings.webauthn.notsupported">お使いのOSではWebAuthnがサポートされていません</system:String>
+
+    <!--  WebAuthn  -->
+    <system:String x:Key="i.page.webauthnpage">セキュリティーキー (FIDO2)</system:String>
+    <system:String x:Key="i.webauthn.add.title">セキュリティーキーの追加</system:String>
+    <system:String x:Key="i.webauthn.add.description">新しいキーを登録する</system:String>
+    <system:String x:Key="i.webauthn.existing">登録済み</system:String>
+    <system:String x:Key="i.webauthn.existing.none">使用可能なキーはありません</system:String>
+    <system:String x:Key="i.webauthn.dialog1.title">セキュリティーキーの追加</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content">追加するセキュリティーキーの名称を入力</system:String>
+    <system:String x:Key="i.webauthn.dialog1.input">名称</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content2">ポップアップでセキュリティキーでログイン可能となった場合、登録を完了するためには、直後の認証を行う必要があります。</system:String>
+    <system:String x:Key="i.webauthn.dialog1.namerequired">セキュリティーキーの名称を入力してください</system:String>
+    <system:String x:Key="i.webauthn.dialog.nameexists">同じ名前のキーが既に存在します</system:String>
+    <system:String x:Key="i.webauthn.delete.title">セキュリティーキーを削除する</system:String>
+    <system:String x:Key="i.webauthn.delete.content">セキュリティーキー @Name を削除してもよろしいですか? 削除後は使用できなくなります。</system:String>
+    <system:String x:Key="i.webauthn.delete.yes">削除</system:String>
+
+    <!--  Application setup  -->
+    <system:String x:Key="i.welcome.subtext">ダウンロードいただきありがとうございます! トークンの安全な管理方法を選択してください。</system:String>
+    <system:String x:Key="i.welcome.hello">Windows Hello と パスワード</system:String>
+    <system:String x:Key="i.welcome.hello.description">シンプルかつ安全、パスワードは予備の手段です</system:String>
+    <system:String x:Key="i.welcome.hello.notavailable">Windows Hello が有効ではありません</system:String>
+    <system:String x:Key="i.welcome.hello.notavailable.content">システムの設定からWindows Helloをセットアップしてください</system:String>
+    <system:String x:Key="i.welcome.pass">パスワード</system:String>
+    <system:String x:Key="i.welcome.pass.description">パスワードのみでトークンを管理します</system:String>
+    <system:String x:Key="i.welcome.skip">スキップ</system:String>
+    <system:String x:Key="i.welcome.pass.title">パスワードを設定する</system:String>
+    <system:String x:Key="i.welcome.pass.subtext">トークンを暗号化するために使用する安全なパスワードを入力してください。このパスワードを忘れると、トークンにアクセスできなくなります。</system:String>
+    <system:String x:Key="i.welcome.pass.box">安全なパスワードを入力してください</system:String>
+    <system:String x:Key="i.welcome.pass.box.repeat">もう一度入力してください</system:String>
+    <system:String x:Key="i.welcome.pass.notempty">パスワードを入力してください</system:String>
+    <system:String x:Key="i.welcome.pass.notmatch">入力されたパスワードが一致しません</system:String>
+    <system:String x:Key="i.welcome.pass.length">パスワードは8～128文字の間で設定する必要があります</system:String>
+    <system:String x:Key="i.setup.finished.title">セットアップが完了しました</system:String>
+    <system:String x:Key="i.setup.finished.subtext">2FAGuardのセットアップが正常に完了し、トークンの追加が可能になりました</system:String>
+    <system:String x:Key="i.setup.finished.action.token">トークンの追加</system:String>
+    <system:String x:Key="i.setup.finished.action.token.description">新しいトークンを追加する</system:String>
+    <system:String x:Key="i.setup.finished.action.settings">設定</system:String>
+    <system:String x:Key="i.setup.finished.action.settings.description">アプリの設定を行う</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.title">安全でない可能性があります</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.content">認証なしで2FAGuardを使用することを選択しました。これは、あなたのトークンが暗号化されず、あなたのコンピューターにアクセスできる人なら誰でもアクセスできることを意味します。本当によろしいですか?</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.continue">続ける (非推奨)</system:String>
+    <system:String x:Key="i.welcome.portable.winhello.title">注記</system:String>
+    <system:String x:Key="i.welcome.portable.winhello.content">USBメモリのような、外付けストレージから起動するポータブル版の2FAGuardを使用している場合、Windows Helloを使用した自動ログインは、他のWindowsユーザーや他のデバイスでは行えません。他のデバイスでWindows Helloを使用するには、まず2FAGuardの設定でWindows Helloを有効にする必要があります。標準のパスワードを使うことでいつでもログインできます。</system:String>
+    <system:String x:Key="i.page.welcome">ようこそ</system:String>
+
+    <!--  Login  -->
+    <system:String x:Key="i.login.subtext">トークンにアクセスするためには、本人確認が必要です</system:String>
+    <system:String x:Key="i.login.passbox">パスワードを入力</system:String>
+    <system:String x:Key="i.login.button">パスワードでログイン</system:String>
+    <system:String x:Key="i.login.pass.error">パスワードが正しくありません</system:String>
+    <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
+    <system:String x:Key="i.login.warning.capslock.title">警告</system:String>
+    <system:String x:Key="i.login.warning.capslock.content">Caps Lockが有効になっています</system:String>
+    <system:String x:Key="i.login.webauthn">セキュリティーキー</system:String>
+
+    <!--  Home  -->
+    <system:String x:Key="i.home.loading">ロード中...</system:String>
+    <system:String x:Key="i.home.notokens">利用可能なトークンはありません</system:String>
+    <system:String x:Key="i.home.notokens.button">トークンの追加</system:String>
+    <system:String x:Key="i.home.search.placeholder">トークンを検索</system:String>
+    <system:String x:Key="i.home.intro.title">案内</system:String>
+    <system:String x:Key="i.home.intro.content">トークンの編集や削除を行うには、トークンの上で右クリックします</system:String>
+
+    <!--  Add  -->
+    <system:String x:Key="i.page.addoverview">トークンの追加</system:String>
+    <system:String x:Key="i.add.manual">手動で入力して追加</system:String>
+    <system:String x:Key="i.add.manual.description">秘密鍵、詳細な情報を入力する</system:String>
+    <system:String x:Key="i.add.qr">QRコード画像から追加</system:String>
+    <system:String x:Key="i.add.qr.description">画像ファイルのQRコードを認識します</system:String>
+    <system:String x:Key="i.add.qrscreen">画面上のQRコードから追加</system:String>
+    <system:String x:Key="i.add.qrscreen.description">画面に表示されているQRコードを認識します</system:String>
+    <system:String x:Key="i.add.clipboard">クリップボードの画像、URIから追加</system:String>
+    <system:String x:Key="i.add.clipboard.description">コピーした画像ファイル、URIから認識します</system:String>
+    <system:String x:Key="i.add.import">インポート</system:String>
+    <system:String x:Key="i.import.backup">バックアップ</system:String>
+    <system:String x:Key="i.import.backup.description">2FAGuardのバックアップから復元します</system:String>
+    <system:String x:Key="i.import.uri">URI リスト</system:String>
+    <system:String x:Key="i.import.uri.description">URI リストからインポートします</system:String>
+    <system:String x:Key="i.import.bitwarden">Bitwarden</system:String>
+    <system:String x:Key="i.import.bitwarden.description">Bitwardenからインポートします</system:String>
+    <system:String x:Key="i.import.bitwarden.accountencryption">選択されたバックアップはBitwardenアカウントに限定されており、他のアプリケーションへインポートすることはできません。2FAGuardにインポートするには、パスワードで保護されたバックアップを作成してください。.</system:String>
+    <system:String x:Key="i.import.failed.title">インポート失敗</system:String>
+    <system:String x:Key="i.import.failed.content">エラーが発生しました:</system:String>
+    <system:String x:Key="i.import.noqrfound">画像にQRコードが見つかりません</system:String>
+    <system:String x:Key="i.import.noqrfound.screen">画面上のQRコードを認識できません。QRコードを隠しているウィンドウが存在しないか確認し、QRコードが鮮明に見えることを確かめてください。</system:String>
+    <system:String x:Key="i.import.invalidqr.screen">QRコードにトークンに関するデータが含まれていません。QRコードが画面に1つのみ存在していることを確かめてください。</system:String>
+    <system:String x:Key="i.import.clipboard.invalid">クリップボードに有効な画像、またはテキストが含まれていません。</system:String>
+    <system:String x:Key="i.import.clipboard.invalid.multifiles">クリップボードからのインポートは1度に1つのファイルのみ可能です。</system:String>
+    <system:String x:Key="i.import.duplicate">同じ秘密鍵を持つトークンがすでに存在します。</system:String>
+    <system:String x:Key="i.home.sort">並べ替え</system:String>
+    <system:String x:Key="i.home.sort.issuer.asc">発行者 - 昇順</system:String>
+    <system:String x:Key="i.home.sort.issuer.desc">発行者 -  降順</system:String>
+    <system:String x:Key="i.home.sort.createdat.asc">作成日時 - 昇順</system:String>
+    <system:String x:Key="i.home.sort.createdat.desc">作成日時 - 降順</system:String>
+    <system:String x:Key="i.import.notokens">ファイルにトークンに関するデータが含まれていません。</system:String>
+    <system:String x:Key="i.import.authpro">Stratum</system:String>
+    <system:String x:Key="i.import.authpro.description">Stratumからインポートします</system:String>
+    <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
+    <system:String x:Key="i.import.gauthenticator.description">Google Authenticatorからトークンを移行します</system:String>
+    <system:String x:Key="i.import.gauthenticator.msgbox.content">Google Authenticatorからトークンをインポートするには、スマートフォンまたはタブレットでアプリから「アカウントを移行」を選択し、「コードを移行」を選択します。@n@n次に、表示されたQRコードのスクリーンショットを撮り、画像ファイルをこのデバイスにコピーします。ページの上部より、適切なQRコードによるインポートを選択して、このファイルをインポートします。@n@n注意：QRコードには限られた量の情報しか保存できません。Google Authenticatorでエクスポートする際は1度に最大5個のトークンまで選択が可能です。</system:String>
+    <system:String x:Key="i.import.authpro.invalid">このバックアップファイルは有効ではありません</system:String>
+    <system:String x:Key="i.import.authpro.legacy">このバックアップファイルは旧式のフォーマットが使われているため、インポートできません。最新のStratumでバックアップを作成してください。</system:String>
+    <system:String x:Key="i.import.password">バックアップファイルのパスワードを入力してください</system:String>
+    <system:String x:Key="i.import.password.invalid">入力されたパスワードが正しくありません</system:String>
+    <system:String x:Key="i.import.hotp.notsupported">カウンタベースのトークン(HOTP)はサポートされていません</system:String>
+    <system:String x:Key="i.import.twofas">2FAS</system:String>
+    <system:String x:Key="i.import.twofas.description">2FASからインポートします</system:String>
+    <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
+    <system:String x:Key="i.import.aegis.description">Aegis Authenticatorからインポートします</system:String>
+    <system:String x:Key="i.page.tokensettings">トークン</system:String>
+    <system:String x:Key="i.page.tokensettings.add">トークンの追加</system:String>
+    <system:String x:Key="i.page.tokensettings.edit">トークンの編集</system:String>
+
+    <!--  Export  -->
+    <system:String x:Key="i.page.exportpage">エクスポート</system:String>
+    <system:String x:Key="i.export.failed.title">エクスポート失敗</system:String>
+    <system:String x:Key="i.export.failed.content">エラーが発生しました:</system:String>
+    <system:String x:Key="i.export.password">バックアップファイルのパスワード入力してください</system:String>
+    <system:String x:Key="i.export.password.invalid">有効なパスワードを入力してください。</system:String>
+    <system:String x:Key="i.export.backup">バックアップ</system:String>
+    <system:String x:Key="i.export.backup.description">2FAGuardのみで使用できる完全なバックアップファイルを作成します</system:String>
+    <system:String x:Key="i.export.uri">URI リスト</system:String>
+    <system:String x:Key="i.export.uri.description">メモや暗号化のないURI リストファイルを作成します</system:String>
+    <system:String x:Key="i.export.success.title">エクスポート完了</system:String>
+    <system:String x:Key="i.export.success.content">トークンのエクスポートが成功しました</system:String>
+    <system:String x:Key="i.export.success.open">フォルダーを開く</system:String>
+    <system:String x:Key="i.export.notokens">エクスポート可能なトークンが見つかりません</system:String>
+    <system:String x:Key="i.export.authpro">Stratum</system:String>
+    <system:String x:Key="i.export.authpro.description">Stratumで使用できるバックアップファイルを作成します</system:String>
+
+    <!--  Token Details  -->
+    <system:String x:Key="i.td.general">詳細情報</system:String>
+    <system:String x:Key="i.td.issuer">発行者</system:String>
+    <system:String x:Key="i.td.issuer.placeholder">例) Google、Apple</system:String>
+    <system:String x:Key="i.td.username">ユーザー名</system:String>
+    <system:String x:Key="i.td.username.placeholder">通常はメールアドレス</system:String>
+    <system:String x:Key="i.td.secret">秘密鍵</system:String>
+    <system:String x:Key="i.td.secret.placeholder">秘密鍵</system:String>
+    <system:String x:Key="i.td.expert">高度な設定</system:String>
+    <system:String x:Key="i.td.expert.warning.title">警告</system:String>
+    <system:String x:Key="i.td.expert.warning.text">以下の設定は、内容を理解している場合にのみ変更してください</system:String>
+    <system:String x:Key="i.td.expert.warning.button">続ける</system:String>
+    <system:String x:Key="i.td.expert.algorithm">アルゴリズム</system:String>
+    <system:String x:Key="i.td.expert.digits">桁数</system:String>
+    <system:String x:Key="i.td.expert.digits.placeholder">通常は6桁</system:String>
+    <system:String x:Key="i.td.expert.period">有効時間</system:String>
+    <system:String x:Key="i.td.expert.period.placeholder">通常は30秒</system:String>
+    <system:String x:Key="i.td.icon.text">発行者の検索候補から、マッチするアイコンの表示が可能です</system:String>
+    <system:String x:Key="i.td.note">メモ (任意)</system:String>
+    <system:String x:Key="i.td.format">フォーマット</system:String>
+    <system:String x:Key="i.td.noissuer">発行者を入力してください</system:String>
+    <system:String x:Key="i.td.nosecret">秘密鍵を入力してください</system:String>
+    <system:String x:Key="i.td.invalidsecret">正しい秘密鍵を入力してください</system:String>
+    <system:String x:Key="i.td.invaliddigits">正しい桁数を指定してください</system:String>
+    <system:String x:Key="i.td.invalidperiod">正しい有効時間を指定してください</system:String>
+    <system:String x:Key="i.td.customicon.btn">カスタムアイコン</system:String>
+    <system:String x:Key="i.td.customicon.dialog.title">アイコンを選ぶ</system:String>
+    <system:String x:Key="i.td.customicon.tolarge">画像ファイルの最大サイズは1MBです</system:String>
+
+    <!--  Token Success Page  -->
+    <system:String x:Key="i.page.tokensuccesspage">トークン</system:String>
+    <system:String x:Key="i.stp.added">トークンが追加されました</system:String>
+    <system:String x:Key="i.stp.home">すべてのトークンを見る</system:String>
+    <system:String x:Key="i.stp.edited">Token edited</system:String>
+    <system:String x:Key="i.stp.added.multiple">複数のトークンが追加</system:String>
+    <system:String x:Key="i.stp.added.multiple.description">@Count個のトークンの追加に成功しました</system:String>
+    <system:String x:Key="i.stp.added.multiple.duplicate">既に存在する@Count個のトークンは追加されませんでした</system:String>
+
+    <!--  Text Formatting Dialog  -->
+    <system:String x:Key="i.txtfd.title">テキストフォーマット</system:String>
+    <system:String x:Key="i.txtfd.content">Ctrl+B: Bold@nCtrl+I: Italic@nCtrl+U: 下線@nCtrl+Shift+L: 箇条書き@nCtrl+Shift+N: 段落番号@nCtrl+E: 中央寄せ@nCtrl+L: 左寄せ@nCtrl+R: 右寄せ</system:String>
+
+    <!--  Token card  -->
+    <system:String x:Key="i.tokencard.copy">コピー</system:String>
+    <system:String x:Key="i.tokencard.edit">編集</system:String>
+    <system:String x:Key="i.tokencard.delete">削除</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.title">トークンの削除</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.content">本当に@Nameを削除してもよろしいですか?この操作は取り消せません。</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.yes">削除</system:String>
+    <system:String x:Key="i.tokencard.qr">QRコードを表示</system:String>
+    <system:String x:Key="i.tokencard.save">保存</system:String>
+    <system:String x:Key="i.tokencard.qr.keepsecure">このQRコードは重要な情報ですので、厳重に保管してください</system:String>
+
+    <!--  Update  -->
+    <system:String x:Key="i.update.title">アップデートが利用可能です</system:String>
+    <system:String x:Key="i.update.content">2FAGuardの新しいバージョンが利用可能です。 今すぐインストールしますか?</system:String>
+    <system:String x:Key="i.update.install">インストール</system:String>
+    <system:String x:Key="i.update.skip">後で</system:String>
+    <system:String x:Key="i.update.loading">アップデートをダウンロード中です...</system:String>
+    <system:String x:Key="i.update.error.title">アップデートに失敗しました</system:String>
+    <system:String x:Key="i.update.error.content">アップデート中にエラーが発生しました</system:String>
+    <system:String x:Key="i.update.changelog">更新履歴を確認</system:String>
+
+    <!--  Tray  -->
+    <system:String x:Key="i.tray.exit">終了</system:String>
+    <system:String x:Key="i.tray.lock">ロック</system:String>
+
+    <!--  Other  -->
+    <system:String x:Key="i.win.hello.request">FAGuardは本人確認を必要とします</system:String>
+    <system:String x:Key="i.error">エラー</system:String>
+    <system:String x:Key="i.save">保存</system:String>
+    <system:String x:Key="i.dialog.close">閉じる</system:String>
+    <system:String x:Key="i.dialog.next">次へ</system:String>
+    <system:String x:Key="i.dialog.cancel">キャンセル</system:String>
+    <system:String x:Key="i.error.unhandled.title">例外処理</system:String>
+    <system:String x:Key="i.error.unhandled.content">予期せぬエラーが発生しました。エラーを修正するために報告をお願いします。エラーの詳細はログファイルで確認できます。</system:String>
+    <system:String x:Key="i.error.unhandled.openbug">バグを報告する</system:String>
+    <system:String x:Key="i.error.time.title">警告: システムの時計は同期されていません</system:String>
+    <system:String x:Key="i.error.time.content">システムの時計は、正しい時刻と10秒以上の差があります。これはTOTPコードの生成に問題を引き起こす可能性があります。正しい時刻に設定してください。</system:String>
+    <system:String x:Key="i.running.title">すでに実行中です</system:String>
+    <system:String x:Key="i.running.content">2FAGuardの多重起動はできません</system:String>
+    <system:String x:Key="i.running.exit">終了</system:String>
+    <system:String x:Key="i.error.unhandled.github">報告ありがとうございます! よろしければ、GitHubでIssueを作成して、進捗状況をご確認ください。</system:String>
+    <system:String x:Key="i.error.unhandled.github.open">Issueを作成</system:String>
+    <system:String x:Key="i.unsupported.os.title">OSがサポートされていません</system:String>
+    <system:String x:Key="i.unsupported.os.content">2FAGuradを使用するためにWindowsをアップデートをしてください。Windows 10 1903 (18362) 以降のバージョンが必要です。</system:String>
+    <system:String x:Key="i.unsupported.exit">終了</system:String>
+    <system:String x:Key="i.unsupported.arch.title">アーキテクチャが対応していません</system:String>
+    <system:String x:Key="i.unsupported.arch.content">お使いのアーキテクチャでは使用できません。2FAGuardは64bit環境でのみ動作します。</system:String>
+    <system:String x:Key="i.unsupported.vcpp.title">Visual C++ Redistributableがインストールされていません</system:String>
+    <system:String x:Key="i.unsupported.vcpp.content">2FAGuradを使用するためには Microsoft Visual C++ Redistributable 2015-2022 が必要です。パッケージをインストールしてください。2FAGuardインストーラーを使用したか、パッケージをインストールした際は、デバイスの再起動が必要になる場合があります。</system:String>
+    <system:String x:Key="i.unsupported.vcpp.download">ダウンロード</system:String>
+    <system:String x:Key="i.unsupported.olderversion.title">古いバージョンです</system:String>
+    <system:String x:Key="i.unsupported.olderversion.content">2FAGuardの古いバージョンを使用中です。新しいバージョンで編集されたデータは開くことができません。使用するためにアップデートしてください。</system:String>
+</ResourceDictionary>
