@@ -18,7 +18,8 @@
         IT,
         EL,
         AR,
-        PT_BR
+        PT_BR,
+        JA
     }
 
     public enum SortOrderSetting
