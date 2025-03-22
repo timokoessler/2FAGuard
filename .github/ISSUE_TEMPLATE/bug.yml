@@ -10,11 +10,19 @@ body:
       value: |
         Thanks for taking the time to fill out this bug report!
   - type: textarea
-    id: what-happened
+    id: summary
     attributes:
-      label: What happened?
-      description: Describe the bug you are experiencing and how to reproduce it.
-      placeholder: What is the bug and what did you expect to happen? How can we reproduce the problem?
+      label: Bug Summary
+      description: A brief description of the bug.
+      placeholder: What is the bug about? What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Describe the steps to reproduce the bug.
+      placeholder: How can the bug be reproduced?
     validations:
       required: true
   - type: textarea
@@ -28,14 +36,14 @@ body:
     id: win-version
     attributes:
       label: What version of Windows are you using?
-      description: If possible, please enter not only Windows 10 / 11 but the entire version.
+      description: Please enter the entire version number, e.g. Windows 11 26100
       placeholder: Your Windows version
     validations:
       required: true
   - type: input
     id: app-version
     attributes:
-      label: What version of the app are you using?
-      placeholder: The app version, e.g. 1.0.0
+      label: What version and edition of the app are you using?
+      placeholder: The app version, e.g. 1.0.0 and the edition, e.g. Microsoft Store, Portable or Installer
     validations:
       required: true
