@@ -70,12 +70,9 @@ namespace Guard.WPF.Views.Pages
                 return;
             }
 
-            List<TokenCard> tokenCards = [];
-
-            foreach (var token in tokenHelpers)
-            {
-                tokenCards.Add(new TokenCard(token));
-            }
+            List<TokenCard> tokenCards = tokenHelpers
+                .Select(token => new TokenCard(token))
+                .ToList();
 
             SortTokenCardList(tokenCards);
 

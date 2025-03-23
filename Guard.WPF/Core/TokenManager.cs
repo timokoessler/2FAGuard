@@ -7,24 +7,28 @@ namespace Guard.WPF.Core
     class TokenManager
     {
         private static List<TOTPTokenHelper>? tokenHelpers;
+        private static readonly SemaphoreSlim bgLoadSemaphore = new(1, 1);
 
         internal static async Task LoadDataInBackground()
         {
+            await bgLoadSemaphore.WaitAsync();
             await Task.Run(() =>
             {
                 try
                 {
                     List<DBTOTPToken> dbTokens = Database.GetAllTokens();
-                    tokenHelpers = [];
-                    foreach (DBTOTPToken dbToken in dbTokens)
-                    {
-                        tokenHelpers.Add(new TOTPTokenHelper(dbToken));
-                    }
+                    tokenHelpers = dbTokens
+                        .Select(dbToken => new TOTPTokenHelper(dbToken))
+                        .ToList();
                 }
                 catch (Exception e)
                 {
                     Log.Logger.Error("Error loading tokens: {0} {1}", e.Message, e.StackTrace);
                     throw new Exception($"Error loading tokens: {e.Message} {e.StackTrace}");
+                }
+                finally
+                {
+                    bgLoadSemaphore.Release();
                 }
             });
         }
