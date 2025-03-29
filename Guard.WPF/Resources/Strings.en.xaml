@@ -275,6 +275,14 @@
     <system:String x:Key="i.tray.exit">Exit</system:String>
     <system:String x:Key="i.tray.lock">Lock</system:String>
 
+
+    <!--  Password  -->
+    <system:String x:Key="i.pass.invalid.minlength">The password must be at least @Length characters long</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">The password must not be longer than 128 characters</system:String>
+    <system:String x:Key="i.pass.invalid.case">The password must contain at least one lowercase and one uppercase letter</system:String>
+    <system:String x:Key="i.pass.invalid.digit">The password must contain at least one digit</system:String>
+    <system:String x:Key="i.pass.invalid.special">The password must contain at least one special character</system:String>
+
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">The application 2FAGuard wants to prove your identity</system:String>
     <system:String x:Key="i.error">Error</system:String>

@@ -40,3 +40,12 @@ Create a subkey named `Settings` in the path specified above. These keys can be 
 - `HideWinHello` (DWORD): If set to `1`, the settings page will not show the Windows Hello settings. The default is `0`.
 - `HidePreventRecording` (DWORD): The settings page will not show the option to prevent screen recording if set to `1`. The default is `0`.
 - `HideSecurityKey` (DWORD): If set to `1`, the settings page will not show the security key (WebAuthn / FIDO2) settings. The default is `0`.
+
+### Password requirements
+
+Create a subkey named `Password` in the path specified above. The following values can be set:
+
+- `RequireLowerAndUpperCase` (DWORD): Requires at least one lowercase and one uppercase letter in the password. The default is `0`.
+- `RequireDigits` (DWORD): Requires at least one digit in the password. The default is `0`.
+- `RequireSpecialChars` (DWORD): Requires at least one special character in the password. The default is `0`.
+- `MinLength` (DWORD): The minimum length of the password. The default is `8`. Tip: Select decimal as the base for the value in the registry editor when entering the value.

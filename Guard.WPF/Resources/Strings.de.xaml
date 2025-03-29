@@ -276,6 +276,13 @@
     <system:String x:Key="i.tray.exit">Beenden</system:String>
     <system:String x:Key="i.tray.lock">Sperren</system:String>
 
+    <!--  Password  -->
+    <system:String x:Key="i.pass.invalid.minlength">Das Passwort muss mindestens @Length Zeichen lang sein</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">Das Passwort darf maximal 128 Zeichen lang sein</system:String>
+    <system:String x:Key="i.pass.invalid.case">Das Passwort muss Groß- und Kleinbuchstaben enthalten</system:String>
+    <system:String x:Key="i.pass.invalid.digit">Das Passwort muss mindestens eine Zahl enthalten</system:String>
+    <system:String x:Key="i.pass.invalid.special">Das Passwort muss mindestens ein Sonderzeichen enthalten</system:String>
+
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">Die Anwendung 2FAGuard möchte deine Identität bestätigen.</system:String>
     <system:String x:Key="i.error">Fehler</system:String>

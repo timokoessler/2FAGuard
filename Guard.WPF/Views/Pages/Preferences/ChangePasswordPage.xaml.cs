@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Guard.Core.Security;
 using Guard.WPF.Core;
+using Guard.WPF.Core.Security;
 
 namespace Guard.WPF.Views.Pages.Preferences
 {
@@ -49,11 +50,17 @@ namespace Guard.WPF.Views.Pages.Preferences
                 ShowEror("Error", I18n.GetString("changepass.current.notempty"));
                 return;
             }
-            if (PasswordBox.Password.Length < 8 || PasswordBox.Password.Length > 128)
+
+            (bool passValid, string? passInvalidReason) = PasswordComplexity.CheckPassword(
+                PasswordBox.Password
+            );
+
+            if (!passValid)
             {
-                ShowEror("Error", I18n.GetString("welcome.pass.length"));
+                ShowEror("Error", passInvalidReason ?? "Invalid Password");
                 return;
             }
+
             if (PasswordBox.Password != PasswordBoxRepeat.Password)
             {
                 ShowEror("Error", I18n.GetString("welcome.pass.notmatch"));

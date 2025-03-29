@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Guard.Core;
 using Guard.Core.Security;
 using Guard.WPF.Core;
+using Guard.WPF.Core.Security;
 
 namespace Guard.WPF.Views.Pages.Start
 {
@@ -30,16 +31,17 @@ namespace Guard.WPF.Views.Pages.Start
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             InfoBar.IsOpen = false;
-            if (string.IsNullOrWhiteSpace(PasswordBox.Password))
+
+            (bool passValid, string? passInvalidReason) = PasswordComplexity.CheckPassword(
+                PasswordBox.Password
+            );
+
+            if (!passValid)
             {
-                ShowEror("Error", I18n.GetString("welcome.pass.notempty"));
+                ShowEror("Error", passInvalidReason ?? "Invalid Password");
                 return;
             }
-            if (PasswordBox.Password.Length < 8 || PasswordBox.Password.Length > 128)
-            {
-                ShowEror("Error", I18n.GetString("welcome.pass.length"));
-                return;
-            }
+
             if (PasswordBox.Password != PasswordBoxRepeat.Password)
             {
                 ShowEror("Error", I18n.GetString("welcome.pass.notmatch"));

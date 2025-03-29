@@ -98,5 +98,35 @@ namespace Guard.Core
 
             return (hideWinHello, hidePreventRecording, hideSecurityKey);
         }
+
+        public static (
+            bool requireLowerAndUpperCase,
+            bool requireDigits,
+            bool requireSpecialChars,
+            int minLength
+        ) GetPasswordOptions()
+        {
+            bool requireLowerAndUpperCase = GetValue(
+                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Password",
+                "RequireLowerAndUpperCase",
+                false
+            );
+            bool requireDigits = GetValue(
+                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Password",
+                "RequireDigits",
+                false
+            );
+            bool requireSpecialChars = GetValue(
+                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Password",
+                "RequireSpecialChars",
+                false
+            );
+            int minLength = GetValue(
+                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Password",
+                "MinLength",
+                8
+            );
+            return (requireLowerAndUpperCase, requireDigits, requireSpecialChars, minLength);
+        }
     }
 }
