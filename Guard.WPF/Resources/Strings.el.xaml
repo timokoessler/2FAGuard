@@ -174,7 +174,7 @@
     <system:String x:Key="i.import.authpro.description">Εισαγωγή αρχείου αντιγράφου ασφαλείας από την εφαρμογή Stratum</system:String>
     <system:String x:Key="i.import.gauthenticator">Επαληθευτής Google</system:String>
     <system:String x:Key="i.import.gauthenticator.description">Εισαγωγή διακριτικών από την εφαρμογή Επαληθευτής Google</system:String>
-    <system:String x:Key="i.import.gauthenticator.msgbox.content">Για να εισαγάγετε διακριτικά από τον Επαληθευτή Google, ανοίξτε την εφαρμογή στο smartphone ή το tablet σας και επιλέξτε "Μεταφορά λογαριασμών" στο μενού και στη συνέχεια "Εξαγωγή λογαριασμών".@nΣτη συνέχεια, πάρτε ένα στιγμιότυπο οθόνης του εμφανιζόμενου κώδικα QR και αντιγράψτε το αρχείο εικόνας σε αυτή τη συσκευή.@nΚάντε εισαγωγή αυτού του αρχείου επιλέγοντας "Εισαγωγή QR κωδικού" στην κορυφή αυτής της εφαρμογής.@n@nΣημείωση: Ένας κωδικός QR μπορεί να αποθηκεύσει μόνο μια περιορισμένη ποσότητα πληροφοριών. Παρακαλώ επιλέξτε το πολύ 5 διακριτικά ταυτόχρονα στην εφαρμογή Επαληθευτής Google για εξαγωγή.</system:String>
+    <system:String x:Key="i.import.gauthenticator.msgbox.content">Για να εισαγάγετε διακριτικά από τον Επαληθευτή Google, ανοίξτε την εφαρμογή στο smartphone ή το tablet σας και επιλέξτε &quot;Μεταφορά λογαριασμών&quot; στο μενού και στη συνέχεια &quot;Εξαγωγή λογαριασμών&quot;.@nΣτη συνέχεια, πάρτε ένα στιγμιότυπο οθόνης του εμφανιζόμενου κώδικα QR και αντιγράψτε το αρχείο εικόνας σε αυτή τη συσκευή.@nΚάντε εισαγωγή αυτού του αρχείου επιλέγοντας &quot;Εισαγωγή QR κωδικού&quot; στην κορυφή αυτής της εφαρμογής.@n@nΣημείωση: Ένας κωδικός QR μπορεί να αποθηκεύσει μόνο μια περιορισμένη ποσότητα πληροφοριών. Παρακαλώ επιλέξτε το πολύ 5 διακριτικά ταυτόχρονα στην εφαρμογή Επαληθευτής Google για εξαγωγή.</system:String>
     <system:String x:Key="i.import.authpro.invalid">Το επιλεγμένο αρχείο δεν είναι έγκυρο αντίγραφο ασφαλείας της εφαρμογής Stratum.</system:String>
     <system:String x:Key="i.import.authpro.legacy">Το επιλεγμένο αντίγραφο ασφαλείας είναι σε ξεπερασμένη μορφή και δεν μπορεί να εισαχθεί. Παρακαλώ δημιουργήστε το αντίγραφο ασφαλείας με μια τρέχουσα έκδοση της εφαρμογής Stratum.</system:String>
     <system:String x:Key="i.import.password">Παρακαλώ εισάγετε τον κωδικό πρόσβασης για το αρχείο αντιγράφου ασφαλείας</system:String>
@@ -192,6 +192,7 @@
     <system:String x:Key="i.page.exportpage">Εξαγωγή διακριτικών</system:String>
     <system:String x:Key="i.export.failed.title">Η εξαγωγή απέτυχε</system:String>
     <system:String x:Key="i.export.failed.content">Παρουσιάστηκε σφάλμα κατά την εξαγωγή:</system:String>
+    <system:String x:Key="i.export.failed.unencrypted">Unencrypted backups are blocked by your administrator</system:String>
     <system:String x:Key="i.export.password">Παρακαλούμε εισάγετε έναν κωδικό πρόσβασης για το αρχείο αντιγράφου ασφαλείας</system:String>
     <system:String x:Key="i.export.password.invalid">Παρακαλώ δώστε έναν έγκυρο κωδικό πρόσβασης</system:String>
     <system:String x:Key="i.export.backup">Αντίγραφο Ασφαλείας</system:String>
@@ -272,6 +273,14 @@
     <!--  Tray  -->
     <system:String x:Key="i.tray.exit">Έξοδος</system:String>
     <system:String x:Key="i.tray.lock">Κλείδωμα</system:String>
+
+
+    <!--  Password  -->
+    <system:String x:Key="i.pass.invalid.minlength">The password must be at least @Length characters long</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">The password must not be longer than 128 characters</system:String>
+    <system:String x:Key="i.pass.invalid.case">The password must contain at least one lowercase and one uppercase letter</system:String>
+    <system:String x:Key="i.pass.invalid.digit">The password must contain at least one digit</system:String>
+    <system:String x:Key="i.pass.invalid.special">The password must contain at least one special character</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">Η εφαρμογή 2FAGuard θέλει να αποδείξει την ταυτότητά σας</system:String>

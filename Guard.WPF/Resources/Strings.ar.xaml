@@ -179,7 +179,7 @@
     <system:String x:Key="i.import.authpro.description">استيراد ملف النسخ الاحتياطي من تطبيق Stratum</system:String>
     <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
     <system:String x:Key="i.import.gauthenticator.description">استيراد الرموز المميزة من تطبيق Google Authenticator</system:String>
-    <system:String x:Key="i.import.gauthenticator.msgbox.content">استيراد الرموز المميزة من Google Authenticator، افتح التطبيق على هاتفك الذكي أو جهازك اللوحي وحدد "نقل الحسابات" في القائمة ثم "تصدير الحسابات".@nثم التقط لقطة شاشة لرمز QR المعروض وانسخ ملف الصورة إلى هذا الجهاز. @nقم باستيراد هذا الملف عن طريق "استيراد رمز QR" في الجزء العلوي من هذا التطبيق.@n@nملاحظة: يمكن لرمز QR تخزين كمية محدودة فقط من المعلومات. يرجى تحديد 5 رموز مميزة كحد أقصى في نفس الوقت في تطبيق Google Authenticator للتصدير.</system:String>
+    <system:String x:Key="i.import.gauthenticator.msgbox.content">استيراد الرموز المميزة من Google Authenticator، افتح التطبيق على هاتفك الذكي أو جهازك اللوحي وحدد &quot;نقل الحسابات&quot; في القائمة ثم &quot;تصدير الحسابات&quot;.@nثم التقط لقطة شاشة لرمز QR المعروض وانسخ ملف الصورة إلى هذا الجهاز. @nقم باستيراد هذا الملف عن طريق &quot;استيراد رمز QR&quot; في الجزء العلوي من هذا التطبيق.@n@nملاحظة: يمكن لرمز QR تخزين كمية محدودة فقط من المعلومات. يرجى تحديد 5 رموز مميزة كحد أقصى في نفس الوقت في تطبيق Google Authenticator للتصدير.</system:String>
     <system:String x:Key="i.import.authpro.invalid">الملف المحدد ليس نسخة احتياطية صالحة لتطبيق Stratum.</system:String>
     <system:String x:Key="i.import.authpro.legacy">تنسيق ملف النسخة الاحتياطية المحددة قديم ولا يمكن استيراده. يرجى إنشاء النسخة الاحتياطية باستخدام إصدار حالي من تطبيق Stratum.</system:String>
     <system:String x:Key="i.import.password">الرجاء إدخال كلمة المرور لملف النسخ الاحتياطي</system:String>
@@ -197,6 +197,7 @@
     <system:String x:Key="i.page.exportpage">تصدير الرموز</system:String>
     <system:String x:Key="i.export.failed.title">فشل التصدير</system:String>
     <system:String x:Key="i.export.failed.content">حدث خطأ أثناء التصدير:</system:String>
+    <system:String x:Key="i.export.failed.unencrypted">Unencrypted backups are blocked by your administrator</system:String>
     <system:String x:Key="i.export.password">الرجاء إدخال كلمة المرور لملف النسخ الاحتياطي</system:String>
     <system:String x:Key="i.export.password.invalid">الرجاء إدخال كلمة مرور صالحة</system:String>
     <system:String x:Key="i.export.backup">نسح احتياطي</system:String>
@@ -277,6 +278,14 @@
     <!--  Tray  -->
     <system:String x:Key="i.tray.exit">خروج</system:String>
     <system:String x:Key="i.tray.lock">قفل</system:String>
+
+
+    <!--  Password  -->
+    <system:String x:Key="i.pass.invalid.minlength">The password must be at least @Length characters long</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">The password must not be longer than 128 characters</system:String>
+    <system:String x:Key="i.pass.invalid.case">The password must contain at least one lowercase and one uppercase letter</system:String>
+    <system:String x:Key="i.pass.invalid.digit">The password must contain at least one digit</system:String>
+    <system:String x:Key="i.pass.invalid.special">The password must contain at least one special character</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">يريد تطبيق 2FAGuard إثبات هويتك</system:String>

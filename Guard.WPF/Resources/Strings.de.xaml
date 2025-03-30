@@ -1,8 +1,5 @@
-﻿<?xml version="1.0" ?>
-<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Nav  -->
     <system:String x:Key="i.title">2FAGuard</system:String>
@@ -95,7 +92,7 @@
     <system:String x:Key="i.webauthn.delete.yes">Entfernen</system:String>
 
     <!--  Application setup  -->
-    <system:String x:Key="i.welcome.subtext">Willkommen! Bitte wähle, wie du deine Token vor unbefugtem Zugriff schützen möchtest</system:String>
+    <system:String x:Key="i.welcome.subtext">Willkommen! Bitte wähle, wie du deine Token vor unbefugtem Zugriff schützen möchtest.</system:String>
     <system:String x:Key="i.welcome.hello">Windows Hello oder Passwort</system:String>
     <system:String x:Key="i.welcome.hello.description">Einfach und sicher, Passwort als Backup</system:String>
     <system:String x:Key="i.welcome.hello.notavailable">Windows Hello ist nicht verfügbar</system:String>
@@ -139,7 +136,7 @@
     <system:String x:Key="i.home.notokens.button">Token hinzufügen</system:String>
     <system:String x:Key="i.home.search.placeholder">Tokens durchsuchen</system:String>
     <system:String x:Key="i.home.intro.title">Tipp</system:String>
-    <system:String x:Key="i.home.intro.content">Du kannst mit einem Rechtsklick auf ein Token weitere Aktionen ausführen, wie z.B. einen Token bearbeiten oder löschen.</system:String>
+    <system:String x:Key="i.home.intro.content">Weitere Aktionen, wie z.B. einen Token bearbeiten oder löschen, können mit einem Rechtsklick auf den Token ausgeführt werden.</system:String>
 
     <!--  Add  -->
     <system:String x:Key="i.page.addoverview">Token hinzufügen</system:String>
@@ -195,6 +192,7 @@
     <system:String x:Key="i.page.exportpage">Tokens exportieren</system:String>
     <system:String x:Key="i.export.failed.title">Export fehlgeschlagen</system:String>
     <system:String x:Key="i.export.failed.content">Beim Exportieren ist ein Fehler aufgetreten:</system:String>
+    <system:String x:Key="i.export.failed.unencrypted">Unverschlüsselte Backups werden von Ihrem Administrator blockiert</system:String>
     <system:String x:Key="i.export.password">Bitte geben Sie ein Passwort für die Sicherungsdatei ein</system:String>
     <system:String x:Key="i.export.password.invalid">Bitte geben Sie ein gültiges Passwort ein</system:String>
     <system:String x:Key="i.export.backup">Backup</system:String>
@@ -276,6 +274,7 @@
     <system:String x:Key="i.tray.exit">Beenden</system:String>
     <system:String x:Key="i.tray.lock">Sperren</system:String>
 
+
     <!--  Password  -->
     <system:String x:Key="i.pass.invalid.minlength">Das Passwort muss mindestens @Length Zeichen lang sein</system:String>
     <system:String x:Key="i.pass.invalid.maxlength">Das Passwort darf maximal 128 Zeichen lang sein</system:String>
@@ -284,7 +283,7 @@
     <system:String x:Key="i.pass.invalid.special">Das Passwort muss mindestens ein Sonderzeichen enthalten</system:String>
 
     <!--  Other  -->
-    <system:String x:Key="i.win.hello.request">Die Anwendung 2FAGuard möchte deine Identität bestätigen.</system:String>
+    <system:String x:Key="i.win.hello.request">Die Anwendung 2FAGuard möchte deine Identität bestätigen</system:String>
     <system:String x:Key="i.error">Fehler</system:String>
     <system:String x:Key="i.save">Speichern</system:String>
     <system:String x:Key="i.dialog.close">Schließen</system:String>

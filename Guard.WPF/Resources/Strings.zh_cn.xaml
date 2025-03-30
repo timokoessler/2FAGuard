@@ -192,6 +192,7 @@
     <system:String x:Key="i.page.exportpage">导出令牌</system:String>
     <system:String x:Key="i.export.failed.title">导出失败</system:String>
     <system:String x:Key="i.export.failed.content">导出时发生错误：</system:String>
+    <system:String x:Key="i.export.failed.unencrypted">Unencrypted backups are blocked by your administrator</system:String>
     <system:String x:Key="i.export.password">请输入备份文件的密码</system:String>
     <system:String x:Key="i.export.password.invalid">请输入有效的密码</system:String>
     <system:String x:Key="i.export.backup">备份</system:String>
@@ -272,6 +273,14 @@
     <!--  Tray  -->
     <system:String x:Key="i.tray.exit">退出</system:String>
     <system:String x:Key="i.tray.lock">锁定</system:String>
+
+
+    <!--  Password  -->
+    <system:String x:Key="i.pass.invalid.minlength">The password must be at least @Length characters long</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">The password must not be longer than 128 characters</system:String>
+    <system:String x:Key="i.pass.invalid.case">The password must contain at least one lowercase and one uppercase letter</system:String>
+    <system:String x:Key="i.pass.invalid.digit">The password must contain at least one digit</system:String>
+    <system:String x:Key="i.pass.invalid.special">The password must contain at least one special character</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">应用2FAGuard想要证明您的身份</system:String>
