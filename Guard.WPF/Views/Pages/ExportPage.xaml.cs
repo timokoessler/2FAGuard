@@ -27,6 +27,11 @@ namespace Guard.WPF.Views.Pages
         {
             try
             {
+                if (!exporter.RequiresPassword() && RegistrySettings.PreventUnencryptedExports())
+                {
+                    throw new Exception(I18n.GetString("i.export.failed.unencrypted"));
+                }
+
                 if (exporter.Type == IExporter.ExportType.File)
                 {
                     Microsoft.Win32.SaveFileDialog saveFileDialog =
@@ -60,6 +65,7 @@ namespace Guard.WPF.Views.Pages
                             throw new Exception(I18n.GetString("export.password.invalid"));
                         }
                     }
+
                     await exporter.Export(saveFileDialog.FileName, password);
 
                     Wpf.Ui.Controls.MessageBoxResult sucessDialogResult =

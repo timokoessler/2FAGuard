@@ -128,5 +128,14 @@ namespace Guard.Core
             );
             return (requireLowerAndUpperCase, requireDigits, requireSpecialChars, minLength);
         }
+
+        public static bool PreventUnencryptedExports()
+        {
+            return GetValue(
+                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard",
+                "PreventUnencryptedExports",
+                false
+            );
+        }
     }
 }

@@ -194,6 +194,7 @@
     <system:String x:Key="i.page.exportpage">Export tokens</system:String>
     <system:String x:Key="i.export.failed.title">Export failed</system:String>
     <system:String x:Key="i.export.failed.content">An error occurred while exporting:</system:String>
+    <system:String x:Key="i.export.failed.unencrypted">Unencrypted backups are blocked by your administrator</system:String>
     <system:String x:Key="i.export.password">Please enter a password for the backup file</system:String>
     <system:String x:Key="i.export.password.invalid">Please enter a valid password</system:String>
     <system:String x:Key="i.export.backup">Backup</system:String>

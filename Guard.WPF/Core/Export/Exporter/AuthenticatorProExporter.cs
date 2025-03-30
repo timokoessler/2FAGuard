@@ -40,6 +40,12 @@ namespace Guard.WPF.Core.Export.Exporter
             var tokenHelpers =
                 await TokenManager.GetAllTokens()
                 ?? throw new Exception(I18n.GetString("export.notokens"));
+
+            if (tokenHelpers.Count == 0)
+            {
+                throw new Exception(I18n.GetString("export.notokens"));
+            }
+
             List<AuthenticatorProBackup.Authenticator> authenticators = [];
 
             foreach (var tokenHelper in tokenHelpers)
