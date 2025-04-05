@@ -1,0 +1,314 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Nav  -->
+    <system:String x:Key="i.title">2FAGuard</system:String>
+    <system:String x:Key="i.page.home">Tokeny</system:String>
+    <system:String x:Key="i.page.settings">Nastavení</system:String>
+    <system:String x:Key="i.language">Jazyk</system:String>
+    <system:String x:Key="i.nav.add">Přidat token</system:String>
+
+    <!--  Settings  -->
+    <system:String x:Key="i.settings.personalisation">Přizpůsobení</system:String>
+    <system:String x:Key="i.settings.theme">Motiv aplikace</system:String>
+    <system:String x:Key="i.settings.theme.description">Zvolte motiv vzhledu aplikace</system:String>
+    <system:String x:Key="i.settings.theme.system">Systémový</system:String>
+    <system:String x:Key="i.settings.theme.light">Světlý</system:String>
+    <system:String x:Key="i.settings.theme.dark">Tmavý</system:String>
+    <system:String x:Key="i.settings.language">Jazyk</system:String>
+    <system:String x:Key="i.settings.language.description">Vyberte jazyk aplikace</system:String>
+    <system:String x:Key="i.settings.about">O tomto softwaru</system:String>
+    <system:String x:Key="i.settings.issue">Nahlásit problém</system:String>
+    <system:String x:Key="i.settings.security">Zabezpečení</system:String>
+    <system:String x:Key="i.settings.winhello">Windows Hello</system:String>
+    <system:String x:Key="i.settings.winhello.description">Povolit přihlášení pomocí Windows Hello</system:String>
+    <system:String x:Key="i.settings.winhello.failed.title">Došlo k chybě</system:String>
+    <system:String x:Key="i.settings.winhello.failed.content">Při nastavování Windows Hello došlo k chybě:</system:String>
+    <system:String x:Key="i.passdialog.title">Zadejte své heslo</system:String>
+    <system:String x:Key="i.passdialog.content">Pro potvrzení akce zadejte prosím své heslo</system:String>
+    <system:String x:Key="i.passdialog.input">Vaše heslo</system:String>
+    <system:String x:Key="i.passdialog.next">Další</system:String>
+    <system:String x:Key="i.passdialog.incorrect">Heslo je nesprávné</system:String>
+    <system:String x:Key="i.settings.password">Heslo</system:String>
+    <system:String x:Key="i.settings.password.description">Změnit vaše heslo</system:String>
+    <system:String x:Key="i.settings.password.button">Změnit</system:String>
+    <system:String x:Key="i.changepass.title">Změnit heslo</system:String>
+    <system:String x:Key="i.changepass.currentbox">Současné heslo</system:String>
+    <system:String x:Key="i.changepass.newbox">Zadejte nové heslo</system:String>
+    <system:String x:Key="i.changepass.newbox.repeat">Zopakujte nové heslo</system:String>
+    <system:String x:Key="i.changepass.current.notempty">Zadejte prosím své současné heslo</system:String>
+    <system:String x:Key="i.changepass.current.incorrect">Zadané současné heslo je nesprávné</system:String>
+    <system:String x:Key="i.settings.record">Zabránit nahrávání</system:String>
+    <system:String x:Key="i.settings.record.description">Blokuje nahrávání obrazovky a snímky obrazovky aplikace</system:String>
+    <system:String x:Key="i.settings.autolock">Automatické uzamčení</system:String>
+    <system:String x:Key="i.settings.autolock.description">Uzamknout aplikaci, pokud jsou Windows uzamčeny</system:String>
+    <system:String x:Key="i.settings.oss">Použitý open source software</system:String>
+    <system:String x:Key="i.settings.autostart">Automatické spuštění</system:String>
+    <system:String x:Key="i.settings.autostart.description">Automaticky spustit aplikaci při startu Windows</system:String>
+    <system:String x:Key="i.settings.autostart.error.title">Došlo k chybě</system:String>
+    <system:String x:Key="i.settings.autostart.error.disabled.policy">Automatické spuštění aplikace bylo deaktivováno zásadami skupiny</system:String>
+    <system:String x:Key="i.settings.autostart.error.disabled.user">Automatické spuštění aplikace bylo deaktivováno ve Správci úloh Windows a lze jej změnit pouze tam</system:String>
+    <system:String x:Key="i.settings.autostart.error.alreadyenabled">Automatické spuštění aplikace je již aktivováno</system:String>
+    <system:String x:Key="i.settings.autostart.error.notenabled">Automatické spuštění aplikace nelze deaktivovat, protože je již deaktivováno</system:String>
+    <system:String x:Key="i.settings.tray">Minimalizovat a zavřít do oznamovací oblasti</system:String>
+    <system:String x:Key="i.settings.tray.description">Přesunout aplikaci do oznamovací oblasti při minimalizaci a zavření</system:String>
+    <system:String x:Key="i.settings.imprint">Tiráž</system:String>
+    <system:String x:Key="i.settings.privacy">Soukromí</system:String>
+    <system:String x:Key="i.settings.reset">Resetovat aplikaci</system:String>
+    <system:String x:Key="i.settings.reset.description">Smazat všechny tokeny a nastavení</system:String>
+    <system:String x:Key="i.settings.reset.button">Resetovat</system:String>
+    <system:String x:Key="i.settings.reset.confirm.title">Jste si jisti?</system:String>
+    <system:String x:Key="i.settings.reset.confirm.content">Opravdu chcete smazat všechny tokeny a nastavení? Tuto akci nelze vrátit zpět.</system:String>
+    <system:String x:Key="i.settings.reset.confirm.btn">Resetovat</system:String>
+    <system:String x:Key="i.settings.locktime">Časovač uzamčení</system:String>
+    <system:String x:Key="i.settings.locktime.description">Uzamknout aplikaci po určité době nečinnosti</system:String>
+    <system:String x:Key="i.settings.locktime.never">Nikdy</system:String>
+    <system:String x:Key="i.settings.locktime.thirtyseconds">30 sekund</system:String>
+    <system:String x:Key="i.settings.locktime.oneminute">1 minuta</system:String>
+    <system:String x:Key="i.settings.locktime.fiveminutes">5 minut</system:String>
+    <system:String x:Key="i.settings.locktime.tenminutes">10 minut</system:String>
+    <system:String x:Key="i.settings.locktime.thirtyminutes">30 minut</system:String>
+    <system:String x:Key="i.settings.locktime.onehour">1 hodina</system:String>
+    <system:String x:Key="i.page.changepasswordpage">Změnit heslo</system:String>
+    <system:String x:Key="i.settings.webauthn">Bezpečnostní klíč (FIDO2)</system:String>
+    <system:String x:Key="i.settings.webauthn.description">Přihlášení pomocí hardwarového bezpečnostního klíče</system:String>
+    <system:String x:Key="i.settings.webauthn.button">Konfigurovat</system:String>
+    <system:String x:Key="i.settings.webauthn.notsupported">Zdá se, že váš operační systém nepodporuje WebAuthn.</system:String>
+
+    <!--  WebAuthn  -->
+    <system:String x:Key="i.page.webauthnpage">Bezpečnostní klíč (FIDO2)</system:String>
+    <system:String x:Key="i.webauthn.add.title">Přidat bezpečnostní klíč</system:String>
+    <system:String x:Key="i.webauthn.add.description">Zaregistrovat nový klíč</system:String>
+    <system:String x:Key="i.webauthn.existing">Existující klíče</system:String>
+    <system:String x:Key="i.webauthn.existing.none">Nejsou k dispozici žádné klíče</system:String>
+    <system:String x:Key="i.webauthn.dialog1.title">Přidat bezpečnostní klíč</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content">Zadejte prosím název pro bezpečnostní klíč, který chcete přidat</system:String>
+    <system:String x:Key="i.webauthn.dialog1.input">Název pro identifikaci klíče</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content2">Vezměte prosím na vědomí, že poté, co systémové vyskakovací okno oznámí, že se nyní můžete přihlásit pomocí bezpečnostního klíče, musíte dokončit bezprostředně následující krok ověření, abyste dokončili registraci.</system:String>
+    <system:String x:Key="i.webauthn.dialog1.namerequired">Musíte zadat název pro bezpečnostní klíč</system:String>
+    <system:String x:Key="i.webauthn.dialog.nameexists">Bezpečnostní klíč s tímto názvem již existuje</system:String>
+    <system:String x:Key="i.webauthn.delete.title">Odebrat bezpečnostní klíč</system:String>
+    <system:String x:Key="i.webauthn.delete.content">Opravdu chcete odebrat bezpečnostní klíč @Name? Tento klíč již nebudete moci použít k ověření.</system:String>
+    <system:String x:Key="i.webauthn.delete.yes">Odebrat</system:String>
+
+    <!--  Application setup  -->
+    <system:String x:Key="i.welcome.subtext">Děkujeme za stažení! Zvolte prosím, jak chcete zabezpečit své tokeny.</system:String>
+    <system:String x:Key="i.welcome.hello">Windows Hello nebo Heslo</system:String>
+    <system:String x:Key="i.welcome.hello.description">Jednoduché a bezpečné, Heslo jako záložní možnost</system:String>
+    <system:String x:Key="i.welcome.hello.notavailable">Windows Hello není k dispozici</system:String>
+    <system:String x:Key="i.welcome.hello.notavailable.content">Pro použití této funkce prosím nakonfigurujte Windows Hello v nastavení systému Windows.</system:String>
+    <system:String x:Key="i.welcome.pass">Pouze heslo</system:String>
+    <system:String x:Key="i.welcome.pass.description">Zabezpečte své tokeny heslem</system:String>
+    <system:String x:Key="i.welcome.skip">Přeskočit</system:String>
+    <system:String x:Key="i.welcome.pass.title">Nastavit heslo</system:String>
+    <system:String x:Key="i.welcome.pass.subtext">Zadejte prosím bezpečné heslo, které bude použito k zašifrování vašich tokenů. Pokud toto heslo zapomenete, nebudete mít k tokenům přístup.</system:String>
+    <system:String x:Key="i.welcome.pass.box">Zadejte bezpečné heslo</system:String>
+    <system:String x:Key="i.welcome.pass.box.repeat">Zopakujte heslo</system:String>
+    <system:String x:Key="i.welcome.pass.notempty">Heslo nemůže být prázdné</system:String>
+    <system:String x:Key="i.welcome.pass.notmatch">Hesla se neshodují</system:String>
+    <system:String x:Key="i.welcome.pass.length">Heslo musí mít délku alespoň 8 a maximálně 128 znaků</system:String>
+    <system:String x:Key="i.setup.finished.title">Nastavení dokončeno</system:String>
+    <system:String x:Key="i.setup.finished.subtext">Úspěšně jste nastavili 2FAGuard. Nyní můžete začít přidávat své tokeny.</system:String>
+    <system:String x:Key="i.setup.finished.action.token">Přidat token</system:String>
+    <system:String x:Key="i.setup.finished.action.token.description">Přidejte první token do své sbírky</system:String>
+    <system:String x:Key="i.setup.finished.action.settings">Nastavení</system:String>
+    <system:String x:Key="i.setup.finished.action.settings.description">Změnit nastavení aplikace</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.title">Jste si jisti?</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.content">Zvolili jste použití 2FAGuard bez jakéhokoli zabezpečení. To znamená, že vaše tokeny nejsou šifrovány a mohou být přístupné komukoli, kdo má přístup k vašemu počítači. Jste si jisti, že chcete pokračovat?</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.continue">Pokračovat (nedoporučuje se)</system:String>
+    <system:String x:Key="i.welcome.portable.winhello.title">Poznámka</system:String>
+    <system:String x:Key="i.welcome.portable.winhello.content">Pokud používáte přenosnou verzi 2FAGuard na USB klíči nebo jiném přenosném úložném zařízení, nemůžete se automaticky přihlásit pomocí Windows Hello s jinými uživateli Windows nebo na jiných zařízeních. Nejprve musíte aktivovat Windows Hello na jiných zařízeních v nastavení 2FAGuard. Vždy se můžete přihlásit pomocí svého hesla.</system:String>
+    <system:String x:Key="i.page.welcome">Vítejte</system:String>
+
+    <!--  Login  -->
+    <system:String x:Key="i.login.subtext">Pro přístup k vašim tokenům prosím ověřte svou identitu</system:String>
+    <system:String x:Key="i.login.passbox">Zadejte své heslo</system:String>
+    <system:String x:Key="i.login.button">Přihlásit se heslem</system:String>
+    <system:String x:Key="i.login.pass.error">Heslo je nesprávné</system:String>
+    <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
+    <system:String x:Key="i.login.warning.capslock.title">Varování</system:String>
+    <system:String x:Key="i.login.warning.capslock.content">Caps Lock je aktivován</system:String>
+    <system:String x:Key="i.login.webauthn">Bezpečnostní klíč</system:String>
+
+    <!--  Home  -->
+    <system:String x:Key="i.home.loading">Načítání...</system:String>
+    <system:String x:Key="i.home.notokens">Nebyly nalezeny žádné tokeny</system:String>
+    <system:String x:Key="i.home.notokens.button">Přidat token</system:String>
+    <system:String x:Key="i.home.search.placeholder">Hledat tokeny</system:String>
+    <system:String x:Key="i.home.intro.title">Upozornění</system:String>
+    <system:String x:Key="i.home.intro.content">Další akce, jako je úprava nebo smazání, můžete provést kliknutím pravým tlačítkem myši na token.</system:String>
+
+    <!--  Add  -->
+    <system:String x:Key="i.page.addoverview">Přidat tokeny</system:String>
+    <system:String x:Key="i.add.manual">Ruční zadání</system:String>
+    <system:String x:Key="i.add.manual.description">Zadejte tajný klíč a další informace</system:String>
+    <system:String x:Key="i.add.qr">Importovat QR kód</system:String>
+    <system:String x:Key="i.add.qr.description">Naskenujte QR kód importem souboru s obrázkem</system:String>
+    <system:String x:Key="i.add.qrscreen">Naskenovat QR kód z obrazovky</system:String>
+    <system:String x:Key="i.add.qrscreen.description">Detekuje viditelný QR kód na obrazovce</system:String>
+    <system:String x:Key="i.add.clipboard">Přidat ze schránky</system:String>
+    <system:String x:Key="i.add.clipboard.description">Vložte obrázek QR kódu nebo TOTP URI</system:String>
+    <system:String x:Key="i.add.import">Importovat</system:String>
+    <system:String x:Key="i.import.backup">Záloha</system:String>
+    <system:String x:Key="i.import.backup.description">Importovat záložní soubor vytvořený pomocí 2FAGuard</system:String>
+    <system:String x:Key="i.import.uri">Seznam URI</system:String>
+    <system:String x:Key="i.import.uri.description">Importovat seznam TOTP URI</system:String>
+    <system:String x:Key="i.import.bitwarden">Bitwarden</system:String>
+    <system:String x:Key="i.import.bitwarden.description">Importovat tokeny ze správce hesel Bitwarden</system:String>
+    <system:String x:Key="i.import.bitwarden.accountencryption">Vybraná záloha je omezena na váš účet Bitwarden a nelze ji importovat jinými aplikacemi. Pro import do 2FAGuard prosím vytvořte zálohu chráněnou heslem.</system:String>
+    <system:String x:Key="i.import.failed.title">Import selhal</system:String>
+    <system:String x:Key="i.import.failed.content">Při importu došlo k chybě:</system:String>
+    <system:String x:Key="i.import.noqrfound">Nelze detekovat QR kód</system:String>
+    <system:String x:Key="i.import.noqrfound.screen">Nebyl detekován žádný QR kód. Ujistěte se prosím, že žádné okno nezakrývá QR kód a že je QR kód jasně viditelný.</system:String>
+    <system:String x:Key="i.import.invalidqr.screen">QR kód neobsahuje platné informace o tokenu. Ujistěte se také, že je na obrazovce viditelný pouze jeden QR kód.</system:String>
+    <system:String x:Key="i.import.clipboard.invalid">Schránka neobsahuje obrázek ani text.</system:String>
+    <system:String x:Key="i.import.clipboard.invalid.multifiles">Aktuálně lze ze schránky importovat pouze jeden soubor najednou.</system:String>
+    <system:String x:Key="i.import.duplicate">Token se stejným tajným klíčem již existuje</system:String>
+    <system:String x:Key="i.home.sort">Pořadí řazení</system:String>
+    <system:String x:Key="i.home.sort.issuer.asc">Vydavatel, vzestupně</system:String>
+    <system:String x:Key="i.home.sort.issuer.desc">Vydavatel, sestupně</system:String>
+    <system:String x:Key="i.home.sort.createdat.asc">Datum vytvoření, vzestupně</system:String>
+    <system:String x:Key="i.home.sort.createdat.desc">Datum vytvoření, sestupně</system:String>
+    <system:String x:Key="i.import.notokens">V importovaném souboru nebyly nalezeny žádné tokeny</system:String>
+    <system:String x:Key="i.import.authpro">Stratum</system:String>
+    <system:String x:Key="i.import.authpro.description">Importovat záložní soubor z aplikace Stratum</system:String>
+    <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
+    <system:String x:Key="i.import.gauthenticator.description">Importovat tokeny z aplikace Google Authenticator</system:String>
+    <system:String x:Key="i.import.gauthenticator.msgbox.content">Chcete-li importovat tokeny z Google Authenticator, otevřete aplikaci na svém smartphonu nebo tabletu a v nabídce vyberte "Přenos účtů" a poté "Exportovat účty".@nPoté pořiďte snímek obrazovky zobrazeného QR kódu a zkopírujte soubor s obrázkem na toto zařízení.@nImportujte tento soubor výběrem možnosti "Importovat QR kód" v horní části této aplikace.@n@nPoznámka: QR kód může uložit pouze omezené množství informací. Vyberte prosím v aplikaci Google Authenticator maximálně 5 tokenů najednou pro export.</system:String>
+    <system:String x:Key="i.import.authpro.invalid">Vybraný soubor není platnou zálohou aplikace Stratum.</system:String>
+    <system:String x:Key="i.import.authpro.legacy">Vybraná záloha je ve zastaralém formátu a nelze ji importovat. Vytvořte prosím zálohu pomocí aktuální verze aplikace Stratum.</system:String>
+    <system:String x:Key="i.import.password">Zadejte prosím heslo k záložnímu souboru</system:String>
+    <system:String x:Key="i.import.password.invalid">Zadané heslo je nesprávné</system:String>
+    <system:String x:Key="i.import.hotp.notsupported">Tokeny založené na čítači (HOTP) nejsou podporovány</system:String>
+    <system:String x:Key="i.import.twofas">2FAS</system:String>
+    <system:String x:Key="i.import.twofas.description">Importovat záložní soubor z aplikace 2FAS</system:String>
+    <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
+    <system:String x:Key="i.import.aegis.description">Importovat export z Aegis Authenticator</system:String>
+    <system:String x:Key="i.page.tokensettings">Token</system:String>
+    <system:String x:Key="i.page.tokensettings.add">Přidat token</system:String>
+    <system:String x:Key="i.page.tokensettings.edit">Upravit token</system:String>
+
+    <!--  Export  -->
+    <system:String x:Key="i.page.exportpage">Exportovat tokeny</system:String>
+    <system:String x:Key="i.export.failed.title">Export selhal</system:String>
+    <system:String x:Key="i.export.failed.content">Při exportu došlo k chybě:</system:String>
+    <system:String x:Key="i.export.failed.unencrypted">Nešifrované zálohy jsou blokovány vaším správcem</system:String>
+    <system:String x:Key="i.export.password">Zadejte prosím heslo pro záložní soubor</system:String>
+    <system:String x:Key="i.export.password.invalid">Zadejte prosím platné heslo</system:String>
+    <system:String x:Key="i.export.backup">Záloha</system:String>
+    <system:String x:Key="i.export.backup.description">Kompletní záložní soubor, kompatibilní pouze s 2FAGuard</system:String>
+    <system:String x:Key="i.export.uri">Seznam URI</system:String>
+    <system:String x:Key="i.export.uri.description">Exportovat seznam TOTP URI bez poznámek a nešifrovaně</system:String>
+    <system:String x:Key="i.export.success.title">Tokeny exportovány</system:String>
+    <system:String x:Key="i.export.success.content">Vaše tokeny byly úspěšně exportovány.</system:String>
+    <system:String x:Key="i.export.success.open">Otevřít složku</system:String>
+    <system:String x:Key="i.export.notokens">Neexistují žádné tokeny, které by bylo možné exportovat</system:String>
+    <system:String x:Key="i.export.authpro">Stratum</system:String>
+    <system:String x:Key="i.export.authpro.description">Exportovat tokeny jako záložní soubor Stratum</system:String>
+
+    <!--  Token Details  -->
+    <system:String x:Key="i.td.general">Obecné informace</system:String>
+    <system:String x:Key="i.td.issuer">Název vydavatele</system:String>
+    <system:String x:Key="i.td.issuer.placeholder">Například: Google nebo Apple</system:String>
+    <system:String x:Key="i.td.username">Uživatelské jméno</system:String>
+    <system:String x:Key="i.td.username.placeholder">Obvykle vaše e-mailová adresa</system:String>
+    <system:String x:Key="i.td.secret">Tajný klíč</system:String>
+    <system:String x:Key="i.td.secret.placeholder">Vložte nebo zadejte tajný klíč</system:String>
+    <system:String x:Key="i.td.expert">Expertní nastavení</system:String>
+    <system:String x:Key="i.td.expert.warning.title">Varování</system:String>
+    <system:String x:Key="i.td.expert.warning.text">Tato nastavení měňte pouze pokud víte, co děláte</system:String>
+    <system:String x:Key="i.td.expert.warning.button">Přesto pokračovat</system:String>
+    <system:String x:Key="i.td.expert.algorithm">Algoritmus</system:String>
+    <system:String x:Key="i.td.expert.digits">Počet číslic</system:String>
+    <system:String x:Key="i.td.expert.digits.placeholder">6 je standard</system:String>
+    <system:String x:Key="i.td.expert.period">Platnost v sekundách</system:String>
+    <system:String x:Key="i.td.expert.period.placeholder">30s je standard</system:String>
+    <system:String x:Key="i.td.icon.text">Zadejte název vydavatele pro získání odpovídající ikony</system:String>
+    <system:String x:Key="i.td.note">Poznámka (volitelné)</system:String>
+    <system:String x:Key="i.td.format">Formát</system:String>
+    <system:String x:Key="i.td.noissuer">Zadejte prosím název vydavatele</system:String>
+    <system:String x:Key="i.td.nosecret">Zadejte prosím tajný klíč</system:String>
+    <system:String x:Key="i.td.invalidsecret">Tajný klíč je neplatný</system:String>
+    <system:String x:Key="i.td.invaliddigits">Počet číslic je neplatný</system:String>
+    <system:String x:Key="i.td.invalidperiod">Doba platnosti je neplatná</system:String>
+    <system:String x:Key="i.settings.license">Licence</system:String>
+    <system:String x:Key="i.td.customicon.btn">Vlastní ikona</system:String>
+    <system:String x:Key="i.td.customicon.dialog.title">Vyberte ikonu</system:String>
+    <system:String x:Key="i.td.customicon.tolarge">Jsou podporovány pouze obrázky s maximální velikostí 1 MB</system:String>
+
+    <!--  Token Success Page  -->
+    <system:String x:Key="i.page.tokensuccesspage">Token</system:String>
+    <system:String x:Key="i.stp.added">Token přidán</system:String>
+    <system:String x:Key="i.stp.home">Zobrazit všechny tokeny</system:String>
+    <system:String x:Key="i.stp.edited">Token upraven</system:String>
+    <system:String x:Key="i.stp.added.multiple">Přidané tokeny</system:String>
+    <system:String x:Key="i.stp.added.multiple.description">@Count tokenů bylo úspěšně přidáno</system:String>
+    <system:String x:Key="i.stp.added.multiple.duplicate">@Count tokenů nebylo přidáno, protože již existují</system:String>
+
+    <!--  Text Formatting Dialog  -->
+    <system:String x:Key="i.txtfd.title">Formátovat text</system:String>
+    <system:String x:Key="i.txtfd.content">Ctrl+B: Tučné@nCtrl+I: Kurzíva@nCtrl+U: Podtržené@nCtrl+Shift+L: Odrážky@nCtrl+Shift+N: Číslování@nCtrl+E: Zarovnat na střed@nCtrl+L: Zarovnat vlevo@nCtrl+R: Zarovnat vpravo</system:String>
+
+    <!--  Token card  -->
+    <system:String x:Key="i.tokencard.copy">Kopírovat</system:String>
+    <system:String x:Key="i.tokencard.edit">Upravit</system:String>
+    <system:String x:Key="i.tokencard.delete">Smazat</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.title">Smazat token</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.content">Opravdu chcete smazat token @Name? Tuto akci nelze vrátit zpět.</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.yes">Smazat</system:String>
+    <system:String x:Key="i.tokencard.qr">Zobrazit QR kód</system:String>
+    <system:String x:Key="i.tokencard.save">Uložit</system:String>
+    <system:String x:Key="i.tokencard.qr.keepsecure">Tento QR kód obsahuje citlivé informace. Uchovávejte jej v bezpečí.</system:String>
+
+    <!--  Update  -->
+    <system:String x:Key="i.update.title">Aktualizace k dispozici</system:String>
+    <system:String x:Key="i.update.content">Je k dispozici nová verze 2FAGuard. Chcete ji nainstalovat nyní?</system:String>
+    <system:String x:Key="i.update.install">Nainstalovat aktualizaci</system:String>
+    <system:String x:Key="i.update.skip">Přeskočit</system:String>
+    <system:String x:Key="i.update.loading">Stahování aktualizace...</system:String>
+    <system:String x:Key="i.update.error.title">Aktualizace selhala</system:String>
+    <system:String x:Key="i.update.error.content">Při aktualizaci došlo k chybě</system:String>
+    <system:String x:Key="i.update.changelog">Zobrazit seznam změn</system:String>
+
+    <!--  Tray  -->
+    <system:String x:Key="i.tray.exit">Ukončit</system:String>
+    <system:String x:Key="i.tray.lock">Uzamknout</system:String>
+
+    <!--  Password  -->
+    <system:String x:Key="i.pass.invalid.minlength">Heslo musí mít alespoň @Length znaků</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">Heslo nesmí být delší než 128 znaků</system:String>
+    <system:String x:Key="i.pass.invalid.case">Heslo musí obsahovat alespoň jedno malé a jedno velké písmeno</system:String>
+    <system:String x:Key="i.pass.invalid.digit">Heslo musí obsahovat alespoň jednu číslici</system:String>
+    <system:String x:Key="i.pass.invalid.special">Heslo musí obsahovat alespoň jeden speciální znak</system:String>
+
+    <!--  Other  -->
+    <system:String x:Key="i.win.hello.request">Aplikace 2FAGuard chce ověřit vaši identitu</system:String>
+    <system:String x:Key="i.error">Chyba</system:String>
+    <system:String x:Key="i.save">Uložit</system:String>
+    <system:String x:Key="i.dialog.close">Zavřít</system:String>
+    <system:String x:Key="i.dialog.next">Další</system:String>
+    <system:String x:Key="i.dialog.cancel">Zrušit</system:String>
+    <system:String x:Key="i.error.unhandled.title">Neočekávaná výjimka</system:String>
+    <system:String x:Key="i.error.unhandled.content">Došlo k neočekávané chybě. Nahlaste prosím tuto chybu, aby mohla být opravena. Více informací naleznete v souboru protokolu.</system:String>
+    <system:String x:Key="i.error.unhandled.openbug">Nahlásit chybu</system:String>
+    <system:String x:Key="i.error.time.title">Varování: Systémový čas není synchronizován</system:String>
+    <system:String x:Key="i.error.time.content">Čas ve vašem systému se odchyluje od správného času o více než 10 sekund. To může vést k problémům s generováním TOTP kódů. Ujistěte se prosím, že čas ve vašem systému je správný.</system:String>
+    <system:String x:Key="i.running.title">Aplikace již běží</system:String>
+    <system:String x:Key="i.running.content">Tuto aplikaci lze spustit pouze jednou.</system:String>
+    <system:String x:Key="i.running.exit">Ukončit</system:String>
+    <system:String x:Key="i.error.unhandled.github">Děkujeme za vaše hlášení! Pokud chcete, můžete vytvořit issue na GitHubu, abyste byli informováni o postupu.</system:String>
+    <system:String x:Key="i.error.unhandled.github.open">Vytvořit Issue</system:String>
+
+    <system:String x:Key="i.unsupported.os.title">OS není podporován</system:String>
+    <system:String x:Key="i.unsupported.os.content">Pro použití 2FAGuard prosím aktualizujte na Windows 10 1903 (18362) nebo vyšší.</system:String>
+    <system:String x:Key="i.unsupported.exit">Ukončit</system:String>
+    <system:String x:Key="i.unsupported.arch.title">Architektura není podporována</system:String>
+    <system:String x:Key="i.unsupported.arch.content">Architektura vašeho systému není podporována. 2FAGuard podporuje pouze 64bitové systémy.</system:String>
+    <system:String x:Key="i.unsupported.vcpp.title">Visual C++ Redistributable není nainstalován</system:String>
+    <system:String x:Key="i.unsupported.vcpp.content">Pro spuštění 2FAGuard je vyžadován Microsoft Visual C++ Redistributable 2015-2022. Nainstalujte prosím tento balíček, abyste mohli 2FAGuard používat. Pokud jste použili instalační program 2FAGuard nebo jste balíček právě nainstalovali, možná budete muset restartovat zařízení.</system:String>
+    <system:String x:Key="i.unsupported.vcpp.download">Stáhnout</system:String>
+    <system:String x:Key="i.unsupported.olderversion.title">Zastaralá verze aplikace</system:String>
+    <system:String x:Key="i.unsupported.olderversion.content">Používáte zastaralou verzi 2FAGuard. Data, která již byla upravena novější verzí aplikace, nelze otevřít. Aktualizujte prosím aplikaci, abyste mohli data používat.</system:String>
+</ResourceDictionary>
