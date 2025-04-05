@@ -21,7 +21,8 @@ namespace Guard.WPF.Core
                 { "el", "Ελληνικά" },
                 { "ar", "العربية" },
                 { "pt_br", "Português Brasileiro" },
-                { "ja", "日本語" }
+                { "ja", "日本語" },
+                { "cz", "Čeština" }
             };
         private static readonly LanguageSetting defaultLanguage = LanguageSetting.EN;
         private static LanguageSetting currentLanguage = defaultLanguage;
