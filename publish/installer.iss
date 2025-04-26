@@ -1,5 +1,5 @@
 ﻿#define MyAppName "2FAGuard"
-#define MyAppVersion "1.5.6"
+#define MyAppVersion "1.5.7"
 #define MyAppPublisher "Timo Kössler"
 #define MyAppURL "https://2faguard.app"
 #define MyAppExeName "2FAGuard.exe"
@@ -51,6 +51,7 @@ Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
 Name: "arabic"; MessagesFile: "compiler:Languages\Arabic.isl"
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
+Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
