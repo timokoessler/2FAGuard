@@ -276,11 +276,11 @@
 
 
     <!--  Password  -->
-    <system:String x:Key="i.pass.invalid.minlength">The password must be at least @Length characters long</system:String>
-    <system:String x:Key="i.pass.invalid.maxlength">The password must not be longer than 128 characters</system:String>
-    <system:String x:Key="i.pass.invalid.case">The password must contain at least one lowercase and one uppercase letter</system:String>
-    <system:String x:Key="i.pass.invalid.digit">The password must contain at least one digit</system:String>
-    <system:String x:Key="i.pass.invalid.special">The password must contain at least one special character</system:String>
+    <system:String x:Key="i.pass.invalid.minlength">A senha deve ter no mínimo @Length caracteres</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">A senha deve ter menos de 128 caracteres</system:String>
+    <system:String x:Key="i.pass.invalid.case">A senha deve conter pelo menos uma letra maiuscula e uma minúscula</system:String>
+    <system:String x:Key="i.pass.invalid.digit">A senha deve conter pelo menos um digito</system:String>
+    <system:String x:Key="i.pass.invalid.special">A senha deve conter pelo menos um caractere especial</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">O aplicativo 2FAGuard quer provar a sua identidade</system:String>

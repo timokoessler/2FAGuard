@@ -192,7 +192,7 @@
     <system:String x:Key="i.page.exportpage">Εξαγωγή διακριτικών</system:String>
     <system:String x:Key="i.export.failed.title">Η εξαγωγή απέτυχε</system:String>
     <system:String x:Key="i.export.failed.content">Παρουσιάστηκε σφάλμα κατά την εξαγωγή:</system:String>
-    <system:String x:Key="i.export.failed.unencrypted">Unencrypted backups are blocked by your administrator</system:String>
+    <system:String x:Key="i.export.failed.unencrypted">Μη κρυπτογραφημένα αντίγραφα ασφαλείας αποκλείονται από το διαχειριστή σας</system:String>
     <system:String x:Key="i.export.password">Παρακαλούμε εισάγετε έναν κωδικό πρόσβασης για το αρχείο αντιγράφου ασφαλείας</system:String>
     <system:String x:Key="i.export.password.invalid">Παρακαλώ δώστε έναν έγκυρο κωδικό πρόσβασης</system:String>
     <system:String x:Key="i.export.backup">Αντίγραφο Ασφαλείας</system:String>
@@ -276,11 +276,11 @@
 
 
     <!--  Password  -->
-    <system:String x:Key="i.pass.invalid.minlength">The password must be at least @Length characters long</system:String>
-    <system:String x:Key="i.pass.invalid.maxlength">The password must not be longer than 128 characters</system:String>
-    <system:String x:Key="i.pass.invalid.case">The password must contain at least one lowercase and one uppercase letter</system:String>
-    <system:String x:Key="i.pass.invalid.digit">The password must contain at least one digit</system:String>
-    <system:String x:Key="i.pass.invalid.special">The password must contain at least one special character</system:String>
+    <system:String x:Key="i.pass.invalid.minlength">Ο κωδικός πρόσβασης πρέπει να είναι τουλάχιστον @Length χαρακτήρες</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">Ο κωδικός πρόσβασης δεν πρέπει να υπερβαίνει τους 128 χαρακτήρες</system:String>
+    <system:String x:Key="i.pass.invalid.case">Ο κωδικός πρόσβασης πρέπει να περιέχει τουλάχιστον ένα πεζό και ένα κεφαλαίο γράμμα</system:String>
+    <system:String x:Key="i.pass.invalid.digit">Ο κωδικός πρόσβασης πρέπει να περιέχει τουλάχιστον ένα ψηφίο</system:String>
+    <system:String x:Key="i.pass.invalid.special">Ο κωδικός πρόσβασης πρέπει να περιέχει τουλάχιστον έναν ειδικό χαρακτήρα</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">Η εφαρμογή 2FAGuard θέλει να αποδείξει την ταυτότητά σας</system:String>
