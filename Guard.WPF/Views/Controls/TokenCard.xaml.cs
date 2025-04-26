@@ -254,9 +254,9 @@ namespace Guard.WPF.Views.UIComponents
                 Title = I18n.GetString("tokencard.delete.modal.title"),
                 Content = I18n.GetString("tokencard.delete.modal.content")
                     .Replace("@Name", token.dBToken.Issuer),
-                IsPrimaryButtonEnabled = true,
-                PrimaryButtonText = I18n.GetString("tokencard.delete.modal.yes"),
                 CloseButtonText = I18n.GetString("dialog.close"),
+                PrimaryButtonText = I18n.GetString("tokencard.delete.modal.yes"),
+                PrimaryButtonAppearance = ControlAppearance.Danger,
                 MaxWidth = 400
             };
 
