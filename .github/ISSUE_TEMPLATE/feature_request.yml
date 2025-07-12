@@ -21,6 +21,6 @@ body:
       label: Are you willing to help with the implementation?
       description: If you are willing to help with the implementation, please check the box below.
       options:
-        - label: Yes
-      validations:
-        required: false
+        - label: "Yes"
+    validations:
+      required: false
