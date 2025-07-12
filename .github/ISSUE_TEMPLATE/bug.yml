@@ -1,6 +1,6 @@
-name: Bug Report
-description: Create a bug report
-title: "Bug: "
+name: "🐛 Bug Report"
+description: "Report something that is not working as expected"
+title: "🐛 Bug Report: "
 labels: ["bug"]
 assignees:
   - timokoessler
@@ -28,8 +28,8 @@ body:
   - type: textarea
     id: error-message
     attributes:
-      label: Provide the error message / stack trace
-      placeholder: Paste the error message or stack trace here, if available
+      label: Provide the error message and stack trace
+      placeholder: Paste the error message and stack trace here, if available
     validations:
       required: false
   - type: input
@@ -43,7 +43,26 @@ body:
   - type: input
     id: app-version
     attributes:
-      label: What version and edition of the app are you using?
-      placeholder: The app version, e.g. 1.0.0 and the edition, e.g. Microsoft Store, Portable or Installer
+      label: What version of the app are you using?
+      placeholder: The app version, e.g. 1.0.0
     validations:
       required: true
+  - type: dropdown
+    id: app-edition
+    attributes:
+      label: What edition of the app are you using?
+      options:
+        - Microsoft Store App
+        - Installer
+        - Portable App
+    validations:
+      required: true
+  - type: checkboxes
+    id:
+    attributes:
+      label: Are you willing to help with the implementation?
+      description: If you are willing to help with the implementation, please check the box below.
+      options:
+        - label: Yes
+      validations:
+        required: false
