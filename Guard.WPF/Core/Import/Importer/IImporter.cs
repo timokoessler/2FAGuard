@@ -6,7 +6,7 @@
         {
             File,
             Clipboard,
-            ScreenCapture
+            ScreenCapture,
         }
 
         internal abstract string Name { get; }

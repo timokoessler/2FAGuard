@@ -3,7 +3,7 @@
     public enum OtpUriType
     {
         TOTP,
-        HOTP
+        HOTP,
     }
 
     public class OTPUri

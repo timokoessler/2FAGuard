@@ -10,7 +10,7 @@ namespace Guard.Core.Security.WebAuthn.entities
         Any = 0,
         Optional = 1,
         OptionalWithCredentialIdList = 2,
-        Required = 3
+        Required = 3,
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
@@ -42,7 +42,7 @@ namespace Guard.Core.Security.WebAuthn.entities
             new RawCredProtectDataIn
             {
                 UserVerification = UserVerification,
-                RequireCredProtect = RequireCredProtect
+                RequireCredProtect = RequireCredProtect,
             };
     }
 

@@ -169,14 +169,14 @@ namespace Guard.Core.Security.WebAuthn
                     new PrfSalt()
                     {
                         First = Convert.FromBase64String(device.Salt1),
-                        Second = Convert.FromBase64String(device.Salt2)
+                        Second = Convert.FromBase64String(device.Salt2),
                     }
                 );
             }
 
             var extensions = new List<WebAuthnAssertionExtensionInput>
             {
-                new HmacSecretAssertionExtension() { SaltsByCredential = saltMap, },
+                new HmacSecretAssertionExtension() { SaltsByCredential = saltMap },
             };
 
             WindowsHello.FocusSecurityPrompt();
@@ -247,7 +247,7 @@ namespace Guard.Core.Security.WebAuthn
                     new AssertionResult()
                     {
                         CredentialId = assertion.Credential.CredentialId,
-                        HmacSecret = hmacSecret
+                        HmacSecret = hmacSecret,
                     }
                 );
             });

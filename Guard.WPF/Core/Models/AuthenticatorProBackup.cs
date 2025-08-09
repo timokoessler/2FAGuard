@@ -8,14 +8,14 @@
             Totp = 2,
             MobileOtp = 3,
             SteamOtp = 4,
-            YandexOtp = 5
+            YandexOtp = 5,
         }
 
         public enum HashAlgorithm
         {
             Sha1 = 0,
             Sha256 = 1,
-            Sha512 = 2
+            Sha512 = 2,
         }
 
         public class Authenticator

@@ -44,7 +44,7 @@ namespace Guard.WPF.Views.Pages
                     new ComboBoxItem
                     {
                         Content = I18n.GetFullLanguageName(lang),
-                        Tag = lang.ToString().ToLower()
+                        Tag = lang.ToString().ToLower(),
                     }
                 );
             }
@@ -133,7 +133,7 @@ namespace Guard.WPF.Views.Pages
                     new ComboBoxItem
                     {
                         Content = I18n.GetString($"i.settings.locktime.{time}"),
-                        Tag = tag
+                        Tag = tag,
                     }
                 );
             }
@@ -292,7 +292,7 @@ namespace Guard.WPF.Views.Pages
                     Title = I18n.GetString("settings.winhello.failed.title"),
                     Content = $"{I18n.GetString("settings.winhello.failed.content")} {ex.Message}",
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
+                    MaxWidth = 400,
                 }.ShowDialogAsync();
             }
         }
@@ -332,7 +332,7 @@ namespace Guard.WPF.Views.Pages
                         Content =
                             $"{I18n.GetString("settings.winhello.failed.content")} {ex.Message}",
                         CloseButtonText = I18n.GetString("dialog.close"),
-                        MaxWidth = 400
+                        MaxWidth = 400,
                     }.ShowDialogAsync();
                 }
             }
@@ -386,7 +386,7 @@ namespace Guard.WPF.Views.Pages
                     Title = I18n.GetString("settings.autostart.error.title"),
                     Content = ex.Message,
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
+                    MaxWidth = 400,
                 }.ShowDialogAsync();
             }
         }
@@ -414,7 +414,7 @@ namespace Guard.WPF.Views.Pages
                     Title = I18n.GetString("settings.autostart.error.title"),
                     Content = ex.Message,
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
+                    MaxWidth = 400,
                 }.ShowDialogAsync();
             }
         }
@@ -433,7 +433,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
                 CloseButtonText = I18n.GetString("dialog.close"),
-                MaxWidth = 550
+                MaxWidth = 550,
             }.ShowDialogAsync();
         }
 
@@ -459,7 +459,7 @@ ZXing.Net - Copyright Michael Jahn under Apache 2.0 License
 ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2.0 License
 ",
                 CloseButtonText = I18n.GetString("dialog.close"),
-                MaxWidth = 600
+                MaxWidth = 600,
             }.ShowDialogAsync();
         }
 
@@ -491,7 +491,7 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
                     CloseButtonText = I18n.GetString("dialog.cancel"),
                     PrimaryButtonText = I18n.GetString("settings.reset.confirm.btn"),
                     PrimaryButtonAppearance = ControlAppearance.Danger,
-                    MaxWidth = 500
+                    MaxWidth = 500,
                 }.ShowDialogAsync();
 
                 if (confirmResult == Wpf.Ui.Controls.MessageBoxResult.Primary)
@@ -508,7 +508,7 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
                     Title = I18n.GetString("error"),
                     Content = ex.Message,
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 500
+                    MaxWidth = 500,
                 }.ShowDialogAsync();
             }
         }
@@ -522,7 +522,7 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
                     Title = I18n.GetString("error"),
                     Content = I18n.GetString("settings.webauthn.notsupported"),
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
+                    MaxWidth = 400,
                 }.ShowDialogAsync();
                 return;
             }

@@ -51,7 +51,7 @@ namespace Guard.WPF.Views.Pages.Preferences
                     Title = I18n.GetString("webauthn.dialog1.title"),
                     Content = I18n.GetString("webauthn.dialog1.namerequired"),
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
+                    MaxWidth = 400,
                 }.ShowDialogAsync();
                 return;
             }
@@ -69,7 +69,7 @@ namespace Guard.WPF.Views.Pages.Preferences
                         Title = I18n.GetString("webauthn.dialog1.title"),
                         Content = I18n.GetString("webauthn.dialog.nameexists"),
                         CloseButtonText = I18n.GetString("dialog.close"),
-                        MaxWidth = 400
+                        MaxWidth = 400,
                     }.ShowDialogAsync();
                     return;
                 }
@@ -92,7 +92,7 @@ namespace Guard.WPF.Views.Pages.Preferences
                         Title = I18n.GetString("error"),
                         Content = creationResult.error,
                         CloseButtonText = I18n.GetString("dialog.close"),
-                        MaxWidth = 400
+                        MaxWidth = 400,
                     }.ShowDialogAsync();
                     return;
                 }
@@ -110,7 +110,7 @@ namespace Guard.WPF.Views.Pages.Preferences
                     Title = I18n.GetString("error"),
                     Content = $"Unhandled WebAuthn exception: {ex.Message}",
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
+                    MaxWidth = 400,
                 }.ShowDialogAsync();
             }
         }
@@ -126,7 +126,7 @@ namespace Guard.WPF.Views.Pages.Preferences
                     new Wpf.Ui.Controls.TextBlock()
                     {
                         Text = I18n.GetString("webauthn.existing.none"),
-                        Margin = new Thickness(0, 15, 0, 0)
+                        Margin = new Thickness(0, 15, 0, 0),
                     }
                 );
                 return;
@@ -154,7 +154,7 @@ namespace Guard.WPF.Views.Pages.Preferences
                         IsPrimaryButtonEnabled = true,
                         PrimaryButtonText = I18n.GetString("webauthn.delete.yes"),
                         CloseButtonText = I18n.GetString("dialog.close"),
-                        MaxWidth = 400
+                        MaxWidth = 400,
                     };
 
                     var result = await deleteMessageBox.ShowDialogAsync();
@@ -181,11 +181,11 @@ namespace Guard.WPF.Views.Pages.Preferences
                                             ? encryptionHelper.DecryptString(key.EncryptedName)
                                             : "???",
                                     FontTypography = FontTypography.BodyStrong,
-                                    TextWrapping = TextWrapping.WrapWithOverflow
+                                    TextWrapping = TextWrapping.WrapWithOverflow,
                                 },
-                            }
+                            },
                         },
-                        Content = delBtn
+                        Content = delBtn,
                     }
                 );
             }

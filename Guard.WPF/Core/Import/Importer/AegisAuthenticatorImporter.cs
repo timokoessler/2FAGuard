@@ -35,8 +35,10 @@ namespace Guard.WPF.Core.Import.Importer
             );
         }
 
-        private readonly JsonSerializerOptions jsonSerializerOptions =
-            new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        private readonly JsonSerializerOptions jsonSerializerOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
 
         public bool RequiresPassword(string? path)
         {
@@ -125,15 +127,14 @@ namespace Guard.WPF.Core.Import.Importer
                         );
                     }
 
-                    Scrypt scrypt =
-                        new(
-                            new ScryptParameters()
-                            {
-                                Cost = slot.N.Value,
-                                BlockSize = slot.R.Value,
-                                Parallelization = slot.P.Value,
-                            }
-                        );
+                    Scrypt scrypt = new(
+                        new ScryptParameters()
+                        {
+                            Cost = slot.N.Value,
+                            BlockSize = slot.R.Value,
+                            Parallelization = slot.P.Value,
+                        }
+                    );
 
                     try
                     {
@@ -268,14 +269,13 @@ namespace Guard.WPF.Core.Import.Importer
                     );
                 }
 
-                DBTOTPToken dbToken =
-                    new()
-                    {
-                        Id = TokenManager.GetNextId(),
-                        Issuer = string.IsNullOrEmpty(token.Issuer) ? "" : token.Issuer,
-                        EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
-                        CreationTime = DateTime.Now
-                    };
+                DBTOTPToken dbToken = new()
+                {
+                    Id = TokenManager.GetNextId(),
+                    Issuer = string.IsNullOrEmpty(token.Issuer) ? "" : token.Issuer,
+                    EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
+                    CreationTime = DateTime.Now,
+                };
 
                 if (!string.IsNullOrEmpty(token.Name))
                 {
@@ -298,10 +298,9 @@ namespace Guard.WPF.Core.Import.Importer
                     "SHA1" => TOTPAlgorithm.SHA1,
                     "SHA256" => TOTPAlgorithm.SHA256,
                     "SHA512" => TOTPAlgorithm.SHA512,
-                    _
-                        => throw new Exception(
-                            $"Unsupported algorithm in Aegis export: {token.Info.Algo}"
-                        ),
+                    _ => throw new Exception(
+                        $"Unsupported algorithm in Aegis export: {token.Info.Algo}"
+                    ),
                 };
 
                 dbToken.Digits = token.Info.Digits;

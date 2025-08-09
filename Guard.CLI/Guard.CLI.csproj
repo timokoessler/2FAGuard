@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
@@ -7,7 +6,7 @@
     <Nullable>enable</Nullable>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <ApplicationIcon>totp.ico</ApplicationIcon>
-	  <Title>2FAGuard CLI</Title>
+    <Title>2FAGuard CLI</Title>
     <Version>1.5.7</Version>
     <Authors>Timo Kössler and Open Source Contributors</Authors>
     <Copyright>$(Authors)</Copyright>
@@ -22,11 +21,9 @@
     <AssemblyName>2fa</AssemblyName>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
-
   <ItemGroup>
     <Content Include="totp.ico" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Spectre.Console" Version="0.50.0" />
     <PackageReference Include="Spectre.Console.Analyzer" Version="1.0.0">
@@ -35,9 +32,7 @@
     </PackageReference>
     <PackageReference Include="Spectre.Console.Cli" Version="0.50.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Guard.Core\Guard.Core.csproj" />
   </ItemGroup>
-
 </Project>

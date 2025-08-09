@@ -23,7 +23,7 @@ namespace Guard.Core.Security.WebAuthn.entities
         NteNotSupported = 0x80090029, // The requested operation is not supported
         NteDeviceNotFound = 0x80090035, // The device that is required by this cryptographic provider is not found on this platform
         NteUserCanceled = 0x80090036, // The action was cancelled by the user,
-        SCardNoReadersAvailable = 0x8010002E // No NFC reader available?
+        SCardNoReadersAvailable = 0x8010002E, // No NFC reader available?
     }
 
     public enum HashAlgorithm
@@ -35,13 +35,13 @@ namespace Guard.Core.Security.WebAuthn.entities
         Sha384,
 
         [Description("SHA-512")]
-        Sha512
+        Sha512,
     }
 
     public enum CredentialType
     {
         [Description("public-key")]
-        PublicKey
+        PublicKey,
     }
 
     public enum CoseAlgorithm : int
@@ -57,7 +57,7 @@ namespace Guard.Core.Security.WebAuthn.entities
 
         RSA_PSS_WITH_SHA256 = -37,
         RSA_PSS_WITH_SHA384 = -38,
-        RSA_PSS_WITH_SHA512 = -39
+        RSA_PSS_WITH_SHA512 = -39,
     }
 
     [Flags]
@@ -73,7 +73,7 @@ namespace Guard.Core.Security.WebAuthn.entities
         Internal = 0x00000010,
         Hybrid = 0x00000020,
 
-        Mask = 0x0000001F
+        Mask = 0x0000001F,
     }
 
     public enum AuthenticatorAttachment : int
@@ -81,7 +81,7 @@ namespace Guard.Core.Security.WebAuthn.entities
         Any = 0,
         Platform = 1,
         CrossPlatform = 2,
-        CrossPlatformU2F = 3
+        CrossPlatformU2F = 3,
     }
 
     public enum UserVerificationRequirement : int
@@ -89,7 +89,7 @@ namespace Guard.Core.Security.WebAuthn.entities
         Any = 0,
         Required = 1,
         Preferred = 2,
-        Discouraged = 3
+        Discouraged = 3,
     }
 
     public enum AttestationConveyancePreference : int
@@ -97,21 +97,21 @@ namespace Guard.Core.Security.WebAuthn.entities
         Any = 0,
         None = 1,
         Indirect = 2,
-        Direct = 3
+        Direct = 3,
     }
 
     public enum EnterpriseAttestation : int
     {
         None = 0,
         VendorFacilitated = 1,
-        PlatformManaged = 2
+        PlatformManaged = 2,
     }
 
     public enum LargeBlobSupport : int
     {
         None = 0,
         Required = 1,
-        Preferred = 2
+        Preferred = 2,
     }
 
     public enum LargeBlobOperation : int
@@ -119,7 +119,7 @@ namespace Guard.Core.Security.WebAuthn.entities
         None = 0,
         Get = 1,
         Set = 2,
-        Delete = 3
+        Delete = 3,
     }
 
     public enum LargeBlobStatus : int
@@ -133,12 +133,12 @@ namespace Guard.Core.Security.WebAuthn.entities
         MultipleCredentials = 6,
         LackOfSpace = 7,
         PlatformError = 8,
-        AuthenticationError = 9
+        AuthenticationError = 9,
     }
 
     public enum GetAssertionFlags : int
     {
-        HmacSecretValues = 0x00100000
+        HmacSecretValues = 0x00100000,
     }
 
     public enum AttestationFormatType
@@ -153,7 +153,7 @@ namespace Guard.Core.Security.WebAuthn.entities
         TPM,
 
         [Description("none")]
-        None
+        None,
     }
 
     public enum ExtensionType
@@ -168,13 +168,13 @@ namespace Guard.Core.Security.WebAuthn.entities
         CredBlob,
 
         [Description("minPinLength")]
-        MinPinLength
+        MinPinLength,
     }
 
     public enum AttestationDecodeType
     {
         None = 0,
-        Common = 1
+        Common = 1,
 
         // WEBAUTHN_ATTESTATION_DECODE_COMMON supports format types
         //  L"packed"

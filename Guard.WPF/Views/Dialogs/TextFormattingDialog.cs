@@ -17,7 +17,7 @@ namespace Guard.WPF.Views.Dialogs
                     {
                         Title = I18n.GetString("txtfd.title"),
                         Content = I18n.GetString("txtfd.content").Replace("@n", "\n"),
-                        CloseButtonText = I18n.GetString("dialog.close")
+                        CloseButtonText = I18n.GetString("dialog.close"),
                     }
                 );
         }

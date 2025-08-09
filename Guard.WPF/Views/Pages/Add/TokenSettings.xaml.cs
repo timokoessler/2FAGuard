@@ -102,12 +102,13 @@ namespace Guard.WPF.Views.Pages.Add
                 {
                     try
                     {
-                        MemoryStream notesStream =
-                            new(
-                                encryptionHelper.DecryptBytes(existingToken.dBToken.EncryptedNotes)
-                            );
-                        TextRange notesRange =
-                            new(Notes.Document.ContentStart, Notes.Document.ContentEnd);
+                        MemoryStream notesStream = new(
+                            encryptionHelper.DecryptBytes(existingToken.dBToken.EncryptedNotes)
+                        );
+                        TextRange notesRange = new(
+                            Notes.Document.ContentStart,
+                            Notes.Document.ContentEnd
+                        );
                         notesRange.Load(notesStream, DataFormats.Xaml);
                         notesStream.Close();
                     }
@@ -247,17 +248,14 @@ namespace Guard.WPF.Views.Pages.Add
             try
             {
                 EncryptionHelper encryptionHelper = Auth.GetMainEncryptionHelper();
-                DBTOTPToken dbToken =
-                    new()
-                    {
-                        Id =
-                            existingToken != null
-                                ? existingToken.dBToken.Id
-                                : TokenManager.GetNextId(),
-                        Issuer = Issuer.Text,
-                        EncryptedSecret = encryptionHelper.EncryptStringToBytes(normalizedSecret),
-                        CreationTime = DateTime.Now
-                    };
+                DBTOTPToken dbToken = new()
+                {
+                    Id =
+                        existingToken != null ? existingToken.dBToken.Id : TokenManager.GetNextId(),
+                    Issuer = Issuer.Text,
+                    EncryptedSecret = encryptionHelper.EncryptStringToBytes(normalizedSecret),
+                    CreationTime = DateTime.Now,
+                };
 
                 if (digits != 6)
                 {
@@ -290,8 +288,10 @@ namespace Guard.WPF.Views.Pages.Add
                     dbToken.EncryptedUsername = null;
                 }
 
-                TextRange notesTextRange =
-                    new(Notes.Document.ContentStart, Notes.Document.ContentEnd);
+                TextRange notesTextRange = new(
+                    Notes.Document.ContentStart,
+                    Notes.Document.ContentEnd
+                );
 
                 if (
                     !string.IsNullOrWhiteSpace(notesTextRange.Text)
@@ -365,12 +365,11 @@ namespace Guard.WPF.Views.Pages.Add
         {
             try
             {
-                OpenFileDialog openFileDialog =
-                    new()
-                    {
-                        Filter = "Icon (*.jpg, *.jpeg, *.png, *.svg) | *.jpg; *.jpeg; *.png; *.svg",
-                        Title = I18n.GetString("i.td.customicon.dialog.title")
-                    };
+                OpenFileDialog openFileDialog = new()
+                {
+                    Filter = "Icon (*.jpg, *.jpeg, *.png, *.svg) | *.jpg; *.jpeg; *.png; *.svg",
+                    Title = I18n.GetString("i.td.customicon.dialog.title"),
+                };
                 bool? result = openFileDialog.ShowDialog();
                 if (result != true)
                 {

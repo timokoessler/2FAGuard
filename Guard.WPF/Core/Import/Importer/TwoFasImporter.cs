@@ -15,8 +15,10 @@ namespace Guard.WPF.Core.Import.Importer
         public string Name => "2FAS";
         public IImporter.ImportType Type => IImporter.ImportType.File;
         public string SupportedFileExtensions => "2FAS Backup (*.2fas) | *.2fas";
-        private readonly JsonSerializerOptions jsonSerializerOptions =
-            new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        private readonly JsonSerializerOptions jsonSerializerOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
 
         public (int total, int duplicate, int tokenID) Parse(string? path, byte[]? password)
         {
@@ -116,14 +118,13 @@ namespace Guard.WPF.Core.Import.Importer
                     throw new Exception($"{I18n.GetString("td.invalidsecret")} ({issuer})");
                 }
 
-                DBTOTPToken dbToken =
-                    new()
-                    {
-                        Id = TokenManager.GetNextId(),
-                        Issuer = issuer,
-                        EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
-                        CreationTime = DateTime.Now
-                    };
+                DBTOTPToken dbToken = new()
+                {
+                    Id = TokenManager.GetNextId(),
+                    Issuer = issuer,
+                    EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
+                    CreationTime = DateTime.Now,
+                };
 
                 if (service.OTP.Account != null)
                 {
@@ -145,10 +146,9 @@ namespace Guard.WPF.Core.Import.Importer
                         "SHA1" => TOTPAlgorithm.SHA1,
                         "SHA256" => TOTPAlgorithm.SHA256,
                         "SHA512" => TOTPAlgorithm.SHA512,
-                        _
-                            => throw new Exception(
-                                $"Invalid 2FAS backup: Unsupported algorithm {service.OTP.Algorithm}"
-                            ),
+                        _ => throw new Exception(
+                            $"Invalid 2FAS backup: Unsupported algorithm {service.OTP.Algorithm}"
+                        ),
                     };
                 }
 

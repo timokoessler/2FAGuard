@@ -21,7 +21,7 @@ namespace Guard.WPF.Core.Import.Importer
             NoEncryption,
             LegacyEncryption,
             StrongEncryption,
-            Invalid
+            Invalid,
         }
 
         private const string LegacyHeader = "AuthenticatorPro";
@@ -103,14 +103,13 @@ namespace Guard.WPF.Core.Import.Importer
                     );
                 }
 
-                DBTOTPToken dbToken =
-                    new()
-                    {
-                        Id = TokenManager.GetNextId(),
-                        Issuer = token.Issuer,
-                        EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
-                        CreationTime = DateTime.Now
-                    };
+                DBTOTPToken dbToken = new()
+                {
+                    Id = TokenManager.GetNextId(),
+                    Issuer = token.Issuer,
+                    EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
+                    CreationTime = DateTime.Now,
+                };
 
                 if (token.Username != null)
                 {
@@ -130,10 +129,9 @@ namespace Guard.WPF.Core.Import.Importer
                         AuthenticatorProBackup.HashAlgorithm.Sha1 => TOTPAlgorithm.SHA1,
                         AuthenticatorProBackup.HashAlgorithm.Sha256 => TOTPAlgorithm.SHA256,
                         AuthenticatorProBackup.HashAlgorithm.Sha512 => TOTPAlgorithm.SHA512,
-                        _
-                            => throw new Exception(
-                                $"Invalid AuthenticatorPro: Unsupported algorithm {token.Algorithm}"
-                            ),
+                        _ => throw new Exception(
+                            $"Invalid AuthenticatorPro: Unsupported algorithm {token.Algorithm}"
+                        ),
                     };
                 }
 
@@ -219,7 +217,7 @@ namespace Guard.WPF.Core.Import.Importer
                 DegreeOfParallelism = ArgonParallelism,
                 Iterations = ArgonIterations,
                 MemorySize = ArgonMemorySize,
-                Salt = salt
+                Salt = salt,
             };
 
             byte[] keyBytes = argon2id.GetBytes(KeyLength);

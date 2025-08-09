@@ -83,7 +83,7 @@ namespace Guard.Core.Security.WebAuthn.entities
                 {
                     Transports = cred.AllowedTransports,
                     CredentialId = idPos,
-                    CredentialIdBytes = cred.CredentialId.Length
+                    CredentialIdBytes = cred.CredentialId.Length,
                 };
 
                 Marshal.StructureToPtr(rawCred, elmPos, false);

@@ -26,7 +26,7 @@
         internal enum BWKdfType
         {
             Pbkdf2 = 0,
-            Argon2id = 1
+            Argon2id = 1,
         }
 
         public bool? Encrypted { get; set; }

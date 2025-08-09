@@ -24,7 +24,7 @@ namespace Guard.WPF.Views.Pages.Start
 
         private void ApplyRegistrySettings()
         {
-            if(mainWindow.SkipApplyRegistrySettings)
+            if (mainWindow.SkipApplyRegistrySettings)
             {
                 mainWindow.SkipApplyRegistrySettings = false;
                 return;
@@ -73,7 +73,7 @@ namespace Guard.WPF.Views.Pages.Start
                     Title = I18n.GetString("welcome.hello.notavailable"),
                     Content = I18n.GetString("welcome.hello.notavailable.content"),
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
+                    MaxWidth = 400,
                 }.ShowDialogAsync();
                 return;
             }
@@ -86,7 +86,7 @@ namespace Guard.WPF.Views.Pages.Start
                         Content = I18n.GetString("welcome.portable.winhello.content"),
                         CloseButtonText = I18n.GetString("dialog.close"),
                         PrimaryButtonText = I18n.GetString("dialog.next"),
-                        MaxWidth = 500
+                        MaxWidth = 500,
                     }.ShowDialogAsync();
 
                 if (sucessDialogResult != Wpf.Ui.Controls.MessageBoxResult.Primary)
@@ -123,7 +123,7 @@ namespace Guard.WPF.Views.Pages.Start
                         Content = I18n.GetString("welcome.insecure.dialog.content"),
                         CloseButtonText = I18n.GetString("dialog.close"),
                         PrimaryButtonText = I18n.GetString("welcome.insecure.dialog.continue"),
-                        MaxWidth = 500
+                        MaxWidth = 500,
                     }.ShowDialogAsync();
 
                 if (sucessDialogResult != Wpf.Ui.Controls.MessageBoxResult.Primary)
@@ -145,7 +145,7 @@ namespace Guard.WPF.Views.Pages.Start
                     Title = "Error",
                     Content = ex.Message,
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 500
+                    MaxWidth = 500,
                 }.ShowDialogAsync();
             }
         }

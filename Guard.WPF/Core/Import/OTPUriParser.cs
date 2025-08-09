@@ -29,7 +29,7 @@ namespace Guard.WPF.Core.Import
                 throw new Exception("Invalid token type");
             }
 
-            OTPUri otpUri = new() { Type = OtpUriType.TOTP, };
+            OTPUri otpUri = new() { Type = OtpUriType.TOTP };
 
             string label = uri.LocalPath;
             if (label.Length < 2)
@@ -96,7 +96,7 @@ namespace Guard.WPF.Core.Import
                         "SHA1" => TOTPAlgorithm.SHA1,
                         "SHA256" => TOTPAlgorithm.SHA256,
                         "SHA512" => TOTPAlgorithm.SHA512,
-                        _ => throw new Exception("Invalid algorithm")
+                        _ => throw new Exception("Invalid algorithm"),
                     };
                     otpUri.Algorithm = algorithm;
                 }
@@ -148,17 +148,16 @@ namespace Guard.WPF.Core.Import
 
             EncryptionHelper encryption = Auth.GetMainEncryptionHelper();
 
-            DBTOTPToken dbToken =
-                new()
-                {
-                    Id = TokenManager.GetNextId(),
-                    Issuer = otpUri.Issuer,
-                    EncryptedSecret = encryption.EncryptStringToBytes(otpUri.Secret),
-                    Algorithm = otpUri.Algorithm,
-                    Digits = otpUri.Digits,
-                    Period = otpUri.Period,
-                    CreationTime = DateTime.Now
-                };
+            DBTOTPToken dbToken = new()
+            {
+                Id = TokenManager.GetNextId(),
+                Issuer = otpUri.Issuer,
+                EncryptedSecret = encryption.EncryptStringToBytes(otpUri.Secret),
+                Algorithm = otpUri.Algorithm,
+                Digits = otpUri.Digits,
+                Period = otpUri.Period,
+                CreationTime = DateTime.Now,
+            };
 
             if (otpUri.Account != null)
             {

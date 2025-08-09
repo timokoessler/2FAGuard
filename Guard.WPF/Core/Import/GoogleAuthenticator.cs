@@ -68,7 +68,7 @@ namespace Guard.WPF.Core.Import
                     }
                 }
 
-                OTPUri otpUri = new() { Type = OtpUriType.TOTP, };
+                OTPUri otpUri = new() { Type = OtpUriType.TOTP };
                 if (string.IsNullOrEmpty(token.Issuer))
                 {
                     otpUri.Issuer = "??????";
@@ -85,10 +85,9 @@ namespace Guard.WPF.Core.Import
                         Algorithm.Sha256 => TOTPAlgorithm.SHA256,
                         Algorithm.Sha512 => TOTPAlgorithm.SHA512,
                         Algorithm.TypeUnspecified => TOTPAlgorithm.SHA1,
-                        _
-                            => throw new Exception(
-                                "Invalid token: Invalid algorithm (otpauth-migration)"
-                            )
+                        _ => throw new Exception(
+                            "Invalid token: Invalid algorithm (otpauth-migration)"
+                        ),
                     };
                 }
 
@@ -99,10 +98,9 @@ namespace Guard.WPF.Core.Import
                         DigitCount.Six => 6,
                         DigitCount.Eight => 8,
                         DigitCount.Unspecified => 6,
-                        _
-                            => throw new Exception(
-                                "Invalid token: Invalid digits (otpauth-migration)"
-                            )
+                        _ => throw new Exception(
+                            "Invalid token: Invalid digits (otpauth-migration)"
+                        ),
                     };
                 }
 

@@ -46,8 +46,10 @@ namespace Guard.WPF.Views.Pages.Add
                 int tokenID;
                 if (importer.Type == IImporter.ImportType.File)
                 {
-                    Microsoft.Win32.OpenFileDialog openFileDialog =
-                        new() { Filter = importer.SupportedFileExtensions };
+                    Microsoft.Win32.OpenFileDialog openFileDialog = new()
+                    {
+                        Filter = importer.SupportedFileExtensions,
+                    };
                     bool? result = openFileDialog.ShowDialog();
                     if (result != true)
                     {
@@ -145,7 +147,7 @@ namespace Guard.WPF.Views.Pages.Add
                     Title = I18n.GetString("import.failed.title"),
                     Content = content,
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
+                    MaxWidth = 400,
                 }.ShowDialogAsync();
             }
         }
@@ -158,7 +160,7 @@ namespace Guard.WPF.Views.Pages.Add
                 Content = I18n.GetString("import.gauthenticator.msgbox.content")
                     .Replace("@n", "\n"),
                 CloseButtonText = I18n.GetString("dialog.close"),
-                MaxWidth = 500
+                MaxWidth = 500,
             }.ShowDialogAsync();
         }
 

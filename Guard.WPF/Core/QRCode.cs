@@ -11,12 +11,11 @@ namespace Guard.WPF.Core
     {
         public static string? ParseQRBitmap(Bitmap bitmap)
         {
-            BarcodeReader reader =
-                new()
-                {
-                    AutoRotate = true,
-                    Options = { PossibleFormats = [BarcodeFormat.QR_CODE] }
-                };
+            BarcodeReader reader = new()
+            {
+                AutoRotate = true,
+                Options = { PossibleFormats = [BarcodeFormat.QR_CODE] },
+            };
 
             var result = reader.Decode(bitmap);
 

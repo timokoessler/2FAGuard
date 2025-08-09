@@ -4,7 +4,7 @@
     {
         System,
         Light,
-        Dark
+        Dark,
     }
 
     public enum LanguageSetting
@@ -20,7 +20,7 @@
         AR,
         PT_BR,
         JA,
-        CZ
+        CZ,
     }
 
     public enum SortOrderSetting
@@ -28,7 +28,7 @@
         ISSUER_ASC,
         ISSUER_DESC,
         CREATED_ASC,
-        CREATED_DESC
+        CREATED_DESC,
     }
 
     public enum LockTimeSetting
@@ -39,7 +39,7 @@
         FiveMinutes,
         TenMinutes,
         ThirtyMinutes,
-        OneHour
+        OneHour,
     }
 
     public class AppSettings

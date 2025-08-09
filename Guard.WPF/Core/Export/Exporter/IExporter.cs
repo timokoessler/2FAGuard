@@ -4,7 +4,7 @@
     {
         internal enum ExportType
         {
-            File
+            File,
         }
 
         internal abstract string Name { get; }

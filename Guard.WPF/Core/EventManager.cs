@@ -11,7 +11,7 @@ namespace Guard.WPF.Core
             internal enum EventSource
             {
                 Navigation,
-                Settings
+                Settings,
             }
 
             internal EventSource Source { get; set; }

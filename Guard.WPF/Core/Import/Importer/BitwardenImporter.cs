@@ -23,20 +23,23 @@ namespace Guard.WPF.Core.Import.Importer
             return GetEncryptionType(exportFile) == BitwardenEncryptionType.Password;
         }
 
-        private readonly JsonSerializerOptions jsonSerializerOptions =
-            new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true };
+        private readonly JsonSerializerOptions jsonSerializerOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true,
+        };
 
         private enum BitwardenTOTPType
         {
             Secret,
-            Uri
+            Uri,
         }
 
         private enum BitwardenEncryptionType
         {
             None,
             Password,
-            Account
+            Account,
         }
 
         private BitwardenExportFile ParseFile(string path)
@@ -142,7 +145,7 @@ namespace Guard.WPF.Core.Import.Importer
                         Id = TokenManager.GetNextId(),
                         Issuer = item.Name,
                         EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
-                        CreationTime = DateTime.Now
+                        CreationTime = DateTime.Now,
                     };
 
                     if (item.Login.Username != null)
@@ -266,7 +269,7 @@ namespace Guard.WPF.Core.Import.Importer
                     DegreeOfParallelism = parallelism,
                     Iterations = iterations,
                     MemorySize = memorySize * 1024, // Convert to KB
-                    Salt = SHA256.HashData(salt)
+                    Salt = SHA256.HashData(salt),
                 };
 
                 return argon2id.GetBytes(KeySize);

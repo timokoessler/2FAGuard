@@ -49,26 +49,24 @@ namespace Guard.WPF.Views.Pages
 
                 int addedCount = count - duplicateCount;
 
-                Wpf.Ui.Controls.TextBlock textBlock =
-                    new()
-                    {
-                        Text = I18n.GetString("i.stp.added.multiple.description")
-                            .Replace("@Count", addedCount.ToString()),
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        FontSize = 16
-                    };
+                Wpf.Ui.Controls.TextBlock textBlock = new()
+                {
+                    Text = I18n.GetString("i.stp.added.multiple.description")
+                        .Replace("@Count", addedCount.ToString()),
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    FontSize = 16,
+                };
                 TokenCardContainer.Children.Insert(1, textBlock);
 
                 if (duplicateCount > 0)
                 {
-                    Wpf.Ui.Controls.TextBlock duplicateTextBlock =
-                        new()
-                        {
-                            Text = I18n.GetString("i.stp.added.multiple.duplicate")
-                                .Replace("@Count", duplicateCount.ToString()),
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            FontSize = 16
-                        };
+                    Wpf.Ui.Controls.TextBlock duplicateTextBlock = new()
+                    {
+                        Text = I18n.GetString("i.stp.added.multiple.duplicate")
+                            .Replace("@Count", duplicateCount.ToString()),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        FontSize = 16,
+                    };
                     TokenCardContainer.Children.Insert(2, duplicateTextBlock);
                 }
             }

@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
@@ -26,23 +25,21 @@
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <Platforms>x64</Platforms>
     <DebugType>embedded</DebugType>
-	<DefineConstants Condition=" '$(IsPortable)' == 'true' ">$(DefineConstants);PORTABLE</DefineConstants>
-	<ApplicationManifest>app.manifest</ApplicationManifest>
-	<StartupObject>Guard.WPF.Program</StartupObject>
-	<PackageProjectUrl>https://2faguard.app</PackageProjectUrl>
-	  
-	<!-- https://github.com/dotnet/sdk/issues/44026 -->
+    <DefineConstants Condition=" '$(IsPortable)' == 'true' "
+      >$(DefineConstants);PORTABLE</DefineConstants
+    >
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <StartupObject>Guard.WPF.Program</StartupObject>
+    <PackageProjectUrl>https://2faguard.app</PackageProjectUrl>
+    <!-- https://github.com/dotnet/sdk/issues/44026 -->
     <CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <NoWarn />
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <NoWarn />
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="Assets\aegis.png" />
     <None Remove="Assets\authenticatorpro.svg" />
@@ -59,11 +56,9 @@
     <None Remove="Assets\twofas.svg" />
     <None Remove="Assets\update.svg" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="totp.ico" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.30.2" />
     <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.1" />
@@ -76,7 +71,6 @@
     <PackageReference Include="ZXing.Net" Version="0.16.10" />
     <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.13" />
   </ItemGroup>
-
   <ItemGroup>
     <Resource Include="Assets\aegis.png" />
     <Resource Include="Assets\authenticatorpro.svg" />
@@ -93,9 +87,7 @@
     <Resource Include="Assets\twofas.svg" />
     <Resource Include="Assets\update.svg" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Guard.Core\Guard.Core.csproj" />
   </ItemGroup>
-
 </Project>

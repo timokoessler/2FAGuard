@@ -8,22 +8,21 @@ namespace Guard.WPF.Core
     class I18n
     {
         // Define supported languages in AppSettings enum too !!!
-        private static readonly Dictionary<string, string> fullLanguageNames =
-            new()
-            {
-                { "system", "System" },
-                { "en", "English" },
-                { "de", "Deutsch" },
-                { "zh_cn", "大陆简体" },
-                { "zh_tw", "中文(繁體)" },
-                { "fr", "Français" },
-                { "it", "Italiano" },
-                { "el", "Ελληνικά" },
-                { "ar", "العربية" },
-                { "pt_br", "Português Brasileiro" },
-                { "ja", "日本語" },
-                { "cz", "Čeština" }
-            };
+        private static readonly Dictionary<string, string> fullLanguageNames = new()
+        {
+            { "system", "System" },
+            { "en", "English" },
+            { "de", "Deutsch" },
+            { "zh_cn", "大陆简体" },
+            { "zh_tw", "中文(繁體)" },
+            { "fr", "Français" },
+            { "it", "Italiano" },
+            { "el", "Ελληνικά" },
+            { "ar", "العربية" },
+            { "pt_br", "Português Brasileiro" },
+            { "ja", "日本語" },
+            { "cz", "Čeština" },
+        };
         private static readonly LanguageSetting defaultLanguage = LanguageSetting.EN;
         private static LanguageSetting currentLanguage = defaultLanguage;
         private static ResourceDictionary? dict;
@@ -74,7 +73,7 @@ namespace Guard.WPF.Core
                 Source = new Uri(
                     @"Resources/Strings." + currentLanguage.ToString().ToLower() + ".xaml",
                     UriKind.Relative
-                )
+                ),
             };
             Application.Current.Resources.MergedDictionaries.Add(dict);
         }

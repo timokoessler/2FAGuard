@@ -5,6 +5,6 @@
         Default,
         Any,
         SimpleIcons,
-        Custom
+        Custom,
     }
 }

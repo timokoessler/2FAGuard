@@ -67,28 +67,27 @@ namespace Guard.WPF.Core.Import.Importer
                 }
 
                 tokenID = TokenManager.GetNextId();
-                DBTOTPToken dbToken =
-                    new()
-                    {
-                        Id = tokenID,
-                        Issuer = token.Issuer,
-                        EncryptedUsername =
-                            token.Username != null
-                                ? internalEncryption.EncryptStringToBytes(token.Username)
-                                : null,
-                        EncryptedSecret = internalEncryption.EncryptStringToBytes(token.Secret),
-                        Algorithm = token.Algorithm,
-                        Digits = token.Digits,
-                        Period = token.Period,
-                        Icon = token.Icon,
-                        IconType = token.IconType,
-                        UpdatedTime = token.UpdatedTime,
-                        CreationTime = token.CreationTime,
-                        EncryptedNotes =
-                            token.Notes != null
-                                ? internalEncryption.EncryptStringToBytes(token.Notes)
-                                : null
-                    };
+                DBTOTPToken dbToken = new()
+                {
+                    Id = tokenID,
+                    Issuer = token.Issuer,
+                    EncryptedUsername =
+                        token.Username != null
+                            ? internalEncryption.EncryptStringToBytes(token.Username)
+                            : null,
+                    EncryptedSecret = internalEncryption.EncryptStringToBytes(token.Secret),
+                    Algorithm = token.Algorithm,
+                    Digits = token.Digits,
+                    Period = token.Period,
+                    Icon = token.Icon,
+                    IconType = token.IconType,
+                    UpdatedTime = token.UpdatedTime,
+                    CreationTime = token.CreationTime,
+                    EncryptedNotes =
+                        token.Notes != null
+                            ? internalEncryption.EncryptStringToBytes(token.Notes)
+                            : null,
+                };
 
                 if (
                     token.IconType == IconType.Custom

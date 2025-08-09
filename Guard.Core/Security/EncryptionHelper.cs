@@ -95,7 +95,7 @@ namespace Guard.Core.Security
                 DegreeOfParallelism = 1,
                 Iterations = 3,
                 MemorySize = 67108,
-                Salt = salt
+                Salt = salt,
             };
 
             return argon2id.GetBytes(KeySize);

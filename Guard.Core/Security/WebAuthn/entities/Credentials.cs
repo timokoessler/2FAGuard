@@ -70,7 +70,7 @@ namespace Guard.Core.Security.WebAuthn.entities
                 var rawCred = new RawCredential
                 {
                     CredentialId = idPos,
-                    CredentialIdBytes = cred.CredentialId.Length
+                    CredentialIdBytes = cred.CredentialId.Length,
                 };
                 idPos += cred.CredentialId.Length;
                 Marshal.StructureToPtr(rawCred, pos, false);

@@ -265,25 +265,24 @@ namespace Guard.WPF
             trayIconImage.UriSource = new("pack://application:,,,/Assets/logo-tray.png");
             trayIconImage.EndInit();
 
-            NotifyIcon trayIcon =
-                new()
+            NotifyIcon trayIcon = new()
+            {
+                FocusOnLeftClick = false,
+                Icon = trayIconImage,
+                ToolTip = "2FAGuard",
+                MenuOnRightClick = true,
+                Menu = new ContextMenu
                 {
-                    FocusOnLeftClick = false,
-                    Icon = trayIconImage,
-                    ToolTip = "2FAGuard",
-                    MenuOnRightClick = true,
-                    Menu = new ContextMenu
+                    Items =
                     {
-                        Items =
+                        new Wpf.Ui.Controls.MenuItem
                         {
-                            new Wpf.Ui.Controls.MenuItem
-                            {
-                                Header = I18n.GetString("i.tray.exit"),
-                                Command = new RelayCommand<object>(Tray_Exit_Click)
-                            }
-                        }
-                    }
-                };
+                            Header = I18n.GetString("i.tray.exit"),
+                            Command = new RelayCommand<object>(Tray_Exit_Click),
+                        },
+                    },
+                },
+            };
             trayIcon.LeftClick += Tray_Open_Click;
             if (Auth.IsLoginEnabled())
             {
@@ -292,7 +291,7 @@ namespace Guard.WPF
                     new Wpf.Ui.Controls.MenuItem
                     {
                         Header = I18n.GetString("i.tray.lock"),
-                        Command = new RelayCommand<object>(Tray_Lock_Click)
+                        Command = new RelayCommand<object>(Tray_Lock_Click),
                     }
                 );
             }

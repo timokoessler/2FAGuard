@@ -12,8 +12,10 @@ namespace Guard.WPF.Core
     internal class Stats
     {
         private static readonly string statsApiUrl = "https://2faguard.app/api/stats";
-        private static readonly JsonSerializerOptions jsonSerializerOptions =
-            new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        private static readonly JsonSerializerOptions jsonSerializerOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
 
         internal enum EventType
         {
@@ -64,7 +66,7 @@ namespace Guard.WPF.Core
                     appVersion = InstallationContext.GetVersionString(),
                     osBuild = InstallationContext.GetOsBuildVersion(),
                     appEdition = InstallationContext.GetAppEditionString(),
-                    locale = InstallationContext.GetLocaleCode()
+                    locale = InstallationContext.GetLocaleCode(),
                 };
                 var httpClient = HTTP.GetHttpClient();
                 var response =

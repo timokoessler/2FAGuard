@@ -11,7 +11,7 @@ namespace Guard.Core.Security.WebAuthn
 
         public static RelayingPartyInfo RelayingPartyInfo
         {
-            get => new() { Id = Origin, Name = "2FAGuard", };
+            get => new() { Id = Origin, Name = "2FAGuard" };
         }
 
         public static UserInfo UserInfo
@@ -21,7 +21,7 @@ namespace Guard.Core.Security.WebAuthn
                 {
                     UserId = Encoding.UTF8.GetBytes(Auth.GetInstallationID()),
                     Name = "2FAGuard User",
-                    DisplayName = "2FAGuard User"
+                    DisplayName = "2FAGuard User",
                 };
         }
 
@@ -32,16 +32,16 @@ namespace Guard.Core.Security.WebAuthn
                 {
                     new CoseCredentialParameter
                     {
-                        Algorithm = CoseAlgorithm.ECDSA_P521_WITH_SHA512
+                        Algorithm = CoseAlgorithm.ECDSA_P521_WITH_SHA512,
                     },
                     new CoseCredentialParameter
                     {
-                        Algorithm = CoseAlgorithm.ECDSA_P384_WITH_SHA384
+                        Algorithm = CoseAlgorithm.ECDSA_P384_WITH_SHA384,
                     },
                     new CoseCredentialParameter { Algorithm = CoseAlgorithm.EDDSA },
                     new CoseCredentialParameter
                     {
-                        Algorithm = CoseAlgorithm.ECDSA_P256_WITH_SHA256
+                        Algorithm = CoseAlgorithm.ECDSA_P256_WITH_SHA256,
                     },
                     new CoseCredentialParameter
                     {
@@ -54,7 +54,7 @@ namespace Guard.Core.Security.WebAuthn
         public enum ClientDataType
         {
             Create,
-            Get
+            Get,
         }
 
         public static ClientData GetClientData(byte[] challenge, ClientDataType type)
@@ -63,7 +63,7 @@ namespace Guard.Core.Security.WebAuthn
             {
                 ClientDataType.Create => "webauthn.create",
                 ClientDataType.Get => "webauthn.get",
-                _ => throw new ArgumentOutOfRangeException(nameof(type))
+                _ => throw new ArgumentOutOfRangeException(nameof(type)),
             };
             return new ClientData()
             {
@@ -72,10 +72,10 @@ namespace Guard.Core.Security.WebAuthn
                     {
                         type = typeString,
                         challenge = UrlBase64.Encode(challenge),
-                        origin = Origin
+                        origin = Origin,
                     }
                 ),
-                HashAlgorithm = HashAlgorithm.Sha512
+                HashAlgorithm = HashAlgorithm.Sha512,
             };
         }
     }

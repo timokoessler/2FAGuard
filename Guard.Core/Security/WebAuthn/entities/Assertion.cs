@@ -89,7 +89,7 @@ namespace Guard.Core.Security.WebAuthn.entities
                         hmacSecret = new HmacSecret()
                         {
                             First = new byte[rawSecret.FirstSize],
-                            Second = new byte[rawSecret.SecondSize]
+                            Second = new byte[rawSecret.SecondSize],
                         };
                         if (rawSecret.FirstSize > 0 && rawSecret.First != IntPtr.Zero)
                         {
@@ -117,7 +117,7 @@ namespace Guard.Core.Security.WebAuthn.entities
                 Extensions = ext,
                 LargeBlobStatus = CredLargeBlobStatus,
                 LargeBlob = largeBlob,
-                HmacSecret = hmacSecret
+                HmacSecret = hmacSecret,
             };
         }
     }

@@ -34,7 +34,7 @@ namespace Guard.Core.Security.WebAuthn.entities
                 Name = Name,
                 IconUrl = IconUrl,
                 DisplayName = DisplayName,
-                UserId = new byte[UserIdBytes]
+                UserId = new byte[UserIdBytes],
             };
             if (UserIdBytes != 0 && UserId != IntPtr.Zero)
                 Marshal.Copy(UserId, info.UserId, 0, UserIdBytes);

@@ -34,14 +34,13 @@ namespace Guard.WPF.Views.Pages
 
                 if (exporter.Type == IExporter.ExportType.File)
                 {
-                    Microsoft.Win32.SaveFileDialog saveFileDialog =
-                        new()
-                        {
-                            Filter = exporter.ExportFileExtensions,
-                            AddExtension = true,
-                            AddToRecent = false,
-                            FileName = exporter.GetDefaultFileName()
-                        };
+                    Microsoft.Win32.SaveFileDialog saveFileDialog = new()
+                    {
+                        Filter = exporter.ExportFileExtensions,
+                        AddExtension = true,
+                        AddToRecent = false,
+                        FileName = exporter.GetDefaultFileName(),
+                    };
                     bool? result = saveFileDialog.ShowDialog();
 
                     if (result != true)
@@ -75,17 +74,16 @@ namespace Guard.WPF.Views.Pages
                             Content = I18n.GetString("export.success.content"),
                             CloseButtonText = I18n.GetString("dialog.close"),
                             PrimaryButtonText = I18n.GetString("export.success.open"),
-                            MaxWidth = 400
+                            MaxWidth = 400,
                         }.ShowDialogAsync();
 
                     if (sucessDialogResult == Wpf.Ui.Controls.MessageBoxResult.Primary)
                     {
-                        ProcessStartInfo startInfo =
-                            new()
-                            {
-                                Arguments = Path.GetDirectoryName(saveFileDialog.FileName),
-                                FileName = "explorer.exe"
-                            };
+                        ProcessStartInfo startInfo = new()
+                        {
+                            Arguments = Path.GetDirectoryName(saveFileDialog.FileName),
+                            FileName = "explorer.exe",
+                        };
 
                         Process.Start(startInfo);
                     }
@@ -108,7 +106,7 @@ namespace Guard.WPF.Views.Pages
                     Title = I18n.GetString("export.failed.title"),
                     Content = $"{I18n.GetString("export.failed.content")} {ex.Message}",
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
+                    MaxWidth = 400,
                 }.ShowDialogAsync();
             }
         }

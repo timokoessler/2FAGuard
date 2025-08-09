@@ -98,7 +98,7 @@ namespace Guard.WPF.Views.Pages
                     Title = I18n.GetString("home.intro.title"),
                     Content = I18n.GetString("home.intro.content"),
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
+                    MaxWidth = 400,
                 }.ShowDialogAsync();
                 SettingsManager.Settings.ShowTokenCardIntro = false;
                 _ = SettingsManager.Save();

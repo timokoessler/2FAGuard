@@ -257,7 +257,7 @@ namespace Guard.WPF.Views.UIComponents
                 CloseButtonText = I18n.GetString("dialog.close"),
                 PrimaryButtonText = I18n.GetString("tokencard.delete.modal.yes"),
                 PrimaryButtonAppearance = ControlAppearance.Danger,
-                MaxWidth = 400
+                MaxWidth = 400,
             };
 
             var result = await deleteMessageBox.ShowDialogAsync();
@@ -301,7 +301,7 @@ namespace Guard.WPF.Views.UIComponents
                 PrimaryButtonText = I18n.GetString("tokencard.save"),
                 IsSecondaryButtonEnabled = true,
                 SecondaryButtonText = I18n.GetString("tokencard.copy"),
-                DialogMaxHeight = 600
+                DialogMaxHeight = 600,
             };
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
@@ -309,7 +309,7 @@ namespace Guard.WPF.Views.UIComponents
                 var saveFileDialog = new SaveFileDialog
                 {
                     Filter = "PNG (*.png)|*.png",
-                    FileName = $"{token.dBToken.Issuer}.png"
+                    FileName = $"{token.dBToken.Issuer}.png",
                 };
                 if (saveFileDialog.ShowDialog() == true)
                 {

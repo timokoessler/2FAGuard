@@ -8,7 +8,7 @@ namespace Guard.Core
     {
         CLASSIC_INSTALLER,
         CLASSIC_PORTABLE,
-        MICROSOFT_STORE
+        MICROSOFT_STORE,
     }
 
     public static class InstallationContext
@@ -116,7 +116,7 @@ namespace Guard.Core
                 InstallationType.CLASSIC_PORTABLE => "portable",
                 InstallationType.CLASSIC_INSTALLER => "installer",
                 InstallationType.MICROSOFT_STORE => "store",
-                _ => "unknown"
+                _ => "unknown",
             };
         }
 

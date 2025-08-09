@@ -78,7 +78,7 @@ namespace Guard.Core.Security.WebAuthn.entities
                 Certificates = certs,
                 TpmVersion = tpmVersion,
                 TpmCertInfo = certInfo,
-                TpmPubArea = pubArea
+                TpmPubArea = pubArea,
             };
         }
     }

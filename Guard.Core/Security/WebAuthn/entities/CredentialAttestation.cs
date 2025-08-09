@@ -96,7 +96,7 @@ namespace Guard.Core.Security.WebAuthn.entities
                 CommonAttestation = rawCommonAtt?.MarshalToPublic(),
                 EnterpriseAttestation = EnterpriseAttestation,
                 LargeBlobSupported = LargeBlobSupported,
-                ResidentKey = ResidentKey
+                ResidentKey = ResidentKey,
             };
         }
     }

@@ -50,21 +50,20 @@ namespace Guard.WPF.Core.Export.Exporter
 
             foreach (var tokenHelper in tokenHelpers)
             {
-                AuthenticatorProBackup.Authenticator authenticator =
-                    new()
-                    {
-                        Issuer = tokenHelper.dBToken.Issuer,
-                        Username = tokenHelper.Username,
-                        Secret = tokenHelper.DecryptedSecret,
-                        Digits = tokenHelper.dBToken.Digits ?? 6,
-                        Period = tokenHelper.dBToken.Period ?? 30,
-                        Type = AuthenticatorProBackup.AuthenticatorType.Totp,
-                        CopyCount = 0,
-                        Counter = 0,
-                        Ranking = 0,
-                        Pin = null,
-                        Icon = null,
-                    };
+                AuthenticatorProBackup.Authenticator authenticator = new()
+                {
+                    Issuer = tokenHelper.dBToken.Issuer,
+                    Username = tokenHelper.Username,
+                    Secret = tokenHelper.DecryptedSecret,
+                    Digits = tokenHelper.dBToken.Digits ?? 6,
+                    Period = tokenHelper.dBToken.Period ?? 30,
+                    Type = AuthenticatorProBackup.AuthenticatorType.Totp,
+                    CopyCount = 0,
+                    Counter = 0,
+                    Ranking = 0,
+                    Pin = null,
+                    Icon = null,
+                };
 
                 if (tokenHelper.dBToken.Algorithm != null)
                 {
@@ -73,10 +72,9 @@ namespace Guard.WPF.Core.Export.Exporter
                         TOTPAlgorithm.SHA1 => AuthenticatorProBackup.HashAlgorithm.Sha1,
                         TOTPAlgorithm.SHA256 => AuthenticatorProBackup.HashAlgorithm.Sha256,
                         TOTPAlgorithm.SHA512 => AuthenticatorProBackup.HashAlgorithm.Sha512,
-                        _
-                            => throw new Exception(
-                                $"Invalid algorithm {tokenHelper.dBToken.Algorithm}"
-                            ),
+                        _ => throw new Exception(
+                            $"Invalid algorithm {tokenHelper.dBToken.Algorithm}"
+                        ),
                     };
                 }
                 else
@@ -87,14 +85,13 @@ namespace Guard.WPF.Core.Export.Exporter
                 authenticators.Add(authenticator);
             }
 
-            AuthenticatorProBackup authProBackup =
-                new()
-                {
-                    Authenticators = [.. authenticators],
-                    Categories = [],
-                    AuthenticatorCategories = [],
-                    CustomIcons = []
-                };
+            AuthenticatorProBackup authProBackup = new()
+            {
+                Authenticators = [.. authenticators],
+                Categories = [],
+                AuthenticatorCategories = [],
+                CustomIcons = [],
+            };
 
             byte[] data = JsonSerializer.SerializeToUtf8Bytes(authProBackup);
             byte[] salt = EncryptionHelper.GetRandomBytes(SaltLength);
@@ -105,7 +102,7 @@ namespace Guard.WPF.Core.Export.Exporter
                 DegreeOfParallelism = ArgonParallelism,
                 Iterations = ArgonIterations,
                 MemorySize = ArgonMemorySize,
-                Salt = salt
+                Salt = salt,
             };
 
             byte[] keyBytes = argon2id.GetBytes(KeyLength);

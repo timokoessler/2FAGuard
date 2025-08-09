@@ -57,7 +57,7 @@ namespace Guard.WPF.Views.Pages.Start
                     Title = I18n.GetString("update.error.title"),
                     Content = $"{I18n.GetString("update.error.content")}: {ex.Message}",
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 500
+                    MaxWidth = 500,
                 }.ShowDialogAsync();
                 Application.Current.Shutdown(1);
             }

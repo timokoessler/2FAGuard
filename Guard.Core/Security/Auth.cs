@@ -45,7 +45,7 @@ namespace Guard.Core.Security
                 authData = new AuthFileData
                 {
                     InstallationID = EncryptionHelper.GetRandomHexString(18),
-                    Version = currentVersion
+                    Version = currentVersion,
                 };
             }
             passwordVault = new();
@@ -89,8 +89,10 @@ namespace Guard.Core.Security
             authData.KeySalt = EncryptionHelper.GenerateSalt();
             authData.LoginSalt = EncryptionHelper.GenerateSalt();
 
-            EncryptionHelper encryptionHelper =
-                new(password, Convert.FromBase64String(authData.LoginSalt));
+            EncryptionHelper encryptionHelper = new(
+                password,
+                Convert.FromBase64String(authData.LoginSalt)
+            );
             authData.PasswordProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
 
             if (enableWindowsHello)
@@ -154,11 +156,10 @@ namespace Guard.Core.Security
                     "Failed to register with Windows Hello because the signed challenge is empty"
                 );
             }
-            EncryptionHelper encryptionHelper =
-                new(
-                    Encoding.UTF8.GetBytes(signedChallenge),
-                    Convert.FromBase64String(authData.LoginSalt)
-                );
+            EncryptionHelper encryptionHelper = new(
+                Encoding.UTF8.GetBytes(signedChallenge),
+                Convert.FromBase64String(authData.LoginSalt)
+            );
             SetWindowsHelloProtectedKey(encryptionHelper.EncryptString(mainEncryptionKey));
         }
 
@@ -246,11 +247,10 @@ namespace Guard.Core.Security
                     "Failed to login with Windows Hello because the signed challenge is empty"
                 );
             }
-            EncryptionHelper encryptionHelper =
-                new(
-                    Encoding.UTF8.GetBytes(signedChallenge),
-                    Convert.FromBase64String(authData.LoginSalt)
-                );
+            EncryptionHelper encryptionHelper = new(
+                Encoding.UTF8.GetBytes(signedChallenge),
+                Convert.FromBase64String(authData.LoginSalt)
+            );
             mainEncryptionKey = encryptionHelper.DecryptString(windowsHelloProtectedKey);
 
             if (mainEncryptionKey == null)
@@ -271,8 +271,10 @@ namespace Guard.Core.Security
             }
             try
             {
-                EncryptionHelper encryptionHelper =
-                    new(password, Convert.FromBase64String(authData.LoginSalt));
+                EncryptionHelper encryptionHelper = new(
+                    password,
+                    Convert.FromBase64String(authData.LoginSalt)
+                );
                 mainEncryptionKey = encryptionHelper.DecryptString(authData.PasswordProtectedKey);
             }
             catch
@@ -356,8 +358,10 @@ namespace Guard.Core.Security
             }
             try
             {
-                EncryptionHelper encryptionHelper =
-                    new(password, Convert.FromBase64String(authData.LoginSalt));
+                EncryptionHelper encryptionHelper = new(
+                    password,
+                    Convert.FromBase64String(authData.LoginSalt)
+                );
                 _ =
                     encryptionHelper.DecryptString(authData.PasswordProtectedKey)
                     ?? throw new Exception("Invalid password");
@@ -379,8 +383,10 @@ namespace Guard.Core.Security
             {
                 throw new Exception("Main encryption key not set");
             }
-            EncryptionHelper encryptionHelper =
-                new(newPassword, Convert.FromBase64String(authData.LoginSalt));
+            EncryptionHelper encryptionHelper = new(
+                newPassword,
+                Convert.FromBase64String(authData.LoginSalt)
+            );
             authData.PasswordProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
             authData.InsecureMainKey = null;
             await SaveFile();
@@ -406,8 +412,10 @@ namespace Guard.Core.Security
 
             authData.WebAuthn ??= [];
 
-            EncryptionHelper encryptionHelper =
-                new(result.HmacSecret, Convert.FromBase64String(authData.LoginSalt));
+            EncryptionHelper encryptionHelper = new(
+                result.HmacSecret,
+                Convert.FromBase64String(authData.LoginSalt)
+            );
 
             device.ProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
 
@@ -451,8 +459,10 @@ namespace Guard.Core.Security
                     )
                 ) ?? throw new Exception("Can not find webauthn device in auth file");
 
-            EncryptionHelper encryptionHelper =
-                new(result.result.HmacSecret, Convert.FromBase64String(authData.LoginSalt));
+            EncryptionHelper encryptionHelper = new(
+                result.result.HmacSecret,
+                Convert.FromBase64String(authData.LoginSalt)
+            );
             mainEncryptionKey = encryptionHelper.DecryptString(
                 device.ProtectedKey ?? throw new Exception("Protected key not set")
             );

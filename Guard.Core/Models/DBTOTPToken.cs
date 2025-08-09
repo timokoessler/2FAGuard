@@ -4,7 +4,7 @@
     {
         SHA1,
         SHA256,
-        SHA512
+        SHA512,
     }
 
     public class DBTOTPToken

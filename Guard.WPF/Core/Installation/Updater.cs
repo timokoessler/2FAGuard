@@ -11,8 +11,10 @@ namespace Guard.WPF.Core.Installation
     public class Updater
     {
         public static readonly string updateApiUrl = "https://2faguard.app/api/update";
-        private static readonly JsonSerializerOptions jsonSerializerOptions =
-            new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        private static readonly JsonSerializerOptions jsonSerializerOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
 
         private static DateTime lastUpdateCheck = DateTime.MinValue;
         private static UpdateInfo? lastUpdateInfo = null;
@@ -119,8 +121,12 @@ namespace Guard.WPF.Core.Installation
 
             var httpClient = HTTP.GetHttpClient();
             using var stream = await httpClient.GetStreamAsync(downloadUrl);
-            using FileStream fileStream =
-                new(downloadFileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
+            using FileStream fileStream = new(
+                downloadFileName,
+                FileMode.OpenOrCreate,
+                FileAccess.Write,
+                FileShare.None
+            );
             await stream.CopyToAsync(fileStream);
             fileStream.Close();
             stream.Close();
@@ -192,7 +198,7 @@ namespace Guard.WPF.Core.Installation
                 {
                     UseShellExecute = true,
                     WindowStyle = ProcessWindowStyle.Normal,
-                    Arguments = arguments
+                    Arguments = arguments,
                 },
             };
             process.Start();

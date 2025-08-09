@@ -12,8 +12,10 @@ namespace Guard.WPF.Core
     internal class ExceptionHandler
     {
         private static readonly string reportApiUrl = "https://2faguard.app/api/report";
-        private static readonly JsonSerializerOptions jsonSerializerOptions =
-            new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        private static readonly JsonSerializerOptions jsonSerializerOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
 
         internal static async void OnUnhandledException(
             object sender,
@@ -36,7 +38,7 @@ namespace Guard.WPF.Core
                 IsPrimaryButtonEnabled = true,
                 PrimaryButtonText = I18n.GetString("error.unhandled.openbug"),
                 CloseButtonText = I18n.GetString("dialog.close"),
-                MaxWidth = 600
+                MaxWidth = 600,
             };
 
             var result = await uiMessageBox.ShowDialogAsync();
@@ -82,7 +84,7 @@ namespace Guard.WPF.Core
                     osBuild = InstallationContext.GetOsBuildVersion(),
                     appEdition = InstallationContext.GetAppEditionString(),
                     locale = InstallationContext.GetLocaleCode(),
-                    stackTrace = errorStack
+                    stackTrace = errorStack,
                 };
                 var httpClient = HTTP.GetHttpClient();
                 var response = await httpClient.PostAsJsonAsync(
@@ -108,7 +110,7 @@ namespace Guard.WPF.Core
                     Content =
                         "Failed to send bug report. Please report the issue manually on GitHub.",
                     CloseButtonText = I18n.GetString("dialog.close"),
-                    MaxWidth = 400
+                    MaxWidth = 400,
                 }.ShowDialogAsync();
             }
         }

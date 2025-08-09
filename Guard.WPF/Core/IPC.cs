@@ -39,7 +39,7 @@ namespace Guard.WPF.Core
                 }
             })
             {
-                IsBackground = true
+                IsBackground = true,
             };
             pipeServerThread.Start();
         }

@@ -43,20 +43,19 @@ namespace Guard.WPF.Core.Export.Exporter
 
             foreach (var tokenHelper in tokenHelpers)
             {
-                Backup.Token token =
-                    new()
-                    {
-                        Issuer = tokenHelper.dBToken.Issuer,
-                        Username = tokenHelper.Username,
-                        Secret = tokenHelper.DecryptedSecret,
-                        Algorithm = tokenHelper.dBToken.Algorithm,
-                        Digits = tokenHelper.dBToken.Digits,
-                        Period = tokenHelper.dBToken.Period,
-                        Icon = tokenHelper.dBToken.Icon,
-                        IconType = tokenHelper.dBToken.IconType,
-                        UpdatedTime = tokenHelper.dBToken.UpdatedTime,
-                        CreationTime = tokenHelper.dBToken.CreationTime,
-                    };
+                Backup.Token token = new()
+                {
+                    Issuer = tokenHelper.dBToken.Issuer,
+                    Username = tokenHelper.Username,
+                    Secret = tokenHelper.DecryptedSecret,
+                    Algorithm = tokenHelper.dBToken.Algorithm,
+                    Digits = tokenHelper.dBToken.Digits,
+                    Period = tokenHelper.dBToken.Period,
+                    Icon = tokenHelper.dBToken.Icon,
+                    IconType = tokenHelper.dBToken.IconType,
+                    UpdatedTime = tokenHelper.dBToken.UpdatedTime,
+                    CreationTime = tokenHelper.dBToken.CreationTime,
+                };
                 if (tokenHelper.dBToken.EncryptedNotes != null)
                 {
                     token.Notes = Auth.GetMainEncryptionHelper()
@@ -74,7 +73,7 @@ namespace Guard.WPF.Core.Export.Exporter
                 tokens.Add(token);
             }
 
-            Backup backup = new() { Version = 1, Tokens = [.. tokens], };
+            Backup backup = new() { Version = 1, Tokens = [.. tokens] };
 
             byte[] data = JsonSerializer.SerializeToUtf8Bytes(backup);
 

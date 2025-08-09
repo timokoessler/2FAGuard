@@ -34,7 +34,7 @@ namespace Guard.WPF.Core
             ShowCurrentNotActive = 0x8,
             Restore = 0x9,
             ShowDefault = 0xA,
-            ForceMinimize = 0xB
+            ForceMinimize = 0xB,
         }
     }
 }
