@@ -137,5 +137,19 @@ namespace Guard.Core
                 false
             );
         }
+
+        public static bool DisableAutoUpdate()
+        {
+            return GetValue(
+                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard",
+                "DisableAutoUpdate",
+                false
+            );
+        }
+
+        public static bool DisableStats()
+        {
+            return GetValue(@"HKEY_CURRENT_USER\Software\Policies\2FAGuard", "DisableStats", false);
+        }
     }
 }

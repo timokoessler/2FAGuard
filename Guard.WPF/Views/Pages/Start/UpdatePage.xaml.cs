@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using Guard.Core;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Installation;
+using Guard.WPF.Core.Models;
 
 namespace Guard.WPF.Views.Pages.Start
 {
@@ -12,21 +13,19 @@ namespace Guard.WPF.Views.Pages.Start
     public partial class UpdatePage : Page
     {
         private readonly MainWindow mainWindow;
-        private readonly Updater.UpdateInfo updateInfo;
+        private readonly UpdateInfo? updateInfo;
 
-        public UpdatePage(Updater.UpdateInfo updateInfo)
+        public UpdatePage()
         {
             InitializeComponent();
-            this.updateInfo = updateInfo;
             mainWindow = (MainWindow)Application.Current.MainWindow;
+
+            updateInfo = Updater.GetUpdateInfo();
         }
 
         private void NavigateHome()
         {
-            mainWindow.FullContentFrame.Content = null;
-            mainWindow.FullContentFrame.Visibility = Visibility.Collapsed;
-            mainWindow.ShowNavigation();
-            mainWindow.Navigate(typeof(Home));
+            mainWindow.Navigate(typeof(Home), false);
         }
 
         private void Skip_Click(object sender, RoutedEventArgs e)
@@ -43,6 +42,11 @@ namespace Guard.WPF.Views.Pages.Start
 
             try
             {
+                if (updateInfo == null)
+                {
+                    throw new Exception("Update information is null.");
+                }
+
                 await Updater.Update(updateInfo);
             }
             catch (Exception ex)

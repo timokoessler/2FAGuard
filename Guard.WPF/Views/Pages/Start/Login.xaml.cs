@@ -6,7 +6,6 @@ using Guard.Core;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.WPF.Core;
-using Guard.WPF.Core.Installation;
 using Guard.WPF.Core.Security;
 
 namespace Guard.WPF.Views.Pages.Start
@@ -17,14 +16,12 @@ namespace Guard.WPF.Views.Pages.Start
     public partial class Login : Page
     {
         private readonly MainWindow mainWindow;
-        private Updater.UpdateInfo? updateInfo;
 
         public Login()
         {
             InitializeComponent();
             PasswordBox.Focus();
             mainWindow = (MainWindow)Application.Current.MainWindow;
-            CheckForUpdate();
             Setup(true);
         }
 
@@ -33,17 +30,7 @@ namespace Guard.WPF.Views.Pages.Start
             InitializeComponent();
             PasswordBox.Focus();
             mainWindow = (MainWindow)Application.Current.MainWindow;
-            CheckForUpdate();
             Setup(promptWinHello);
-        }
-
-        private async void CheckForUpdate()
-        {
-            if (InstallationContext.GetInstallationType() == InstallationType.MICROSOFT_STORE)
-            {
-                return;
-            }
-            updateInfo = await Updater.CheckForUpdate();
         }
 
         private async void Setup(bool promptWinHello)
@@ -159,11 +146,6 @@ namespace Guard.WPF.Views.Pages.Start
             }
             Database.Init();
 
-            if (updateInfo != null)
-            {
-                mainWindow.FullContentFrame.Content = new UpdatePage(updateInfo);
-                return;
-            }
             mainWindow.FullContentFrame.Content = null;
             mainWindow.FullContentFrame.Visibility = Visibility.Collapsed;
             mainWindow.ShowNavigation();

@@ -171,6 +171,7 @@ namespace Guard.WPF
             }
 
             Version currentVersion = installationInfo.version;
+            // If version is not initialized, set it to the current version
             if (
                 SettingsManager.Settings.LastUsedAppVersion.Major == 0
                 && SettingsManager.Settings.LastUsedAppVersion.Minor == 0
@@ -179,11 +180,13 @@ namespace Guard.WPF
                 SettingsManager.Settings.LastUsedAppVersion = currentVersion;
                 _ = SettingsManager.Save();
             }
+
             int versionCompare = SettingsManager.Settings.LastUsedAppVersion.CompareTo(
                 currentVersion
             );
             if (versionCompare < 0)
             {
+                // Update last used version after update
                 SettingsManager.Settings.LastUsedAppVersion = currentVersion;
                 _ = SettingsManager.Save();
             }

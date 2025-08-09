@@ -42,6 +42,11 @@ namespace Guard.WPF.Core
                 return;
             }
 
+            if (RegistrySettings.DisableStats())
+            {
+                return;
+            }
+
             if (type == EventType.AppStarted)
             {
                 if (

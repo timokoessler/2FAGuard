@@ -11,7 +11,9 @@ using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Icons;
+using Guard.WPF.Core.Models;
 using Guard.WPF.Core.Security;
+using Guard.WPF.Views.Pages.Preferences;
 using Guard.WPF.Views.Pages.Start;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
@@ -52,6 +54,8 @@ namespace Guard.WPF
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(
                 ExceptionHandler.OnUnhandledException
             );
+
+            Core.EventManager.UpdateAvailable += OnUpdateAvailable;
 
             SessionSwitchEvent.Register(this);
 
@@ -140,7 +144,7 @@ namespace Guard.WPF
                 return;
             }
             currentPageName = e.Page.GetType().Name;
-            UpdatePageTitle(currentPageName);
+            UpdatePageTitle(currentPageName.ToLower());
         }
 
         /// <summary>
@@ -149,7 +153,17 @@ namespace Guard.WPF
         /// <param name="pageName"></param>
         internal void UpdatePageTitle(string pageName)
         {
-            PageTitle.Text = I18n.GetString("page." + pageName.ToLower());
+            if (PageHasNoTitle(pageName))
+            {
+                PageTitle.Text = string.Empty;
+                return;
+            }
+            PageTitle.Text = I18n.GetString("page." + pageName);
+        }
+
+        private bool PageHasNoTitle(string pageName)
+        {
+            return pageName == "updatepage";
         }
 
         /// <summary>
@@ -450,6 +464,11 @@ namespace Guard.WPF
                     SettingsNavigationItem.SetResourceReference(ContentProperty, "i.page.settings");
                 }
             }
+        }
+
+        private void OnUpdateAvailable(object? sender, UpdateInfo updateInfo)
+        {
+            Navigate(typeof(UpdatePage), false);
         }
     }
 }

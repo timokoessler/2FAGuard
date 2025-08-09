@@ -1,11 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Net.Http.Json;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.Json;
 using System.Web;
 using Guard.Core;
-using Guard.Core.Security;
 
 namespace Guard.WPF.Core
 {

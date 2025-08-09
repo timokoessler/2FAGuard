@@ -27,6 +27,11 @@ The default data paths are:
 
 Create a value named `PreventUnencryptedExports` in the path above. The value should be of type `DWORD`. If set to `1`, the application will not allow unencrypted exports of the secrets. The default is `0`.
 
+### Disable automatic updates
+
+Create a value named `DisableAutoUpdate` in the path above. The value should be of type `DWORD`. If set to `1`, the application will not check for updates automatically. The default is `0`.
+Only disable automatic updates if you have an alternative update mechanism in place.
+
 ### Password requirements
 
 Create a subkey named `Password` in the path specified above. The following values can be set:

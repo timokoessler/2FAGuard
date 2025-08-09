@@ -4,6 +4,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Windows;
 using Guard.Core;
+using Guard.WPF.Core.Models;
 using Microsoft.Security.Extensions;
 
 namespace Guard.WPF.Core.Installation
@@ -15,36 +16,38 @@ namespace Guard.WPF.Core.Installation
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
+        private static UpdateInfo? updateInfo;
 
         private static DateTime lastUpdateCheck = DateTime.MinValue;
-        private static UpdateInfo? lastUpdateInfo = null;
 
-        public class UpdateInfoDownloadUrls
+        internal static async void CheckForUpdate()
         {
-            public required string Installer { get; set; }
-            public required string Portable { get; set; }
-        }
+            // Updates are done via the Microsoft Store
+            if (InstallationContext.GetInstallationType() == InstallationType.MICROSOFT_STORE)
+            {
+                return;
+            }
 
-        public class UpdateInfo
-        {
-            public required string Version { get; set; }
-            public required UpdateInfoDownloadUrls Urls { get; set; }
-        }
+            if (RegistrySettings.DisableAutoUpdate())
+            {
+                Log.Logger.Information(
+                    "Not checking for updates, because auto update is disabled via registry setting."
+                );
+                return;
+            }
 
-        internal static async Task<UpdateInfo?> CheckForUpdate()
-        {
+            // Do not show new update notice if the user has already seen it in the last 24 hours (if the app was not restarted)
+            if (lastUpdateCheck.AddHours(24) > DateTime.Now)
+            {
+                return;
+            }
+
             Version? currentVersion = System
                 .Reflection.Assembly.GetExecutingAssembly()
                 .GetName()
                 .Version;
             string currentVersionString = currentVersion?.ToString() ?? "";
             bool isPortable = InstallationContext.IsPortable();
-
-            // Cache last update check for 1 hour
-            if (lastUpdateCheck.AddHours(1) > DateTime.Now)
-            {
-                return lastUpdateInfo;
-            }
 
             try
             {
@@ -60,17 +63,17 @@ namespace Guard.WPF.Core.Installation
                 Version newVersion = new(updateInfo.Version);
                 if (newVersion.CompareTo(currentVersion) <= 0)
                 {
-                    lastUpdateInfo = null;
-                    return null;
+                    Updater.updateInfo = null;
+                    return;
                 }
-                lastUpdateInfo = updateInfo;
-                return updateInfo;
+                Updater.updateInfo = updateInfo;
+                EventManager.EmitUpdateAvailable(updateInfo);
             }
             catch (Exception e)
             {
-                lastUpdateInfo = null;
+                Updater.updateInfo = null;
                 Log.Logger.Error("Error while checking for updates: {0}", e.Message);
-                return null;
+                return;
             }
         }
 
@@ -203,6 +206,11 @@ namespace Guard.WPF.Core.Installation
             };
             process.Start();
             Application.Current.Shutdown();
+        }
+
+        internal static UpdateInfo? GetUpdateInfo()
+        {
+            return updateInfo;
         }
     }
 }

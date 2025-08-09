@@ -1,4 +1,6 @@
 ﻿using Guard.Core.Models;
+using Guard.WPF.Core.Models;
+using static Guard.WPF.Core.Installation.Updater;
 
 namespace Guard.WPF.Core
 {
@@ -19,6 +21,7 @@ namespace Guard.WPF.Core
 
         internal static event EventHandler<int> TokenDeleted = delegate { };
         internal static event EventHandler<AppThemeChangedEventArgs> AppThemeChanged = delegate { };
+        internal static event EventHandler<UpdateInfo> UpdateAvailable = delegate { };
 
         internal static void EmitTokenDeleted(int tokenID)
         {
@@ -34,6 +37,11 @@ namespace Guard.WPF.Core
                 null,
                 new AppThemeChangedEventArgs { Theme = theme, Source = source }
             );
+        }
+
+        internal static void EmitUpdateAvailable(UpdateInfo updateInfo)
+        {
+            UpdateAvailable?.Invoke(null, updateInfo);
         }
     }
 }

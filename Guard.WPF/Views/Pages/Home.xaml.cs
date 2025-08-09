@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using Guard.Core.Models;
 using Guard.Core.Storage;
 using Guard.WPF.Core;
+using Guard.WPF.Core.Installation;
 using Guard.WPF.Views.Pages.Add;
 using Guard.WPF.Views.UIComponents;
 
@@ -23,6 +24,7 @@ namespace Guard.WPF.Views.Pages
             mainWindow = (MainWindow)Application.Current.MainWindow;
 
             Loaded += (sender, e) => LoadTokens();
+            Loaded += (sender, e) => Updater.CheckForUpdate();
             Core.EventManager.TokenDeleted += OnTokenDeleted;
 
             Unloaded += (object? sender, RoutedEventArgs e) =>
