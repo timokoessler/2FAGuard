@@ -63,7 +63,7 @@ namespace Guard.Core
         {
             return GetInstallationType() switch
             {
-                InstallationType.CLASSIC_INSTALLER => "Desktop Installation",
+                InstallationType.CLASSIC_INSTALLER => "Installer",
                 InstallationType.CLASSIC_PORTABLE => "Portable",
                 InstallationType.MICROSOFT_STORE => "Microsoft Store",
                 _ => "Unknown",

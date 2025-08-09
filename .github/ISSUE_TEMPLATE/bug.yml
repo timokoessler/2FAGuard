@@ -47,14 +47,11 @@ body:
       placeholder: The app version, e.g. 1.0.0
     validations:
       required: true
-  - type: dropdown
+  - type: input
     id: app-edition
     attributes:
       label: What edition of the app are you using?
-      options:
-        - Microsoft Store App
-        - Installer
-        - Portable App
+      placeholder: Microsoft Store, Installer or Portable
     validations:
       required: true
   - type: checkboxes
