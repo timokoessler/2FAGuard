@@ -9,7 +9,7 @@
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="Settings"
     d:Background="White"
-    d:DesignHeight="700"
+    d:DesignHeight="1000"
     d:DesignWidth="1150"
     mc:Ignorable="d">
 
@@ -79,7 +79,7 @@
                     MinWidth="125" />
             </ui:CardControl>
         </Grid>
-        <Grid Margin="0,0,0,10">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -87,7 +87,7 @@
             <ui:CardControl
                 Grid.Column="0"
                 Margin="0,0,0,15"
-                Icon="{ui:SymbolIcon OpenFolder24}">
+                Icon="{ui:SymbolIcon WindowNew24}">
                 <ui:CardControl.Header>
                     <Grid Margin="0,0,35,0">
                         <Grid.RowDefinitions>
@@ -127,6 +127,34 @@
                     </Grid>
                 </ui:CardControl.Header>
                 <ui:ToggleSwitch x:Name="TraySwitch" Grid.Column="1" />
+            </ui:CardControl>
+        </Grid>
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ui:CardControl
+                Grid.Column="0"
+                Margin="0,0,0,15"
+                Icon="{ui:SymbolIcon WindowLocationTarget20}">
+                <ui:CardControl.Header>
+                    <Grid Margin="0,0,35,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="{DynamicResource i.settings.restorewindow}" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{DynamicResource i.settings.restorewindow.description}" />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ui:ToggleSwitch x:Name="RestoreWindowPlacementSwitch" Grid.Column="1" />
             </ui:CardControl>
         </Grid>
 

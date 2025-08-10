@@ -76,6 +76,8 @@
     <system:String x:Key="i.settings.webauthn.description">Login with a hardware security key</system:String>
     <system:String x:Key="i.settings.webauthn.button">Configure</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">Your operating system does not seem to support WebAuthn.</system:String>
+    <system:String x:Key="i.settings.restorewindow">Remember window position</system:String>
+    <system:String x:Key="i.settings.restorewindow.description">Open the app in the same position as it was closed</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Security Key (FIDO2)</system:String>

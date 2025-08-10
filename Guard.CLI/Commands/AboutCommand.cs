@@ -10,7 +10,7 @@ namespace Guard.CLI.Commands
         {
             AnsiConsole.Write(new FigletText("2FAGuard"));
             AnsiConsole.WriteLine(
-                $"Copyright © {DateTime.Now.Year} Timo Kössler and Open Source Contributors"
+                $"Copyright © 2024-{DateTime.Now.Year} Timo Kössler and Open Source Contributors"
             );
             AnsiConsole.WriteLine(
                 $"Version: {InstallationContext.GetVersionString()} ({InstallationContext.GetInstallationTypeString()})"

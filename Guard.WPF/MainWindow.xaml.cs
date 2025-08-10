@@ -359,7 +359,6 @@ namespace Guard.WPF
                 WindowState = WindowState.Minimized;
                 Hide();
             }
-            // Todo check with minimize to tray
             if (SettingsManager.Settings.RestoreWindowPlacement)
             {
                 WindowPlacement.SavePlacement(this);

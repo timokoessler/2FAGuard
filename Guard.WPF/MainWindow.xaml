@@ -15,6 +15,7 @@
     MinHeight="420"
     ExtendsContentIntoTitleBar="True"
     WindowCornerPreference="Round"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid x:Name="RootGrid">
         <ui:TitleBar Title="2FAGuard" Grid.Row="0">
