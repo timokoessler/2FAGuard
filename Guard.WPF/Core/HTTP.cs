@@ -8,7 +8,10 @@ namespace Guard.WPF.Core
 
         static HTTP()
         {
-            httpClient.DefaultRequestHeaders.Add("User-Agent", "2FAGuard-Windows-App");
+            httpClient.DefaultRequestHeaders.Add(
+                "User-Agent",
+                "2FAGuard-Windows-App (https://2faguard.app)"
+            );
         }
 
         public static HttpClient GetHttpClient()

@@ -13,7 +13,6 @@ using Guard.WPF.Core;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Models;
 using Guard.WPF.Core.Security;
-using Guard.WPF.Views.Pages.Preferences;
 using Guard.WPF.Views.Pages.Start;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
@@ -360,6 +359,12 @@ namespace Guard.WPF
                 WindowState = WindowState.Minimized;
                 Hide();
             }
+            // Todo check with minimize to tray
+            if (SettingsManager.Settings.RestoreWindowPlacement)
+            {
+                WindowPlacement.SavePlacement(this);
+            }
+
             base.OnClosing(e);
         }
 
@@ -469,6 +474,15 @@ namespace Guard.WPF
         private void OnUpdateAvailable(object? sender, UpdateInfo updateInfo)
         {
             Navigate(typeof(UpdatePage), false);
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            if (SettingsManager.Settings.RestoreWindowPlacement)
+            {
+                WindowPlacement.ApplyPlacement(this);
+            }
         }
     }
 }
