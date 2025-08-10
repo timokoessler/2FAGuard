@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Guard.Core.Models;
 using Guard.Core.Security.WebAuthn;
+using Guard.Core.Storage;
 using Windows.Security.Credentials;
 
 namespace Guard.Core.Security
@@ -66,7 +67,7 @@ namespace Guard.Core.Security
         public static async Task SaveFile()
         {
             byte[] fileData = JsonSerializer.SerializeToUtf8Bytes(authData);
-            await File.WriteAllBytesAsync(authFilePath, fileData);
+            await SafeFileWriter.SaveFileAsync(authFilePath, fileData);
         }
 
         /// <summary>

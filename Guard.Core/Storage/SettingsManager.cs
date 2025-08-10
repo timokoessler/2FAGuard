@@ -30,7 +30,7 @@ namespace Guard.Core.Storage
         {
             string fileContent = JsonSerializer.Serialize(Settings);
             byte[] fileData = System.Text.Encoding.UTF8.GetBytes(fileContent);
-            await File.WriteAllBytesAsync(settingsFilePath, fileData);
+            await SafeFileWriter.SaveFileAsync(settingsFilePath, fileData);
         }
     }
 }
