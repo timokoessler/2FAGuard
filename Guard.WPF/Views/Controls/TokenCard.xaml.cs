@@ -7,6 +7,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Guard.Core;
 using Guard.Core.Models;
+using Guard.Core.Storage;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Export;
 using Guard.WPF.Core.Icons;
@@ -76,6 +77,10 @@ namespace Guard.WPF.Views.UIComponents
             // Add Click event to copy token to clipboard
             MouseLeftButtonUp += (sender, e) =>
             {
+                if (SettingsManager.Settings.HideToken == HideTokenSetting.ShowAfterClick)
+                {
+                    UpdateTokenText(true);
+                }
                 CopyToken();
             };
 
@@ -142,8 +147,19 @@ namespace Guard.WPF.Views.UIComponents
             TimeProgressRing.BeginAnimation(ProgressRing.ProgressProperty, doubleAnimation);
         }
 
-        private void UpdateTokenText()
+        private void UpdateTokenText(bool showIfHidden = false)
         {
+            if (showIfHidden)
+            {
+                TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0)); // #000000
+            }
+            else if (SettingsManager.Settings.HideToken != HideTokenSetting.Never)
+            {
+                TokenTextBlock.Text = "●●● ●●●";
+                TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(68, 68, 68)); // #444444
+                return;
+            }
+
             string tokenStr = token.GenerateToken();
             if (tokenStr.Length == 6)
             {
@@ -153,6 +169,7 @@ namespace Guard.WPF.Views.UIComponents
             {
                 tokenStr = tokenStr[..4] + " " + tokenStr[4..];
             }
+
             TokenTextBlock.Text = tokenStr;
         }
 

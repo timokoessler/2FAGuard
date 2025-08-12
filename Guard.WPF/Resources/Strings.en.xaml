@@ -78,6 +78,11 @@
     <system:String x:Key="i.settings.webauthn.notsupported">Your operating system does not seem to support WebAuthn.</system:String>
     <system:String x:Key="i.settings.restorewindow">Remember window position</system:String>
     <system:String x:Key="i.settings.restorewindow.description">Open the app in the same position as it was closed</system:String>
+    <system:String x:Key="i.settings.hidetoken">Hide the generated tokens</system:String>
+    <system:String x:Key="i.settings.hidetoken.description">Do not display the tokens on the screen</system:String>
+    <system:String x:Key="i.settings.hidetoken.never">Never hide</system:String>
+    <system:String x:Key="i.settings.hidetoken.showafterclick">Show after click</system:String>
+    <system:String x:Key="i.settings.hidetoken.always">Always hide</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Security Key (FIDO2)</system:String>

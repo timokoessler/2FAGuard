@@ -10,7 +10,6 @@ using Guard.WPF.Core.Installation;
 using Guard.WPF.Core.Security;
 using Guard.WPF.Views.Dialogs;
 using Guard.WPF.Views.Pages.Preferences;
-using Guard.WPF.Views.UIComponents;
 using Wpf.Ui.Controls;
 
 namespace Guard.WPF.Views.Pages
@@ -165,6 +164,9 @@ namespace Guard.WPF.Views.Pages
 
             WebAuthnBtn.IsEnabled = Auth.IsLoginEnabled();
 
+            SetSelectedHideTokenSetting(SettingsManager.Settings.HideToken);
+            HideTokenComboBox.SelectionChanged += OnHideTokenSelectionChanged;
+
             ApplyRegistrySettings();
             FixSecuritySettingsGridSpacing();
         }
@@ -203,6 +205,15 @@ namespace Guard.WPF.Views.Pages
                 .Items.OfType<ComboBoxItem>()
                 .FirstOrDefault(x =>
                     ((string)x.Tag).Equals(theme.ToString(), StringComparison.OrdinalIgnoreCase)
+                );
+        }
+
+        private void SetSelectedHideTokenSetting(HideTokenSetting hideToken)
+        {
+            HideTokenComboBox.SelectedItem = HideTokenComboBox
+                .Items.OfType<ComboBoxItem>()
+                .FirstOrDefault(x =>
+                    ((string)x.Tag).Equals(hideToken.ToString(), StringComparison.OrdinalIgnoreCase)
                 );
         }
 
@@ -578,6 +589,20 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
                     card.Margin = new Thickness(15, 0, 0, 15);
                 }
                 ++i;
+            }
+        }
+
+        private void OnHideTokenSelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            if (HideTokenComboBox.SelectedItem != null)
+            {
+                string theme = (string)((ComboBoxItem)HideTokenComboBox.SelectedItem).Tag;
+
+                if (Enum.TryParse(theme, true, out HideTokenSetting result))
+                {
+                    SettingsManager.Settings.HideToken = result;
+                    _ = SettingsManager.Save();
+                }
             }
         }
     }

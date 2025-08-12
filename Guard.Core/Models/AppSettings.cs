@@ -42,6 +42,13 @@
         OneHour,
     }
 
+    public enum HideTokenSetting
+    {
+        Never,
+        ShowAfterClick,
+        Always,
+    }
+
     public class AppSettings
     {
         public ThemeSetting Theme { get; set; } = ThemeSetting.System;
@@ -55,5 +62,6 @@
         public Version LastUsedAppVersion { get; set; } = new(0, 0);
         public DateTime LastAppStartEvent { get; set; } = DateTime.MinValue;
         public bool RestoreWindowPlacement { get; set; } = false;
+        public HideTokenSetting HideToken { get; set; } = HideTokenSetting.Never;
     }
 }
