@@ -1,12 +1,14 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Guard.Core;
 using Guard.Core.Models;
+using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Export;
@@ -106,6 +108,11 @@ namespace Guard.WPF.Views.UIComponents
                     }
                 }
             };
+
+            if (token.dBToken.EncryptedNotes != null)
+            {
+                MouseEnter += OnMouseEnter;
+            }
 
             Cursor = Cursors.Hand;
         }
@@ -345,6 +352,43 @@ namespace Guard.WPF.Views.UIComponents
         internal int GetTokenId()
         {
             return token.dBToken.Id;
+        }
+
+        private void OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            AddNotesTooltip();
+        }
+
+        private void AddNotesTooltip()
+        {
+            MouseEnter -= OnMouseEnter;
+
+            if (token.dBToken.EncryptedNotes == null)
+            {
+                return;
+            }
+
+            try
+            {
+                var notesBytes = Auth.GetMainEncryptionHelper()
+                    .DecryptBytes(token.dBToken.EncryptedNotes);
+                using var notesStream = new MemoryStream(notesBytes);
+
+                var doc = new FlowDocument();
+                var notesRange = new TextRange(doc.ContentStart, doc.ContentEnd);
+                notesRange.Load(notesStream, DataFormats.Xaml);
+
+                var viewer = new FlowDocumentScrollViewer { Document = doc };
+
+                var tooltip = new ToolTip { Content = viewer };
+
+                ToolTipService.SetToolTip(this, tooltip);
+                ToolTipService.SetIsEnabled(this, true);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Error loading notes for token: {Message}", ex);
+            }
         }
     }
 }
