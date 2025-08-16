@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-	<!--  RTL  -->
+    <!--  RTL  -->
     <Style TargetType="TextBlock">
         <Setter Property="FlowDirection" Value="RightToLeft" />
     </Style>
@@ -79,6 +79,13 @@
     <system:String x:Key="i.settings.webauthn.description">تسجيل الدخول بواسطة مفتاح أمان مادي</system:String>
     <system:String x:Key="i.settings.webauthn.button">تكوين</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">يبدو أن النظام الخاص بك لا يدعم WebAuthn</system:String>
+    <system:String x:Key="i.settings.restorewindow">Remember window position</system:String>
+    <system:String x:Key="i.settings.restorewindow.description">Open the app in the same position as it was closed</system:String>
+    <system:String x:Key="i.settings.hidetoken">Hide the generated tokens</system:String>
+    <system:String x:Key="i.settings.hidetoken.description">Do not display the tokens on the screen</system:String>
+    <system:String x:Key="i.settings.hidetoken.never">Never hide</system:String>
+    <system:String x:Key="i.settings.hidetoken.showafterclick">Show after click</system:String>
+    <system:String x:Key="i.settings.hidetoken.always">Always hide</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">مفتاح أمان (FIDO2)</system:String>

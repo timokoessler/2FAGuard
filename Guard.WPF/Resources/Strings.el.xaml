@@ -74,6 +74,13 @@
     <system:String x:Key="i.settings.webauthn.description">Συνδεθείτε με ένα κλειδί ασφάλειας υλικού</system:String>
     <system:String x:Key="i.settings.webauthn.button">Διαμόρφωση</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">Το λειτουργικό σας σύστημα δεν φαίνεται να υποστηρίζει WebAuthn.</system:String>
+    <system:String x:Key="i.settings.restorewindow">Remember window position</system:String>
+    <system:String x:Key="i.settings.restorewindow.description">Open the app in the same position as it was closed</system:String>
+    <system:String x:Key="i.settings.hidetoken">Hide the generated tokens</system:String>
+    <system:String x:Key="i.settings.hidetoken.description">Do not display the tokens on the screen</system:String>
+    <system:String x:Key="i.settings.hidetoken.never">Never hide</system:String>
+    <system:String x:Key="i.settings.hidetoken.showafterclick">Show after click</system:String>
+    <system:String x:Key="i.settings.hidetoken.always">Always hide</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Κλειδί Ασφαλείας (FIDO2)</system:String>

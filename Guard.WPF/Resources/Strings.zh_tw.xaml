@@ -74,6 +74,13 @@
     <system:String x:Key="i.settings.webauthn.description">使用硬件安全金鑰登入</system:String>
     <system:String x:Key="i.settings.webauthn.button">配置</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">您的作業系统似乎不支持WebAuthn。</system:String>
+    <system:String x:Key="i.settings.restorewindow">Remember window position</system:String>
+    <system:String x:Key="i.settings.restorewindow.description">Open the app in the same position as it was closed</system:String>
+    <system:String x:Key="i.settings.hidetoken">Hide the generated tokens</system:String>
+    <system:String x:Key="i.settings.hidetoken.description">Do not display the tokens on the screen</system:String>
+    <system:String x:Key="i.settings.hidetoken.never">Never hide</system:String>
+    <system:String x:Key="i.settings.hidetoken.showafterclick">Show after click</system:String>
+    <system:String x:Key="i.settings.hidetoken.always">Always hide</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">安全金鑰 (FIDO2)</system:String>

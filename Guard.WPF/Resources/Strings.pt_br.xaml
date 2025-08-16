@@ -74,6 +74,13 @@
     <system:String x:Key="i.settings.webauthn.description">Entrar com uma chave de segurança física</system:String>
     <system:String x:Key="i.settings.webauthn.button">Configurar</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">Seu sistema operacional parece não suportar WebAuthn.</system:String>
+    <system:String x:Key="i.settings.restorewindow"></system:String>
+    <system:String x:Key="i.settings.restorewindow.description">Open the app in the same position as it was closed</system:String>
+    <system:String x:Key="i.settings.hidetoken">Hide the generated tokens</system:String>
+    <system:String x:Key="i.settings.hidetoken.description">Do not display the tokens on the screen</system:String>
+    <system:String x:Key="i.settings.hidetoken.never">Never hide</system:String>
+    <system:String x:Key="i.settings.hidetoken.showafterclick">Show after click</system:String>
+    <system:String x:Key="i.settings.hidetoken.always">Always hide</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Chave de Segurança (FIDO2)</system:String>
@@ -192,7 +199,7 @@
     <system:String x:Key="i.page.exportpage">Exportar códigos</system:String>
     <system:String x:Key="i.export.failed.title">Falha ao exportar</system:String>
     <system:String x:Key="i.export.failed.content">Ocorreu um erro ao exportar:</system:String>
-    <system:String x:Key="i.export.failed.unencrypted">Unencrypted backups are blocked by your administrator</system:String>
+    <system:String x:Key="i.export.failed.unencrypted">Backups sem criptografia estão bloqueados pelo seu administrador</system:String>
     <system:String x:Key="i.export.password">Por favor, digite uma senha para o arquivo de backup</system:String>
     <system:String x:Key="i.export.password.invalid">Por favor, insira uma senha válida</system:String>
     <system:String x:Key="i.export.backup">Backup</system:String>

@@ -3,7 +3,7 @@
 
     <!--  Nav  -->
     <system:String x:Key="i.title">2FAGuard</system:String>
-    <system:String x:Key="i.page.home">Tokens</system:String>
+    <system:String x:Key="i.page.home">Jetons</system:String>
     <system:String x:Key="i.page.settings">Paramètres</system:String>
     <system:String x:Key="i.language">Langue</system:String>
     <system:String x:Key="i.nav.add">Ajouter un token</system:String>
@@ -74,6 +74,13 @@
     <system:String x:Key="i.settings.webauthn.description">Se connecter avec une clé de sécurité matérielle</system:String>
     <system:String x:Key="i.settings.webauthn.button">Configurer</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">Votre système d'exploitation ne semble pas prendre en charge WebAuthn.</system:String>
+    <system:String x:Key="i.settings.restorewindow">Mémoriser la position de la fenêtre</system:String>
+    <system:String x:Key="i.settings.restorewindow.description">Ouvrir l'application à la même position qu'elle a été fermée</system:String>
+    <system:String x:Key="i.settings.hidetoken">Masquer les jetons générés</system:String>
+    <system:String x:Key="i.settings.hidetoken.description">Ne pas afficher les jetons à l'écran</system:String>
+    <system:String x:Key="i.settings.hidetoken.never">Ne jamais masquer</system:String>
+    <system:String x:Key="i.settings.hidetoken.showafterclick">Afficher après clic</system:String>
+    <system:String x:Key="i.settings.hidetoken.always">Toujours masquer</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Clé de sécurité (FIDO2)</system:String>

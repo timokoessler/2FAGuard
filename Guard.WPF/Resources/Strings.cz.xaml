@@ -1,7 +1,5 @@
-<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Nav  -->
     <system:String x:Key="i.title">2FAGuard</system:String>
@@ -76,6 +74,13 @@
     <system:String x:Key="i.settings.webauthn.description">Přihlášení pomocí hardwarového bezpečnostního klíče</system:String>
     <system:String x:Key="i.settings.webauthn.button">Konfigurovat</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">Zdá se, že váš operační systém nepodporuje WebAuthn.</system:String>
+    <system:String x:Key="i.settings.restorewindow">Remember window position</system:String>
+    <system:String x:Key="i.settings.restorewindow.description">Open the app in the same position as it was closed</system:String>
+    <system:String x:Key="i.settings.hidetoken">Hide the generated tokens</system:String>
+    <system:String x:Key="i.settings.hidetoken.description">Do not display the tokens on the screen</system:String>
+    <system:String x:Key="i.settings.hidetoken.never">Never hide</system:String>
+    <system:String x:Key="i.settings.hidetoken.showafterclick">Show after click</system:String>
+    <system:String x:Key="i.settings.hidetoken.always">Always hide</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Bezpečnostní klíč (FIDO2)</system:String>
@@ -176,7 +181,7 @@
     <system:String x:Key="i.import.authpro.description">Importovat záložní soubor z aplikace Stratum</system:String>
     <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
     <system:String x:Key="i.import.gauthenticator.description">Importovat tokeny z aplikace Google Authenticator</system:String>
-    <system:String x:Key="i.import.gauthenticator.msgbox.content">Chcete-li importovat tokeny z Google Authenticator, otevřete aplikaci na svém smartphonu nebo tabletu a v nabídce vyberte "Přenos účtů" a poté "Exportovat účty".@nPoté pořiďte snímek obrazovky zobrazeného QR kódu a zkopírujte soubor s obrázkem na toto zařízení.@nImportujte tento soubor výběrem možnosti "Importovat QR kód" v horní části této aplikace.@n@nPoznámka: QR kód může uložit pouze omezené množství informací. Vyberte prosím v aplikaci Google Authenticator maximálně 5 tokenů najednou pro export.</system:String>
+    <system:String x:Key="i.import.gauthenticator.msgbox.content">Chcete-li importovat tokeny z Google Authenticator, otevřete aplikaci na svém smartphonu nebo tabletu a v nabídce vyberte &quot;Přenos účtů&quot; a poté &quot;Exportovat účty&quot;.@nPoté pořiďte snímek obrazovky zobrazeného QR kódu a zkopírujte soubor s obrázkem na toto zařízení.@nImportujte tento soubor výběrem možnosti &quot;Importovat QR kód&quot; v horní části této aplikace.@n@nPoznámka: QR kód může uložit pouze omezené množství informací. Vyberte prosím v aplikaci Google Authenticator maximálně 5 tokenů najednou pro export.</system:String>
     <system:String x:Key="i.import.authpro.invalid">Vybraný soubor není platnou zálohou aplikace Stratum.</system:String>
     <system:String x:Key="i.import.authpro.legacy">Vybraná záloha je ve zastaralém formátu a nelze ji importovat. Vytvořte prosím zálohu pomocí aktuální verze aplikace Stratum.</system:String>
     <system:String x:Key="i.import.password">Zadejte prosím heslo k záložnímu souboru</system:String>
@@ -275,6 +280,7 @@
     <!--  Tray  -->
     <system:String x:Key="i.tray.exit">Ukončit</system:String>
     <system:String x:Key="i.tray.lock">Uzamknout</system:String>
+
 
     <!--  Password  -->
     <system:String x:Key="i.pass.invalid.minlength">Heslo musí mít alespoň @Length znaků</system:String>

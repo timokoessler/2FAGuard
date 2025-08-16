@@ -74,6 +74,13 @@
     <system:String x:Key="i.settings.webauthn.description">Melde dich mit einem Sicherheitsschlüssel an</system:String>
     <system:String x:Key="i.settings.webauthn.button">Konfigurieren</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">Dein Betriebssystem scheint WebAuthn nicht zu unterstützen.</system:String>
+    <system:String x:Key="i.settings.restorewindow">Position des Fensters merken</system:String>
+    <system:String x:Key="i.settings.restorewindow.description">Öffne die App an derselben Position, an der sie geschlossen wurde</system:String>
+    <system:String x:Key="i.settings.hidetoken">Generierte Token ausblenden</system:String>
+    <system:String x:Key="i.settings.hidetoken.description">Token nicht auf dem Bildschirm anzeigen</system:String>
+    <system:String x:Key="i.settings.hidetoken.never">Niemals verbergen</system:String>
+    <system:String x:Key="i.settings.hidetoken.showafterclick">Nach Klick anzeigen</system:String>
+    <system:String x:Key="i.settings.hidetoken.always">Immer verbergen</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Sicherheitsschlüssel (FIDO2)</system:String>
@@ -234,7 +241,7 @@
     <system:String x:Key="i.settings.license">Lizenz</system:String>
     <system:String x:Key="i.td.customicon.btn">Eigenes Icon</system:String>
     <system:String x:Key="i.td.customicon.dialog.title">Eigenes Icon auswählen</system:String>
-    <system:String x:Key="i.td.customicon.tolarge">Ein Icon darf maximal 1 MB groß sein</system:String>
+    <system:String x:Key="i.td.customicon.tolarge">Es werden nur Bilder mit einer maximalen Größe von 1MB unterstützt</system:String>
 
     <!--  Token Success Page  -->
     <system:String x:Key="i.page.tokensuccesspage">Token</system:String>
