@@ -11,6 +11,7 @@ HKEY_CURRENT_USER\Software\Policies\2FAGuard
 ```
 
 A group policy ADMX template provided by a user from the community can be downloaded [here](https://2faguard.app/static-content/2FAGuard-ADMX-Template.zip).
+Please note that the ADMX template is currently out of date, but you can find all options on this page.
 
 ### Modify app data path
 
