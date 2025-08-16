@@ -74,7 +74,7 @@
     <system:String x:Key="i.settings.webauthn.description">Entrar com uma chave de segurança física</system:String>
     <system:String x:Key="i.settings.webauthn.button">Configurar</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">Seu sistema operacional parece não suportar WebAuthn.</system:String>
-    <system:String x:Key="i.settings.restorewindow"></system:String>
+    <system:String x:Key="i.settings.restorewindow">Remember window position</system:String>
     <system:String x:Key="i.settings.restorewindow.description">Open the app in the same position as it was closed</system:String>
     <system:String x:Key="i.settings.hidetoken">Hide the generated tokens</system:String>
     <system:String x:Key="i.settings.hidetoken.description">Do not display the tokens on the screen</system:String>
