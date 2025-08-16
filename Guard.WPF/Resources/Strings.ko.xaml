@@ -1,0 +1,322 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Nav  -->
+    <system:String x:Key="i.title">2FAGuard</system:String>
+    <system:String x:Key="i.page.home">토큰</system:String>
+    <system:String x:Key="i.page.settings">설정</system:String>
+    <system:String x:Key="i.language">언어 추가</system:String>
+    <system:String x:Key="i.nav.add">토큰 추가</system:String>
+
+    <!--  Settings  -->
+    <system:String x:Key="i.settings.personalisation">개인화</system:String>
+    <system:String x:Key="i.settings.theme">앱 테마</system:String>
+    <system:String x:Key="i.settings.theme.description">앱의 테마 선택</system:String>
+    <system:String x:Key="i.settings.theme.system">시스템</system:String>
+    <system:String x:Key="i.settings.theme.light">밝은</system:String>
+    <system:String x:Key="i.settings.theme.dark">어두운</system:String>
+    <system:String x:Key="i.settings.language">언어</system:String>
+    <system:String x:Key="i.settings.language.description">앱의 언어 선택</system:String>
+    <system:String x:Key="i.settings.about">이 소프트웨어에 대하여</system:String>
+    <system:String x:Key="i.settings.issue">문제 보고</system:String>
+    <system:String x:Key="i.settings.security">보안</system:String>
+    <system:String x:Key="i.settings.winhello">Windows Hello</system:String>
+    <system:String x:Key="i.settings.winhello.description">Windows Hello로 로그인 허용</system:String>
+    <system:String x:Key="i.settings.winhello.failed.title">오류가 발생했습니다</system:String>
+    <system:String x:Key="i.settings.winhello.failed.content">Windows Hello를 설정하는 동안 오류가 발생했습니다:</system:String>
+    <system:String x:Key="i.passdialog.title">비밀번호를 입력하세요</system:String>
+    <system:String x:Key="i.passdialog.content">작업을 확인하려면 비밀번호를 입력하세요</system:String>
+    <system:String x:Key="i.passdialog.input">사용자 비밀번호</system:String>
+    <system:String x:Key="i.passdialog.next">다움</system:String>
+    <system:String x:Key="i.passdialog.incorrect">비밀번호가 잘못되었습니다</system:String>
+    <system:String x:Key="i.settings.password">비밀번호</system:String>
+    <system:String x:Key="i.settings.password.description">사용자 비밀번호 변경</system:String>
+    <system:String x:Key="i.settings.password.button">변경</system:String>
+    <system:String x:Key="i.changepass.title">비밀번호 변경</system:String>
+    <system:String x:Key="i.changepass.currentbox">현재 비밀번호</system:String>
+    <system:String x:Key="i.changepass.newbox">새 비밀번호 입력</system:String>
+    <system:String x:Key="i.changepass.newbox.repeat">새 비밀번호 반복</system:String>
+    <system:String x:Key="i.changepass.current.notempty">현재 비밀번호를 입력해 주세요</system:String>
+    <system:String x:Key="i.changepass.current.incorrect">현재 입력한 비밀번호가 잘못되었습니다</system:String>
+    <system:String x:Key="i.settings.record">녹화 방지</system:String>
+    <system:String x:Key="i.settings.record.description">앱의 화면 녹화 및 스크린샷 차단</system:String>
+    <system:String x:Key="i.settings.autolock">자동 잠금</system:String>
+    <system:String x:Key="i.settings.autolock.description">Windows가 잠겨 있는 경우 앱 잠금</system:String>
+    <system:String x:Key="i.settings.oss">사용된 오픈 소스 소프트웨어</system:String>
+    <system:String x:Key="i.settings.autostart">자동 시작</system:String>
+    <system:String x:Key="i.settings.autostart.description">Windows가 시작되면 앱을 자동으로 엽니다</system:String>
+    <system:String x:Key="i.settings.autostart.error.title">오류가 발생했습니다</system:String>
+    <system:String x:Key="i.settings.autostart.error.disabled.policy">그룹 정책에 의해 앱의 자동 시작이 비활성화되었습니다</system:String>
+    <system:String x:Key="i.settings.autostart.error.disabled.user">Windows 작업 관리자에서 앱의 자동 시작이 비활성화되었으며, 그곳에서만 변경할 수 있습니다</system:String>
+    <system:String x:Key="i.settings.autostart.error.alreadyenabled">앱의 자동 시작이 이미 활성화되었습니다</system:String>
+    <system:String x:Key="i.settings.autostart.error.notenabled">앱의 자동 시작은 이미 비활성화되어 있으므로 비활성화할 수 없습니다</system:String>
+    <system:String x:Key="i.settings.tray">최소화하고 트레이에서 닫기</system:String>
+    <system:String x:Key="i.settings.tray.description">앱을 최소화하고 닫을 때 시스템 트레이로 이동</system:String>
+    <system:String x:Key="i.settings.imprint">각인</system:String>
+    <system:String x:Key="i.settings.privacy">개인정보</system:String>
+    <system:String x:Key="i.settings.reset">앱 재설정</system:String>
+    <system:String x:Key="i.settings.reset.description">모든 토큰 및 설정 삭제</system:String>
+    <system:String x:Key="i.settings.reset.button">재설정</system:String>
+    <system:String x:Key="i.settings.reset.confirm.title">확실합니까?</system:String>
+    <system:String x:Key="i.settings.reset.confirm.content">모든 토큰과 설정을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.</system:String>
+    <system:String x:Key="i.settings.reset.confirm.btn">재설정</system:String>
+    <system:String x:Key="i.settings.locktime">잠금 타이머</system:String>
+    <system:String x:Key="i.settings.locktime.description">일정 시간 동안 사용하지 않으면 앱을 잠급니다</system:String>
+    <system:String x:Key="i.settings.locktime.never">절대 안 함</system:String>
+    <system:String x:Key="i.settings.locktime.thirtyseconds">30초</system:String>
+    <system:String x:Key="i.settings.locktime.oneminute">1분</system:String>
+    <system:String x:Key="i.settings.locktime.fiveminutes">5뷴</system:String>
+    <system:String x:Key="i.settings.locktime.tenminutes">10분</system:String>
+    <system:String x:Key="i.settings.locktime.thirtyminutes">30분</system:String>
+    <system:String x:Key="i.settings.locktime.onehour">1시간</system:String>
+    <system:String x:Key="i.page.changepasswordpage">비밀번호 변경</system:String>
+    <system:String x:Key="i.settings.webauthn">보안 키 (FIDO2)</system:String>
+    <system:String x:Key="i.settings.webauthn.description">하드웨어 보안 키로 로그인</system:String>
+    <system:String x:Key="i.settings.webauthn.button">구성</system:String>
+    <system:String x:Key="i.settings.webauthn.notsupported">운영 체제가 WebAuthn을 지원하지 않는 것 같습니다.</system:String>
+    <system:String x:Key="i.settings.restorewindow">창 위치 기억</system:String>
+    <system:String x:Key="i.settings.restorewindow.description">닫힌 위치와 동일한 위치에서 앱 열기</system:String>
+    <system:String x:Key="i.settings.hidetoken">생성된 토큰 숨기기</system:String>
+    <system:String x:Key="i.settings.hidetoken.description">화면에 토큰을 표시하지 않음</system:String>
+    <system:String x:Key="i.settings.hidetoken.never">숨기지 않음</system:String>
+    <system:String x:Key="i.settings.hidetoken.showafterclick">클릭 후 표시</system:String>
+    <system:String x:Key="i.settings.hidetoken.always">항상 숨기기</system:String>
+
+    <!--  WebAuthn  -->
+    <system:String x:Key="i.page.webauthnpage">보안 키 (FIDO2)</system:String>
+    <system:String x:Key="i.webauthn.add.title">보안 키 추가</system:String>
+    <system:String x:Key="i.webauthn.add.description">새 키 등록</system:String>
+    <system:String x:Key="i.webauthn.existing">기존 키</system:String>
+    <system:String x:Key="i.webauthn.existing.none">사용 가능한 키 없음</system:String>
+    <system:String x:Key="i.webauthn.dialog1.title">보안 키 추가</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content">추가하려는 보안 키의 이름을 입력해 주세요</system:String>
+    <system:String x:Key="i.webauthn.dialog1.input">키를 식별할 수 있는 이름</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content2">시스템 팝업에 보안 키로 로그인할 수 있다고 표시된 후, 등록을 완료하려면 다음 인증 단계를 직접 완료해야 합니다.</system:String>
+    <system:String x:Key="i.webauthn.dialog1.namerequired">보안 키의 이름을 입력해야 합니다</system:String>
+    <system:String x:Key="i.webauthn.dialog.nameexists">이 이름을 가진 보안 키가 이미 존재합니다</system:String>
+    <system:String x:Key="i.webauthn.delete.title">보안 키 제거</system:String>
+    <system:String x:Key="i.webauthn.delete.content">보안 키 @이름을 제거하시겠습니까? 이 키는 더 이상 인증에 사용할 수 없습니다.</system:String>
+    <system:String x:Key="i.webauthn.delete.yes">제거</system:String>
+
+    <!--  Application setup  -->
+    <system:String x:Key="i.welcome.subtext">다운로드해 주셔서 감사합니다! 토큰을 어떻게 보호할지 선택해 주세요.</system:String>
+    <system:String x:Key="i.welcome.hello">Windows Hello 또는 비밀번호</system:String>
+    <system:String x:Key="i.welcome.hello.description">간단하고 안전한, 폴백으로서의 비밀번호</system:String>
+    <system:String x:Key="i.welcome.hello.notavailable">Windows Hello를 사용할 수 없습니다</system:String>
+    <system:String x:Key="i.welcome.hello.notavailable.content">이 기능을 사용할 수 있도록 Windows 시스템 설정에서 Windows Hello를 구성해 주세요.</system:String>
+    <system:String x:Key="i.welcome.pass">비밀번호만</system:String>
+    <system:String x:Key="i.welcome.pass.description">비밀번호로 토큰 보안</system:String>
+    <system:String x:Key="i.welcome.skip">건너뛰기</system:String>
+    <system:String x:Key="i.welcome.pass.title">비밀번호 설정</system:String>
+    <system:String x:Key="i.welcome.pass.subtext">토큰을 암호화하는 데 사용할 보안 비밀번호를 입력하세요. 이 비밀번호를 잊어버리면 더 이상 토큰에 액세스할 수 없습니다.</system:String>
+    <system:String x:Key="i.welcome.pass.box">보안 비밀번호 입력</system:String>
+    <system:String x:Key="i.welcome.pass.box.repeat">비밀번호 반복</system:String>
+    <system:String x:Key="i.welcome.pass.notempty">비밀번호는 비워둘 수 없습니다</system:String>
+    <system:String x:Key="i.welcome.pass.notmatch">비밀번호가 일치하지 않습니다</system:String>
+    <system:String x:Key="i.welcome.pass.length">비밀번호는 최소 8자에서 최대 128자여야 합니다</system:String>
+    <system:String x:Key="i.setup.finished.title">설정 완료</system:String>
+    <system:String x:Key="i.setup.finished.subtext">2FAGuard를 성공적으로 설정했습니다. 이제 토큰을 추가할 수 있습니다.</system:String>
+    <system:String x:Key="i.setup.finished.action.token">토큰 추가</system:String>
+    <system:String x:Key="i.setup.finished.action.token.description">컬렉션에 첫 번째 토큰 추가</system:String>
+    <system:String x:Key="i.setup.finished.action.settings">설정</system:String>
+    <system:String x:Key="i.setup.finished.action.settings.description">응용 프로그램 설정 변경</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.title">확실합니까?</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.content">보안 없이 2FAGuard를 사용하기로 선택하셨습니다. 즉, 토큰은 암호화되어 있지 않으며 컴퓨터에 액세스할 수 있는 모든 사용자가 액세스할 수 있습니다. 계속하시겠습니까?</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.continue">계속 (권장 없음)</system:String>
+    <system:String x:Key="i.welcome.portable.winhello.title">참고</system:String>
+    <system:String x:Key="i.welcome.portable.winhello.content">USB 스틱 또는 기타 포터블 저장 장치에서 포터블 버전의 2FAGuard를 사용하는 경우 다른 Windows 사용자나 다른 장치에서 Windows Hello로 자동 로그인할 수 없습니다. 먼저 2FAGuard 설정의 다른 장치에서 Windows Hello를 활성화해야 합니다. 언제든지 비밀번호로 로그인할 수 있습니다.</system:String>
+    <system:String x:Key="i.page.welcome">환영합니다</system:String>
+
+    <!--  Login  -->
+    <system:String x:Key="i.login.subtext">토큰에 액세스하려면 신원을 증명하세요</system:String>
+    <system:String x:Key="i.login.passbox">비밀번호를 입력하세요</system:String>
+    <system:String x:Key="i.login.button">비밀번호로 로그인</system:String>
+    <system:String x:Key="i.login.pass.error">비밀번호가 틀렸습니다</system:String>
+    <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
+    <system:String x:Key="i.login.warning.capslock.title">경고</system:String>
+    <system:String x:Key="i.login.warning.capslock.content">Caps Lock이 활성화되었습니다</system:String>
+    <system:String x:Key="i.login.webauthn">보안 키</system:String>
+
+    <!--  Home  -->
+    <system:String x:Key="i.home.loading">로드 중...</system:String>
+    <system:String x:Key="i.home.notokens">토큰을 찾을 수 없습니다</system:String>
+    <system:String x:Key="i.home.notokens.button">토큰 추가</system:String>
+    <system:String x:Key="i.home.search.placeholder">토큰 검색</system:String>
+    <system:String x:Key="i.home.intro.title">알림</system:String>
+    <system:String x:Key="i.home.intro.content">토큰을 마우스 오른쪽 버튼으로 클릭하면 편집이나 삭제 등의 추가 작업을 수행할 수 있습니다.</system:String>
+
+    <!--  Add  -->
+    <system:String x:Key="i.page.addoverview">토큰 추가</system:String>
+    <system:String x:Key="i.add.manual">수동 입력</system:String>
+    <system:String x:Key="i.add.manual.description">보안 키 입력 및 추가 정보</system:String>
+    <system:String x:Key="i.add.qr">QR 코드 가져오기</system:String>
+    <system:String x:Key="i.add.qr.description">이미지 파일을 가져와 QR 코드 스캔</system:String>
+    <system:String x:Key="i.add.qrscreen">화면에서 QR 코드 스캔</system:String>
+    <system:String x:Key="i.add.qrscreen.description">화면에서 보이는 QR 코드를 감지합니다</system:String>
+    <system:String x:Key="i.add.clipboard">클립보드에서 추가</system:String>
+    <system:String x:Key="i.add.clipboard.description">QR 코드 이미지 또는 TOTP URI 붙여넣기</system:String>
+    <system:String x:Key="i.add.import">가져오기</system:String>
+    <system:String x:Key="i.import.backup">백업</system:String>
+    <system:String x:Key="i.import.backup.description">2FAGuard로 생성된 백업 파일 가져오기</system:String>
+    <system:String x:Key="i.import.uri">URI 목록</system:String>
+    <system:String x:Key="i.import.uri.description">TOTP URI 목록 가져오기</system:String>
+    <system:String x:Key="i.import.bitwarden">Bitwarden</system:String>
+    <system:String x:Key="i.import.bitwarden.description">비밀번호 관리자 Bitwarden에서 토큰 가져오기</system:String>
+    <system:String x:Key="i.import.bitwarden.accountencryption">선택한 백업은 귀하의 Bitwarden 계정으로 제한되며 다른 응용 프로그램에서는 가져올 수 없습니다. 비밀번호로 보호된 백업을 생성하여 2FAGuard로 가져오세요.</system:String>
+    <system:String x:Key="i.import.failed.title">가져오기 실패</system:String>
+    <system:String x:Key="i.import.failed.content">가져오는 동안 오류가 발생했습니다:</system:String>
+    <system:String x:Key="i.import.noqrfound">QR 코드를 감지할 수 없습니다</system:String>
+    <system:String x:Key="i.import.noqrfound.screen">QR 코드가 감지되지 않았습니다. QR 코드를 덮고 있는 창이 없고 QR 코드가 명확하게 보이는지 확인해 주세요.</system:String>
+    <system:String x:Key="i.import.invalidqr.screen">QR 코드에는 토큰에 대한 유효한 정보가 포함되어 있지 않습니다. 또한 화면에 하나의 QR 코드만 표시되도록 해주세요.</system:String>
+    <system:String x:Key="i.import.clipboard.invalid">클립보드에 이미지나 텍스트가 포함되어 있지 않습니다.</system:String>
+    <system:String x:Key="i.import.clipboard.invalid.multifiles">현재 클립보드에서 한 번에 하나의 파일만 가져올 수 있습니다.</system:String>
+    <system:String x:Key="i.import.duplicate">동일한 보안 키를 가진 토큰이 이미 존재합니다</system:String>
+    <system:String x:Key="i.home.sort">정렬 순서</system:String>
+    <system:String x:Key="i.home.sort.issuer.asc">발행자, 오름차순</system:String>
+    <system:String x:Key="i.home.sort.issuer.desc">발행자, 내림차순</system:String>
+    <system:String x:Key="i.home.sort.createdat.asc">생성 날짜, 오름차순</system:String>
+    <system:String x:Key="i.home.sort.createdat.desc">생성 날짜, 내림차순</system:String>
+    <system:String x:Key="i.import.notokens">가져오기 파일에서 토큰을 찾을 수 없습니다</system:String>
+    <system:String x:Key="i.import.authpro">Stratum</system:String>
+    <system:String x:Key="i.import.authpro.description">앱 Stratum에서 백업 파일 가져오기</system:String>
+    <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
+    <system:String x:Key="i.import.gauthenticator.description">Google Authenticator 앱에서 토큰 가져오기</system:String>
+    <system:String x:Key="i.import.gauthenticator.msgbox.content">Google Authenticator에서 토큰을 가져오려면 스마트폰이나 태블릿에서 앱을 열고 메뉴에서 "계정 전송"을 선택한 다음 "계정 내보내기"를 선택합니다.@n그런 다음 표시된 QR 코드의 스크린샷을 찍고 이미지 파일을 이 장치에 복사합니다.@n이 응용 프로램 상단에 있는 "QR 코드 가져오기"를 선택하여 이 파일을 가져옵니다.@n@n참고: QR 코드는 제한된 양의 정보만 저장할 수 있습니다. 내보내기를 위해 Google Authenticator 앱에서 최대 5개의 토큰을 동시에 선택하세요.</system:String>
+    <system:String x:Key="i.import.authpro.invalid">선택한 파일은 Stratum 앱의 유효한 백업이 아닙니다.</system:String>
+    <system:String x:Key="i.import.authpro.legacy">선택한 백업이 오래된 형식이므로 가져올 수 없습니다. 현재 버전의 Stratum 앱으로 백업을 생성해 주세요.</system:String>
+    <system:String x:Key="i.import.password">백업 파일의 비밀번호를 입력해 주세요</system:String>
+    <system:String x:Key="i.import.password.invalid">입력한 비밀번호가 잘못되었습니다</system:String>
+    <system:String x:Key="i.import.hotp.notsupported">카운터 기반 토큰 (HOTP)은 지원되지 않습니다</system:String>
+    <system:String x:Key="i.import.twofas">2FAS</system:String>
+    <system:String x:Key="i.import.twofas.description">앱 2FAS에서 백업 파일 가져오기</system:String>
+    <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
+    <system:String x:Key="i.import.aegis.description">Aegis Authenticator export에서 가져오기</system:String>
+    <system:String x:Key="i.page.tokensettings">토큰</system:String>
+    <system:String x:Key="i.page.tokensettings.add">토큰 추가</system:String>
+    <system:String x:Key="i.page.tokensettings.edit">토큰 편집</system:String>
+
+    <!--  Export  -->
+    <system:String x:Key="i.page.exportpage">토큰 내보내기</system:String>
+    <system:String x:Key="i.export.failed.title">내보내기 실패</system:String>
+    <system:String x:Key="i.export.failed.content">내보내는 동안 오류가 발생했습니다:</system:String>
+    <system:String x:Key="i.export.failed.unencrypted">암호화되지 않은 백업은 관리자가 차단합니다</system:String>
+    <system:String x:Key="i.export.password">백업 파일의 비밀번호를 입력해 주세요</system:String>
+    <system:String x:Key="i.export.password.invalid">유효한 비밀번호를 입력해 주세요</system:String>
+    <system:String x:Key="i.export.backup">백업</system:String>
+    <system:String x:Key="i.export.backup.description">2FAGuard와만 호환되는 완전한 백업 파일</system:String>
+    <system:String x:Key="i.export.uri">URI 목록</system:String>
+    <system:String x:Key="i.export.uri.description">메모 없이 암호화되지 않은 TOTP URI 목록 내보내기</system:String>
+    <system:String x:Key="i.export.success.title">내보낸 토큰</system:String>
+    <system:String x:Key="i.export.success.content">토큰이 성공적으로 내보내기되었습니다.</system:String>
+    <system:String x:Key="i.export.success.open">폴더 열기</system:String>
+    <system:String x:Key="i.export.notokens">내보낼 수 있는 토큰이 없습니다</system:String>
+    <system:String x:Key="i.export.authpro">Stratum</system:String>
+    <system:String x:Key="i.export.authpro.description">토큰을 Stratum 백업 파일로 내보내기</system:String>
+
+    <!--  Token Details  -->
+    <system:String x:Key="i.td.general">일반 정보</system:String>
+    <system:String x:Key="i.td.issuer">발행자의 이름</system:String>
+    <system:String x:Key="i.td.issuer.placeholder">예를 들어: Google 또는 Apple</system:String>
+    <system:String x:Key="i.td.username">사용자 이름</system:String>
+    <system:String x:Key="i.td.username.placeholder">일반적으로 귀하의 이메일 주소</system:String>
+    <system:String x:Key="i.td.secret">보안 키</system:String>
+    <system:String x:Key="i.td.secret.placeholder">보안 키 붙여넣기 또는 입력</system:String>
+    <system:String x:Key="i.td.expert">전문가 설정</system:String>
+    <system:String x:Key="i.td.expert.warning.title">경고</system:String>
+    <system:String x:Key="i.td.expert.warning.text">무엇을 하고 있는지 아는 경우에만 이 설정을 변경하세요.</system:String>
+    <system:String x:Key="i.td.expert.warning.button">어쨌든 계속</system:String>
+    <system:String x:Key="i.td.expert.algorithm">알고리즘</system:String>
+    <system:String x:Key="i.td.expert.digits">자릿수</system:String>
+    <system:String x:Key="i.td.expert.digits.placeholder">6자가 표준입니다</system:String>
+    <system:String x:Key="i.td.expert.period">유효 기간 (초)</system:String>
+    <system:String x:Key="i.td.expert.period.placeholder">30초가 표준입니다</system:String>
+    <system:String x:Key="i.td.icon.text">발행자 이름을 입력하면 일치하는 아이콘을 얻을 수 있습니다</system:String>
+    <system:String x:Key="i.td.note">참고 (선택 사항)</system:String>
+    <system:String x:Key="i.td.format">형식</system:String>
+    <system:String x:Key="i.td.noissuer">발행자의 이름을 입력해 주세요</system:String>
+    <system:String x:Key="i.td.nosecret">보안 키를 입력해 주세요</system:String>
+    <system:String x:Key="i.td.invalidsecret">보안 키가 잘못되었습니다</system:String>
+    <system:String x:Key="i.td.invaliddigits">자릿수가 잘못되었습니다</system:String>
+    <system:String x:Key="i.td.invalidperiod">유효 기간이 잘못되었습니다</system:String>
+    <system:String x:Key="i.settings.license">라이선스</system:String>
+    <system:String x:Key="i.td.customicon.btn">사용자 지정 아이콘</system:String>
+    <system:String x:Key="i.td.customicon.dialog.title">아이콘 선택</system:String>
+    <system:String x:Key="i.td.customicon.tolarge">최대 크기가 1MB인 이미지만 지원됩니다</system:String>
+
+    <!--  Token Success Page  -->
+    <system:String x:Key="i.page.tokensuccesspage">토큰</system:String>
+    <system:String x:Key="i.stp.added">추가된 토큰</system:String>
+    <system:String x:Key="i.stp.home">모든 토큰 보기</system:String>
+    <system:String x:Key="i.stp.edited">편집된 토큰</system:String>
+    <system:String x:Key="i.stp.added.multiple">추가된 토큰</system:String>
+    <system:String x:Key="i.stp.added.multiple.description">@Count 토큰이 성공적으로 추가되었습니다</system:String>
+    <system:String x:Key="i.stp.added.multiple.duplicate">@Count 토큰은 이미 존재하므로 추가되지 않았습니다</system:String>
+
+    <!--  Text Formatting Dialog  -->
+    <system:String x:Key="i.txtfd.title">텍스트 형식</system:String>
+    <system:String x:Key="i.txtfd.content">Ctrl+B: 굵게@nCtrl+I: 기울임꼴@nCtrl+U: 밑줄@nCtrl+Shift+L: 큰 점@nCtrl+Shift+N: 번호 매기기@nCtrl+E: 텍스트 가운데@nCtrl+L: 텍스트 왼쪽@nCtrl+R: 텍스트 오른쪽</system:String>
+
+    <!--  Token card  -->
+    <system:String x:Key="i.tokencard.copy">복사y</system:String>
+    <system:String x:Key="i.tokencard.edit">편집</system:String>
+    <system:String x:Key="i.tokencard.delete">삭제</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.title">토큰 삭제</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.content">토큰 @Name을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.</system:String>
+    <system:String x:Key="i.tokencard.delete.modal.yes">삭제</system:String>
+    <system:String x:Key="i.tokencard.qr">QR 코드 표시</system:String>
+    <system:String x:Key="i.tokencard.save">저장</system:String>
+    <system:String x:Key="i.tokencard.qr.keepsecure">이 QR 코드에는 민감한 정보가 포함되어 있습니다. 보안을 유지하세요.</system:String>
+
+    <!--  Update  -->
+    <system:String x:Key="i.update.title">업데이트 가능</system:String>
+    <system:String x:Key="i.update.content">2FAGuard의 새 버전을 사용할 수 있습니다. 지금 설치하시겠습니까?</system:String>
+    <system:String x:Key="i.update.install">업데이트 설치</system:String>
+    <system:String x:Key="i.update.skip">건너뛰기</system:String>
+    <system:String x:Key="i.update.loading">업데이트를 다운로드 중...</system:String>
+    <system:String x:Key="i.update.error.title">업데이트 실패</system:String>
+    <system:String x:Key="i.update.error.content">업데이트하는 동안 오류가 발생했습니다</system:String>
+    <system:String x:Key="i.update.changelog">변경 로그 보기</system:String>
+
+    <!--  Tray  -->
+    <system:String x:Key="i.tray.exit">종료</system:String>
+    <system:String x:Key="i.tray.lock">잠금</system:String>
+
+
+    <!--  Password  -->
+    <system:String x:Key="i.pass.invalid.minlength">비밀번호는 최소 @Length 문자여야 합니다</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">비밀번호는 128자를 초과해서는 안 됩니다</system:String>
+    <system:String x:Key="i.pass.invalid.case">비밀번호에는 최소 하나의 소문자와 하나의 대문자가 포함되어야 합니다</system:String>
+    <system:String x:Key="i.pass.invalid.digit">비밀번호에는 최소한 하나의 숫자가 포함되어야 합니다</system:String>
+    <system:String x:Key="i.pass.invalid.special">비밀번호에는 최소 하나의 특수 문자가 포함되어야 합니다</system:String>
+
+    <!--  Other  -->
+    <system:String x:Key="i.win.hello.request">응용 프로그램 2FAGuard는 귀하의 신원을 증명하고자 합니다</system:String>
+    <system:String x:Key="i.error">오류</system:String>
+    <system:String x:Key="i.save">저장</system:String>
+    <system:String x:Key="i.dialog.close">닫기</system:String>
+    <system:String x:Key="i.dialog.next">다음</system:String>
+    <system:String x:Key="i.dialog.cancel">취소</system:String>
+    <system:String x:Key="i.error.unhandled.title">처리되지 않은 예외</system:String>
+    <system:String x:Key="i.error.unhandled.content">예기치 않은 오류가 발생했습니다. 이 오류를 수정할 수 있도록 보고해 주세요. 로그 파일에서 자세한 정보를 확인할 수 있습니다.</system:String>
+    <system:String x:Key="i.error.unhandled.openbug">버그 보고</system:String>
+    <system:String x:Key="i.error.time.title">경고: 시스템 시간이 동기화되지 않음</system:String>
+    <system:String x:Key="i.error.time.content">시스템의 시간이 올바른 시간에서 10초 이상 차이가 납니다. 이로 인해 TOTP 코드 생성에 문제가 발생할 수 있습니다. 시스템의 시간이 올바른지 확인해 주세요.</system:String>
+    <system:String x:Key="i.running.title">앱이 이미 실행 중입니다</system:String>
+    <system:String x:Key="i.running.content">이 앱은 한 번에 한 번만 실행할 수 있습니다.</system:String>
+    <system:String x:Key="i.running.exit">종료</system:String>
+    <system:String x:Key="i.error.unhandled.github">보고서를 보내주셔서 감사합니다! 원하시면 GitHub에서 문제를 만들어 진행 상황을 알려주세요.</system:String>
+    <system:String x:Key="i.error.unhandled.github.open">이슈 생성</system:String>
+
+    <system:String x:Key="i.unsupported.os.title">OS 지원되지 않음</system:String>
+    <system:String x:Key="i.unsupported.os.content">2FAGuard를 사용하려면 Windows 10 1903 (18362) 이상으로 업데이트하세요.</system:String>
+    <system:String x:Key="i.unsupported.exit">종료</system:String>
+    <system:String x:Key="i.unsupported.arch.title">아키텍처가 지원되지 않음</system:String>
+    <system:String x:Key="i.unsupported.arch.content">시스템 아키텍처는 지원되지 않습니다. 2FAGuard는 64비트 시스템만 지원합니다.</system:String>
+    <system:String x:Key="i.unsupported.vcpp.title">Visual C++ Redistributable이 설치되지 않음</system:String>
+    <system:String x:Key="i.unsupported.vcpp.content">2FAGuard를 실행하려면 Microsoft Visual C++ Redistributable 2015-2022가 필요합니다. 2FAGuard를 사용하려면 패키지를 설치하세요. 2FAGuard 설치 프로그램을 사용했거나 패키지를 방금 설치한 경우 장치를 재시작해야 할 수도 있습니다.</system:String>
+    <system:String x:Key="i.unsupported.vcpp.download">다운로드</system:String>
+    <system:String x:Key="i.unsupported.olderversion.title">구식 앱 버전</system:String>
+    <system:String x:Key="i.unsupported.olderversion.content">오래된 버전의 2FAGuard를 사용 중입니다. 최신 버전의 앱으로 이미 편집된 데이터는 열 수 없습니다. 데이터를 사용하려면 앱을 업데이트해 주세요</system:String>
+</ResourceDictionary>
