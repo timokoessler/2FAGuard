@@ -55,7 +55,7 @@
     {
       "login": "leftertrp",
       "name": "Lefteris T.",
-      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15330686/large/4230178a6a5663e2704f0822c60cb74c_default.png",
+      "avatar_url": "https://crowdin-static.cf-downloads.crowdin.com/avatar/15330686/large/780b858dcd03ac54a1d359254d637f8c.jpg",
       "profile": "https://crowdin.com/profile/leftertrp",
       "contributions": [
         "translation"
@@ -84,6 +84,15 @@
       "name": "zateckar",
       "avatar_url": "https://avatars.githubusercontent.com/u/41990536?v=4",
       "profile": "https://github.com/zateckar",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "VenusGirl",
+      "name": "VenusGirl",
+      "avatar_url": "https://avatars.githubusercontent.com/u/53147200?v=4",
+      "profile": "https://github.com/VenusGirl",
       "contributions": [
         "translation"
       ]
