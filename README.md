@@ -11,7 +11,7 @@ A modern and secure Windows app for managing your 2FA authentification codes.
 - 🔒 **Supports Windows Hello**: Security made simple. Use your fingerprint or face to access your tokens quickly and securely.
 - 💡 **Dark Mode**: A modern and sleek design that looks great in both light and dark mode.
 - 📦 **Portable Version**: You can use 2FAGuard as a portable application without installation, e.g. on a USB stick
-- 🌍 **Multilingual**: 2FAGuard is currently available in 11 different languages
+- 🌍 **Multilingual**: 2FAGuard is currently available in 12 different languages
 - ⚙️ **Customizable**: Auto-lock, autostart or minimize to the background - the app adapts to your needs.
 
 ## Download
@@ -49,5 +49,5 @@ If a public GitHub issue or discussion is not the right choice for your concern,
 
 ## License
 
-© [Timo Kössler](https://timokoessler.de) 2024  
-Released under the [MIT license](https://github.com/timokoessler/totp-token-guard/blob/main/LICENSE)
+© [Timo Kössler](https://timokoessler.de) 2025  
+Released under the [MIT license](https://github.com/timokoessler/2FAGuard/blob/main/LICENSE)

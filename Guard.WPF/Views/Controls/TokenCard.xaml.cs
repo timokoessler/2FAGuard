@@ -32,6 +32,7 @@ namespace Guard.WPF.Views.UIComponents
         private readonly MainWindow mainWindow;
         internal readonly string SearchString;
         private TotpIcon? icon;
+        private bool IsDarkMode = false;
 
         internal TokenCard(TOTPTokenHelper token)
         {
@@ -62,6 +63,8 @@ namespace Guard.WPF.Views.UIComponents
             {
                 Username.Visibility = Visibility.Collapsed;
             }
+
+            IsDarkMode = ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Dark;
 
             SetIcon();
             UpdateTokenText();
@@ -158,12 +161,26 @@ namespace Guard.WPF.Views.UIComponents
         {
             if (showIfHidden)
             {
-                TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0)); // #000000
+                if (IsDarkMode)
+                {
+                    TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)); // #FFFFFF
+                }
+                else
+                {
+                    TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0)); // #000000
+                }
             }
             else if (SettingsManager.Settings.HideToken != HideTokenSetting.Never)
             {
                 TokenTextBlock.Text = "●●● ●●●";
-                TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(68, 68, 68)); // #444444
+                if (IsDarkMode)
+                {
+                    TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(204, 204, 204)); // #CCCCCC
+                }
+                else
+                {
+                    TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(68, 68, 68)); // #444444
+                }
                 return;
             }
 
