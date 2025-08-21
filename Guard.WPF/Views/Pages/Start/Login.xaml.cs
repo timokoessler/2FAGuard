@@ -35,6 +35,13 @@ namespace Guard.WPF.Views.Pages.Start
 
         private async void Setup(bool promptWinHello)
         {
+            Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
+
+            Unloaded += (object? sender, RoutedEventArgs e) =>
+            {
+                Core.EventManager.WindowSizeChanged -= OnWindowSizeChanged;
+            };
+
             PasswordBox.KeyDown += (sender, e) =>
             {
                 if (Keyboard.IsKeyToggled(Key.CapsLock))
@@ -213,6 +220,26 @@ namespace Guard.WPF.Views.Pages.Start
                     return;
                 }
                 ShowError("Error", ex.Message);
+            }
+        }
+
+        private void OnWindowSizeChanged(object? sender, (double width, double height) size)
+        {
+            if (mainWindow.ActualHeight < 500)
+            {
+                HeaderLogo.Visibility = Visibility.Collapsed;
+                HeaderTitle.Visibility = Visibility.Collapsed;
+                var margin = HeaderSubtitle.Margin;
+                margin.Top = 60;
+                HeaderSubtitle.Margin = margin;
+            }
+            else
+            {
+                HeaderLogo.Visibility = Visibility.Visible;
+                HeaderTitle.Visibility = Visibility.Visible;
+                var margin = HeaderSubtitle.Margin;
+                margin.Top = 20;
+                HeaderSubtitle.Margin = margin;
             }
         }
     }

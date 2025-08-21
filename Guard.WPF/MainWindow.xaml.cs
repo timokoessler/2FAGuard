@@ -32,7 +32,6 @@ namespace Guard.WPF
         private readonly bool isAutostart;
         private string currentPageName = "";
         public bool SkipApplyRegistrySettings = false;
-        private const double WindowThresholdWidth = 700;
 
         public MainWindow(bool autostart)
         {
@@ -435,9 +434,12 @@ namespace Guard.WPF
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
+            const double HideNavElementTitlesThreshold = 700;
+            const double HidePageTitleThreshold = 600;
+
             if (HomeNavigationItem != null)
             {
-                if (ActualWidth < WindowThresholdWidth)
+                if (ActualWidth < HideNavElementTitlesThreshold)
                 {
                     HomeNavigationItem.Content = null;
                 }
@@ -448,7 +450,7 @@ namespace Guard.WPF
             }
             if (AddNavigationItem != null)
             {
-                if (ActualWidth < WindowThresholdWidth)
+                if (ActualWidth < HideNavElementTitlesThreshold)
                 {
                     AddNavigationItem.Content = null;
                 }
@@ -459,7 +461,7 @@ namespace Guard.WPF
             }
             if (SettingsNavigationItem != null)
             {
-                if (ActualWidth < WindowThresholdWidth)
+                if (ActualWidth < HideNavElementTitlesThreshold)
                 {
                     SettingsNavigationItem.Content = null;
                 }
@@ -468,6 +470,20 @@ namespace Guard.WPF
                     SettingsNavigationItem.SetResourceReference(ContentProperty, "i.page.settings");
                 }
             }
+
+            if (PageTitle != null)
+            {
+                if (ActualWidth < HidePageTitleThreshold)
+                {
+                    PageTitle.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    PageTitle.Visibility = Visibility.Visible;
+                }
+            }
+
+            Core.EventManager.EmitWindowSizeChanged(ActualWidth, ActualHeight);
         }
 
         private void OnUpdateAvailable(object? sender, UpdateInfo updateInfo)

@@ -22,6 +22,7 @@ namespace Guard.WPF.Core
         internal static event EventHandler<int> TokenDeleted = delegate { };
         internal static event EventHandler<AppThemeChangedEventArgs> AppThemeChanged = delegate { };
         internal static event EventHandler<UpdateInfo> UpdateAvailable = delegate { };
+        internal static event EventHandler<(double, double)> WindowSizeChanged = delegate { };
 
         internal static void EmitTokenDeleted(int tokenID)
         {
@@ -42,6 +43,11 @@ namespace Guard.WPF.Core
         internal static void EmitUpdateAvailable(UpdateInfo updateInfo)
         {
             UpdateAvailable?.Invoke(null, updateInfo);
+        }
+
+        internal static void EmitWindowSizeChanged(double width, double height)
+        {
+            WindowSizeChanged?.Invoke(null, (width, height));
         }
     }
 }

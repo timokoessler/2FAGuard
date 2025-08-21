@@ -11,8 +11,8 @@
     Title="2FAGuard"
     Width="1200"
     Height="725"
-    MinWidth="600"
-    MinHeight="420"
+    MinWidth="460"
+    MinHeight="290"
     ExtendsContentIntoTitleBar="True"
     WindowCornerPreference="Round"
     WindowStartupLocation="CenterScreen"
@@ -25,7 +25,7 @@
         </ui:TitleBar>
         <ui:NavigationView
             x:Name="RootNavigation"
-            MinHeight="300"
+            MinHeight="200"
             Margin="40,50,40,0"
             IsBackButtonVisible="Collapsed"
             IsPaneToggleVisible="False"

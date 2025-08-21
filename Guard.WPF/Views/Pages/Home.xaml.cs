@@ -26,10 +26,17 @@ namespace Guard.WPF.Views.Pages
             Loaded += (sender, e) => LoadTokens();
             Loaded += (sender, e) => Updater.CheckForUpdate();
             Core.EventManager.TokenDeleted += OnTokenDeleted;
+            Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
+
+            if (mainWindow.ActualHeight < 500)
+            {
+                LoadingInfoImage.Visibility = Visibility.Collapsed;
+            }
 
             Unloaded += (object? sender, RoutedEventArgs e) =>
             {
                 Core.EventManager.TokenDeleted -= OnTokenDeleted;
+                Core.EventManager.WindowSizeChanged -= OnWindowSizeChanged;
                 timer?.Dispose();
             };
 
@@ -57,6 +64,9 @@ namespace Guard.WPF.Views.Pages
                     }
                 }
             };
+
+            // The size could have changed while another page was active
+            OnWindowSizeChanged(null, (mainWindow.ActualWidth, mainWindow.ActualHeight));
         }
 
         private async void LoadTokens()
@@ -196,6 +206,18 @@ namespace Guard.WPF.Views.Pages
                 case SortOrderSetting.CREATED_DESC:
                     cards.Sort((a, b) => b.GetCreationTime().CompareTo(a.GetCreationTime()));
                     break;
+            }
+        }
+
+        private void OnWindowSizeChanged(object? sender, (double width, double height) size)
+        {
+            if (size.width < 600)
+            {
+                SearchBox.Width = size.width - 238;
+            }
+            else
+            {
+                SearchBox.Width = 360;
             }
         }
     }

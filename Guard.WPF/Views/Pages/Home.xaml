@@ -20,6 +20,7 @@
         </Grid.RowDefinitions>
         <StackPanel x:Name="LoadingInfo" HorizontalAlignment="Center">
             <svgc:SvgViewbox
+                x:Name="LoadingInfoImage"
                 Width="150"
                 Margin="0,50,0,0"
                 HorizontalAlignment="Center"
