@@ -13,18 +13,12 @@
     d:DesignWidth="1150"
     mc:Ignorable="d">
 
-    <Grid Margin="0,20" HorizontalAlignment="Center">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+    <WrapPanel Margin="0,20" HorizontalAlignment="Center">
         <StackPanel
-            Grid.Column="0"
+            x:Name="LeftStackPanel"
             Width="200"
             Margin="0,0,25,0">
             <StackPanel
-                Grid.Column="0"
                 Width="60"
                 Margin="0,80,0,25"
                 HorizontalAlignment="Center">
@@ -48,8 +42,8 @@
                 Icon="{ui:SymbolIcon ImageAdd24}" />
         </StackPanel>
         <StackPanel
-            Grid.Column="1"
             Width="320"
+            x:Name="CenterStackPanel"
             Margin="50,0,50,0">
             <TextBlock
                 Margin="0,24,0,0"
@@ -114,7 +108,7 @@
                 Margin="0,20,0,0"
                 IsOpen="False" />
         </StackPanel>
-        <StackPanel Grid.Column="2" Margin="50,0,0,0">
+        <StackPanel Margin="50,0,0,0" x:Name="RightStackPanel">
             <TextBlock
                 Width="320"
                 Margin="0,24,0,0"
@@ -171,5 +165,5 @@
                 PlaceholderText="{DynamicResource i.td.expert.period.placeholder}"
                 Value="30" />
         </StackPanel>
-    </Grid>
+    </WrapPanel>
 </Page>

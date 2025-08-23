@@ -26,6 +26,15 @@ namespace Guard.WPF.Views.Pages.Start
 
             PasswordBox.KeyDown += (sender, e) => CapsLockWarning();
             PasswordBoxRepeat.KeyDown += (sender, e) => CapsLockWarning();
+
+            Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
+
+            Unloaded += (object? sender, RoutedEventArgs e) =>
+            {
+                Core.EventManager.WindowSizeChanged -= OnWindowSizeChanged;
+            };
+
+            OnWindowSizeChanged(null, (mainWindow.ActualWidth, mainWindow.ActualHeight));
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -94,6 +103,26 @@ namespace Guard.WPF.Views.Pages.Start
                 {
                     InfoBar.IsOpen = false;
                 }
+            }
+        }
+
+        private void OnWindowSizeChanged(object? sender, (double width, double height) size)
+        {
+            if (mainWindow.ActualHeight < 600)
+            {
+                HeaderLogo.Visibility = Visibility.Collapsed;
+                HeaderTitle.Visibility = Visibility.Collapsed;
+                var margin = HeaderSubtitle.Margin;
+                margin.Top = 60;
+                HeaderSubtitle.Margin = margin;
+            }
+            else
+            {
+                HeaderLogo.Visibility = Visibility.Visible;
+                HeaderTitle.Visibility = Visibility.Visible;
+                var margin = HeaderSubtitle.Margin;
+                margin.Top = 20;
+                HeaderSubtitle.Margin = margin;
             }
         }
     }

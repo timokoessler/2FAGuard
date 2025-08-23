@@ -16,18 +16,21 @@
     <Grid>
         <StackPanel HorizontalAlignment="Center">
             <svgc:SvgViewbox
+                x:Name="HeaderLogo"
                 Width="200"
                 Margin="0,45,0,0"
                 HorizontalAlignment="Center"
                 Source="pack://application:,,,/Assets/update.svg" />
             <StackPanel x:Name="QuestionPanel" HorizontalAlignment="Center">
                 <ui:TextBlock
+                    x:Name="HeaderTitle"
                     Margin="0,20,0,0"
                     FontSize="32"
                     FontWeight="SemiBold"
                     Text="{DynamicResource i.update.title}"
                     TextAlignment="Center" />
                 <ui:TextBlock
+                    x:Name="HeaderSubtitle"
                     MaxWidth="400"
                     Margin="0,20,0,30"
                     FontSize="15"

@@ -42,6 +42,8 @@ namespace Guard.WPF.Views.Pages.Start
                 Core.EventManager.WindowSizeChanged -= OnWindowSizeChanged;
             };
 
+            OnWindowSizeChanged(null, (mainWindow.ActualWidth, mainWindow.ActualHeight));
+
             PasswordBox.KeyDown += (sender, e) =>
             {
                 if (Keyboard.IsKeyToggled(Key.CapsLock))

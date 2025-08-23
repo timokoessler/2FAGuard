@@ -154,6 +154,14 @@ namespace Guard.WPF.Views.Pages.Add
                     mainWindow.SetPageTitle(I18n.GetString("i.page.tokensettings.add"));
                 }
             };
+
+            Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
+            OnWindowSizeChanged(this, (mainWindow.ActualWidth, mainWindow.ActualHeight));
+
+            Unloaded += (sender, e) =>
+            {
+                Core.EventManager.WindowSizeChanged -= OnWindowSizeChanged;
+            };
         }
 
         private void AutoSuggestBoxOnSuggestionChosen(
@@ -431,6 +439,33 @@ namespace Guard.WPF.Views.Pages.Add
             }
             ImageLicense.Text = string.Empty;
             NoIconText.Visibility = Visibility.Collapsed;
+        }
+
+        private void OnWindowSizeChanged(object? sender, (double width, double height) size)
+        {
+            if (size.width < 800)
+            {
+                LeftStackPanel.Margin = new Thickness(0, 0, 0, 0);
+                CenterStackPanel.Margin = new Thickness(0, 20, 0, 0);
+                RightStackPanel.Margin = new Thickness(0, 20, 0, 0);
+            }
+            else
+            {
+                LeftStackPanel.Margin = new Thickness(0, 0, 25, 0);
+                CenterStackPanel.Margin = new Thickness(50, 0, 50, 0);
+                RightStackPanel.Margin = new Thickness(50, 0, 0, 0);
+            }
+
+            if (size.width < 600)
+            {
+                LeftStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+                LeftStackPanel.Width = size.width - 150;
+            }
+            else
+            {
+                LeftStackPanel.HorizontalAlignment = HorizontalAlignment.Left;
+                LeftStackPanel.Width = 200;
+            }
         }
     }
 }

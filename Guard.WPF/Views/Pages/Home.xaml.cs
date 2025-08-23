@@ -79,6 +79,10 @@ namespace Guard.WPF.Views.Pages
             {
                 LoadingInfo.Visibility = Visibility.Collapsed;
                 NoTokensInfo.Visibility = Visibility.Visible;
+                if (mainWindow.ActualHeight < 500)
+                {
+                    NoTokensInfoImage.Visibility = Visibility.Collapsed;
+                }
                 return;
             }
 

@@ -434,7 +434,7 @@ namespace Guard.WPF
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            const double HideNavElementTitlesThreshold = 700;
+            const double HideNavElementTitlesThreshold = 800;
             const double HidePageTitleThreshold = 600;
 
             if (HomeNavigationItem != null)
