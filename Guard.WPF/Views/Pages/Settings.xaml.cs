@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using Guard.Core;
 using Guard.Core.Models;
 using Guard.Core.Security;
@@ -103,11 +104,6 @@ namespace Guard.WPF.Views.Pages
 
             Core.EventManager.AppThemeChanged += OnAppThemeChanged;
 
-            Unloaded += (sender, e) =>
-            {
-                Core.EventManager.AppThemeChanged -= OnAppThemeChanged;
-            };
-
             TraySwitch.IsChecked = SettingsManager.Settings.MinimizeToTray;
 
             TraySwitch.Checked += (sender, e) =>
@@ -168,7 +164,18 @@ namespace Guard.WPF.Views.Pages
             HideTokenComboBox.SelectionChanged += OnHideTokenSelectionChanged;
 
             ApplyRegistrySettings();
-            FixSecuritySettingsGridSpacing();
+
+            FixUniformGridSpacing(PersonalisationSettingsGrid, true);
+            FixUniformGridSpacing(SecuritySettingsGrid, true);
+
+            Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
+            OnWindowSizeChanged(this, (mainWindow.ActualWidth, mainWindow.ActualHeight));
+
+            Unloaded += (sender, e) =>
+            {
+                Core.EventManager.AppThemeChanged -= OnAppThemeChanged;
+                Core.EventManager.WindowSizeChanged -= OnWindowSizeChanged;
+            };
         }
 
         private void ApplyRegistrySettings()
@@ -574,19 +581,23 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
             }
         }
 
-        private void FixSecuritySettingsGridSpacing()
+        private static void FixUniformGridSpacing(UniformGrid grid, bool multipleCols)
         {
             int i = 0;
-            foreach (CardControl card in SecuritySettingsGrid.Children)
+            foreach (CardControl card in grid.Children)
             {
                 if (card.Visibility == Visibility.Collapsed)
                 {
                     continue;
                 }
 
-                if (i % 2 != 0)
+                if (multipleCols && i % 2 != 0)
                 {
                     card.Margin = new Thickness(15, 0, 0, 15);
+                }
+                else
+                {
+                    card.Margin = new Thickness(0, 0, 0, 15);
                 }
                 ++i;
             }
@@ -604,6 +615,42 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
                     _ = SettingsManager.Save();
                 }
             }
+        }
+
+        private void OnWindowSizeChanged(object? sender, (double width, double height) size)
+        {
+            var onlyRows = size.width < 800;
+
+            var newValue = onlyRows ? 1 : 2;
+
+            if (PersonalisationSettingsGrid.Columns != newValue)
+            {
+                PersonalisationSettingsGrid.Columns = newValue;
+                FixUniformGridSpacing(PersonalisationSettingsGrid, !onlyRows);
+            }
+
+            if (SecuritySettingsGrid.Columns != newValue)
+            {
+                SecuritySettingsGrid.Columns = newValue;
+                FixUniformGridSpacing(SecuritySettingsGrid, !onlyRows);
+            }
+
+            if (onlyRows)
+            {
+                Grid.SetRow(AppVersionText, 1);
+                Grid.SetColumn(AppVersionText, 0);
+                AppVersionText.HorizontalAlignment = HorizontalAlignment.Left;
+                AppVersionText.Margin = new Thickness(54, 5, 0, 0);
+            }
+            else
+            {
+                Grid.SetRow(AppVersionText, 0);
+                Grid.SetColumn(AppVersionText, 1);
+                AppVersionText.HorizontalAlignment = HorizontalAlignment.Right;
+                AppVersionText.Margin = new Thickness(0, 0, 16, 0);
+            }
+
+            LinksStackPanel.Orientation = onlyRows ? Orientation.Vertical : Orientation.Horizontal;
         }
     }
 }

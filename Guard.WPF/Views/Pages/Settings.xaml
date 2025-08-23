@@ -19,13 +19,11 @@
             FontSize="20"
             FontWeight="Medium"
             Text="{DynamicResource i.settings.personalisation}" />
-        <Grid Margin="0,20,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <UniformGrid
+            x:Name="PersonalisationSettingsGrid"
+            Margin="0,20,0,0"
+            Columns="2">
             <ui:CardControl
-                Grid.Column="0"
                 Margin="0,0,0,15"
                 Icon="{ui:SymbolIcon DarkTheme24}">
                 <ui:CardControl.Header>
@@ -54,8 +52,7 @@
                 </ComboBox>
             </ui:CardControl>
             <ui:CardControl
-                Grid.Column="1"
-                Margin="15,0,0,15"
+                Margin="0,0,0,15"
                 Icon="{ui:SymbolIcon LocalLanguage24}">
                 <ui:CardControl.Header>
                     <Grid Margin="0,0,35,0">
@@ -78,14 +75,7 @@
                     Grid.Column="1"
                     MinWidth="125" />
             </ui:CardControl>
-        </Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
             <ui:CardControl
-                Grid.Column="0"
                 Margin="0,0,0,15"
                 Icon="{ui:SymbolIcon WindowNew24}">
                 <ui:CardControl.Header>
@@ -107,8 +97,7 @@
                 <ui:ToggleSwitch x:Name="AutoStartSwitch" Grid.Column="1" />
             </ui:CardControl>
             <ui:CardControl
-                Grid.Column="1"
-                Margin="15,0,0,15"
+                Margin="0,0,0,15"
                 Icon="{ui:SymbolIcon ShareCloseTray24}">
                 <ui:CardControl.Header>
                     <Grid Margin="0,0,35,0">
@@ -128,14 +117,7 @@
                 </ui:CardControl.Header>
                 <ui:ToggleSwitch x:Name="TraySwitch" Grid.Column="1" />
             </ui:CardControl>
-        </Grid>
-        <Grid Margin="0,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
             <ui:CardControl
-                Grid.Column="0"
                 Margin="0,0,0,15"
                 Icon="{ui:SymbolIcon WindowLocationTarget20}">
                 <ui:CardControl.Header>
@@ -157,8 +139,7 @@
                 <ui:ToggleSwitch x:Name="RestoreWindowPlacementSwitch" Grid.Column="1" />
             </ui:CardControl>
             <ui:CardControl
-                Grid.Column="1"
-                Margin="15,0,0,15"
+                Margin="0,0,0,15"
                 Icon="{ui:SymbolIcon EyeOff24}">
                 <ui:CardControl.Header>
                     <Grid Margin="0,0,35,0">
@@ -185,7 +166,7 @@
                     <ComboBoxItem Content="{DynamicResource i.settings.hidetoken.always}" Tag="Always" />
                 </ComboBox>
             </ui:CardControl>
-        </Grid>
+        </UniformGrid>
 
         <TextBlock
             FontSize="20"
@@ -373,6 +354,10 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
                     <StackPanel
                         Grid.Column="0"
                         VerticalAlignment="Center"
@@ -393,12 +378,12 @@
                         Grid.Column="1"
                         Margin="0,0,16,0"
                         VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
                         Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
                 </Grid>
             </ui:CardExpander.Header>
             <StackPanel>
-
-                <StackPanel Margin="15" Orientation="Horizontal">
+                <StackPanel x:Name="LinksStackPanel" Margin="15" Orientation="Horizontal">
                     <ui:HyperlinkButton
                         Content="Website"
                         Icon="{ui:SymbolIcon Link24}"
