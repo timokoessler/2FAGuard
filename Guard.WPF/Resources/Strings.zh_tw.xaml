@@ -74,13 +74,13 @@
     <system:String x:Key="i.settings.webauthn.description">使用硬件安全金鑰登入</system:String>
     <system:String x:Key="i.settings.webauthn.button">配置</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">您的作業系统似乎不支持WebAuthn。</system:String>
-    <system:String x:Key="i.settings.restorewindow">Remember window position</system:String>
-    <system:String x:Key="i.settings.restorewindow.description">Open the app in the same position as it was closed</system:String>
-    <system:String x:Key="i.settings.hidetoken">Hide the generated tokens</system:String>
-    <system:String x:Key="i.settings.hidetoken.description">Do not display the tokens on the screen</system:String>
-    <system:String x:Key="i.settings.hidetoken.never">Never hide</system:String>
-    <system:String x:Key="i.settings.hidetoken.showafterclick">Show after click</system:String>
-    <system:String x:Key="i.settings.hidetoken.always">Always hide</system:String>
+    <system:String x:Key="i.settings.restorewindow">記住程式視窗位置</system:String>
+    <system:String x:Key="i.settings.restorewindow.description">開啟程式於最後關閉位置</system:String>
+    <system:String x:Key="i.settings.hidetoken">隱藏已產生的Token</system:String>
+    <system:String x:Key="i.settings.hidetoken.description">不在螢幕上顯示Token</system:String>
+    <system:String x:Key="i.settings.hidetoken.never">總是顯示</system:String>
+    <system:String x:Key="i.settings.hidetoken.showafterclick">點擊後顯示</system:String>
+    <system:String x:Key="i.settings.hidetoken.always">總是隱藏</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">安全金鑰 (FIDO2)</system:String>
@@ -199,7 +199,7 @@
     <system:String x:Key="i.page.exportpage">匯出Token</system:String>
     <system:String x:Key="i.export.failed.title">匯出失敗</system:String>
     <system:String x:Key="i.export.failed.content">匯出時發生錯誤：</system:String>
-    <system:String x:Key="i.export.failed.unencrypted">Unencrypted backups are blocked by your administrator</system:String>
+    <system:String x:Key="i.export.failed.unencrypted">管理員禁止創建未加密備份</system:String>
     <system:String x:Key="i.export.password">請輸入備份檔案的密碼</system:String>
     <system:String x:Key="i.export.password.invalid">請輸入有效的密碼</system:String>
     <system:String x:Key="i.export.backup">備份</system:String>
@@ -283,11 +283,11 @@
 
 
     <!--  Password  -->
-    <system:String x:Key="i.pass.invalid.minlength">The password must be at least @Length characters long</system:String>
-    <system:String x:Key="i.pass.invalid.maxlength">The password must not be longer than 128 characters</system:String>
-    <system:String x:Key="i.pass.invalid.case">The password must contain at least one lowercase and one uppercase letter</system:String>
-    <system:String x:Key="i.pass.invalid.digit">The password must contain at least one digit</system:String>
-    <system:String x:Key="i.pass.invalid.special">The password must contain at least one special character</system:String>
+    <system:String x:Key="i.pass.invalid.minlength">密碼長度至少需 @Length 個字符</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">密碼不可超過128個字符</system:String>
+    <system:String x:Key="i.pass.invalid.case">密碼應至少包含一個小寫字母及一個大寫字母</system:String>
+    <system:String x:Key="i.pass.invalid.digit">密碼應至少包含一個數字</system:String>
+    <system:String x:Key="i.pass.invalid.special">密碼應至少包含一個特殊字符</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">2FAGuard想要證明您的身份</system:String>
