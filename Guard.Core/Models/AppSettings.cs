@@ -21,7 +21,8 @@
         PT_BR,
         JA,
         CZ,
-        KO
+        KO,
+        PL,
     }
 
     public enum SortOrderSetting
