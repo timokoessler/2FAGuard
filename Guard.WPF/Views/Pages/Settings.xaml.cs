@@ -76,7 +76,10 @@ namespace Guard.WPF.Views.Pages
 
             CheckWindowsHelloAvailability();
 
-            ScreenRecordingSwitch.IsChecked = SettingsManager.Settings.PreventRecording;
+            ScreenRecordingSwitch.IsEnabled = !RegistrySettings.DisableScreenRecordingProtection();
+            ScreenRecordingSwitch.IsChecked =
+                SettingsManager.Settings.PreventRecording
+                && !RegistrySettings.DisableScreenRecordingProtection();
             ScreenRecordingSwitch.Checked += (sender, e) =>
             {
                 mainWindow.AllowScreenRecording(false);

@@ -151,5 +151,14 @@ namespace Guard.Core
         {
             return GetValue(@"HKEY_CURRENT_USER\Software\Policies\2FAGuard", "DisableStats", false);
         }
+
+        public static bool DisableScreenRecordingProtection()
+        {
+            return GetValue(
+                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard",
+                "DisableScreenRecordingProtection",
+                false
+            );
+        }
     }
 }

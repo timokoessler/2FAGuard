@@ -70,10 +70,7 @@ namespace Guard.WPF
 
             ApplyTheme(SettingsManager.Settings.Theme);
 
-            if (SettingsManager.Settings.PreventRecording)
-            {
-                AllowScreenRecording(!SettingsManager.Settings.PreventRecording);
-            }
+            ApplyScreenRecordingSetting();
 
             SimpleIconsManager.LoadIcons();
 
@@ -497,6 +494,20 @@ namespace Guard.WPF
             if (SettingsManager.Settings.RestoreWindowPlacement)
             {
                 WindowPlacement.ApplyPlacement(this);
+            }
+        }
+
+        private void ApplyScreenRecordingSetting()
+        {
+            if (RegistrySettings.DisableScreenRecordingProtection())
+            {
+                AllowScreenRecording(true);
+                return;
+            }
+
+            if (SettingsManager.Settings.PreventRecording)
+            {
+                AllowScreenRecording(!SettingsManager.Settings.PreventRecording);
             }
         }
     }

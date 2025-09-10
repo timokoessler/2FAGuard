@@ -33,6 +33,10 @@ Create a value named `PreventUnencryptedExports` in the path above. The value sh
 Create a value named `DisableAutoUpdate` in the path above. The value should be of type `DWORD`. If set to `1`, the application will not check for updates automatically. The default is `0`.
 Only disable automatic updates if you have an alternative update mechanism in place.
 
+### Disable Screen Recording Protection (v1.6.2+)
+
+Create a value named `DisableScreenRecordingProtection` in the path above. The value should be of type `DWORD`. If set to `1`, the screen recording protection feature is disabled and the user will not be able to modify this setting. The default is `0`. This setting might be helpful for usage in RDP environments.
+
 ### Password requirements
 
 Create a subkey named `Password` in the path specified above. The following values can be set:
