@@ -1,4 +1,5 @@
 ﻿using Guard.Core.Security;
+using Guard.Core.Token;
 using OtpNet;
 
 namespace Guard.Core.Models
@@ -9,6 +10,8 @@ namespace Guard.Core.Models
         private readonly Totp totp;
         public readonly DBTOTPToken dBToken;
         public readonly string? Username;
+        public readonly bool IsSteamToken;
+        private readonly byte[] secret;
 
         public TOTPTokenHelper(DBTOTPToken dBToken)
         {
@@ -19,7 +22,7 @@ namespace Guard.Core.Models
             {
                 Username = encryption.DecryptBytesToString(dBToken.EncryptedUsername);
             }
-            byte[] secret = Base32Encoding.ToBytes(DecryptedSecret);
+            secret = Base32Encoding.ToBytes(DecryptedSecret);
 
             OtpHashMode hashMode = OtpHashMode.Sha1;
             if (dBToken.Algorithm != null)
@@ -34,6 +37,8 @@ namespace Guard.Core.Models
                 }
             }
 
+            IsSteamToken = dBToken.Issuer.Equals("Steam", StringComparison.OrdinalIgnoreCase);
+
             totp = new Totp(secret, dBToken.Period ?? 30, hashMode, dBToken.Digits ?? 6);
         }
 
@@ -44,6 +49,10 @@ namespace Guard.Core.Models
 
         public string GenerateToken()
         {
+            if (IsSteamToken)
+            {
+                return SteamTokenGenerator.ComputeTotp(secret);
+            }
             return totp.ComputeTotp();
         }
     }
