@@ -73,7 +73,7 @@ namespace Guard.WPF.Core
             dict = new ResourceDictionary
             {
                 Source = new Uri(
-                    @"Resources/Strings." + currentLanguage.ToString().ToLower() + ".xaml",
+                    @"Resources/Strings." + currentLanguage.ToString().ToLowerInvariant() + ".xaml",
                     UriKind.Relative
                 ),
             };
@@ -99,7 +99,7 @@ namespace Guard.WPF.Core
             }
 
             dict.Source = new Uri(
-                @"Resources/Strings." + lang.ToString().ToLower() + ".xaml",
+                @"Resources/Strings." + lang.ToString().ToLowerInvariant() + ".xaml",
                 UriKind.Relative
             );
             currentLanguage = lang;
@@ -118,8 +118,8 @@ namespace Guard.WPF.Core
             {
                 return "Error!";
             }
-            key = key.ToLower();
-            if (!key.StartsWith("i."))
+            key = key.ToLowerInvariant();
+            if (!key.StartsWith("i.", StringComparison.Ordinal))
             {
                 key = "i." + key;
             }
@@ -133,7 +133,7 @@ namespace Guard.WPF.Core
 
         public static string GetFullLanguageName(string lang)
         {
-            return fullLanguageNames[lang.ToLower()];
+            return fullLanguageNames[lang.ToLowerInvariant()];
         }
     }
 }

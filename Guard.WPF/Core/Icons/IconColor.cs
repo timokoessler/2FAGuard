@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using Wpf.Ui.Appearance;
 
 namespace Guard.WPF.Core.Icons
@@ -21,7 +22,7 @@ namespace Guard.WPF.Core.Icons
                 return isDarkMode ? DefaultDarkModeColor : DefaultLightModeColor;
             }
 
-            if (!iconColor.StartsWith('#'))
+            if (!iconColor.StartsWith("#", StringComparison.Ordinal))
             {
                 return $"#{iconColor}";
             }

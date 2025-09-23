@@ -61,7 +61,10 @@ namespace Guard.WPF.Core.Import
             }
 
             // Workaround for Cisco Meraki (issue #14)
-            if (otpUri.Account.Equals("Meraki") && !string.IsNullOrEmpty(otpUri.Issuer))
+            if (
+                otpUri.Account.Equals("Meraki", StringComparison.OrdinalIgnoreCase)
+                && !string.IsNullOrEmpty(otpUri.Issuer)
+            )
             {
                 otpUri.Account = otpUri.Issuer;
                 otpUri.Issuer = "Meraki";
@@ -80,7 +83,7 @@ namespace Guard.WPF.Core.Import
                 {
                     throw new Exception("Invalid URI query");
                 }
-                string key = kv[0].ToLower();
+                string key = kv[0].ToLowerInvariant();
                 if (key == "secret")
                 {
                     otpUri.Secret = kv[1];
@@ -91,7 +94,7 @@ namespace Guard.WPF.Core.Import
                 }
                 else if (key == "algorithm")
                 {
-                    TOTPAlgorithm algorithm = kv[1].ToUpper() switch
+                    TOTPAlgorithm algorithm = kv[1].ToUpperInvariant() switch
                     {
                         "SHA1" => TOTPAlgorithm.SHA1,
                         "SHA256" => TOTPAlgorithm.SHA256,
@@ -177,7 +180,7 @@ namespace Guard.WPF.Core.Import
         {
             return new string(
                 secret.ToCharArray().Where(c => !Char.IsWhiteSpace(c)).ToArray()
-            ).ToUpper();
+            ).ToUpperInvariant();
         }
 
         internal static bool IsValidSecret(string secret)

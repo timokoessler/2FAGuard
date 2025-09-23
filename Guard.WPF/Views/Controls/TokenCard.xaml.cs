@@ -214,7 +214,7 @@ namespace Guard.WPF.Views.UIComponents
                 {
                     if (icon.Path != null && File.Exists(icon.Path))
                     {
-                        if (icon.Path.EndsWith(".svg"))
+                        if (icon.Path.EndsWith(".svg", StringComparison.Ordinal))
                         {
                             SvgIconView.Source = new Uri(icon.Path);
                         }

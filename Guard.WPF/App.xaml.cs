@@ -70,7 +70,8 @@ namespace Guard.WPF
                                 process.Id != currentProcess.Id
                                 && process.MainModule != null
                                 && process.MainModule.FileName.Equals(
-                                    currentProcess.MainModule.FileName
+                                    currentProcess.MainModule.FileName,
+                                    StringComparison.Ordinal
                                 )
                             )
                             {

@@ -173,7 +173,11 @@ namespace Guard.WPF.Core.Installation
                         }
 
                         string fileName = Path.GetFileName(exePath);
-                        if (fileName.ToLower().Equals("2faguard-portable.exe"))
+                        if (
+                            fileName
+                                .ToLowerInvariant()
+                                .Equals("2faguard-portable.exe", StringComparison.Ordinal)
+                        )
                         {
                             fileName = $"2FAGuard-Portable-{updateInfo.Version}.exe";
                         }

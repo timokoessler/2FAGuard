@@ -18,7 +18,7 @@ namespace Guard.WPF.Core.Import.Importer
             string? text =
                 QRCode.ParseQRFile(path) ?? throw new Exception(I18n.GetString("import.noqrfound"));
 
-            if (text.StartsWith("otpauth-migration:"))
+            if (text.StartsWith("otpauth-migration:", StringComparison.Ordinal))
             {
                 int duplicateTokens = 0;
                 List<OTPUri> otpUris = GoogleAuthenticator.Parse(text);

@@ -20,7 +20,7 @@ namespace Guard.WPF.Core.Import.Importer
             if (Clipboard.ContainsText())
             {
                 text = Clipboard.GetText();
-                if (text == null || !text.StartsWith("otpauth://"))
+                if (text == null || !text.StartsWith("otpauth://", StringComparison.Ordinal))
                 {
                     throw new Exception(I18n.GetString("import.clipboard.invalid"));
                 }
@@ -49,7 +49,9 @@ namespace Guard.WPF.Core.Import.Importer
                 var file = fileDropList[0];
                 if (
                     file == null
-                    || !file.EndsWith(".png") && !file.EndsWith(".jpg") && !file.EndsWith(".jpeg")
+                    || !file.EndsWith(".png", StringComparison.Ordinal)
+                        && !file.EndsWith(".jpg", StringComparison.Ordinal)
+                        && !file.EndsWith(".jpeg", StringComparison.Ordinal)
                 )
                 {
                     throw new Exception(I18n.GetString("import.clipboard.invalid"));
@@ -64,7 +66,7 @@ namespace Guard.WPF.Core.Import.Importer
                 throw new Exception(I18n.GetString("import.clipboard.invalid"));
             }
 
-            if (text.StartsWith("otpauth-migration:"))
+            if (text.StartsWith("otpauth-migration:", StringComparison.Ordinal))
             {
                 int duplicateTokens = 0;
                 List<OTPUri> otpUris = GoogleAuthenticator.Parse(text);

@@ -39,7 +39,7 @@ namespace Guard.WPF.Views.Pages.Add
                 throw new System.Exception("Invalid action specified for TokenSettings");
             }
 
-            if (action.Equals("edit"))
+            if (action.Equals("edit", StringComparison.Ordinal))
             {
                 int tokenID = (int)NavigationContextManager.CurrentContext["tokenID"];
                 existingToken = TokenManager.GetTokenById(tokenID);
@@ -145,7 +145,7 @@ namespace Guard.WPF.Views.Pages.Add
 
             Loaded += (sender, e) =>
             {
-                if (action.Equals("edit"))
+                if (action.Equals("edit", StringComparison.Ordinal))
                 {
                     mainWindow.SetPageTitle(I18n.GetString("i.page.tokensettings.edit"));
                 }
@@ -419,7 +419,7 @@ namespace Guard.WPF.Views.Pages.Add
             {
                 return;
             }
-            if (selectedIcon.Path.EndsWith(".svg"))
+            if (selectedIcon.Path.EndsWith(".svg", StringComparison.Ordinal))
             {
                 ImageIconView.Visibility = Visibility.Collapsed;
                 IconSvgView.Visibility = Visibility.Visible;

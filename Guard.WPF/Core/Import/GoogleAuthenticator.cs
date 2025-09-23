@@ -23,7 +23,7 @@ namespace Guard.WPF.Core.Import
                 throw new Exception("Invalid URI: Expected 1 query parameter (otpauth-migration)");
             }
 
-            if (!query[0].StartsWith("data="))
+            if (!query[0].StartsWith("data=", StringComparison.Ordinal))
             {
                 throw new Exception(
                     "Invalid URI: Expected data query parameter (otpauth-migration)"

@@ -19,7 +19,7 @@ namespace Guard.WPF.Core.Export
 
             if (dBToken.Algorithm != null)
             {
-                uri += $"&algorithm={dBToken.Algorithm.ToString()!.ToLower()}";
+                uri += $"&algorithm={dBToken.Algorithm.ToString()!.ToLowerInvariant()}";
             }
 
             if (dBToken.Digits != null)

@@ -105,7 +105,10 @@ namespace Guard.WPF.Core.Import.Importer
                 }
                 string totp = item.Login.Totp;
 
-                BitwardenTOTPType exportTotpType = totp.StartsWith("otpauth://")
+                BitwardenTOTPType exportTotpType = totp.StartsWith(
+                    "otpauth://",
+                    StringComparison.Ordinal
+                )
                     ? BitwardenTOTPType.Uri
                     : BitwardenTOTPType.Secret;
 

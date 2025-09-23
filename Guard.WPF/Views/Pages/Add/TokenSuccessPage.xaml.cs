@@ -30,7 +30,7 @@ namespace Guard.WPF.Views.Pages
                 timer?.Dispose();
             };
 
-            if (!type.Equals("added-multiple"))
+            if (!type.Equals("added-multiple", StringComparison.Ordinal))
             {
                 TOTPTokenHelper? token = TokenManager.GetTokenById(tokenID);
                 if (token == null)
@@ -75,15 +75,15 @@ namespace Guard.WPF.Views.Pages
 
             Loaded += (sender, e) =>
             {
-                if (type.Equals("added"))
+                if (type.Equals("added", StringComparison.Ordinal))
                 {
                     mainWindow.SetPageTitle(I18n.GetString("stp.added"));
                 }
-                else if (type.Equals("edited"))
+                else if (type.Equals("edited", StringComparison.Ordinal))
                 {
                     mainWindow.SetPageTitle(I18n.GetString("stp.edited"));
                 }
-                else if (type.Equals("added-multiple"))
+                else if (type.Equals("added-multiple", StringComparison.Ordinal))
                 {
                     mainWindow.SetPageTitle(I18n.GetString("stp.added.multiple"));
                 }

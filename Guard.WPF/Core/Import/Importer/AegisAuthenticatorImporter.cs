@@ -47,8 +47,6 @@ namespace Guard.WPF.Core.Import.Importer
             return IsEncryptedBackup(jsonString);
         }
 
-        // https://nsec.rocks/docs/api/nsec.cryptography.passwordbasedkeyderivationalgorithm
-
         public (int total, int duplicate, int tokenID) Parse(string? path, byte[]? password)
         {
             ArgumentNullException.ThrowIfNull(path);
@@ -293,7 +291,7 @@ namespace Guard.WPF.Core.Import.Importer
                     dbToken.IconType = icon.Type;
                 }
 
-                dbToken.Algorithm = token.Info.Algo.ToUpper() switch
+                dbToken.Algorithm = token.Info.Algo.ToUpperInvariant() switch
                 {
                     "SHA1" => TOTPAlgorithm.SHA1,
                     "SHA256" => TOTPAlgorithm.SHA256,

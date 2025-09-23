@@ -44,7 +44,7 @@ namespace Guard.WPF.Views.Pages
                     new ComboBoxItem
                     {
                         Content = I18n.GetFullLanguageName(lang),
-                        Tag = lang.ToString().ToLower(),
+                        Tag = lang.ToString().ToLowerInvariant(),
                     }
                 );
             }
@@ -142,7 +142,7 @@ namespace Guard.WPF.Views.Pages
             string[] lockTimes = Enum.GetNames(typeof(LockTimeSetting));
             foreach (string time in lockTimes)
             {
-                string tag = time.ToString().ToLower();
+                string tag = time.ToString().ToLowerInvariant();
                 LockTimeComboBox.Items.Add(
                     new ComboBoxItem
                     {

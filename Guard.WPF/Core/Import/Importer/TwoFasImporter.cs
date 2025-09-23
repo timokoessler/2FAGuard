@@ -100,9 +100,9 @@ namespace Guard.WPF.Core.Import.Importer
 
                 TotpIcon icon = IconManager.GetIcon(issuer, IconType.Any);
 
-                if (service.OTP?.TokenType?.ToLower() != "totp")
+                if (service.OTP?.TokenType?.ToLowerInvariant() != "totp")
                 {
-                    if (service.OTP?.TokenType?.ToLower() == "hotp")
+                    if (service.OTP?.TokenType?.ToLowerInvariant() == "hotp")
                     {
                         throw new Exception(I18n.GetString("i.import.hotp.notsupported"));
                     }
@@ -141,7 +141,7 @@ namespace Guard.WPF.Core.Import.Importer
 
                 if (service.OTP.Algorithm != null)
                 {
-                    dbToken.Algorithm = service.OTP.Algorithm.ToUpper() switch
+                    dbToken.Algorithm = service.OTP.Algorithm.ToUpperInvariant() switch
                     {
                         "SHA1" => TOTPAlgorithm.SHA1,
                         "SHA256" => TOTPAlgorithm.SHA256,

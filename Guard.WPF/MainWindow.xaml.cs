@@ -139,7 +139,7 @@ namespace Guard.WPF
                 return;
             }
             currentPageName = e.Page.GetType().Name;
-            UpdatePageTitle(currentPageName.ToLower());
+            UpdatePageTitle(currentPageName.ToLowerInvariant());
         }
 
         /// <summary>

@@ -116,7 +116,7 @@ namespace Guard.Core.Security
             return BitConverter
                 .ToString(RandomNumberGenerator.GetBytes(count))
                 .Replace("-", "")
-                .ToLower();
+                .ToLowerInvariant();
         }
 
         public static bool IsSupported()

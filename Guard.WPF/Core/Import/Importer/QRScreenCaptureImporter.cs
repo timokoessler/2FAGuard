@@ -26,13 +26,13 @@ namespace Guard.WPF.Core.Import.Importer
                 QRCode.ParseQRBitmap(capture)
                 ?? throw new Exception(I18n.GetString("import.noqrfound.screen"));
 
-            if (!text.StartsWith("otpauth"))
+            if (!text.StartsWith("otpauth", StringComparison.Ordinal))
             {
                 throw new Exception(I18n.GetString("import.invalidqr.screen"));
             }
 
             // Google Authenticator
-            if (text.StartsWith("otpauth-migration:"))
+            if (text.StartsWith("otpauth-migration:", StringComparison.Ordinal))
             {
                 int duplicateTokens = 0;
                 List<OTPUri> otpUris = GoogleAuthenticator.Parse(text);
