@@ -1,8 +1,22 @@
 # Script to build the WPF and CLI app, sign the executables and build the installer
 
 Param (
-    [switch]$dev
+    [switch]$dev,
+    [switch]$preview
 )
+
+if ($preview) {
+    $WpfExeName = "2FAGuard-Preview.exe"
+    $PortableExeName = "2FAGuard-Portable-Preview.exe"
+    $CliExeName = "2fa-Preview.exe"
+
+    $env:PREVIEW = "1"    
+}
+else {
+    $WpfExeName = "2FAGuard.exe"
+    $PortableExeName = "2FAGuard-Portable.exe"
+    $CliExeName = "2fa.exe"
+}
 
 function Confirm-Requirements {
     # Check if current directory is the publish directory
@@ -40,21 +54,21 @@ function Invoke-Tests {
 function Build-WPF-App {
     Set-Location ../Guard.WPF
     dotnet publish -r win-x64 -c Release --p:PublishSingleFile=true --self-contained true -o bin\publish
-    Move-Item bin\publish\2FAGuard.exe ..\publish\bin -Force
+    Move-Item bin\publish\2FAGuard.exe "..\publish\bin\$WpfExeName" -Force
     dotnet publish -r win-x64 -c Release --p:PublishSingleFile=true --self-contained true -p:IsPortable=true -o bin\portable
-    Move-Item bin\portable\2FAGuard.exe ..\publish\bin\2FAGuard-Portable.exe -Force
+    Move-Item bin\portable\2FAGuard.exe "..\publish\bin\$PortableExeName" -Force
     Set-Location ../publish
 }
 
 function Build-CLI-App {
     Set-Location ../Guard.CLI
     dotnet publish -r win-x64 -c Release --p:PublishSingleFile=true --self-contained true -o bin\publish
-    Move-Item bin\publish\2fa.exe ..\publish\bin -Force
+    Move-Item bin\publish\2fa.exe "..\publish\bin\$CliExeName" -Force
     Set-Location ../publish
 }
 
 function Invoke-Code-Signing {
-    signtool.exe sign /sha1 0839626A858F4D2E44EDC99708362609E432DA5A /t "http://time.certum.pl/" /fd sha256 /d "2FAGuard" /du "https://2faguard.app" .\bin\2FAGuard.exe .\bin\2FAGuard-Portable.exe .\bin\2fa.exe
+    signtool.exe sign /sha1 0839626A858F4D2E44EDC99708362609E432DA5A /t "http://time.certum.pl/" /fd sha256 /d "2FAGuard" /du "https://2faguard.app" ".\bin\$WpfExeName" ".\bin\$PortableExeName" ".\bin\$CliExeName"
 }
 
 function Build-Installer {
@@ -87,10 +101,10 @@ Build-Installer
 Write-Host "Done"
 
 # SIG # Begin signature block
-# MIIohQYJKoZIhvcNAQcCoIIodjCCKHICAQExDzANBglghkgBZQMEAgEFADB5Bgor
+# MIIofAYJKoZIhvcNAQcCoIIobTCCKGkCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDDVpMNxSZ4VrzK
-# QsSSXQgsbrm6tjMFuXYqYlop3AqsoaCCILcwggXJMIIEsaADAgECAhAbtY8lKt8j
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCAWnX1uo8Ge9uFk
+# 5vDcqDg8q/fSqa7tXJA6FOmAiPnwZ6CCILcwggXJMIIEsaADAgECAhAbtY8lKt8j
 # AEkoya49fu0nMA0GCSqGSIb3DQEBDAUAMH4xCzAJBgNVBAYTAlBMMSIwIAYDVQQK
 # ExlVbml6ZXRvIFRlY2hub2xvZ2llcyBTLkEuMScwJQYDVQQLEx5DZXJ0dW0gQ2Vy
 # dGlmaWNhdGlvbiBBdXRob3JpdHkxIjAgBgNVBAMTGUNlcnR1bSBUcnVzdGVkIE5l
@@ -265,43 +279,42 @@ Write-Host "Done"
 # 67PkkzcSZ0uPxG4SZME3BF9OE3KO4Bjvuxw4Ig6M5ZbSC7o1mS9AI1V/YB6x3rD2
 # 6r165tPFIrN1k6iQ1LY4Zvauv02JxboamlScU36yj7220YTqfPCwW4zj5npSqNzF
 # 1a4dU+8j3b09S9a/fpWhrLKTXKtue7e+7z30FM3VOupIl6LFCR4yrOaMpUNZMx2G
-# STGCByQwggcgAgEBMGowVjELMAkGA1UEBhMCUEwxITAfBgNVBAoTGEFzc2VjbyBE
+# STGCBxswggcXAgEBMGowVjELMAkGA1UEBhMCUEwxITAfBgNVBAoTGEFzc2VjbyBE
 # YXRhIFN5c3RlbXMgUy5BLjEkMCIGA1UEAxMbQ2VydHVtIENvZGUgU2lnbmluZyAy
-# MDIxIENBAhBO6VUkItfIt28WItxgWoxdMA0GCWCGSAFlAwQCAQUAoIGEMBgGCisG
-# AQQBgjcCAQwxCjAIoAKAAKECgAAwGQYJKoZIhvcNAQkDMQwGCisGAQQBgjcCAQQw
-# HAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwLwYJKoZIhvcNAQkEMSIEINz7
-# FfGqXAp4+56fbdy2jQqdQyHzHIFn2FNJcYslFbUbMA0GCSqGSIb3DQEBAQUABIIC
-# ALfPZbTxVP2qYOyJuL1wmW0mYgKDDTyCgHVmwj1dessfPPghV/z1PIDpR8jVEDtL
-# vCl8zTctf4Quci0uxY017Mg+mOsnqTI7QP9STiefeofaMLlssaJWU+UgQTw4fR2K
-# Sxh1anP/RMGfdvLtj2FJPyceWYfj9Wft19cmh1izt7gb50oBMj/JFjKYScVVXCmT
-# 6cA7+NHGvNYnSzQ+B4eLS1LifhEQKGBJDWIj3hsXyYFGbAWDXYVBnpw7OTaAIzT8
-# nvSHLvCRpXguuGeNMRb1UmPJQT11p3usTNSlXNC8mC4X1nlbYryhivWbfJhdAvjh
-# w/HWurO6Q45Eul+va08xWdlG5EOKo0om0lEH9wcxpSNNKhR3k2tE/lbp3ilbU/yw
-# dfnCq0wxEx90HkVLuAkN+t3MmO3wBPbb7G66utAEE4BvEJsrn++wkoruQnv3b6R4
-# RHFQsoCdIBq7Wt4x/96JmLQ64P+7kgxqPEgR2V6ZAiNWpdfY1j6M8HNRxfF6t4oM
-# nRe+1DonF6rEtDmCT21NC70JLeoCbHKFNVulsbYLEpzbj/1fyQKDSCBh2+uZQV3d
-# 1h779pYxDgduj1aM+yfn5h5VGbfa1UehRm0vVRwC3wO87ohTrG/hktFwl1srNYJK
-# IlCVz8CYMgqXuCBNprMcWJOIsBE//dMjx6Bj1HMQpjLBoYIEBDCCBAAGCSqGSIb3
-# DQEJBjGCA/EwggPtAgEBMGswVjELMAkGA1UEBhMCUEwxITAfBgNVBAoTGEFzc2Vj
-# byBEYXRhIFN5c3RlbXMgUy5BLjEkMCIGA1UEAxMbQ2VydHVtIFRpbWVzdGFtcGlu
-# ZyAyMDIxIENBAhEAnpwE9lWotKcCbUmMbHiNqjANBglghkgBZQMEAgIFAKCCAVcw
-# GgYJKoZIhvcNAQkDMQ0GCyqGSIb3DQEJEAEEMBwGCSqGSIb3DQEJBTEPFw0yNTAy
-# MjIxNDQyMDFaMDcGCyqGSIb3DQEJEAIvMSgwJjAkMCIEIM+h3DWd7SvDy4kPojDl
-# 2vd7VA8abisj3c8XVOGM+qDVMD8GCSqGSIb3DQEJBDEyBDBXgvo4jqeMlrgTtKka
-# OKcMQFa5Dxr/TTUl60LavO8cHboCnmd3Xlcm8DccIn69TZMwgaAGCyqGSIb3DQEJ
-# EAIMMYGQMIGNMIGKMIGHBBTDJbibF/zFAmBhzitxe0UH3ZxqajBvMFqkWDBWMQsw
-# CQYDVQQGEwJQTDEhMB8GA1UEChMYQXNzZWNvIERhdGEgU3lzdGVtcyBTLkEuMSQw
-# IgYDVQQDExtDZXJ0dW0gVGltZXN0YW1waW5nIDIwMjEgQ0ECEQCenAT2Vai0pwJt
-# SYxseI2qMA0GCSqGSIb3DQEBAQUABIICAIRaZp54AgQXWvnNmZ3RMcTVsweiB3d5
-# JxJ7BWJJXLamKBE1o8JJaN1pmcwYkIem5Qe5aKpNajfTqiPkgNx05W8PHUpJO0J+
-# jANpgTbMPQ0drbU41X8OGBvRm5qs//0MtRJCma3usdbbK7jf67RTx6VjkCBSn7EB
-# 5Av0YrVDlahxtQyEqjUFXlnaqBk39n44v65SmUs1k2LYdxHbDSOqNy2UZYJv6jD5
-# b8KNsvzKEOZuwdAR34Fv9HQOJao04WNRgRcCPwqZfXzXs0tccxgRtMeEVg8LD8n1
-# mnYyqeWXWREqFMgFJO6+A43JcxJFtQ1k9Ex0uisAKRodF+HA90BiQnGDkrmP8pX1
-# MLeMPlSZlQWcCBUKb6Em8WC/1ROW1Eg5TVcQdANZxHwp1so12EPvjw+qGcU8xi10
-# PtL3+4OMrJuM20t9CPOCAc4rSIT4rA8U+3s5hzvND1PQOUPBWZuAFVe0B3/QNAWn
-# qzFIk1xzE69NYW4SCQGFCR+sRDVJYH9SEU7tpY7+qcn2Pv5LVuc2+93Y4vFanDNW
-# +MV+sLA98xP6/dBNprPeBRo0mwwabqN9NGlCEedJewPnRYbXsZnQHJkhgchIorFs
-# 5PFFkZAqeCqCi4rawXvgGCqlSQjNPMpFL4oiX89a6tbx9d6n8pY9k8JRje7B0VhI
-# q4b3AxLUS0fV
+# MDIxIENBAhBO6VUkItfIt28WItxgWoxdMA0GCWCGSAFlAwQCAQUAoHwwEAYKKwYB
+# BAGCNwIBDDECMAAwGQYJKoZIhvcNAQkDMQwGCisGAQQBgjcCAQQwHAYKKwYBBAGC
+# NwIBCzEOMAwGCisGAQQBgjcCARUwLwYJKoZIhvcNAQkEMSIEIAyKw8PuAOJGsu/s
+# M9w4FxX/uTBvQDjGCiXPYBbI56PPMA0GCSqGSIb3DQEBAQUABIICAEtL31jo1RlH
+# gbm2b38Ei6n0Azfi6lPae2tBgjH+866BBXC7BVByaToM/NV8h6mW3FzAM93lBztE
+# +++q7/rag4/gMlHAFJdine79mMXKHPRYHVL5ZR9RYXCjHkMo2yf7JRU0urafZ3xl
+# MVaTxlnvx4aqw1dzQV2IoXiF+q8LMaN+6LlPuRHErHAT5YwV1wLmN+Rw2Zuu4GF0
+# 1VQXH82hGKQRcPA8hed8cb+bcK5k66zrzlAw3pYCvzqlMJA3kVQXDz7XNptBB3Wo
+# 28MgzXSRp3rgLIDOQcJYlzntlQ8O1tC+3ucwQYWu/nqBKyJ8h+NP3xjPDJrTMfhL
+# 9pbRzYGKHaw0aHMq8aYL1TPjH7dRbVVnt6eAeSHmM/81dGxTqzAigO35S7ZO6XI1
+# wznOWHJRNdCYY8Dc2lxVQTNWhX6lZzwUIsrfRr7FdPSfNTLNN8OukGwaAsVqCMkh
+# o0uwlcw0KBXq9SuXw1PcdrGA3/lqLiZn9ltkg2gqU1y6nHII2s0Zgt1ChWD7Q+zy
+# BK41USIK8sh4mqPeuqRkQeYzTSepTMB6kbTER/brZbppHcQUj7Ux5Z8ViLMxFZBp
+# GvQHCwUJlmWgl+Y9icsgIyM9WHrZqwj7eWFIhFn6lRwea963IP1RtME2Z6Dz3QTi
+# n4EBKGi88Ddl84RpajNWonIYsTBDa7ASoYIEBDCCBAAGCSqGSIb3DQEJBjGCA/Ew
+# ggPtAgEBMGswVjELMAkGA1UEBhMCUEwxITAfBgNVBAoTGEFzc2VjbyBEYXRhIFN5
+# c3RlbXMgUy5BLjEkMCIGA1UEAxMbQ2VydHVtIFRpbWVzdGFtcGluZyAyMDIxIENB
+# AhEAnpwE9lWotKcCbUmMbHiNqjANBglghkgBZQMEAgIFAKCCAVcwGgYJKoZIhvcN
+# AQkDMQ0GCyqGSIb3DQEJEAEEMBwGCSqGSIb3DQEJBTEPFw0yNTA5MjMyMDMyNTNa
+# MDcGCyqGSIb3DQEJEAIvMSgwJjAkMCIEIM+h3DWd7SvDy4kPojDl2vd7VA8abisj
+# 3c8XVOGM+qDVMD8GCSqGSIb3DQEJBDEyBDDVBXsyMPV17vOIoy1OmRT8FOEtkv9o
+# OLe2h31tItarAM56mIcgQzFYU5s2ow4wZLQwgaAGCyqGSIb3DQEJEAIMMYGQMIGN
+# MIGKMIGHBBTDJbibF/zFAmBhzitxe0UH3ZxqajBvMFqkWDBWMQswCQYDVQQGEwJQ
+# TDEhMB8GA1UEChMYQXNzZWNvIERhdGEgU3lzdGVtcyBTLkEuMSQwIgYDVQQDExtD
+# ZXJ0dW0gVGltZXN0YW1waW5nIDIwMjEgQ0ECEQCenAT2Vai0pwJtSYxseI2qMA0G
+# CSqGSIb3DQEBAQUABIICADYAbTCmCybT8QlZZU4gvJZ8jUkvr6ktfY4Xgy4/uI8w
+# 4t5UMl1XC57ROOMqoUgk7Ko6vpjuTWvmtizTW3V2EF3hlwsHi6Im7E7XwwK38fOP
+# DytlDLc6E4OA9IcW6siHNUHquKud3bPgbG7md36lseJi0a2lQYJP0OnbwWCFq+xd
+# Yqi9CDblWGhIOehUySx5YJhrz17LfABNJ1ZzdYz2+lTiBbSPeodTNhpEKZ44Vrh+
+# CAO+S2/jtZ0a24L+LJUkkVXhlHYCz8JL7FTcwN0vAoJB6nHDulJO0D0T8Q4O+2dm
+# PzUn9voHFMFaV6j3YFy1w9d/4i6svOy4Zv85ENWooJeiTfh+d3ogX2A2NGKoXKgB
+# hG4FKNb/TIPN8zieRb3WAk6F3H/Dgg7mpLhO60z6/Z86p6Qcj9RwBa2eff7Sd3a8
+# 3TKL1lC3ABIbVAjAYTO/X7cYNlDRBlkeffDxTJzgFTZsKgrjKJNbsJjj31nSXspp
+# SCSzkw+R5YVjrnEdXtpOjfhkuLPfQ6xDUyfD1+g69x9qgF1VVwSJn4wGnP3vYgMP
+# Ow3XmV3aOwBMmuXejxiG9kW+0+vNgdIj5MrUgs3RXetQmY3R8SFcacDqgEyf0iXJ
+# MX5aHyGuUgUjAgF/eyq/xOP9Ik91+4hLcAsl10MUu3woTlLpcPTD1VasywN4ZIhI
 # SIG # End signature block
