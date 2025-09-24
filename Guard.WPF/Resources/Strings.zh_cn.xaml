@@ -74,8 +74,8 @@
     <system:String x:Key="i.settings.webauthn.description">使用硬件安全密钥登录</system:String>
     <system:String x:Key="i.settings.webauthn.button">配置</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">您的操作系统似乎不支持WebAuthn。</system:String>
-    <system:String x:Key="i.settings.restorewindow">Remember window position</system:String>
-    <system:String x:Key="i.settings.restorewindow.description">Open the app in the same position as it was closed</system:String>
+    <system:String x:Key="i.settings.restorewindow">记住窗口位置</system:String>
+    <system:String x:Key="i.settings.restorewindow.description">在上次关闭的位置打开应用</system:String>
     <system:String x:Key="i.settings.hidetoken">Hide the generated tokens</system:String>
     <system:String x:Key="i.settings.hidetoken.description">Do not display the tokens on the screen</system:String>
     <system:String x:Key="i.settings.hidetoken.never">Never hide</system:String>
@@ -283,11 +283,11 @@
 
 
     <!--  Password  -->
-    <system:String x:Key="i.pass.invalid.minlength">The password must be at least @Length characters long</system:String>
-    <system:String x:Key="i.pass.invalid.maxlength">The password must not be longer than 128 characters</system:String>
-    <system:String x:Key="i.pass.invalid.case">The password must contain at least one lowercase and one uppercase letter</system:String>
-    <system:String x:Key="i.pass.invalid.digit">The password must contain at least one digit</system:String>
-    <system:String x:Key="i.pass.invalid.special">The password must contain at least one special character</system:String>
+    <system:String x:Key="i.pass.invalid.minlength">密码长度必须至少为@Length 个字符</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">密码不得超过128个字符</system:String>
+    <system:String x:Key="i.pass.invalid.case">密码必须包含大小写字母至少各一个</system:String>
+    <system:String x:Key="i.pass.invalid.digit">密码最少要包含一个数字</system:String>
+    <system:String x:Key="i.pass.invalid.special">密码必须包含至少一个特殊字符</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">应用2FAGuard想要证明您的身份</system:String>
