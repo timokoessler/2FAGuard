@@ -87,8 +87,6 @@ namespace Guard.WPF.Core.Import.Importer
                     throw new Exception("Invalid AuthenticatorPro backup: No secret found");
                 }
 
-                TotpIcon icon = IconManager.GetIcon(token.Issuer, IconType.Any);
-
                 string normalizedSecret = OTPUriParser.NormalizeSecret(token.Secret);
 
                 if (!OTPUriParser.IsValidSecret(normalizedSecret))
@@ -96,7 +94,10 @@ namespace Guard.WPF.Core.Import.Importer
                     throw new Exception($"{I18n.GetString("td.invalidsecret")} ({token.Issuer})");
                 }
 
-                if (token.Type != AuthenticatorProBackup.AuthenticatorType.Totp)
+                if (
+                    token.Type != AuthenticatorProBackup.AuthenticatorType.Totp
+                    && token.Type != AuthenticatorProBackup.AuthenticatorType.SteamOtp
+                )
                 {
                     throw new Exception(
                         $"Only TOTP tokens are supported. Backup contains {token.Type} token."
@@ -111,11 +112,18 @@ namespace Guard.WPF.Core.Import.Importer
                     CreationTime = DateTime.Now,
                 };
 
-                if (token.Username != null)
+                if (token.Type == AuthenticatorProBackup.AuthenticatorType.SteamOtp)
+                {
+                    // For steam tokens, we force the issuer to be "Steam"
+                    dbToken.Issuer = "Steam";
+                }
+
+                if (!string.IsNullOrEmpty(token.Username))
                 {
                     dbToken.EncryptedUsername = encryption.EncryptStringToBytes(token.Username);
                 }
 
+                TotpIcon icon = IconManager.GetIcon(dbToken.Issuer, IconType.Any);
                 if (icon != null && icon.Type != IconType.Default)
                 {
                     dbToken.Icon = icon.Name;

@@ -105,18 +105,48 @@ namespace Guard.WPF.Core.Import.Importer
                 }
                 string totp = item.Login.Totp;
 
-                BitwardenTOTPType exportTotpType = totp.StartsWith(
-                    "otpauth://",
-                    StringComparison.Ordinal
-                )
-                    ? BitwardenTOTPType.Uri
-                    : BitwardenTOTPType.Secret;
+                BitwardenTOTPType exportTotpType =
+                    totp.StartsWith("otpauth://", StringComparison.Ordinal)
+                    || totp.StartsWith("steam://", StringComparison.Ordinal)
+                        ? BitwardenTOTPType.Uri
+                        : BitwardenTOTPType.Secret;
 
-                DBTOTPToken dbToken;
                 if (exportTotpType == BitwardenTOTPType.Uri)
                 {
-                    OTPUri otpUri = OTPUriParser.Parse(totp);
-                    dbToken = OTPUriParser.ConvertToDBToken(otpUri);
+                    DBTOTPToken dbToken;
+
+                    if (totp.StartsWith("steam://", StringComparison.Ordinal))
+                    {
+                        // steam://secret
+                        var uri = new Uri(totp);
+
+                        dbToken = new()
+                        {
+                            Id = TokenManager.GetNextId(),
+                            Issuer = "Steam",
+                            EncryptedSecret = encryption.EncryptStringToBytes(
+                                OTPUriParser.NormalizeSecret(uri.Host)
+                            ),
+                            Digits = 5,
+                            Period = 30,
+                            CreationTime = DateTime.Now,
+                            Icon = "Steam",
+                            IconType = IconType.SimpleIcons,
+                        };
+
+                        if (!string.IsNullOrEmpty(item.Login.Username))
+                        {
+                            dbToken.EncryptedUsername = encryption.EncryptStringToBytes(
+                                item.Login.Username
+                            );
+                        }
+                    }
+                    else
+                    {
+                        OTPUri otpUri = OTPUriParser.Parse(totp);
+                        dbToken = OTPUriParser.ConvertToDBToken(otpUri);
+                    }
+
                     total += 1;
                     if (!TokenManager.AddToken(dbToken))
                     {
@@ -143,7 +173,7 @@ namespace Guard.WPF.Core.Import.Importer
                         throw new Exception($"{I18n.GetString("td.invalidsecret")} ({item.Name})");
                     }
 
-                    dbToken = new()
+                    DBTOTPToken dbToken = new()
                     {
                         Id = TokenManager.GetNextId(),
                         Issuer = item.Name,
@@ -151,7 +181,7 @@ namespace Guard.WPF.Core.Import.Importer
                         CreationTime = DateTime.Now,
                     };
 
-                    if (item.Login.Username != null)
+                    if (!string.IsNullOrEmpty(item.Login.Username))
                     {
                         dbToken.EncryptedUsername = encryption.EncryptStringToBytes(
                             item.Login.Username

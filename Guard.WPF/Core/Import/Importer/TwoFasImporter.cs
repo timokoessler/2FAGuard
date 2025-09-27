@@ -98,9 +98,8 @@ namespace Guard.WPF.Core.Import.Importer
                     throw new Exception("Invalid 2FAS backup: No secret found");
                 }
 
-                TotpIcon icon = IconManager.GetIcon(issuer, IconType.Any);
-
-                if (service.OTP?.TokenType?.ToLowerInvariant() != "totp")
+                string tokenType = service.OTP?.TokenType?.ToLowerInvariant() ?? "totp";
+                if (tokenType != "totp" && tokenType != "steam")
                 {
                     if (service.OTP?.TokenType?.ToLowerInvariant() == "hotp")
                     {
@@ -118,6 +117,12 @@ namespace Guard.WPF.Core.Import.Importer
                     throw new Exception($"{I18n.GetString("td.invalidsecret")} ({issuer})");
                 }
 
+                if (tokenType == "steam")
+                {
+                    // For steam tokens, we force the issuer to be "Steam"
+                    issuer = "Steam";
+                }
+
                 DBTOTPToken dbToken = new()
                 {
                     Id = TokenManager.GetNextId(),
@@ -126,12 +131,14 @@ namespace Guard.WPF.Core.Import.Importer
                     CreationTime = DateTime.Now,
                 };
 
-                if (service.OTP.Account != null)
+                if (!string.IsNullOrEmpty(service.OTP.Account))
                 {
                     dbToken.EncryptedUsername = encryption.EncryptStringToBytes(
                         service.OTP.Account
                     );
                 }
+
+                TotpIcon icon = IconManager.GetIcon(issuer, IconType.Any);
 
                 if (icon != null && icon.Type != IconType.Default)
                 {

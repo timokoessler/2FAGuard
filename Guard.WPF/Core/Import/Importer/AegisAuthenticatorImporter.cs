@@ -251,8 +251,6 @@ namespace Guard.WPF.Core.Import.Importer
             EncryptionHelper encryption = Auth.GetMainEncryptionHelper();
             foreach (var token in database.Entries)
             {
-                TotpIcon icon = IconManager.GetIcon(token.Issuer, IconType.Any);
-
                 string normalizedSecret = OTPUriParser.NormalizeSecret(token.Info.Secret);
 
                 if (!OTPUriParser.IsValidSecret(normalizedSecret))
@@ -260,17 +258,25 @@ namespace Guard.WPF.Core.Import.Importer
                     throw new Exception($"{I18n.GetString("td.invalidsecret")} ({token.Issuer})");
                 }
 
-                if (token.Type != "totp")
+                if (token.Type != "totp" && token.Type != "steam")
                 {
                     throw new Exception(
                         $"Only TOTP tokens are supported. Backup contains {token.Type} token."
                     );
                 }
 
+                string issuer = string.IsNullOrEmpty(token.Issuer) ? "" : token.Issuer;
+
+                if (token.Type == "steam")
+                {
+                    // For steam tokens, we force the issuer to be "Steam"
+                    issuer = "Steam";
+                }
+
                 DBTOTPToken dbToken = new()
                 {
                     Id = TokenManager.GetNextId(),
-                    Issuer = string.IsNullOrEmpty(token.Issuer) ? "" : token.Issuer,
+                    Issuer = issuer,
                     EncryptedSecret = encryption.EncryptStringToBytes(normalizedSecret),
                     CreationTime = DateTime.Now,
                 };
@@ -284,6 +290,8 @@ namespace Guard.WPF.Core.Import.Importer
                 {
                     throw new Exception("Token must have either issuer or name set.");
                 }
+
+                TotpIcon icon = IconManager.GetIcon(issuer, IconType.Any);
 
                 if (icon != null && icon.Type != IconType.Default)
                 {
