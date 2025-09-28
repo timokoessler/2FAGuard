@@ -13,6 +13,7 @@ using Guard.WPF.Core;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Models;
 using Guard.WPF.Core.Security;
+using Guard.WPF.Views.Pages;
 using Guard.WPF.Views.Pages.Start;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
@@ -202,7 +203,9 @@ namespace Guard.WPF
         internal void Logout()
         {
             SkipApplyRegistrySettings = true;
-            Navigate(typeof(Welcome));
+            Navigate(typeof(Blank));
+            HideNavigation();
+            InactivityDetector.Stop();
             Auth.Logout();
             TokenManager.ClearTokens();
             FullContentFrame.Visibility = Visibility.Visible;
