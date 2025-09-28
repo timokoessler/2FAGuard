@@ -1,5 +1,5 @@
 ﻿#define MyAppName "2FAGuard"
-#define MyAppVersion "1.6.1"
+#define MyAppVersion "1.6.2"
 #define MyAppPublisher "Timo Kössler"
 #define MyAppURL "https://2faguard.app"
 
@@ -9,7 +9,7 @@
   #define OutputFileName "2FAGuard-Installer-Preview"
 #else
   #define MyAppExeName "2FAGuard.exe"
-  #define OutputFileName "2FAGuard-Installer-Preview"
+  #define OutputFileName "2FAGuard-Installer"
 #endif
 
 #include "CodeDependencies.iss"

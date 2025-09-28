@@ -7,7 +7,7 @@
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <ApplicationIcon>totp.ico</ApplicationIcon>
     <Title>2FAGuard CLI</Title>
-    <Version>1.6.1</Version>
+    <Version>1.6.2</Version>
     <Authors>Timo Kössler and Open Source Contributors</Authors>
     <Copyright>$(Authors)</Copyright>
     <RepositoryType>git</RepositoryType>
