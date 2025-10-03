@@ -123,6 +123,12 @@ namespace Guard.WPF.Core
             {
                 key = "i." + key;
             }
+
+            if(key.Equals("i.page.blank", StringComparison.Ordinal))
+            {
+                return "";
+            }
+
             if (dict[key] is not string content)
             {
                 Log.Logger.Warning("Missing translation for key: " + key);
