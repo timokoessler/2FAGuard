@@ -124,7 +124,7 @@ namespace Guard.WPF.Core
                 key = "i." + key;
             }
 
-            if(key.Equals("i.page.blank", StringComparison.Ordinal))
+            if (key.Equals("i.page.blank", StringComparison.Ordinal))
             {
                 return "";
             }

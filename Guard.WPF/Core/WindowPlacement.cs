@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Windows;
 using Guard.Core;
+using Guard.Core.Storage;
 
 namespace Guard.WPF.Core
 {
@@ -43,6 +44,7 @@ namespace Guard.WPF.Core
 
         public static void ApplyPlacement(Window window)
         {
+            return;
             try
             {
                 var windowHandle = NativeWindow.WindowToNativeHandle(window);
@@ -60,6 +62,13 @@ namespace Guard.WPF.Core
                     );
 
                 placement.Length = Marshal.SizeOf(typeof(NativeWindow.WINDOWPLACEMENT));
+
+                if (SettingsManager.Settings.MinimizeToTray)
+                {
+                    // Prevent the Window from being restored as minimized if the app is set to minimize to tray
+                    // https://github.com/timokoessler/2FAGuard/issues/81
+                    placement.ShowCmd = NativeWindow.ShowWindowCommand.ShowNormal;
+                }
 
                 NativeWindow.SetWindowPlacement(windowHandle, ref placement);
             }
