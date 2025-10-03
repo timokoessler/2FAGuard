@@ -44,7 +44,6 @@ namespace Guard.WPF.Core
 
         public static void ApplyPlacement(Window window)
         {
-            return;
             try
             {
                 var windowHandle = NativeWindow.WindowToNativeHandle(window);
