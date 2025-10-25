@@ -131,7 +131,7 @@ namespace Guard.WPF.Core.Import.Importer
                     CreationTime = DateTime.Now,
                 };
 
-                if (!string.IsNullOrEmpty(service.OTP.Account))
+                if (!string.IsNullOrEmpty(service.OTP?.Account))
                 {
                     dbToken.EncryptedUsername = encryption.EncryptStringToBytes(
                         service.OTP.Account

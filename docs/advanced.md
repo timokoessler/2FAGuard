@@ -65,3 +65,13 @@ Create a subkey named `Settings` in the path specified above. These keys can be 
 - `HideWinHello` (DWORD): If set to `1`, the settings page will not show the Windows Hello settings. The default is `0`.
 - `HidePreventRecording` (DWORD): The settings page will not show the option to prevent screen recording if set to `1`. The default is `0`.
 - `HideSecurityKey` (DWORD): If set to `1`, the settings page will not show the security key (WebAuthn / FIDO2) settings. The default is `0`.
+
+## Installer Command Line Options
+
+The installer supports the following command line options. These can **not** be used with the Portable version or the Microsoft Store app.
+
+- `/NOSTART` - Prevents the application from starting automatically after installation.
+- `/SP- /VERYSILENT /SUPPRESSMSGBOXES /NORESTART` - Silent installation without progress bar. Suppresses all message boxes.
+- `/SP- /SILENT /SUPPRESSMSGBOXES /NORESTART` - Silent installation with progress bar. Suppresses all message boxes.
+
+All options except `/NOSTART` are standard Inno Setup options. More information about Inno Setup options can be found [here](https://jrsoftware.org/ishelp/index.php?topic=setupcmdline).
