@@ -127,11 +127,11 @@ namespace Guard.WPF.Views.Pages.Add
                 }
                 if (existingToken.dBToken.Digits != null)
                 {
-                    DigitsBox.Text = existingToken.dBToken.Digits.ToString();
+                    DigitsBox.Value = existingToken.dBToken.Digits;
                 }
                 if (existingToken.dBToken.Period != null)
                 {
-                    PeriodBox.Text = existingToken.dBToken.Period.ToString();
+                    PeriodBox.Value = existingToken.dBToken.Period;
                 }
 
                 Loaded += (sender, e) =>
@@ -239,17 +239,20 @@ namespace Guard.WPF.Views.Pages.Add
             }
 
             // Validate digits
-            if (!int.TryParse(DigitsBox.Text, out int digits) || digits < 4 || digits > 9)
+            if (!DigitsBox.Value.HasValue || DigitsBox.Value < 4 || DigitsBox.Value > 9)
             {
                 ShowEror(I18n.GetString("td.invaliddigits"));
                 return;
             }
+            int digits = (int)DigitsBox.Value.Value;
+
             // Validate period
-            if (!int.TryParse(PeriodBox.Text, out int period) || period < 1 || period > 3600)
+            if (!PeriodBox.Value.HasValue || PeriodBox.Value < 1 || PeriodBox.Value > 3600)
             {
                 ShowEror(I18n.GetString("td.invalidperiod"));
                 return;
             }
+            int period = (int)PeriodBox.Value.Value;
 
             SaveButton.IsEnabled = false;
 
