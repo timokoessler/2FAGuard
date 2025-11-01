@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Guard.Core.Models;
+using Microsoft.Win32;
 
 namespace Guard.Core
 {
@@ -159,6 +160,31 @@ namespace Guard.Core
                 "DisableScreenRecordingProtection",
                 false
             );
+        }
+
+        public static bool ForceLockOnScreenLock()
+        {
+            return GetValue(
+                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Settings",
+                "ForceLockOnScreenLock",
+                false
+            );
+        }
+
+        public static LockTimeSetting? GetForcedLockTime()
+        {
+            int rawValue = GetValue(
+                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Settings",
+                "ForceLockTimeSetting",
+                -1
+            );
+
+            if (rawValue < (int)LockTimeSetting.Never || rawValue > (int)LockTimeSetting.OneHour)
+            {
+                return null;
+            }
+
+            return (LockTimeSetting)rawValue;
         }
     }
 }

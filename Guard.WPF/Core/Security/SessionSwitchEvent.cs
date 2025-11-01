@@ -1,4 +1,5 @@
-﻿using Guard.Core.Security;
+﻿using Guard.Core;
+using Guard.Core.Security;
 using Guard.Core.Storage;
 using Microsoft.Win32;
 
@@ -16,13 +17,15 @@ namespace Guard.WPF.Core.Security
 
         private static void OnSessionSwitch(object sender, SessionSwitchEventArgs e)
         {
-            if (
-                e.Reason == SessionSwitchReason.SessionLock
-                && Auth.IsLoggedIn()
-                && SettingsManager.Settings.LockOnScreenLock
-            )
+            if (e.Reason == SessionSwitchReason.SessionLock && Auth.IsLoggedIn())
             {
-                mainWindow?.Logout();
+                if (
+                    SettingsManager.Settings.LockOnScreenLock
+                    || RegistrySettings.ForceLockOnScreenLock()
+                )
+                {
+                    mainWindow?.Logout();
+                }
             }
         }
     }

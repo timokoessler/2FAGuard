@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows;
+using Guard.Core;
 using Guard.Core.Models;
 using Guard.Core.Storage;
 
@@ -94,7 +95,9 @@ namespace Guard.WPF.Core.Security
 
         private static TimeSpan? GetTimeUntilLock()
         {
-            return SettingsManager.Settings.LockTime switch
+            LockTimeSetting activeLockTimeSetting =
+                RegistrySettings.GetForcedLockTime() ?? SettingsManager.Settings.LockTime;
+            return activeLockTimeSetting switch
             {
                 LockTimeSetting.Never => null,
                 LockTimeSetting.ThirtySeconds => TimeSpan.FromSeconds(30),

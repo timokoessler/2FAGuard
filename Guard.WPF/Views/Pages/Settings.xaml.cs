@@ -93,7 +93,10 @@ namespace Guard.WPF.Views.Pages
                 _ = SettingsManager.Save();
             };
 
-            ScreenLockSwitch.IsChecked = SettingsManager.Settings.LockOnScreenLock;
+            bool registryForceLockOnScreenLock = RegistrySettings.ForceLockOnScreenLock();
+            ScreenLockSwitch.IsEnabled = !registryForceLockOnScreenLock;
+            ScreenLockSwitch.IsChecked =
+                SettingsManager.Settings.LockOnScreenLock || registryForceLockOnScreenLock;
             ScreenLockSwitch.Checked += (sender, e) =>
             {
                 SettingsManager.Settings.LockOnScreenLock = true;
@@ -151,14 +154,20 @@ namespace Guard.WPF.Views.Pages
                     }
                 );
             }
+
+            LockTimeSetting? registryForcedLockTime = RegistrySettings.GetForcedLockTime();
+            LockTimeSetting activeLockTimeSetting =
+                registryForcedLockTime ?? SettingsManager.Settings.LockTime;
+
             LockTimeComboBox.SelectedItem = LockTimeComboBox
                 .Items.OfType<ComboBoxItem>()
                 .FirstOrDefault(x =>
                     ((string)x.Tag).Equals(
-                        SettingsManager.Settings.LockTime.ToString(),
+                        activeLockTimeSetting.ToString(),
                         StringComparison.OrdinalIgnoreCase
                     )
                 );
+            LockTimeComboBox.IsEnabled = registryForcedLockTime == null;
             LockTimeComboBox.SelectionChanged += OnLockTimeSelectionChanged;
 
             WebAuthnBtn.IsEnabled = Auth.IsLoginEnabled();
