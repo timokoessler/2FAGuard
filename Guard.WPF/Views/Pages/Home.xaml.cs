@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Guard.Core.Models;
+using Guard.Core.Security;
 using Guard.Core.Storage;
 using Guard.WPF.Core;
 using Guard.WPF.Core.Installation;
@@ -23,8 +24,17 @@ namespace Guard.WPF.Views.Pages
             InitializeComponent();
             mainWindow = (MainWindow)Application.Current.MainWindow;
 
-            Loaded += (sender, e) => LoadTokens();
-            Loaded += (sender, e) => Updater.CheckForUpdate();
+            Loaded += (sender, e) =>
+            {
+                if (!Auth.IsLoggedIn())
+                {
+                    mainWindow.Logout();
+                    return;
+                }
+                LoadTokens();
+                Updater.CheckForUpdate();
+            };
+
             Core.EventManager.TokenDeleted += OnTokenDeleted;
             Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
 
@@ -38,6 +48,7 @@ namespace Guard.WPF.Views.Pages
                 Core.EventManager.TokenDeleted -= OnTokenDeleted;
                 Core.EventManager.WindowSizeChanged -= OnWindowSizeChanged;
                 timer?.Dispose();
+                timer = null;
             };
 
             SearchBox.TextChanged += (sender, e) =>
@@ -123,13 +134,25 @@ namespace Guard.WPF.Views.Pages
 
         private async void RunTimer()
         {
-            timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
-            while (await timer.WaitForNextTickAsync())
+            if (timer != null)
             {
-                foreach (TokenCard card in TOTPTokenContainer.Children)
+                return;
+            }
+            timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+            try
+            {
+                while (await timer.WaitForNextTickAsync())
                 {
-                    card.Update();
+                    foreach (TokenCard card in TOTPTokenContainer.Children)
+                    {
+                        card.Update();
+                    }
                 }
+            }
+            catch (OperationCanceledException)
+            {
+                // This is expected when timer.Dispose() is called
+                // from the Unloaded event. The loop will exit.
             }
         }
 
