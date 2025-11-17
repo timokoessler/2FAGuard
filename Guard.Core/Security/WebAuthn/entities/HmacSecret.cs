@@ -25,17 +25,13 @@ namespace Guard.Core.Security.WebAuthn.entities
         public override ExtensionType Type => ExtensionType.HmacSecret;
         public bool Success;
 
-        static HmacSecretResultExtension() =>
-            Register(
-                ExtensionType.HmacSecret,
-                r =>
-                {
-                    var success = false;
-                    if (r.ExtensionDataBytes > 0)
-                        success = Marshal.PtrToStructure<HmacSecretBoolData>(r.ExtensionData).Bool;
-                    return new HmacSecretResultExtension { Success = success };
-                }
-            );
+        public static HmacSecretResultExtension Parse(RawWebAuthnExtensionIn r)
+        {
+            var success = false;
+            if (r.ExtensionDataBytes > 0)
+                success = Marshal.PtrToStructure<HmacSecretBoolData>(r.ExtensionData).Bool;
+            return new HmacSecretResultExtension { Success = success };
+        }
     }
 
     public class PrfSalt

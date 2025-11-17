@@ -57,19 +57,15 @@ namespace Guard.Core.Security.WebAuthn.entities
         public override ExtensionType Type => ExtensionType.CredProtect;
         public UserVerification UserVerification;
 
-        static CredProtectExtensionOut() =>
-            Register(
-                ExtensionType.CredProtect,
-                r =>
-                {
-                    var uv = UserVerification.Any;
-                    if (r.ExtensionDataBytes > 0)
-                        uv = Marshal
-                            .PtrToStructure<RawCredProtectDataOut>(r.ExtensionData)
-                            .UserVerification;
-                    return new CredProtectExtensionOut { UserVerification = uv };
-                }
-            );
+        public static CredProtectExtensionOut Parse(RawWebAuthnExtensionIn r)
+        {
+            var uv = UserVerification.Any;
+            if (r.ExtensionDataBytes > 0)
+                uv = Marshal
+                    .PtrToStructure<RawCredProtectDataOut>(r.ExtensionData)
+                    .UserVerification;
+            return new CredProtectExtensionOut { UserVerification = uv };
+        }
     }
 
     //// MakeCredential Input Type:   WEBAUTHN_CRED_PROTECT_EXTENSION_IN.

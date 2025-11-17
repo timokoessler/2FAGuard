@@ -47,15 +47,19 @@ namespace Guard.Core.Security.WebAuthn.entities
         }
     }
 
+#nullable enable
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal class RawWebAuthnExtensionIn : RawWebAuthnExtension
     {
-        public WebAuthnExtensionOutput MarshalPublic(bool isCreation)
+        public WebAuthnExtensionOutput? MarshalPublic(bool isCreation)
         {
             var type = EnumHelper.FromString<ExtensionType>(ExtensionIdentifier);
             return WebAuthnExtensionOutput.Get(type, isCreation, this);
         }
     }
+
+#nullable disable
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal class RawWebAuthnExtensionsOut
@@ -110,7 +114,11 @@ namespace Guard.Core.Security.WebAuthn.entities
             for (var n = 0; n < Count; n++)
             {
                 var ext = Marshal.PtrToStructure<RawWebAuthnExtensionIn>(pos);
-                extensions.Add(ext.MarshalPublic(isCreation));
+                var parsedExt = ext.MarshalPublic(isCreation);
+                if (parsedExt != null)
+                {
+                    extensions.Add(parsedExt);
+                }
                 pos += elmSize;
             }
             return extensions;
@@ -132,35 +140,42 @@ namespace Guard.Core.Security.WebAuthn.entities
         }
     }
 
+#nullable enable
+
     internal abstract class WebAuthnExtensionOutput : WebAuthnExtension
     {
-        private static readonly Dictionary<
-            ExtensionType,
-            Func<RawWebAuthnExtensionIn, WebAuthnExtensionOutput>
-        > _creationExtFactories =
-            new Dictionary<ExtensionType, Func<RawWebAuthnExtensionIn, WebAuthnExtensionOutput>>();
-        private static readonly Dictionary<
-            ExtensionType,
-            Func<RawWebAuthnExtensionIn, WebAuthnExtensionOutput>
-        > _attestationExtFactories =
-            new Dictionary<ExtensionType, Func<RawWebAuthnExtensionIn, WebAuthnExtensionOutput>>();
-
-        internal static void Register(
-            ExtensionType type,
-            Func<RawWebAuthnExtensionIn, WebAuthnCreationExtensionOutput> fn
-        ) => _creationExtFactories.Add(type, fn);
-
-        internal static void Register(
-            ExtensionType type,
-            Func<RawWebAuthnExtensionIn, WebAuthnAssertionExtensionOutput> fn
-        ) => _attestationExtFactories.Add(type, fn);
-
-        internal static WebAuthnExtensionOutput Get(
+        internal static WebAuthnExtensionOutput? Get(
             ExtensionType type,
             bool isCreation,
             RawWebAuthnExtensionIn raw
-        ) => (isCreation ? _creationExtFactories : _attestationExtFactories)[type](raw);
+        )
+        {
+            if (type == ExtensionType.HmacSecret)
+            {
+                if (isCreation)
+                {
+                    return HmacSecretResultExtension.Parse(raw);
+                }
+            }
+            if (type == ExtensionType.CredProtect)
+            {
+                if (isCreation)
+                {
+                    return CredProtectExtensionOut.Parse(raw);
+                }
+            }
+
+            Log.Logger.Error(
+                "Unsupported extension type {0} in {1}",
+                type,
+                isCreation ? "creation" : "assertion"
+            );
+
+            return null;
+        }
     }
+
+#nullable disable
 
     internal abstract class WebAuthnExtensionInput : WebAuthnExtension
     {
