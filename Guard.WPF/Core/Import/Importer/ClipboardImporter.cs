@@ -1,8 +1,7 @@
-﻿using System.Drawing;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media.Imaging;
 using Guard.Core.Models;
+using SkiaSharp.Views.WPF;
 
 namespace Guard.WPF.Core.Import.Importer
 {
@@ -30,12 +29,9 @@ namespace Guard.WPF.Core.Import.Importer
                 BitmapSource bitmapSource =
                     Clipboard.GetImage()
                     ?? throw new Exception("Could not get image from clipboard");
-                Bitmap bitmap =
-                    BitmapSourceToBitmap(bitmapSource)
-                    ?? throw new Exception("Could not convert BitmapSource to Bitmap");
 
                 text =
-                    QRCode.ParseQRBitmap(bitmap)
+                    QRCode.ParseQRBitmap(WPFExtensions.ToSKBitmap(bitmapSource))
                     ?? throw new Exception(I18n.GetString("import.noqrfound"));
             }
             else if (Clipboard.ContainsFileDropList())
@@ -96,22 +92,6 @@ namespace Guard.WPF.Core.Import.Importer
             }
 
             return (1, 0, dbToken.Id);
-        }
-
-        private static Bitmap BitmapSourceToBitmap(BitmapSource bitmapSource)
-        {
-            Bitmap bitmap;
-            using (MemoryStream outStream = new())
-            {
-                // Create encoder
-                BitmapEncoder encoder = new BmpBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
-                // Save BitmapSource to stream
-                encoder.Save(outStream);
-                // Create Bitmap from stream
-                bitmap = new Bitmap(outStream);
-            }
-            return bitmap;
         }
     }
 }

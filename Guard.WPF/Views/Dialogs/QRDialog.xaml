@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:Guard.WPF.Views.Dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
     d:Background="White"
     d:DesignHeight="400"
     d:DesignWidth="400"
@@ -21,7 +22,7 @@
 
 
     <StackPanel>
-        <ui:Image
+        <skia:SKElement
             x:Name="ImageEle"
             HorizontalAlignment="Center"
             VerticalAlignment="Center" />

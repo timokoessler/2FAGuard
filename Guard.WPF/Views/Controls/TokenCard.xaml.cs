@@ -17,6 +17,8 @@ using Guard.WPF.Views.Dialogs;
 using Guard.WPF.Views.Pages;
 using Guard.WPF.Views.Pages.Add;
 using Microsoft.Win32;
+using SkiaSharp;
+using SkiaSharp.Views.WPF;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -354,15 +356,22 @@ namespace Guard.WPF.Views.UIComponents
                 };
                 if (saveFileDialog.ShowDialog() == true)
                 {
-                    using FileStream fileStream = new(saveFileDialog.FileName, FileMode.Create);
-                    PngBitmapEncoder encoder = new();
-                    encoder.Frames.Add(BitmapFrame.Create(qrImage));
-                    encoder.Save(fileStream);
+                    using SKImage image = SKImage.FromBitmap(qrImage);
+                    using SKData data = image.Encode(SKEncodedImageFormat.Png, 100);
+
+                    File.WriteAllBytes(saveFileDialog.FileName, data.ToArray());
                 }
             }
             else if (result == ContentDialogResult.Secondary)
             {
-                Clipboard.SetImage(qrImage);
+                // Todo not working: Clipboard is empty after pasting
+                WriteableBitmap bitmap = WPFExtensions.ToWriteableBitmap(qrImage);
+                if (bitmap.CanFreeze)
+                {
+                    bitmap.Freeze();
+                }
+                Clipboard.SetImage(bitmap);
+                Clipboard.Flush();
             }
         }
 

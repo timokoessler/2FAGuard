@@ -1,6 +1,6 @@
-﻿using System.Drawing;
-using System.Windows;
+﻿using System.Windows;
 using Guard.Core.Models;
+using SkiaSharp;
 
 namespace Guard.WPF.Core.Import.Importer
 {
@@ -18,7 +18,7 @@ namespace Guard.WPF.Core.Import.Importer
 
             mainWindow.MinimizeWindow();
 
-            Bitmap capture = ScreenCapture.CaptureAllScreens();
+            SKBitmap capture = ScreenCapture.CaptureAllScreens();
 
             mainWindow.RestoreWindow();
 

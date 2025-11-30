@@ -1,15 +1,12 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Windows.Media.Imaging;
+﻿using SkiaSharp;
 using ZXing;
-using ZXing.Windows.Compatibility;
+using ZXing.SkiaSharp;
 
 namespace Guard.WPF.Core
 {
     internal class QRCode
     {
-        public static string? ParseQRBitmap(Bitmap bitmap)
+        public static string? ParseQRBitmap(SKBitmap bitmap)
         {
             BarcodeReader reader = new()
             {
@@ -28,32 +25,25 @@ namespace Guard.WPF.Core
 
         public static string? ParseQRFile(string filePath)
         {
-            using Bitmap barcodeBitmap = (Bitmap)Image.FromFile(filePath);
+            SKBitmap barcodeBitmap = SKBitmap.Decode(filePath);
             return ParseQRBitmap(barcodeBitmap);
         }
 
-        public static Bitmap GenerateQRCode(string text, ZXing.Common.EncodingOptions? options)
+        public static SKBitmap GenerateQRCode(string text, ZXing.Common.EncodingOptions? options)
         {
             options ??= new ZXing.Common.EncodingOptions();
             var writer = new BarcodeWriter { Format = BarcodeFormat.QR_CODE, Options = options };
             return writer.Write(text);
         }
 
-        public static BitmapImage GenerateQRCodeImage(string text, int size)
+        public static SKBitmap GenerateQRCodeImage(string text, int size)
         {
-            Bitmap bitmap = GenerateQRCode(
+            SKBitmap bitmap = GenerateQRCode(
                 text,
                 new ZXing.Common.EncodingOptions { Width = size, Height = size }
             );
-            using MemoryStream memory = new();
-            bitmap.Save(memory, ImageFormat.Png);
-            memory.Position = 0;
-            BitmapImage bitmapImage = new();
-            bitmapImage.BeginInit();
-            bitmapImage.StreamSource = memory;
-            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapImage.EndInit();
-            return bitmapImage;
+
+            return bitmap;
         }
     }
 }
