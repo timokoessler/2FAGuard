@@ -282,12 +282,13 @@ namespace Guard.WPF.Core.Import.Importer
 
             if (exportFile.KdfType == BitwardenExportFile.BWKdfType.Pbkdf2)
             {
-                return new Rfc2898DeriveBytes(
+                return Rfc2898DeriveBytes.Pbkdf2(
                     password,
                     salt,
                     iterations,
-                    HashAlgorithmName.SHA256
-                ).GetBytes(KeySize);
+                    HashAlgorithmName.SHA256,
+                    KeySize
+                );
             }
             else if (exportFile.KdfType == BitwardenExportFile.BWKdfType.Argon2id)
             {

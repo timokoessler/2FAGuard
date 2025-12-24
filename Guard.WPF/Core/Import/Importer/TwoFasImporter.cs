@@ -7,6 +7,7 @@ using Guard.Core.Security;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Models;
 using NSec.Cryptography;
+using Windows.Security.Cryptography.Certificates;
 
 namespace Guard.WPF.Core.Import.Importer
 {
@@ -220,12 +221,13 @@ namespace Guard.WPF.Core.Import.Importer
             byte[] salt = Convert.FromBase64String(parts[1]);
             ReadOnlySpan<byte> iv = Convert.FromBase64String(parts[2]);
 
-            ReadOnlySpan<byte> keyBytes = new Rfc2898DeriveBytes(
+            ReadOnlySpan<byte> keyBytes = Rfc2898DeriveBytes.Pbkdf2(
                 pass,
                 salt,
                 10000,
-                HashAlgorithmName.SHA256
-            ).GetBytes(32);
+                HashAlgorithmName.SHA256,
+                32
+            );
 
             if (!Aes256Gcm.IsSupported)
             {

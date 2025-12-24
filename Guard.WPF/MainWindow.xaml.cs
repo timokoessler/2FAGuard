@@ -69,8 +69,6 @@ namespace Guard.WPF
 
             windowInteropHandle = (new WindowInteropHelper(this)).Handle;
 
-            ApplyTheme(SettingsManager.Settings.Theme);
-
             ApplyScreenRecordingSetting();
 
             SimpleIconsManager.LoadIcons();
@@ -498,6 +496,7 @@ namespace Guard.WPF
             {
                 WindowPlacement.ApplyPlacement(this);
             }
+            ApplyTheme(SettingsManager.Settings.Theme);
         }
 
         private void ApplyScreenRecordingSetting()
