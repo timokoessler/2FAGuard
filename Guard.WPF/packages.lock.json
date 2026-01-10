@@ -4,9 +4,9 @@
     "net10.0-windows10.0.22621": {
       "Google.Protobuf": {
         "type": "Direct",
-        "requested": "[3.33.2, )",
-        "resolved": "3.33.2",
-        "contentHash": "vZXVbrZgBqUkP5iWQi0CS6pucIS2MQdEYPS1duWCo8fGrrt4th6HTiHfLFX2RmAWAQl1oUnzGgyDBsfq7fHQJA=="
+        "requested": "[3.33.3, )",
+        "resolved": "3.33.3",
+        "contentHash": "ZkghmDjhnSS26gL1GbaMpl/8Uj/azE24xZunN36pGplYIj2xI6OBZUCe5LVoj18D2mcMJBBjUSjJMceyAPybNQ=="
       },
       "Konscious.Security.Cryptography.Argon2": {
         "type": "Direct",
@@ -16,6 +16,12 @@
         "dependencies": {
           "Konscious.Security.Cryptography.Blake2": "1.1.1"
         }
+      },
+      "Microsoft.NET.ILLink.Tasks": {
+        "type": "Direct",
+        "requested": "[10.0.1, )",
+        "resolved": "10.0.1",
+        "contentHash": "ISahzLHsHY7vrwqr2p1YWZ+gsxoBRtH7gWRDK8fDUst9pp2He0GiesaqEfeX0V8QMCJM3eNEHGGpnIcPjFo2NQ=="
       },
       "Microsoft.Security.Extensions": {
         "type": "Direct",

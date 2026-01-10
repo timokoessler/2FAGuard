@@ -75,5 +75,6 @@ The installer supports the following command line options. These can **not** be 
 - `/NOSTART` - Prevents the application from starting automatically after installation.
 - `/SP- /VERYSILENT /SUPPRESSMSGBOXES /NORESTART` - Silent installation without progress bar. Suppresses all message boxes.
 - `/SP- /SILENT /SUPPRESSMSGBOXES /NORESTART` - Silent installation with progress bar. Suppresses all message boxes.
+- `/SKIPVCPPINSTALL` - Skips the installation of the Visual C++ Redistributable. This option can be used if the required version is already installed on the system. Only use this option if you know what you are doing.
 
 All options except `/NOSTART` are standard Inno Setup options. More information about Inno Setup options can be found [here](https://jrsoftware.org/ishelp/index.php?topic=setupcmdline).

@@ -1,5 +1,5 @@
 ﻿#define MyAppName "2FAGuard"
-#define MyAppVersion "1.6.3"
+#define MyAppVersion "1.7.0"
 #define MyAppPublisher "Timo Kössler"
 #define MyAppURL "https://2faguard.app"
 
@@ -78,18 +78,6 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall; Parameters: setup; Check: LaunchChecked
 
 [Code]
-function InitializeSetup: Boolean;
-begin
-  Dependency_AddVC2015To2022;
-  Result := True;
-end;
-procedure CurPageChanged(CurPageID: Integer);
-begin
-  if CurPageID = wpSelectTasks then
-    WizardForm.NextButton.Caption := SetupMessage(msgButtonInstall)
-  else
-    WizardForm.NextButton.Caption := SetupMessage(msgButtonNext);
-end;
 function CmdLineParamExists(const Value: string): Boolean;
 var
   I: Integer;  
@@ -101,6 +89,20 @@ begin
       Result := True;
       Exit;
     end;
+end;
+
+function InitializeSetup: Boolean;
+begin
+  if not CmdLineParamExists('/SKIPVCPPINSTALL') then
+    Dependency_AddVC2015To2022;
+  Result := True;
+end;
+procedure CurPageChanged(CurPageID: Integer);
+begin
+  if CurPageID = wpSelectTasks then
+    WizardForm.NextButton.Caption := SetupMessage(msgButtonInstall)
+  else
+    WizardForm.NextButton.Caption := SetupMessage(msgButtonNext);
 end;
 
 function LaunchChecked: Boolean;

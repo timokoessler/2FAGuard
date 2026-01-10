@@ -1,5 +1,6 @@
 ﻿using Guard.Core;
 using Guard.Core.Models;
+using Guard.Core.Security;
 using Guard.Core.Storage;
 
 namespace Guard.WPF.Core
@@ -14,6 +15,10 @@ namespace Guard.WPF.Core
             await bgLoadSemaphore.WaitAsync();
             await Task.Run(() =>
             {
+                if (!Auth.IsLoggedIn())
+                {
+                    return;
+                }
                 try
                 {
                     List<DBTOTPToken> dbTokens = Database.GetAllTokens();

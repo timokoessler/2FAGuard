@@ -37,8 +37,8 @@
       },
       "Google.Protobuf": {
         "type": "Transitive",
-        "resolved": "3.33.2",
-        "contentHash": "vZXVbrZgBqUkP5iWQi0CS6pucIS2MQdEYPS1duWCo8fGrrt4th6HTiHfLFX2RmAWAQl1oUnzGgyDBsfq7fHQJA=="
+        "resolved": "3.33.3",
+        "contentHash": "ZkghmDjhnSS26gL1GbaMpl/8Uj/azE24xZunN36pGplYIj2xI6OBZUCe5LVoj18D2mcMJBBjUSjJMceyAPybNQ=="
       },
       "GuerrillaNtp": {
         "type": "Transitive",
@@ -232,8 +232,8 @@
       "2FAGuard": {
         "type": "Project",
         "dependencies": {
-          "Google.Protobuf": "[3.33.2, )",
-          "Guard.Core": "[1.6.3, )",
+          "Google.Protobuf": "[3.33.3, )",
+          "Guard.Core": "[1.7.0, )",
           "Konscious.Security.Cryptography.Argon2": "[1.3.1, )",
           "Microsoft.Security.Extensions": "[1.4.0, )",
           "NSec.Cryptography": "[25.4.0, )",

@@ -49,5 +49,5 @@ If a public GitHub issue or discussion is not the right choice for your concern,
 
 ## License
 
-© [Timo Kössler](https://timokoessler.de) 2025  
+© [Timo Kössler](https://timokoessler.de) 2026  
 Released under the [MIT license](https://github.com/timokoessler/2FAGuard/blob/main/LICENSE)

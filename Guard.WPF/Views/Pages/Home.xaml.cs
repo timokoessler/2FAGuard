@@ -82,9 +82,17 @@ namespace Guard.WPF.Views.Pages
 
         private async void LoadTokens()
         {
-            List<TOTPTokenHelper>? tokenHelpers =
-                await TokenManager.GetAllTokens()
-                ?? throw new Exception("Error loading tokens (tokenHelpers is null)");
+            List<TOTPTokenHelper>? tokenHelpers = await TokenManager.GetAllTokens();
+
+            if (tokenHelpers == null)
+            {
+                if (!Auth.IsLoggedIn())
+                {
+                    mainWindow.Logout();
+                    return;
+                }
+                throw new Exception("Failed to load tokens (tokenHelpers is null)");
+            }
 
             if (tokenHelpers.Count == 0)
             {
