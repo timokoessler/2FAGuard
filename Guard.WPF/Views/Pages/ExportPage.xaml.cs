@@ -50,7 +50,7 @@ namespace Guard.WPF.Views.Pages
                     byte[]? password = null;
                     if (exporter.RequiresPassword())
                     {
-                        var dialog = new PasswordDialog(mainWindow.GetRootContentDialogPresenter());
+                        var dialog = new PasswordDialog(mainWindow.GetRootContentDialogHost());
                         dialog.Description.Text = I18n.GetString("export.password");
                         var dialogResult = await dialog.ShowAsync();
 

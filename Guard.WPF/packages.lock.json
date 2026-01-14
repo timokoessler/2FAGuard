@@ -4,9 +4,9 @@
     "net10.0-windows10.0.22621": {
       "Google.Protobuf": {
         "type": "Direct",
-        "requested": "[3.33.3, )",
-        "resolved": "3.33.3",
-        "contentHash": "ZkghmDjhnSS26gL1GbaMpl/8Uj/azE24xZunN36pGplYIj2xI6OBZUCe5LVoj18D2mcMJBBjUSjJMceyAPybNQ=="
+        "requested": "[3.33.4, )",
+        "resolved": "3.33.4",
+        "contentHash": "8uRKKkDp+0Clqz1GqH6aTQtQsDJJyWhw9Owo1jsplIdNR7SIPehLVq4+5zccXkjOVbR6OcjEvL4MlrVSTme2IA=="
       },
       "Konscious.Security.Cryptography.Argon2": {
         "type": "Direct",
@@ -16,12 +16,6 @@
         "dependencies": {
           "Konscious.Security.Cryptography.Blake2": "1.1.1"
         }
-      },
-      "Microsoft.NET.ILLink.Tasks": {
-        "type": "Direct",
-        "requested": "[10.0.1, )",
-        "resolved": "10.0.1",
-        "contentHash": "ISahzLHsHY7vrwqr2p1YWZ+gsxoBRtH7gWRDK8fDUst9pp2He0GiesaqEfeX0V8QMCJM3eNEHGGpnIcPjFo2NQ=="
       },
       "Microsoft.Security.Extensions": {
         "type": "Direct",
@@ -52,20 +46,20 @@
       },
       "WPF-UI": {
         "type": "Direct",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "bL+ehJIgRl9bh8imYFJ33DsJrqcU6xfmbEBPlghW/jaBYtbCEDLfuxsEAVITYQjAxTJjPy+DT5vll3XOSCmHgQ==",
+        "requested": "[4.2.0, )",
+        "resolved": "4.2.0",
+        "contentHash": "cLJCqIYGtbSU8da9UnPV83SU5XttiM+BEZWW/jLSLjjmBvK2s54oDcO2wP36GEVgiXu5/QXJHlgXk0f14Cvw3g==",
         "dependencies": {
-          "WPF-UI.Abstractions": "4.1.0"
+          "WPF-UI.Abstractions": "4.2.0"
         }
       },
       "WPF-UI.Tray": {
         "type": "Direct",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "+alEwZ+YcmrH1t0H7LE7tX9b8BFqO6xXtd8Gvu4pN8Y4BkGbynkDaMN1PS2glAPZxaAhmKkOKPLB+/IbVo2bBw==",
+        "requested": "[4.2.0, )",
+        "resolved": "4.2.0",
+        "contentHash": "/t6fXMMuZ7tcQ6EKecG5e3Qyt9tdtKQP0u8gqpn+v+IDVVPWDXOsdDQ6t7QPteXi4UqGWFi8/ARoxzuNJ+RvFg==",
         "dependencies": {
-          "WPF-UI": "4.1.0"
+          "WPF-UI": "4.2.0"
         }
       },
       "ZXing.Net": {
@@ -131,8 +125,8 @@
       },
       "WPF-UI.Abstractions": {
         "type": "Transitive",
-        "resolved": "4.1.0",
-        "contentHash": "SzwdKzoA9ZlNXitVPUBAp79Pao5iRM/miny7/yIQGJwKzfx5bojjzNG4jV9B861ub5zer/AioDwCDc2cUpCoMA=="
+        "resolved": "4.2.0",
+        "contentHash": "N4/ODw2F7yniiaEO6aEaxFC8aMJDJTGoeNNv3LLXFJs+qY2Flu9fMqFrRfcCFTk4ZKg1+guUB6Y0QKi6AGt88w=="
       },
       "guard.core": {
         "type": "Project",

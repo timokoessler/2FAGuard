@@ -11,8 +11,8 @@ namespace Guard.WPF.Views.Dialogs;
 
 public partial class PasswordDialog : ContentDialog
 {
-    public PasswordDialog(ContentPresenter contentPresenter)
-        : base(contentPresenter)
+    public PasswordDialog(ContentDialogHost contentDialogHost)
+        : base(contentDialogHost)
     {
         InitializeComponent();
         this.PasswordBox.Focus();

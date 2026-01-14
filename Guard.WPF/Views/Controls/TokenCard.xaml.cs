@@ -336,7 +336,7 @@ namespace Guard.WPF.Views.UIComponents
         {
             string uri = OTPUriCreator.GetUri(token);
             var qrImage = QRCode.GenerateQRCodeImage(uri, 380);
-            var dialog = new QRDialog(mainWindow.GetRootContentDialogPresenter(), qrImage, 380, 380)
+            var dialog = new QRDialog(mainWindow.GetRootContentDialogHost(), qrImage, 380, 380)
             {
                 IsPrimaryButtonEnabled = true,
                 PrimaryButtonText = I18n.GetString("tokencard.save"),

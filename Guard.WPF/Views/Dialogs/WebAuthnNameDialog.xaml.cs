@@ -5,8 +5,8 @@ namespace Guard.WPF.Views.Dialogs;
 
 public partial class WebAuthnNameDialog : ContentDialog
 {
-    public WebAuthnNameDialog(ContentPresenter contentPresenter)
-        : base(contentPresenter)
+    public WebAuthnNameDialog(ContentDialogHost contentDialogHost)
+        : base(contentDialogHost)
     {
         InitializeComponent();
         this.NameBox.Focus();

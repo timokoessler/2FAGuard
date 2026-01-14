@@ -44,6 +44,7 @@ namespace Guard.WPF
 
             InitializeComponent();
             Loaded += (s, e) => OnWindowLoaded();
+            ContentRendered += (s, e) => ApplyTheme(SettingsManager.Settings.Theme);
 
             RootNavigation.Navigated += OnNavigated;
             ContentDialogService = new ContentDialogService();
@@ -64,7 +65,7 @@ namespace Guard.WPF
 
         private void OnWindowLoaded()
         {
-            ContentDialogService.SetDialogHost(RootContentDialogPresenter);
+            ContentDialogService.SetDialogHost(RootContentDialogHost);
             HideNavigation();
 
             windowInteropHandle = (new WindowInteropHelper(this)).Handle;
@@ -234,9 +235,9 @@ namespace Guard.WPF
             return currentPageName;
         }
 
-        internal ContentPresenter GetRootContentDialogPresenter()
+        internal ContentDialogHost GetRootContentDialogHost()
         {
-            return RootContentDialogPresenter;
+            return RootContentDialogHost;
         }
 
         internal void AllowScreenRecording(bool allow)
@@ -496,7 +497,6 @@ namespace Guard.WPF
             {
                 WindowPlacement.ApplyPlacement(this);
             }
-            ApplyTheme(SettingsManager.Settings.Theme);
         }
 
         private void ApplyScreenRecordingSetting()

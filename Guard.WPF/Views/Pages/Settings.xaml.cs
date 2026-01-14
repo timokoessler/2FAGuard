@@ -350,7 +350,7 @@ namespace Guard.WPF.Views.Pages
                 return;
             }
             ignoreWinHelloSwitchEvents = true;
-            var dialog = new PasswordDialog(mainWindow.GetRootContentDialogPresenter());
+            var dialog = new PasswordDialog(mainWindow.GetRootContentDialogHost());
             var result = await dialog.ShowAsync();
 
             if (result.Equals(ContentDialogResult.Primary))
@@ -515,7 +515,7 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
             {
                 if (Auth.IsLoginEnabled())
                 {
-                    var dialog = new PasswordDialog(mainWindow.GetRootContentDialogPresenter());
+                    var dialog = new PasswordDialog(mainWindow.GetRootContentDialogHost());
                     var result = await dialog.ShowAsync();
 
                     if (!result.Equals(ContentDialogResult.Primary))

@@ -58,7 +58,7 @@ namespace Guard.WPF.Views.Pages.Add
                     byte[]? password = null;
                     if (importer.RequiresPassword(openFileDialog.FileName))
                     {
-                        var dialog = new PasswordDialog(mainWindow.GetRootContentDialogPresenter());
+                        var dialog = new PasswordDialog(mainWindow.GetRootContentDialogHost());
                         dialog.Description.Text = I18n.GetString("import.password");
                         var dialogResult = await dialog.ShowAsync();
 

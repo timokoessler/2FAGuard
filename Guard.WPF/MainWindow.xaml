@@ -64,6 +64,6 @@
             </ui:NavigationView.FooterMenuItems>
         </ui:NavigationView>
         <Frame x:Name="FullContentFrame" />
-        <ContentPresenter x:Name="RootContentDialogPresenter" Grid.Row="0" />
+        <ui:ContentDialogHost x:Name="RootContentDialogHost" Grid.Row="0" />
     </Grid>
 </ui:FluentWindow>

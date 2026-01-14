@@ -6,8 +6,8 @@ namespace Guard.WPF.Views.Dialogs;
 
 public partial class QRDialog : ContentDialog
 {
-    public QRDialog(ContentPresenter contentPresenter, BitmapImage bitmap, int height, int width)
-        : base(contentPresenter)
+    public QRDialog(ContentDialogHost contentDialogHost, BitmapImage bitmap, int height, int width)
+        : base(contentDialogHost)
     {
         InitializeComponent();
         ImageEle.Source = bitmap;

@@ -36,7 +36,7 @@ namespace Guard.WPF.Views.Pages.Preferences
 
         private async void Add_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new WebAuthnNameDialog(mainWindow.GetRootContentDialogPresenter());
+            var dialog = new WebAuthnNameDialog(mainWindow.GetRootContentDialogHost());
             var result = await dialog.ShowAsync();
 
             if (!result.Equals(ContentDialogResult.Primary))
