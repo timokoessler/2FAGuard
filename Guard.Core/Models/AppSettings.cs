@@ -65,5 +65,6 @@
         public DateTime LastAppStartEvent { get; set; } = DateTime.MinValue;
         public bool RestoreWindowPlacement { get; set; } = false;
         public HideTokenSetting HideToken { get; set; } = HideTokenSetting.Never;
+        public Version MinimumAppVersion { get; set; } = new(0, 0);
     }
 }
