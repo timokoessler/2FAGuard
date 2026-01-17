@@ -18,6 +18,7 @@ namespace Guard.WPF
     {
         private Mutex? singleInstanceMutex;
         private bool autostart = false;
+
         // Increase the minimum app version when making breaking changes to prevent downgrades
         private static readonly Version minimumCompatibleVersion = new(1, 7, 0);
 
@@ -173,7 +174,7 @@ namespace Guard.WPF
                 return;
             }
 
-            if(!await CheckForUnsupportedVersion(installationInfo.version))
+            if (!await CheckForUnsupportedVersion(installationInfo.version))
             {
                 Shutdown();
                 return;
