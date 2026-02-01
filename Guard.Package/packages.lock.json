@@ -20,8 +20,8 @@
       },
       "Google.Protobuf": {
         "type": "Transitive",
-        "resolved": "3.33.3",
-        "contentHash": "ZkghmDjhnSS26gL1GbaMpl/8Uj/azE24xZunN36pGplYIj2xI6OBZUCe5LVoj18D2mcMJBBjUSjJMceyAPybNQ==",
+        "resolved": "3.33.4",
+        "contentHash": "8uRKKkDp+0Clqz1GqH6aTQtQsDJJyWhw9Owo1jsplIdNR7SIPehLVq4+5zccXkjOVbR6OcjEvL4MlrVSTme2IA==",
         "dependencies": {
           "System.Memory": "4.5.3",
           "System.Runtime.CompilerServices.Unsafe": "4.5.2"
@@ -532,26 +532,26 @@
       },
       "WPF-UI": {
         "type": "Transitive",
-        "resolved": "4.1.0",
-        "contentHash": "bL+ehJIgRl9bh8imYFJ33DsJrqcU6xfmbEBPlghW/jaBYtbCEDLfuxsEAVITYQjAxTJjPy+DT5vll3XOSCmHgQ==",
+        "resolved": "4.2.0",
+        "contentHash": "cLJCqIYGtbSU8da9UnPV83SU5XttiM+BEZWW/jLSLjjmBvK2s54oDcO2wP36GEVgiXu5/QXJHlgXk0f14Cvw3g==",
         "dependencies": {
           "System.Memory": "4.6.3",
           "System.ValueTuple": "4.5.0",
-          "WPF-UI.Abstractions": "4.1.0"
+          "WPF-UI.Abstractions": "4.2.0"
         }
       },
       "WPF-UI.Abstractions": {
         "type": "Transitive",
-        "resolved": "4.1.0",
-        "contentHash": "SzwdKzoA9ZlNXitVPUBAp79Pao5iRM/miny7/yIQGJwKzfx5bojjzNG4jV9B861ub5zer/AioDwCDc2cUpCoMA=="
+        "resolved": "4.2.0",
+        "contentHash": "N4/ODw2F7yniiaEO6aEaxFC8aMJDJTGoeNNv3LLXFJs+qY2Flu9fMqFrRfcCFTk4ZKg1+guUB6Y0QKi6AGt88w=="
       },
       "WPF-UI.Tray": {
         "type": "Transitive",
-        "resolved": "4.1.0",
-        "contentHash": "+alEwZ+YcmrH1t0H7LE7tX9b8BFqO6xXtd8Gvu4pN8Y4BkGbynkDaMN1PS2glAPZxaAhmKkOKPLB+/IbVo2bBw==",
+        "resolved": "4.2.0",
+        "contentHash": "/t6fXMMuZ7tcQ6EKecG5e3Qyt9tdtKQP0u8gqpn+v+IDVVPWDXOsdDQ6t7QPteXi4UqGWFi8/ARoxzuNJ+RvFg==",
         "dependencies": {
           "System.ValueTuple": "4.5.0",
-          "WPF-UI": "4.1.0"
+          "WPF-UI": "4.2.0"
         }
       },
       "ZXing.Net": {
@@ -572,15 +572,15 @@
       "2FAGuard": {
         "type": "Project",
         "dependencies": {
-          "Google.Protobuf": "[3.33.3, )",
+          "Google.Protobuf": "[3.33.4, )",
           "Guard.Core": "[1.7.1, )",
           "Konscious.Security.Cryptography.Argon2": "[1.3.1, )",
           "Microsoft.Security.Extensions": "[1.4.0, )",
           "NSec.Cryptography": "[25.4.0, )",
           "Otp.NET": "[1.4.1, )",
           "SharpVectors.Wpf": "[1.8.5, )",
-          "WPF-UI": "[4.1.0, )",
-          "WPF-UI.Tray": "[4.1.0, )",
+          "WPF-UI": "[4.2.0, )",
+          "WPF-UI.Tray": "[4.2.0, )",
           "ZXing.Net": "[0.16.11, )",
           "ZXing.Net.Bindings.Windows.Compatibility": "[0.16.14, )"
         }

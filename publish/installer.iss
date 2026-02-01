@@ -43,7 +43,7 @@ UsePreviousTasks=yes
 DisableFinishedPage=yes
 PrivilegesRequiredOverridesAllowed=dialog
 ArchitecturesInstallIn64BitMode=x64compatible
-SignTool=mysigntool sign /sha1 0839626A858F4D2E44EDC99708362609E432DA5A /t $qhttp://time.certum.pl/$q /fd sha256 /d $q2FAGuard Installer$q /du $qhttps://2faguard.app$q $f
+SignTool=mysigntool sign /sha1 43E9DD4D4A06853CBB521EA35E5F337EDB0DBCCD /t $qhttp://time.certum.pl/$q /fd sha256 /d $q2FAGuard Installer$q /du $qhttps://2faguard.app$q $f
 SignedUninstaller=yes
 SignToolRetryCount=0
 
