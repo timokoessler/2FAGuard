@@ -4,9 +4,9 @@
     "net10.0-windows10.0.22621": {
       "Google.Protobuf": {
         "type": "Direct",
-        "requested": "[3.33.4, )",
-        "resolved": "3.33.4",
-        "contentHash": "8uRKKkDp+0Clqz1GqH6aTQtQsDJJyWhw9Owo1jsplIdNR7SIPehLVq4+5zccXkjOVbR6OcjEvL4MlrVSTme2IA=="
+        "requested": "[3.33.5, )",
+        "resolved": "3.33.5",
+        "contentHash": "XEzLpCTosZb5I6eGSPn7rAES0VfkJkn3Cqydh0W39POdZwkdhPhOmAROTFJF9g0ardst4ulNXRm/q/iXwNu+Qw=="
       },
       "Konscious.Security.Cryptography.Argon2": {
         "type": "Direct",

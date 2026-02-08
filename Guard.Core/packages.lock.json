@@ -78,13 +78,6 @@
         "resolved": "1.0.20.1",
         "contentHash": "pkiceEqJDQFHjbga3k/oPfTVX9g+GKJZ1VrkuiLhaymt9YNw1Dr7cX9hNuZuNaWcr9WD0moW55k4pMwzQ7JaZQ=="
       }
-    },
-    "net10.0-windows10.0.22621/win-x64": {
-      "libsodium": {
-        "type": "Transitive",
-        "resolved": "1.0.20.1",
-        "contentHash": "pkiceEqJDQFHjbga3k/oPfTVX9g+GKJZ1VrkuiLhaymt9YNw1Dr7cX9hNuZuNaWcr9WD0moW55k4pMwzQ7JaZQ=="
-      }
     }
   }
 }
