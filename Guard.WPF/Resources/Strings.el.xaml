@@ -191,6 +191,8 @@
     <system:String x:Key="i.import.twofas.description">Εισαγωγή αρχείου αντιγράφου ασφαλείας από την εφαρμογή 2FAS</system:String>
     <system:String x:Key="i.import.aegis">Επαληθευτής Aegis</system:String>
     <system:String x:Key="i.import.aegis.description">Εισαγωγή μιας εξαγωγής από το Aegis Authenticator</system:String>
+    <system:String x:Key="i.import.protonauthenticator">Proton Authenticator</system:String>
+    <system:String x:Key="i.import.protonauthenticator.description">Εισαγωγή διακριτικών από την εφαρμογή Επαληθευτής Proton</system:String>
     <system:String x:Key="i.page.tokensettings">Διακριτικό</system:String>
     <system:String x:Key="i.page.tokensettings.add">Προσθήκη διακριτικού</system:String>
     <system:String x:Key="i.page.tokensettings.edit">Επεξεργασία διακριτικού</system:String>

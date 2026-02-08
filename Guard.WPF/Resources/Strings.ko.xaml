@@ -19,7 +19,7 @@
     <system:String x:Key="i.settings.theme.dark">어두운</system:String>
     <system:String x:Key="i.settings.language">언어</system:String>
     <system:String x:Key="i.settings.language.description">앱의 언어 선택</system:String>
-    <system:String x:Key="i.settings.about">이 소프트웨어에 대하여</system:String>
+    <system:String x:Key="i.settings.about">이 소프트웨어 정보 - 번역: 비너스걸</system:String>
     <system:String x:Key="i.settings.issue">문제 보고</system:String>
     <system:String x:Key="i.settings.security">보안</system:String>
     <system:String x:Key="i.settings.winhello">Windows Hello</system:String>
@@ -39,14 +39,14 @@
     <system:String x:Key="i.changepass.newbox">새 비밀번호 입력</system:String>
     <system:String x:Key="i.changepass.newbox.repeat">새 비밀번호 반복</system:String>
     <system:String x:Key="i.changepass.current.notempty">현재 비밀번호를 입력해 주세요</system:String>
-    <system:String x:Key="i.changepass.current.incorrect">현재 입력한 비밀번호가 잘못되었습니다</system:String>
+    <system:String x:Key="i.changepass.current.incorrect">입력한 현재 비밀번호가 잘못되었습니다</system:String>
     <system:String x:Key="i.settings.record">녹화 방지</system:String>
     <system:String x:Key="i.settings.record.description">앱의 화면 녹화 및 스크린샷 차단</system:String>
     <system:String x:Key="i.settings.autolock">자동 잠금</system:String>
     <system:String x:Key="i.settings.autolock.description">Windows가 잠겨 있는 경우 앱 잠금</system:String>
     <system:String x:Key="i.settings.oss">사용된 오픈 소스 소프트웨어</system:String>
     <system:String x:Key="i.settings.autostart">자동 시작</system:String>
-    <system:String x:Key="i.settings.autostart.description">Windows가 시작되면 앱을 자동으로 엽니다</system:String>
+    <system:String x:Key="i.settings.autostart.description">Windows가 시작되면 앱을 자동으로 열기</system:String>
     <system:String x:Key="i.settings.autostart.error.title">오류가 발생했습니다</system:String>
     <system:String x:Key="i.settings.autostart.error.disabled.policy">그룹 정책에 의해 앱의 자동 시작이 비활성화되었습니다</system:String>
     <system:String x:Key="i.settings.autostart.error.disabled.user">Windows 작업 관리자에서 앱의 자동 시작이 비활성화되었으며, 그곳에서만 변경할 수 있습니다</system:String>
@@ -54,7 +54,7 @@
     <system:String x:Key="i.settings.autostart.error.notenabled">앱의 자동 시작은 이미 비활성화되어 있으므로 비활성화할 수 없습니다</system:String>
     <system:String x:Key="i.settings.tray">최소화하고 트레이에서 닫기</system:String>
     <system:String x:Key="i.settings.tray.description">앱을 최소화하고 닫을 때 시스템 트레이로 이동</system:String>
-    <system:String x:Key="i.settings.imprint">각인</system:String>
+    <system:String x:Key="i.settings.imprint">저작권</system:String>
     <system:String x:Key="i.settings.privacy">개인정보</system:String>
     <system:String x:Key="i.settings.reset">앱 재설정</system:String>
     <system:String x:Key="i.settings.reset.description">모든 토큰 및 설정 삭제</system:String>
@@ -63,7 +63,7 @@
     <system:String x:Key="i.settings.reset.confirm.content">모든 토큰과 설정을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.</system:String>
     <system:String x:Key="i.settings.reset.confirm.btn">재설정</system:String>
     <system:String x:Key="i.settings.locktime">잠금 타이머</system:String>
-    <system:String x:Key="i.settings.locktime.description">일정 시간 동안 사용하지 않으면 앱을 잠급니다</system:String>
+    <system:String x:Key="i.settings.locktime.description">일정 시간 동안 사용하지 않으면 앱 잠금</system:String>
     <system:String x:Key="i.settings.locktime.never">절대 안 함</system:String>
     <system:String x:Key="i.settings.locktime.thirtyseconds">30초</system:String>
     <system:String x:Key="i.settings.locktime.oneminute">1분</system:String>
@@ -97,13 +97,13 @@
     <system:String x:Key="i.webauthn.dialog1.namerequired">보안 키의 이름을 입력해야 합니다</system:String>
     <system:String x:Key="i.webauthn.dialog.nameexists">이 이름을 가진 보안 키가 이미 존재합니다</system:String>
     <system:String x:Key="i.webauthn.delete.title">보안 키 제거</system:String>
-    <system:String x:Key="i.webauthn.delete.content">보안 키 @이름을 제거하시겠습니까? 이 키는 더 이상 인증에 사용할 수 없습니다.</system:String>
+    <system:String x:Key="i.webauthn.delete.content">보안 키 @Name을 제거하시겠습니까? 이 키는 더 이상 인증에 사용할 수 없습니다.</system:String>
     <system:String x:Key="i.webauthn.delete.yes">제거</system:String>
 
     <!--  Application setup  -->
     <system:String x:Key="i.welcome.subtext">다운로드해 주셔서 감사합니다! 토큰을 어떻게 보호할지 선택해 주세요.</system:String>
     <system:String x:Key="i.welcome.hello">Windows Hello 또는 비밀번호</system:String>
-    <system:String x:Key="i.welcome.hello.description">간단하고 안전한, 폴백으로서의 비밀번호</system:String>
+    <system:String x:Key="i.welcome.hello.description">간단하고 안전한 비밀번호 대체 수단</system:String>
     <system:String x:Key="i.welcome.hello.notavailable">Windows Hello를 사용할 수 없습니다</system:String>
     <system:String x:Key="i.welcome.hello.notavailable.content">이 기능을 사용할 수 있도록 Windows 시스템 설정에서 Windows Hello를 구성해 주세요.</system:String>
     <system:String x:Key="i.welcome.pass">비밀번호만</system:String>
@@ -163,7 +163,7 @@
     <system:String x:Key="i.import.uri">URI 목록</system:String>
     <system:String x:Key="i.import.uri.description">TOTP URI 목록 가져오기</system:String>
     <system:String x:Key="i.import.bitwarden">Bitwarden</system:String>
-    <system:String x:Key="i.import.bitwarden.description">비밀번호 관리자 Bitwarden에서 토큰 가져오기</system:String>
+    <system:String x:Key="i.import.bitwarden.description">Bitwarden 비밀번호 관리자에서 토큰 가져오기</system:String>
     <system:String x:Key="i.import.bitwarden.accountencryption">선택한 백업은 귀하의 Bitwarden 계정으로 제한되며 다른 응용 프로그램에서는 가져올 수 없습니다. 비밀번호로 보호된 백업을 생성하여 2FAGuard로 가져오세요.</system:String>
     <system:String x:Key="i.import.failed.title">가져오기 실패</system:String>
     <system:String x:Key="i.import.failed.content">가져오는 동안 오류가 발생했습니다:</system:String>
@@ -180,7 +180,7 @@
     <system:String x:Key="i.home.sort.createdat.desc">생성 날짜, 내림차순</system:String>
     <system:String x:Key="i.import.notokens">가져오기 파일에서 토큰을 찾을 수 없습니다</system:String>
     <system:String x:Key="i.import.authpro">Stratum</system:String>
-    <system:String x:Key="i.import.authpro.description">앱 Stratum에서 백업 파일 가져오기</system:String>
+    <system:String x:Key="i.import.authpro.description">Stratum앱 에서 백업 파일 가져오기</system:String>
     <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
     <system:String x:Key="i.import.gauthenticator.description">Google Authenticator 앱에서 토큰 가져오기</system:String>
     <system:String x:Key="i.import.gauthenticator.msgbox.content">Google Authenticator에서 토큰을 가져오려면 스마트폰이나 태블릿에서 앱을 열고 메뉴에서 "계정 전송"을 선택한 다음 "계정 내보내기"를 선택합니다.@n그런 다음 표시된 QR 코드의 스크린샷을 찍고 이미지 파일을 이 장치에 복사합니다.@n이 응용 프로램 상단에 있는 "QR 코드 가져오기"를 선택하여 이 파일을 가져옵니다.@n@n참고: QR 코드는 제한된 양의 정보만 저장할 수 있습니다. 내보내기를 위해 Google Authenticator 앱에서 최대 5개의 토큰을 동시에 선택하세요.</system:String>
@@ -190,9 +190,11 @@
     <system:String x:Key="i.import.password.invalid">입력한 비밀번호가 잘못되었습니다</system:String>
     <system:String x:Key="i.import.hotp.notsupported">카운터 기반 토큰 (HOTP)은 지원되지 않습니다</system:String>
     <system:String x:Key="i.import.twofas">2FAS</system:String>
-    <system:String x:Key="i.import.twofas.description">앱 2FAS에서 백업 파일 가져오기</system:String>
+    <system:String x:Key="i.import.twofas.description">2FAS 앱에서 백업 파일 가져오기</system:String>
     <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
-    <system:String x:Key="i.import.aegis.description">Aegis Authenticator export에서 가져오기</system:String>
+    <system:String x:Key="i.import.aegis.description">Aegis Authenticator에서 가져오기</system:String>
+    <system:String x:Key="i.import.protonauthenticator">Proton Authenticator</system:String>
+    <system:String x:Key="i.import.protonauthenticator.description">Proton Authenticator 앱에서 토큰 가져오기</system:String>
     <system:String x:Key="i.page.tokensettings">토큰</system:String>
     <system:String x:Key="i.page.tokensettings.add">토큰 추가</system:String>
     <system:String x:Key="i.page.tokensettings.edit">토큰 편집</system:String>
@@ -313,7 +315,7 @@
     <system:String x:Key="i.unsupported.os.content">2FAGuard를 사용하려면 Windows 10 1903 (18362) 이상으로 업데이트하세요.</system:String>
     <system:String x:Key="i.unsupported.exit">종료</system:String>
     <system:String x:Key="i.unsupported.arch.title">아키텍처가 지원되지 않음</system:String>
-    <system:String x:Key="i.unsupported.arch.content">시스템 아키텍처는 지원되지 않습니다. 2FAGuard는 64비트 시스템만 지원합니다.</system:String>
+    <system:String x:Key="i.unsupported.arch.content">귀하의 시스템 아키텍처는 지원되지 않습니다. 2FAGuard는 64비트 시스템만 지원합니다.</system:String>
     <system:String x:Key="i.unsupported.vcpp.title">Visual C++ Redistributable이 설치되지 않음</system:String>
     <system:String x:Key="i.unsupported.vcpp.content">2FAGuard를 실행하려면 Microsoft Visual C++ Redistributable 2015-2022가 필요합니다. 2FAGuard를 사용하려면 패키지를 설치하세요. 2FAGuard 설치 프로그램을 사용했거나 패키지를 방금 설치한 경우 장치를 재시작해야 할 수도 있습니다.</system:String>
     <system:String x:Key="i.unsupported.vcpp.download">다운로드</system:String>

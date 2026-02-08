@@ -191,6 +191,8 @@
     <system:String x:Key="i.import.twofas.description">Importiere ein Backup der App 2FAS</system:String>
     <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
     <system:String x:Key="i.import.aegis.description">Importiere einen Aegis Authenticator Export</system:String>
+    <system:String x:Key="i.import.protonauthenticator">Proton Authenticator</system:String>
+    <system:String x:Key="i.import.protonauthenticator.description">Importiere Token aus der Proton Authenticator App</system:String>
     <system:String x:Key="i.page.tokensettings">Token</system:String>
     <system:String x:Key="i.page.tokensettings.add">Token hinzufügen</system:String>
     <system:String x:Key="i.page.tokensettings.edit">Token bearbeiten</system:String>

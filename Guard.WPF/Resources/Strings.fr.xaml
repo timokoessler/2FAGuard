@@ -191,6 +191,8 @@
     <system:String x:Key="i.import.twofas.description">Importer un fichier de sauvegarde de l'application 2FAS</system:String>
     <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
     <system:String x:Key="i.import.aegis.description">Importer une exportation d'Aegis Authenticator</system:String>
+    <system:String x:Key="i.import.protonauthenticator">Proton Authenticator</system:String>
+    <system:String x:Key="i.import.protonauthenticator.description">Importer des jetons depuis l'application Proton Authenticator</system:String>
     <system:String x:Key="i.page.tokensettings">Jeton</system:String>
     <system:String x:Key="i.page.tokensettings.add">Ajouter un jeton</system:String>
     <system:String x:Key="i.page.tokensettings.edit">Modifier le jeton</system:String>

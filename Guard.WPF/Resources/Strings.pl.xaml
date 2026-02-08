@@ -7,7 +7,7 @@
     <system:String x:Key="i.page.settings">Ustawienia</system:String>
     <system:String x:Key="i.language">Język</system:String>
     <system:String x:Key="i.nav.add">Dodaj token</system:String>
-    
+
     <!--  Settings  -->
     <system:String x:Key="i.settings.personalisation">Personalizacja</system:String>
     <system:String x:Key="i.settings.theme">Motyw aplikacji</system:String>
@@ -81,7 +81,7 @@
     <system:String x:Key="i.settings.hidetoken.never">Nigdy nie ukrywaj</system:String>
     <system:String x:Key="i.settings.hidetoken.showafterclick">Pokaż po kliknięciu</system:String>
     <system:String x:Key="i.settings.hidetoken.always">Zawsze ukrywaj</system:String>
-    
+
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Klucz bezpieczeństwa (FIDO2)</system:String>
     <system:String x:Key="i.webauthn.add.title">Dodaj klucz bezpieczeństwa</system:String>
@@ -144,7 +144,7 @@
     <system:String x:Key="i.home.search.placeholder">Szukaj tokenów</system:String>
     <system:String x:Key="i.home.intro.title">Informacja</system:String>
     <system:String x:Key="i.home.intro.content">Możesz wykonywać dodatkowe akcje, takie jak edycja lub usuwanie, klikając prawym przyciskiem myszy na tokenie.</system:String>
-    
+
     <!--  Add  -->
     <system:String x:Key="i.page.addoverview">Dodaj tokeny</system:String>
     <system:String x:Key="i.add.manual">Ręczne wprowadzenie</system:String>
@@ -191,6 +191,8 @@
     <system:String x:Key="i.import.twofas.description">Importuj plik kopii zapasowej z aplikacji 2FAS</system:String>
     <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
     <system:String x:Key="i.import.aegis.description">Importuj plik eksportu z Aegis Authenticator</system:String>
+    <system:String x:Key="i.import.protonauthenticator">Proton Authenticator</system:String>
+    <system:String x:Key="i.import.protonauthenticator.description">Import tokens from the Proton Authenticator app</system:String>
     <system:String x:Key="i.page.tokensettings">Token</system:String>
     <system:String x:Key="i.page.tokensettings.add">Dodaj token</system:String>
     <system:String x:Key="i.page.tokensettings.edit">Edytuj token</system:String>
@@ -280,6 +282,7 @@
     <!--  Tray  -->
     <system:String x:Key="i.tray.exit">Zakończ</system:String>
     <system:String x:Key="i.tray.lock">Zablokuj</system:String>
+
 
     <!--  Password  -->
     <system:String x:Key="i.pass.invalid.minlength">Hasło musi mieć co najmniej @Length znaków</system:String>

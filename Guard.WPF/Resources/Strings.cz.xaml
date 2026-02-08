@@ -191,6 +191,8 @@
     <system:String x:Key="i.import.twofas.description">Importovat záložní soubor z aplikace 2FAS</system:String>
     <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
     <system:String x:Key="i.import.aegis.description">Importovat export z Aegis Authenticator</system:String>
+    <system:String x:Key="i.import.protonauthenticator">Proton Authenticator</system:String>
+    <system:String x:Key="i.import.protonauthenticator.description">Importovat tokeny z aplikace Proton Authenticator</system:String>
     <system:String x:Key="i.page.tokensettings">Token</system:String>
     <system:String x:Key="i.page.tokensettings.add">Přidat token</system:String>
     <system:String x:Key="i.page.tokensettings.edit">Upravit token</system:String>
