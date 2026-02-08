@@ -23,6 +23,8 @@
         CZ,
         KO,
         PL,
+        ES,
+        SL,
     }
 
     public enum SortOrderSetting

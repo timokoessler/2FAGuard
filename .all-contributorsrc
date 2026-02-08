@@ -3,9 +3,7 @@
   "projectOwner": "timokoessler",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "files": [
-    "CONTRIBUTORS.md"
-  ],
+  "files": ["CONTRIBUTORS.md"],
   "imageSize": 100,
   "commit": false,
   "commitConvention": "none",
@@ -28,113 +26,98 @@
       "name": "Cristian9828",
       "avatar_url": "https://avatars.githubusercontent.com/u/51407503?v=4",
       "profile": "https://github.com/Cristian9828",
-      "contributions": [
-        "translation",
-        "bug"
-      ]
+      "contributions": ["translation", "bug"]
     },
     {
       "login": "reg-chen",
       "name": "Reg Chen",
       "avatar_url": "https://avatars.githubusercontent.com/u/34430957?v=4",
       "profile": "https://github.com/reg-chen",
-      "contributions": [
-        "translation",
-        "bug"
-      ]
+      "contributions": ["translation", "bug"]
     },
     {
       "login": "epver",
       "name": "Epver",
       "avatar_url": "https://avatars.githubusercontent.com/u/8299627?v=4",
       "profile": "https://github.com/epver",
-      "contributions": [
-        "translation"
-      ]
+      "contributions": ["translation"]
     },
     {
       "login": "leftertrp",
       "name": "Lefteris T.",
       "avatar_url": "https://crowdin-static.cf-downloads.crowdin.com/avatar/15330686/large/780b858dcd03ac54a1d359254d637f8c.jpg",
       "profile": "https://crowdin.com/profile/leftertrp",
-      "contributions": [
-        "translation"
-      ]
+      "contributions": ["translation"]
     },
     {
       "login": "gitjica",
       "name": "Rell",
       "avatar_url": "https://avatars.githubusercontent.com/u/171240181?v=4",
       "profile": "https://github.com/gitjica",
-      "contributions": [
-        "translation"
-      ]
+      "contributions": ["translation"]
     },
     {
       "login": "threenezumi",
       "name": "Tarukawa",
       "avatar_url": "https://avatars.githubusercontent.com/u/133642732?v=4",
       "profile": "https://github.com/threenezumi",
-      "contributions": [
-        "translation"
-      ]
+      "contributions": ["translation"]
     },
     {
       "login": "zateckar",
       "name": "zateckar",
       "avatar_url": "https://avatars.githubusercontent.com/u/41990536?v=4",
       "profile": "https://github.com/zateckar",
-      "contributions": [
-        "translation"
-      ]
+      "contributions": ["translation"]
     },
     {
       "login": "VenusGirl",
       "name": "VenusGirl",
       "avatar_url": "https://avatars.githubusercontent.com/u/53147200?v=4",
       "profile": "https://github.com/VenusGirl",
-      "contributions": [
-        "translation"
-      ]
+      "contributions": ["translation"]
     },
     {
       "login": "FadeMind",
       "name": "FadeMind",
       "avatar_url": "https://avatars.githubusercontent.com/u/9846948?v=4",
       "profile": "https://github.com/FadeMind",
-      "contributions": [
-        "translation"
-      ]
+      "contributions": ["translation"]
+    },
+    {
+      "login": "anderlli0053",
+      "name": "Andrew Poženel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22171451?v=4",
+      "profile": "https://github.com/anderlli0053",
+      "contributions": ["translation"]
+    },
+    {
+      "login": "fausy.agha",
+      "name": "Fausy Agha",
+      "avatar_url": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17550964/large/50e23c522052e6248e8a52a9814a4018.png",
+      "profile": "https://crowdin.com/profile/fausy.agha",
+      "contributions": ["translation"]
     },
     {
       "login": "jdunham22",
       "name": "Jason Dunham",
       "avatar_url": "https://avatars.githubusercontent.com/u/723070?v=4",
       "profile": "https://github.com/jdunham22",
-      "contributions": [
-        "bug",
-        "ideas"
-      ]
+      "contributions": ["bug", "ideas"]
     },
     {
       "login": "PascalReintjensDSGF",
       "name": "PascalReintjensDSGF",
       "avatar_url": "https://avatars.githubusercontent.com/u/186927574?v=4",
       "profile": "https://github.com/PascalReintjensDSGF",
-      "contributions": [
-        "ideas",
-        "bug"
-      ]
+      "contributions": ["ideas", "bug"]
     },
     {
       "login": "ThatGuyJon",
       "name": "ThatGuyJon",
       "avatar_url": "https://avatars.githubusercontent.com/u/54686106?v=4",
       "profile": "https://github.com/ThatGuyJon",
-      "contributions": [
-        "ideas",
-        "bug"
-      ]
+      "contributions": ["ideas", "bug"]
     }
   ],
   "contributorsPerLine": 6,
