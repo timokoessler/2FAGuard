@@ -25,7 +25,7 @@ namespace Guard.WPF.Core
             { "ko", "한국어" },
             { "pl", "Polski" },
             { "es", "Español" },
-            { "sl", "Slovenščina" }
+            { "sl", "Slovenščina" },
         };
         private static readonly LanguageSetting defaultLanguage = LanguageSetting.EN;
         private static LanguageSetting currentLanguage = defaultLanguage;

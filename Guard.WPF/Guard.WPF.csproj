@@ -54,6 +54,7 @@
     <None Remove="Assets\logo-tray.png" />
     <None Remove="Assets\logo.svg" />
     <None Remove="Assets\padlock-gradient.svg" />
+    <None Remove="Assets\protonauthenticator.svg" />
     <None Remove="Assets\twofas.svg" />
     <None Remove="Assets\update.svg" />
   </ItemGroup>
@@ -85,6 +86,7 @@
     <Resource Include="Assets\logo-tray.png" />
     <Resource Include="Assets\logo.svg" />
     <Resource Include="Assets\padlock-gradient.svg" />
+    <Resource Include="Assets\protonauthenticator.svg" />
     <Resource Include="Assets\twofas.svg" />
     <Resource Include="Assets\update.svg" />
   </ItemGroup>

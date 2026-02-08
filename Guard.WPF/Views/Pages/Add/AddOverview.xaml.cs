@@ -198,5 +198,10 @@ namespace Guard.WPF.Views.Pages.Add
         {
             Import(new QRScreenCaptureImporter());
         }
+
+        private void ProtonAuthenticator_Click(object sender, RoutedEventArgs e)
+        {
+            Import(new ProtonAuthenticatorImporter());
+        }
     }
 }

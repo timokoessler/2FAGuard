@@ -57,6 +57,8 @@ Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"
 Name: "korean"; MessagesFile: "compiler:Languages\Korean.isl"
 Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
+Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
+Name: "slovenian"; MessagesFile: "compiler:Languages\Slovenian.isl"
 // Unofficial translations
 // Download: https://jrsoftware.org/files/istrans/
 Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"

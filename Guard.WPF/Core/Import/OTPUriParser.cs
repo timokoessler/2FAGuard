@@ -10,7 +10,7 @@ namespace Guard.WPF.Core.Import
     /// </summary>
     class OTPUriParser
     {
-        internal static OTPUri Parse(string uriString)
+        internal static OTPUri Parse(string uriString, bool allowMissingIssuer = false)
         {
             ArgumentNullException.ThrowIfNull(uriString);
 
@@ -121,7 +121,7 @@ namespace Guard.WPF.Core.Import
                 }
             }
 
-            if (string.IsNullOrEmpty(otpUri.Issuer))
+            if (!allowMissingIssuer && string.IsNullOrEmpty(otpUri.Issuer))
             {
                 throw new Exception($"Missing issuer in URI");
             }
