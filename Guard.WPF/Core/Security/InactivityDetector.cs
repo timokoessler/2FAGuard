@@ -40,6 +40,7 @@ namespace Guard.WPF.Core.Security
         {
             timer?.Stop();
             timer?.Dispose();
+            timer = null;
         }
 
         public static bool IsRunning()

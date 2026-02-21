@@ -203,6 +203,7 @@ namespace Guard.WPF
         {
             SkipApplyRegistrySettings = true;
             Navigate(typeof(Blank));
+            RootNavigation.ClearJournal();
             HideNavigation();
             InactivityDetector.Stop();
             Auth.Logout();
