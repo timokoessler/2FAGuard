@@ -41,7 +41,7 @@ namespace Guard.WPF.Core
 
         public static BitmapImage GenerateQRCodeImage(string text, int size)
         {
-            Bitmap bitmap = GenerateQRCode(
+            using Bitmap bitmap = GenerateQRCode(
                 text,
                 new ZXing.Common.EncodingOptions { Width = size, Height = size }
             );

@@ -27,6 +27,17 @@ namespace Guard.WPF.Views.UIComponents
     /// </summary>
     partial class TokenCard : UserControl
     {
+        private static readonly SolidColorBrush s_tokenHiddenDark;
+        private static readonly SolidColorBrush s_tokenHiddenLight;
+
+        static TokenCard()
+        {
+            s_tokenHiddenDark = new SolidColorBrush(Color.FromRgb(204, 204, 204)); // #CCCCCC
+            s_tokenHiddenDark.Freeze();
+            s_tokenHiddenLight = new SolidColorBrush(Color.FromRgb(68, 68, 68)); // #444444
+            s_tokenHiddenLight.Freeze();
+        }
+
         private readonly TOTPTokenHelper token;
         private DoubleAnimation? doubleAnimation;
         private readonly MainWindow mainWindow;
@@ -161,26 +172,12 @@ namespace Guard.WPF.Views.UIComponents
         {
             if (showIfHidden)
             {
-                if (IsDarkMode)
-                {
-                    TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)); // #FFFFFF
-                }
-                else
-                {
-                    TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0)); // #000000
-                }
+                TokenTextBlock.Foreground = IsDarkMode ? Brushes.White : Brushes.Black;
             }
             else if (SettingsManager.Settings.HideToken != HideTokenSetting.Never)
             {
                 TokenTextBlock.Text = "●●● ●●●";
-                if (IsDarkMode)
-                {
-                    TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(204, 204, 204)); // #CCCCCC
-                }
-                else
-                {
-                    TokenTextBlock.Foreground = new SolidColorBrush(Color.FromRgb(68, 68, 68)); // #444444
-                }
+                TokenTextBlock.Foreground = IsDarkMode ? s_tokenHiddenDark : s_tokenHiddenLight;
                 return;
             }
 

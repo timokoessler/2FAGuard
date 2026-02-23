@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Text.Json;
 using Guard.Core.Models;
-using Wpf.Ui.Appearance;
 
 namespace Guard.WPF.Core.Icons
 {
@@ -25,8 +24,7 @@ namespace Guard.WPF.Core.Icons
 
     class SimpleIconsManager
     {
-        private static SimpleIcon[]? icons;
-        private static string? version;
+        private static Dictionary<string, SimpleIcon>? iconsByName;
         private static string? license;
 
         private class SimpleIconJSON
@@ -48,28 +46,16 @@ namespace Guard.WPF.Core.Icons
             var parsedJson =
                 JsonSerializer.Deserialize<SimpleIconJSON>(json)
                 ?? throw new Exception("Can not parse internal SimpleIcon JSON file");
-            version = parsedJson.Version;
-            icons = parsedJson.Icons;
+            iconsByName = parsedJson.Icons.ToDictionary(icon => icon.T);
             license = parsedJson.License;
         }
 
-        public static SimpleIcon[]? GetIcons()
-        {
-            return icons;
-        }
-
-        public static string? GetVersion()
-        {
-            return version;
-        }
-
         public static string[] GetIconNames() =>
-            icons?.Select(icon => icon.T).ToArray()
-            ?? throw new InvalidOperationException("Icons not loaded");
+            iconsByName?.Keys.ToArray() ?? throw new InvalidOperationException("Icons not loaded");
 
         public static SimpleIcon? GetSimpleIcon(string name)
         {
-            return icons?.FirstOrDefault(icon => icon.T == name);
+            return iconsByName?.GetValueOrDefault(name);
         }
 
         public static TotpIcon? GetTotpIcon(string name)

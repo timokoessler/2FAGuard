@@ -11,11 +11,6 @@ namespace Guard.WPF.Core.Icons
             "icons"
         );
 
-        public static void LoadIcons()
-        {
-            Task.Run(() => SimpleIconsManager.LoadIcons());
-        }
-
         public static string[] GetIconNames()
         {
             return SimpleIconsManager.GetIconNames();

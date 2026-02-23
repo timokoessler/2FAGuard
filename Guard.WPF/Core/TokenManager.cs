@@ -15,12 +15,12 @@ namespace Guard.WPF.Core
             await bgLoadSemaphore.WaitAsync();
             await Task.Run(() =>
             {
-                if (!Auth.IsLoggedIn())
-                {
-                    return;
-                }
                 try
                 {
+                    if (!Auth.IsLoggedIn())
+                    {
+                        return;
+                    }
                     List<DBTOTPToken> dbTokens = Database.GetAllTokens();
                     tokenHelpers = dbTokens
                         .Select(dbToken => new TOTPTokenHelper(dbToken))
