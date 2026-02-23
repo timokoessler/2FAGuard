@@ -83,9 +83,19 @@ namespace Guard.WPF.Views.UIComponents
 
             Core.EventManager.AppThemeChanged += OnAppThemeChanged;
 
+            Loaded += (object? sender, RoutedEventArgs e) =>
+            {
+                if (doubleAnimation == null)
+                {
+                    InitProgressRing();
+                }
+            };
+
             Unloaded += (object? sender, RoutedEventArgs e) =>
             {
                 Core.EventManager.AppThemeChanged -= OnAppThemeChanged;
+                TimeProgressRing.BeginAnimation(ProgressRing.ProgressProperty, null);
+                doubleAnimation = null;
             };
 
             SearchString = $"{token.dBToken.Issuer.ToLower()} {token.Username?.ToLower()}";
@@ -133,6 +143,11 @@ namespace Guard.WPF.Views.UIComponents
 
         internal void Update()
         {
+            if (!IsLoaded)
+            {
+                return;
+            }
+
             int remainingSeconds = token.GetRemainingSeconds();
             if (remainingSeconds == (token.dBToken.Period ?? 30) || TimeProgressRing.Progress == 0)
             {

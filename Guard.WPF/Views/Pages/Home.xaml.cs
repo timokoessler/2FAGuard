@@ -51,6 +51,19 @@ namespace Guard.WPF.Views.Pages
                 timer = null;
             };
 
+            IsVisibleChanged += (s, e) =>
+            {
+                if (!IsVisible)
+                {
+                    timer?.Dispose();
+                    timer = null;
+                }
+                else if (IsLoaded && timer == null)
+                {
+                    RunTimer();
+                }
+            };
+
             SearchBox.TextChanged += (sender, e) =>
             {
                 foreach (TokenCard card in TOTPTokenContainer.Children)
