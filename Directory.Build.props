@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- Strip absolute paths from debug symbols (PDB/embedded) -->
+    <PathMap>$(MSBuildThisFileDirectory)=./</PathMap>
+  </PropertyGroup>
+</Project>
