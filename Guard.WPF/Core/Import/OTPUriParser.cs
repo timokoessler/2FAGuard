@@ -86,7 +86,7 @@ namespace Guard.WPF.Core.Import
                 string key = kv[0].ToLowerInvariant();
                 if (key == "secret")
                 {
-                    otpUri.Secret = kv[1];
+                    otpUri.Secret = Uri.UnescapeDataString(kv[1]);
                 }
                 else if (key == "issuer")
                 {

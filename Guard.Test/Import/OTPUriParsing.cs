@@ -78,5 +78,33 @@ namespace Guard.Test.Import
             Exception ex = Assert.Throws<Exception>(() => OTPUriParser.Parse(uri));
             Assert.Equal("Missing issuer in URI", ex.Message);
         }
+
+        [Fact]
+        public void ParseUriWithUrlEncodedSpacesInSecret()
+        {
+            string uri =
+                "otpauth://totp/Example:User?secret=GYYW%204UTK%20KJ2W%20Y3LZ&issuer=Example";
+            OTPUri otpUri = OTPUriParser.Parse(uri);
+            Assert.Equal("GYYW4UTKKJ2WY3LZ", otpUri.Secret);
+            Assert.Equal("Example", otpUri.Issuer);
+        }
+
+        [Fact]
+        public void NormalizeSecretStripsWhitespace()
+        {
+            string spaceDelimited = "GYYW 4UTK KJ2W Y3LZ I5FE 2OBS GRJF IVBR";
+            string normalized = OTPUriParser.NormalizeSecret(spaceDelimited);
+            Assert.Equal("GYYW4UTKKJ2WY3LZI5FE2OBSGRJFIVBR", normalized);
+            Assert.True(OTPUriParser.IsValidSecret(normalized));
+        }
+
+        [Fact]
+        public void NormalizeSecretConvertsToUpperCase()
+        {
+            string lower = "jbswy3dpehpk3pxp";
+            string normalized = OTPUriParser.NormalizeSecret(lower);
+            Assert.Equal("JBSWY3DPEHPK3PXP", normalized);
+            Assert.True(OTPUriParser.IsValidSecret(normalized));
+        }
     }
 }
