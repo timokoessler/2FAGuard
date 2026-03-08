@@ -34,7 +34,7 @@
                 Text="{DynamicResource i.setup.finished.subtext}"
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
-            <ui:CardAction Click="CardAction_Click">
+            <ui:CardAction Click="CardAction_AddToken_Click">
                 <ui:CardAction.Icon>
                     <ui:SymbolIcon FontSize="32px" Symbol="Key24" />
                 </ui:CardAction.Icon>
@@ -50,7 +50,7 @@
                         TextWrapping="WrapWithOverflow" />
                 </StackPanel>
             </ui:CardAction>
-            <ui:CardAction Margin="0,10,0,0" Click="CardAction_Click_Settings">
+            <ui:CardAction Margin="0,10,0,0" Click="CardAction_Settings_Click">
                 <ui:CardAction.Icon>
                     <ui:SymbolIcon FontSize="32px" Symbol="Settings24" />
                 </ui:CardAction.Icon>

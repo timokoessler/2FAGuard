@@ -217,6 +217,16 @@ namespace Guard.WPF
             return ContentDialogService;
         }
 
+        internal void ClearFullContentFrame()
+        {
+            FullContentFrame.Content = null;
+            while (FullContentFrame.CanGoBack)
+            {
+                FullContentFrame.RemoveBackEntry();
+            }
+            FullContentFrame.Visibility = Visibility.Collapsed;
+        }
+
         internal void HideNavigation()
         {
             RootNavigation.Visibility = Visibility.Collapsed;

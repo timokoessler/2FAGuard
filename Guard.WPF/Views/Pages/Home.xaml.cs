@@ -26,6 +26,8 @@ namespace Guard.WPF.Views.Pages
 
             Loaded += (sender, e) =>
             {
+                Core.EventManager.TokenDeleted += OnTokenDeleted;
+                Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
                 if (!Auth.IsLoggedIn())
                 {
                     mainWindow.Logout();
@@ -34,9 +36,6 @@ namespace Guard.WPF.Views.Pages
                 LoadTokens();
                 Updater.CheckForUpdate();
             };
-
-            Core.EventManager.TokenDeleted += OnTokenDeleted;
-            Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
 
             if (mainWindow.ActualHeight < 500)
             {

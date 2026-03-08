@@ -155,8 +155,7 @@ namespace Guard.WPF.Views.Pages.Start
             }
             Database.Init();
 
-            mainWindow.FullContentFrame.Content = null;
-            mainWindow.FullContentFrame.Visibility = Visibility.Collapsed;
+            mainWindow.ClearFullContentFrame();
             mainWindow.ShowNavigation();
             mainWindow.Navigate(typeof(Home));
 

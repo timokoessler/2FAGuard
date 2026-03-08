@@ -25,28 +25,28 @@ namespace Guard.WPF.Views.Pages.Start
             Stats.TrackEvent(Stats.EventType.SetupCompleted);
             InactivityDetector.Start();
 
-            Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
+            Loaded += (object? sender, RoutedEventArgs e) =>
+            {
+                Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
+                OnWindowSizeChanged(null, (mainWindow.ActualWidth, mainWindow.ActualHeight));
+            };
 
             Unloaded += (object? sender, RoutedEventArgs e) =>
             {
                 Core.EventManager.WindowSizeChanged -= OnWindowSizeChanged;
             };
-
-            OnWindowSizeChanged(null, (mainWindow.ActualWidth, mainWindow.ActualHeight));
         }
 
-        private void CardAction_Click(object sender, RoutedEventArgs e)
+        private void CardAction_AddToken_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.FullContentFrame.Content = null;
-            mainWindow.FullContentFrame.Visibility = Visibility.Collapsed;
+            mainWindow.ClearFullContentFrame();
             mainWindow.ShowNavigation();
             mainWindow.Navigate(typeof(AddOverview));
         }
 
-        private void CardAction_Click_Settings(object sender, RoutedEventArgs e)
+        private void CardAction_Settings_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.FullContentFrame.Content = null;
-            mainWindow.FullContentFrame.Visibility = Visibility.Collapsed;
+            mainWindow.ClearFullContentFrame();
             mainWindow.ShowNavigation();
             mainWindow.Navigate(typeof(Settings));
         }

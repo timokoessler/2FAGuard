@@ -25,7 +25,8 @@ namespace Guard.Test.Core
         {
             return e.Attribute(
                     XName.Get("Key", "http://schemas.microsoft.com/winfx/2006/xaml")
-                )?.Value ?? throw new Exception("Key not found");
+                )?.Value
+                ?? throw new Exception("Key not found");
         }
 
         [Fact]
