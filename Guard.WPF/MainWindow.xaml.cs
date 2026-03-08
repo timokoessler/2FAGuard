@@ -172,6 +172,10 @@ namespace Guard.WPF
 
         internal void Navigate(Type page, bool enableBackButton = false)
         {
+            if (!enableBackButton)
+            {
+                RootNavigation.ClearJournal();
+            }
             RootNavigation.Navigate(page);
             RootNavigation.IsBackButtonVisible = enableBackButton
                 ? NavigationViewBackButtonVisible.Visible
