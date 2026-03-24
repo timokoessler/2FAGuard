@@ -426,7 +426,8 @@ namespace Guard.WPF.Views.Pages.Add
             {
                 ImageIconView.Visibility = Visibility.Collapsed;
                 IconSvgView.Visibility = Visibility.Visible;
-                IconSvgView.Source = new Uri(selectedIcon.Path);
+                using var svgStream = new FileStream(selectedIcon.Path, FileMode.Open, FileAccess.Read);
+                IconSvgView.StreamSource = svgStream;
             }
             else
             {
@@ -436,8 +437,10 @@ namespace Guard.WPF.Views.Pages.Add
                 var bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.UriSource = new Uri(selectedIcon.Path);
+                using var stream = new FileStream(selectedIcon.Path, FileMode.Open, FileAccess.Read);
+                bitmap.StreamSource = stream;
                 bitmap.EndInit();
+                bitmap.Freeze();
                 ImageIconView.Source = bitmap;
             }
             ImageLicense.Text = string.Empty;

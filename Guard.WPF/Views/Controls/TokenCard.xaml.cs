@@ -81,10 +81,9 @@ namespace Guard.WPF.Views.UIComponents
             UpdateTokenText();
             InitProgressRing();
 
-            Core.EventManager.AppThemeChanged += OnAppThemeChanged;
-
             Loaded += (object? sender, RoutedEventArgs e) =>
             {
+                Core.EventManager.AppThemeChanged += OnAppThemeChanged;
                 if (doubleAnimation == null)
                 {
                     InitProgressRing();
@@ -228,7 +227,8 @@ namespace Guard.WPF.Views.UIComponents
                     {
                         if (icon.Path.EndsWith(".svg", StringComparison.Ordinal))
                         {
-                            SvgIconView.Source = new Uri(icon.Path);
+                            using var svgStream = new FileStream(icon.Path, FileMode.Open, FileAccess.Read);
+                            SvgIconView.StreamSource = svgStream;
                         }
                         else
                         {
@@ -238,8 +238,10 @@ namespace Guard.WPF.Views.UIComponents
                             var bitmap = new BitmapImage();
                             bitmap.BeginInit();
                             bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                            bitmap.UriSource = new Uri(icon.Path);
+                            using var stream = new FileStream(icon.Path, FileMode.Open, FileAccess.Read);
+                            bitmap.StreamSource = stream;
                             bitmap.EndInit();
+                            bitmap.Freeze();
                             ImageIconView.Source = bitmap;
                         }
                     }
