@@ -48,6 +48,12 @@ namespace Guard.WPF.Views.Pages
                 Core.EventManager.WindowSizeChanged -= OnWindowSizeChanged;
                 timer?.Dispose();
                 timer = null;
+                TOTPTokenContainer.Children.Clear();
+                TOTPTokenContainer.Visibility = Visibility.Collapsed;
+                SearchPanel.Visibility = Visibility.Collapsed;
+                NoTokensInfo.Visibility = Visibility.Collapsed;
+                LoadingInfo.Visibility = Visibility.Visible;
+                LoadingInfoImage.Visibility = mainWindow.ActualHeight < 500 ? Visibility.Collapsed : Visibility.Visible;
             };
 
             IsVisibleChanged += (s, e) =>
@@ -96,6 +102,11 @@ namespace Guard.WPF.Views.Pages
         {
             List<TOTPTokenHelper>? tokenHelpers = await TokenManager.GetAllTokens();
 
+            if (!IsLoaded)
+            {
+                return;
+            }
+
             if (tokenHelpers == null)
             {
                 if (!Auth.IsLoggedIn())
@@ -131,6 +142,7 @@ namespace Guard.WPF.Views.Pages
             }
 
             LoadingInfo.Visibility = Visibility.Collapsed;
+            NoTokensInfo.Visibility = Visibility.Collapsed;
             TOTPTokenContainer.Visibility = Visibility.Visible;
             SearchPanel.Visibility = Visibility.Visible;
 

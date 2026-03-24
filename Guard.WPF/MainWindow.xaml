@@ -43,6 +43,7 @@
                     x:Name="HomeNavigationItem"
                     Content="{DynamicResource i.page.home}"
                     Icon="{ui:SymbolIcon Key24}"
+                    NavigationCacheMode="Enabled"
                     TargetPageType="{x:Type pages:Home}" />
                 <ui:NavigationViewItem
                     x:Name="AddNavigationItem"
