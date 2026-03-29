@@ -4,9 +4,9 @@
     "UAP,Version=v10.0.18362": {
       "Microsoft.Windows.SDK.BuildTools": {
         "type": "Direct",
-        "requested": "[10.0.26100.7463, )",
-        "resolved": "10.0.26100.7463",
-        "contentHash": "JQYm1B9VS6QDlonYJOglgp2GNl+w1LM2TfEzGOGHPY1UICcuFr20ljxaO1drwj21exbhA7pu23w1N2Tbg4mYvw=="
+        "requested": "[10.0.26100.7705, )",
+        "resolved": "10.0.26100.7705",
+        "contentHash": "HhD3TweZMpyor2t7vRJgJrASHJDWcDjYWQB2HSqsYWvpB10K8KgkdmXLtGUoKYwoztyIV2k1vjt1DdVsYs8jWw=="
       },
       "System.Private.Uri": {
         "type": "Direct",
@@ -174,8 +174,8 @@
       },
       "Serilog": {
         "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "+cDryFR0GRhsGOnZSKwaDzRRl4MupvJ42FhCE4zhQRVanX0Jpg6WuCBk59OVhVDPmab1bB+nRykAnykYELA9qQ==",
+        "resolved": "4.3.1",
+        "contentHash": "savYe7h5yRlkqBVOwP8cIRDOdqKiPmYCU4W87JH38sBmcKD5EBoXvQIw6bNEvZ/pTe1gsiye3VFCzBsoppGkXQ==",
         "dependencies": {
           "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Threading.Channels": "8.0.0"
@@ -593,7 +593,7 @@
           "LiteDB": "[5.0.21, )",
           "NSec.Cryptography": "[25.4.0, )",
           "Otp.NET": "[1.4.1, )",
-          "Serilog": "[4.3.0, )",
+          "Serilog": "[4.3.1, )",
           "Serilog.Sinks.Debug": "[3.0.0, )",
           "Serilog.Sinks.File": "[7.0.0, )",
           "UrlBase64": "[2.0.0, )"
