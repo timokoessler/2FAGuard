@@ -153,6 +153,28 @@ namespace Guard.Core
             return GetValue(@"HKEY_CURRENT_USER\Software\Policies\2FAGuard", "DisableStats", false);
         }
 
+        public static bool IsCliDesktopBridgeEnabled()
+        {
+            try
+            {
+                object? rawValue = Registry.GetValue(
+                    @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\CLI",
+                    "EnableDesktopBridge",
+                    null
+                );
+                return IsCliDesktopBridgeEnabled(rawValue);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool IsCliDesktopBridgeEnabled(object? rawValue)
+        {
+            return rawValue is int val && val == 1;
+        }
+
         public static bool DisableScreenRecordingProtection()
         {
             return GetValue(

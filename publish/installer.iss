@@ -6,9 +6,11 @@
 #define PreviewEnv GetEnv("PREVIEW")
 #if PreviewEnv != ""
   #define MyAppExeName "2FAGuard-Preview.exe"
+  #define MyCliExeName "2fa-Preview.exe"
   #define OutputFileName "2FAGuard-Installer-Preview"
 #else
   #define MyAppExeName "2FAGuard.exe"
+  #define MyCliExeName "2fa.exe"
   #define OutputFileName "2FAGuard-Installer"
 #endif
 
@@ -71,6 +73,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: ".\bin\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\bin\{#MyCliExeName}"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

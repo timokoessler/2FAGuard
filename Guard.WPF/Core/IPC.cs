@@ -42,6 +42,11 @@ namespace Guard.WPF.Core
                 IsBackground = true,
             };
             pipeServerThread.Start();
+
+            if (RegistrySettings.IsCliDesktopBridgeEnabled())
+            {
+                CliBridgeServer.Init();
+            }
         }
 
         internal static bool SendToFront()
