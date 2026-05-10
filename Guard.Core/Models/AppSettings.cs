@@ -26,6 +26,7 @@
         ES,
         SL,
         TT,
+        ET,
     }
 
     public enum SortOrderSetting
