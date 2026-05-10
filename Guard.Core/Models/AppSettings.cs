@@ -55,6 +55,15 @@
         Always,
     }
 
+    public enum ClearClipboardSetting
+    {
+        Disabled,
+        TenSeconds,
+        TwentySeconds,
+        ThirtySeconds,
+        OneMinute,
+    }
+
     public class AppSettings
     {
         public ThemeSetting Theme { get; set; } = ThemeSetting.System;
@@ -69,6 +78,7 @@
         public DateTime LastAppStartEvent { get; set; } = DateTime.MinValue;
         public bool RestoreWindowPlacement { get; set; } = false;
         public HideTokenSetting HideToken { get; set; } = HideTokenSetting.Never;
+        public ClearClipboardSetting ClearClipboard { get; set; } = ClearClipboardSetting.Disabled;
         public Version MinimumAppVersion { get; set; } = new(0, 0);
     }
 }

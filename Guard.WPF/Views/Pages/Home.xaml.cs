@@ -53,7 +53,8 @@ namespace Guard.WPF.Views.Pages
                 SearchPanel.Visibility = Visibility.Collapsed;
                 NoTokensInfo.Visibility = Visibility.Collapsed;
                 LoadingInfo.Visibility = Visibility.Visible;
-                LoadingInfoImage.Visibility = mainWindow.ActualHeight < 500 ? Visibility.Collapsed : Visibility.Visible;
+                LoadingInfoImage.Visibility =
+                    mainWindow.ActualHeight < 500 ? Visibility.Collapsed : Visibility.Visible;
             };
 
             IsVisibleChanged += (s, e) =>

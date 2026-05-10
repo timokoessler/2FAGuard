@@ -175,6 +175,27 @@ namespace Guard.WPF.Views.Pages
             SetSelectedHideTokenSetting(SettingsManager.Settings.HideToken);
             HideTokenComboBox.SelectionChanged += OnHideTokenSelectionChanged;
 
+            string[] clearClipboardSettings = Enum.GetNames(typeof(ClearClipboardSetting));
+            foreach (string setting in clearClipboardSettings)
+            {
+                ClearClipboardComboBox.Items.Add(
+                    new ComboBoxItem
+                    {
+                        Content = I18n.GetString($"i.settings.clearclipboard.{setting}"),
+                        Tag = setting.ToLowerInvariant(),
+                    }
+                );
+            }
+            ClearClipboardComboBox.SelectedItem = ClearClipboardComboBox
+                .Items.OfType<ComboBoxItem>()
+                .FirstOrDefault(x =>
+                    ((string)x.Tag).Equals(
+                        SettingsManager.Settings.ClearClipboard.ToString(),
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                );
+            ClearClipboardComboBox.SelectionChanged += OnClearClipboardSelectionChanged;
+
             ApplyRegistrySettings();
 
             FixUniformGridSpacing(PersonalisationSettingsGrid, true);
@@ -624,6 +645,25 @@ ZXing.Net.Bindings.Windows.Compatibility - Copyright Michael Jahn under Apache 2
                 if (Enum.TryParse(theme, true, out HideTokenSetting result))
                 {
                     SettingsManager.Settings.HideToken = result;
+                    _ = SettingsManager.Save();
+                }
+            }
+        }
+
+        private void OnClearClipboardSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ClearClipboardComboBox.SelectedItem != null)
+            {
+                string val = (string)((ComboBoxItem)ClearClipboardComboBox.SelectedItem).Tag;
+                if (
+                    Enum.TryParse<ClearClipboardSetting>(
+                        val,
+                        true,
+                        out ClearClipboardSetting result
+                    )
+                )
+                {
+                    SettingsManager.Settings.ClearClipboard = result;
                     _ = SettingsManager.Save();
                 }
             }

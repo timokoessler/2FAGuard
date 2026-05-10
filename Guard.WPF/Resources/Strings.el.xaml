@@ -81,6 +81,13 @@
     <system:String x:Key="i.settings.hidetoken.never">Εμφάνιση πάντα</system:String>
     <system:String x:Key="i.settings.hidetoken.showafterclick">Εμφάνιση μετά το κλικ</system:String>
     <system:String x:Key="i.settings.hidetoken.always">Πάντα απόκρυψη</system:String>
+    <system:String x:Key="i.settings.clearclipboard">Clear clipboard</system:String>
+    <system:String x:Key="i.settings.clearclipboard.description">Clear the clipboard after copying a token</system:String>
+    <system:String x:Key="i.settings.clearclipboard.disabled">Never</system:String>
+    <system:String x:Key="i.settings.clearclipboard.tenseconds">10 seconds</system:String>
+    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20 seconds</system:String>
+    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30 seconds</system:String>
+    <system:String x:Key="i.settings.clearclipboard.oneminute">1 minute</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Κλειδί Ασφαλείας (FIDO2)</system:String>
