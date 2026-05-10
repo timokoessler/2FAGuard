@@ -183,7 +183,7 @@
     <system:String x:Key="i.import.authpro.description">Stratum앱 에서 백업 파일 가져오기</system:String>
     <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
     <system:String x:Key="i.import.gauthenticator.description">Google Authenticator 앱에서 토큰 가져오기</system:String>
-    <system:String x:Key="i.import.gauthenticator.msgbox.content">Google Authenticator에서 토큰을 가져오려면 스마트폰이나 태블릿에서 앱을 열고 메뉴에서 "계정 전송"을 선택한 다음 "계정 내보내기"를 선택합니다.@n그런 다음 표시된 QR 코드의 스크린샷을 찍고 이미지 파일을 이 장치에 복사합니다.@n이 응용 프로램 상단에 있는 "QR 코드 가져오기"를 선택하여 이 파일을 가져옵니다.@n@n참고: QR 코드는 제한된 양의 정보만 저장할 수 있습니다. 내보내기를 위해 Google Authenticator 앱에서 최대 5개의 토큰을 동시에 선택하세요.</system:String>
+    <system:String x:Key="i.import.gauthenticator.msgbox.content">Google Authenticator에서 토큰을 가져오려면 스마트폰이나 태블릿에서 앱을 열고 메뉴에서 &quot;계정 전송&quot;을 선택한 다음 &quot;계정 내보내기&quot;를 선택합니다.@n그런 다음 표시된 QR 코드의 스크린샷을 찍고 이미지 파일을 이 장치에 복사합니다.@n이 응용 프로램 상단에 있는 &quot;QR 코드 가져오기&quot;를 선택하여 이 파일을 가져옵니다.@n@n참고: QR 코드는 제한된 양의 정보만 저장할 수 있습니다. 내보내기를 위해 Google Authenticator 앱에서 최대 5개의 토큰을 동시에 선택하세요.</system:String>
     <system:String x:Key="i.import.authpro.invalid">선택한 파일은 Stratum 앱의 유효한 백업이 아닙니다.</system:String>
     <system:String x:Key="i.import.authpro.legacy">선택한 백업이 오래된 형식이므로 가져올 수 없습니다. 현재 버전의 Stratum 앱으로 백업을 생성해 주세요.</system:String>
     <system:String x:Key="i.import.password">백업 파일의 비밀번호를 입력해 주세요</system:String>
