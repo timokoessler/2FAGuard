@@ -65,6 +65,8 @@ Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.i
 Name: "chinesetraditional"; MessagesFile: "compiler:Languages\ChineseTraditional.isl"
 Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
+Name: "tatar"; MessagesFile: "compiler:Languages\Tatar.isl"
+Name: "estonian"; MessagesFile: "compiler:Languages\Estonian.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
