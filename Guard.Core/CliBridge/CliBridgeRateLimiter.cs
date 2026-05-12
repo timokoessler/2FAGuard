@@ -5,8 +5,7 @@ namespace Guard.Core.CliBridge
         private readonly int maxRequests;
         private readonly TimeSpan window;
         private readonly Func<DateTime> getNow;
-        private readonly List<DateTime> globalRequestTimes = [];
-        private readonly Dictionary<int, List<DateTime>> requestTimes = [];
+        private readonly Queue<DateTime> requestTimes = [];
         private readonly object lockObject = new();
 
         public CliBridgeRateLimiter(int maxRequests, TimeSpan window, Func<DateTime>? getNow = null)
@@ -16,31 +15,22 @@ namespace Guard.Core.CliBridge
             this.getNow = getNow ?? (() => DateTime.UtcNow);
         }
 
-        public bool Allow(int processId)
+        public bool Allow()
         {
             lock (lockObject)
             {
                 DateTime now = getNow();
-                globalRequestTimes.RemoveAll(time => now - time > window);
-                if (globalRequestTimes.Count >= maxRequests)
+                while (requestTimes.Count > 0 && now - requestTimes.Peek() > window)
+                {
+                    requestTimes.Dequeue();
+                }
+
+                if (requestTimes.Count >= maxRequests)
                 {
                     return false;
                 }
 
-                if (!requestTimes.TryGetValue(processId, out List<DateTime>? times))
-                {
-                    times = [];
-                    requestTimes[processId] = times;
-                }
-
-                times.RemoveAll(time => now - time > window);
-                if (times.Count >= maxRequests)
-                {
-                    return false;
-                }
-
-                globalRequestTimes.Add(now);
-                times.Add(now);
+                requestTimes.Enqueue(now);
                 return true;
             }
         }

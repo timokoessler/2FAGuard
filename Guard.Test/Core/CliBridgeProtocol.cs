@@ -12,8 +12,6 @@ namespace Guard.Test.Core
                 Version = CliBridgeProtocolConstants.Version,
                 Operation = CliBridgeOperation.GetCode,
                 IssuerOrId = "GitHub",
-                RequestingProcessId = 123,
-                RequestingProcessPath = @"C:\Program Files\2FAGuard\2fa.exe",
             };
 
             Assert.Null(CliBridgeProtocolValidator.GetRequestError(request));
@@ -27,8 +25,6 @@ namespace Guard.Test.Core
                 Version = 2,
                 Operation = CliBridgeOperation.GetCode,
                 IssuerOrId = "GitHub",
-                RequestingProcessId = 123,
-                RequestingProcessPath = @"C:\Program Files\2FAGuard\2fa.exe",
             };
 
             Assert.Equal(
@@ -45,8 +41,6 @@ namespace Guard.Test.Core
                 Version = CliBridgeProtocolConstants.Version,
                 Operation = "DeleteToken",
                 IssuerOrId = "GitHub",
-                RequestingProcessId = 123,
-                RequestingProcessPath = @"C:\Program Files\2FAGuard\2fa.exe",
             };
 
             Assert.Equal(
@@ -63,8 +57,6 @@ namespace Guard.Test.Core
                 Version = CliBridgeProtocolConstants.Version,
                 Operation = CliBridgeOperation.GetCode,
                 IssuerOrId = " ",
-                RequestingProcessId = 123,
-                RequestingProcessPath = @"C:\Program Files\2FAGuard\2fa.exe",
             };
 
             Assert.Equal(

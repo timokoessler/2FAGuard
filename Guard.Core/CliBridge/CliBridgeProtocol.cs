@@ -37,8 +37,6 @@ namespace Guard.Core.CliBridge
         public int Version { get; set; }
         public string? Operation { get; set; }
         public string? IssuerOrId { get; set; }
-        public int RequestingProcessId { get; set; }
-        public string? RequestingProcessPath { get; set; }
     }
 
     public class CliBridgeResponse
@@ -85,10 +83,6 @@ namespace Guard.Core.CliBridge
                 return CliBridgeErrorCode.UnsupportedOperation;
             }
             if (string.IsNullOrWhiteSpace(request.IssuerOrId))
-            {
-                return CliBridgeErrorCode.InvalidRequest;
-            }
-            if (request.RequestingProcessId <= 0 || string.IsNullOrWhiteSpace(request.RequestingProcessPath))
             {
                 return CliBridgeErrorCode.InvalidRequest;
             }

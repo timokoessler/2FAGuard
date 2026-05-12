@@ -1,5 +1,7 @@
+using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
+using System.Runtime.InteropServices;
 using System.Text;
 using Guard.Core;
 using Guard.Core.CliBridge;
@@ -22,17 +24,24 @@ namespace Guard.WPF.Core
         {
             Thread thread = new(() =>
             {
-                while (true)
+                try
                 {
-                    NamedPipeServerStream pipeServer = new(
-                        CliBridgeProtocolConstants.GetPipeName(),
-                        PipeDirection.InOut,
-                        NamedPipeServerStream.MaxAllowedServerInstances,
-                        PipeTransmissionMode.Byte,
-                        PipeOptions.CurrentUserOnly | PipeOptions.Asynchronous
-                    );
-                    pipeServer.WaitForConnection();
-                    _ = Task.Run(() => HandleConnection(pipeServer));
+                    while (true)
+                    {
+                        NamedPipeServerStream pipeServer = new(
+                            CliBridgeProtocolConstants.GetPipeName(),
+                            PipeDirection.InOut,
+                            NamedPipeServerStream.MaxAllowedServerInstances,
+                            PipeTransmissionMode.Byte,
+                            PipeOptions.CurrentUserOnly | PipeOptions.Asynchronous
+                        );
+                        pipeServer.WaitForConnection();
+                        _ = Task.Run(() => HandleConnection(pipeServer));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error("CLI bridge listener failed: {0}", ex.Message);
                 }
             })
             {
@@ -44,26 +53,30 @@ namespace Guard.WPF.Core
         private static async Task HandleConnection(NamedPipeServerStream pipeServer)
         {
             CliBridgeRequest? request = null;
+            CliBridgeClientInfo clientInfo = new();
             CliBridgeResponse response = CliBridgeResponse.Error(
                 CliBridgeErrorCode.Unavailable,
                 "Desktop bridge request failed."
             );
             try
             {
-                using (pipeServer)
+                clientInfo = GetClientInfo(pipeServer);
+                if (!rateLimiter.Allow())
                 {
-                    using var timeout = new CancellationTokenSource(requestTimeout);
-                    string? requestJson = await ReadLine(pipeServer, timeout.Token);
-                    request = requestJson == null
-                        ? null
-                        : CliBridgeSerializer.DeserializeRequest(requestJson);
-
-                    response = HandleRequest(request);
-                    byte[] responseBytes = Encoding.UTF8.GetBytes(
-                        CliBridgeSerializer.SerializeResponse(response) + "\n"
+                    response = CliBridgeResponse.Error(
+                        CliBridgeErrorCode.RateLimited,
+                        "Desktop bridge rate limit exceeded."
                     );
-                    await pipeServer.WriteAsync(responseBytes, timeout.Token);
+                    return;
                 }
+
+                using var timeout = new CancellationTokenSource(requestTimeout);
+                string? requestJson = await ReadLine(pipeServer, timeout.Token);
+                request = requestJson == null
+                    ? null
+                    : CliBridgeSerializer.DeserializeRequest(requestJson);
+
+                response = HandleRequest(request, clientInfo);
             }
             catch (OperationCanceledException)
             {
@@ -82,7 +95,9 @@ namespace Guard.WPF.Core
             }
             finally
             {
-                LogRequest(request, response);
+                await WriteResponse(pipeServer, response);
+                LogRequest(request, clientInfo, response);
+                pipeServer.Dispose();
             }
         }
 
@@ -107,7 +122,34 @@ namespace Guard.WPF.Core
             return null;
         }
 
-        private static CliBridgeResponse HandleRequest(CliBridgeRequest? request)
+        private static async Task WriteResponse(
+            NamedPipeServerStream pipeServer,
+            CliBridgeResponse response
+        )
+        {
+            try
+            {
+                if (!pipeServer.IsConnected)
+                {
+                    return;
+                }
+
+                using var timeout = new CancellationTokenSource(requestTimeout);
+                byte[] responseBytes = Encoding.UTF8.GetBytes(
+                    CliBridgeSerializer.SerializeResponse(response) + "\n"
+                );
+                await pipeServer.WriteAsync(responseBytes, timeout.Token);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("CLI bridge response failed: {0}", ex.Message);
+            }
+        }
+
+        private static CliBridgeResponse HandleRequest(
+            CliBridgeRequest? request,
+            CliBridgeClientInfo clientInfo
+        )
         {
             if (request == null)
             {
@@ -117,15 +159,10 @@ namespace Guard.WPF.Core
                 );
             }
 
-            if (!rateLimiter.Allow(request.RequestingProcessId))
-            {
-                return CliBridgeResponse.Error(
-                    CliBridgeErrorCode.RateLimited,
-                    "Desktop bridge rate limit exceeded."
-                );
-            }
-
-            string? validationError = CliBridgeRequestValidator.GetError(request);
+            string? validationError = CliBridgeRequestValidator.GetError(
+                request,
+                clientInfo.ProcessPath
+            );
             if (validationError != null)
             {
                 return CliBridgeResponse.Error(
@@ -144,6 +181,28 @@ namespace Guard.WPF.Core
 
             return GetCode(request.IssuerOrId ?? "");
         }
+
+        private static CliBridgeClientInfo GetClientInfo(NamedPipeServerStream pipeServer)
+        {
+            if (!GetNamedPipeClientProcessId(pipeServer.SafePipeHandle, out uint clientProcessId))
+            {
+                throw new IOException("Could not get CLI bridge client process ID.");
+            }
+
+            int processId = checked((int)clientProcessId);
+            using Process process = Process.GetProcessById(processId);
+            return new CliBridgeClientInfo
+            {
+                ProcessId = processId,
+                ProcessPath = process.MainModule?.FileName,
+            };
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool GetNamedPipeClientProcessId(
+            Microsoft.Win32.SafeHandles.SafePipeHandle pipe,
+            out uint clientProcessId
+        );
 
         private static CliBridgeResponse GetCode(string issuerOrId)
         {
@@ -169,17 +228,27 @@ namespace Guard.WPF.Core
             );
         }
 
-        private static void LogRequest(CliBridgeRequest? request, CliBridgeResponse response)
+        private static void LogRequest(
+            CliBridgeRequest? request,
+            CliBridgeClientInfo clientInfo,
+            CliBridgeResponse response
+        )
         {
             Log.Logger.Information(
                 "CLI bridge request at {Time}: processId={ProcessId}, process={ProcessPath}, target={Target}, success={Success}, error={ErrorCode}",
                 DateTimeOffset.Now,
-                request?.RequestingProcessId ?? 0,
-                request?.RequestingProcessPath ?? "",
+                clientInfo.ProcessId,
+                clientInfo.ProcessPath ?? "",
                 request?.IssuerOrId ?? "",
                 response.Success,
                 response.ErrorCode ?? ""
             );
+        }
+
+        private class CliBridgeClientInfo
+        {
+            public int ProcessId { get; set; }
+            public string? ProcessPath { get; set; }
         }
     }
 }

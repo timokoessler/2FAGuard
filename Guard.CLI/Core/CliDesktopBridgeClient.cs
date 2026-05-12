@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO.Pipes;
 using System.Security.Principal;
 using Guard.Core.CliBridge;
@@ -12,23 +10,11 @@ namespace Guard.CLI.Core
         {
             try
             {
-                using Process currentProcess = Process.GetCurrentProcess();
-                string? processPath = currentProcess.MainModule?.FileName;
-                if (processPath == null)
-                {
-                    return CliBridgeResponse.Error(
-                        CliBridgeErrorCode.Unavailable,
-                        "Could not get CLI process path."
-                    );
-                }
-
                 CliBridgeRequest request = new()
                 {
                     Version = CliBridgeProtocolConstants.Version,
                     Operation = CliBridgeOperation.GetCode,
                     IssuerOrId = issuerOrId,
-                    RequestingProcessId = currentProcess.Id,
-                    RequestingProcessPath = processPath,
                 };
 
                 using var pipeClient = new NamedPipeClientStream(
@@ -44,7 +30,8 @@ namespace Guard.CLI.Core
                 using StreamReader reader = new(pipeClient);
 
                 await writer.WriteLineAsync(CliBridgeSerializer.SerializeRequest(request));
-                string? responseJson = await reader.ReadLineAsync();
+                using var readTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+                string? responseJson = await reader.ReadLineAsync(readTimeout.Token);
                 if (responseJson == null)
                 {
                     return CliBridgeResponse.Error(
@@ -59,13 +46,7 @@ namespace Guard.CLI.Core
                         "Desktop app returned an invalid response."
                     );
             }
-            catch (Exception ex) when (
-                ex is IOException
-                || ex is InvalidOperationException
-                || ex is TimeoutException
-                || ex is UnauthorizedAccessException
-                || ex is Win32Exception
-            )
+            catch
             {
                 return CliBridgeResponse.Error(
                     CliBridgeErrorCode.Unavailable,
