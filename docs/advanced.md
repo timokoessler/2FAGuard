@@ -50,7 +50,7 @@ Create a value named `DisableScreenRecordingProtection` in the path above. The v
 
 ### Enable CLI desktop bridge
 
-Create a subkey named `CLI` in the path specified above. Create a value named `EnableDesktopBridge` in this subkey. The value should be of type `DWORD`. If set to `1`, the CLI can use the `--use-desktop` option to request codes from an already-unlocked desktop app session. The default is `0`.
+Create a subkey named `CLI` in the path specified above. Create a value named `EnableDesktopBridge` in this subkey. The value should be of type `DWORD`. If set to `1`, the CLI can use the `--use-desktop` option to request codes from an already-unlocked desktop app session. The default is `0`. Restart the desktop app after changing this value.
 
 Only enable this if you understand that same-user local processes can request codes through the CLI while the desktop app is unlocked. The desktop app logs the requesting process path and request time, but it does not log generated codes.
 

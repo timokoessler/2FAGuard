@@ -22,3 +22,5 @@ jobs:
         run: dotnet test Guard.Test
       - name: Build CLI
         run: dotnet build Guard.CLI --configuration Release
+      - name: Build WPF
+        run: dotnet build Guard.WPF --configuration Release

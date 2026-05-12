@@ -24,9 +24,9 @@ namespace Guard.WPF.Core
         {
             Thread thread = new(() =>
             {
-                try
+                while (true)
                 {
-                    while (true)
+                    try
                     {
                         NamedPipeServerStream pipeServer = new(
                             CliBridgeProtocolConstants.GetPipeName(),
@@ -38,10 +38,11 @@ namespace Guard.WPF.Core
                         pipeServer.WaitForConnection();
                         _ = Task.Run(() => HandleConnection(pipeServer));
                     }
-                }
-                catch (Exception ex)
-                {
-                    Log.Logger.Error("CLI bridge listener failed: {0}", ex.Message);
+                    catch (Exception ex)
+                    {
+                        Log.Logger.Error("CLI bridge listener failed: {0}", ex.Message);
+                        Thread.Sleep(1000);
+                    }
                 }
             })
             {
@@ -235,11 +236,10 @@ namespace Guard.WPF.Core
         )
         {
             Log.Logger.Information(
-                "CLI bridge request at {Time}: processId={ProcessId}, process={ProcessPath}, target={Target}, success={Success}, error={ErrorCode}",
+                "CLI bridge request at {Time}: processId={ProcessId}, process={ProcessPath}, success={Success}, error={ErrorCode}",
                 DateTimeOffset.Now,
                 clientInfo.ProcessId,
                 clientInfo.ProcessPath ?? "",
-                request?.IssuerOrId ?? "",
                 response.Success,
                 response.ErrorCode ?? ""
             );
