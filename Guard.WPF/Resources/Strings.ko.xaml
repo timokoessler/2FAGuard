@@ -1,4 +1,4 @@
-﻿<ResourceDictionary
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
@@ -83,13 +83,13 @@
     <system:String x:Key="i.settings.hidetoken.never">숨기지 않음</system:String>
     <system:String x:Key="i.settings.hidetoken.showafterclick">클릭 후 표시</system:String>
     <system:String x:Key="i.settings.hidetoken.always">항상 숨기기</system:String>
-    <system:String x:Key="i.settings.clearclipboard">Clear clipboard</system:String>
-    <system:String x:Key="i.settings.clearclipboard.description">Clear the clipboard after copying a token</system:String>
-    <system:String x:Key="i.settings.clearclipboard.disabled">Never</system:String>
-    <system:String x:Key="i.settings.clearclipboard.tenseconds">10 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.oneminute">1 minute</system:String>
+    <system:String x:Key="i.settings.clearclipboard">클립보드 지우기</system:String>
+    <system:String x:Key="i.settings.clearclipboard.description">토큰 복사 후 클립보드 지우기</system:String>
+    <system:String x:Key="i.settings.clearclipboard.disabled">절대 안 함</system:String>
+    <system:String x:Key="i.settings.clearclipboard.tenseconds">10초</system:String>
+    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20초</system:String>
+    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30초</system:String>
+    <system:String x:Key="i.settings.clearclipboard.oneminute">1분</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">보안 키 (FIDO2)</system:String>
@@ -131,7 +131,7 @@
     <system:String x:Key="i.setup.finished.action.settings.description">응용 프로그램 설정 변경</system:String>
     <system:String x:Key="i.welcome.insecure.dialog.title">확실합니까?</system:String>
     <system:String x:Key="i.welcome.insecure.dialog.content">보안 없이 2FAGuard를 사용하기로 선택하셨습니다. 즉, 토큰은 암호화되어 있지 않으며 컴퓨터에 액세스할 수 있는 모든 사용자가 액세스할 수 있습니다. 계속하시겠습니까?</system:String>
-    <system:String x:Key="i.welcome.insecure.dialog.continue">계속 (권장 없음)</system:String>
+    <system:String x:Key="i.welcome.insecure.dialog.continue">계속 (권장하지 않음)</system:String>
     <system:String x:Key="i.welcome.portable.winhello.title">참고</system:String>
     <system:String x:Key="i.welcome.portable.winhello.content">USB 스틱 또는 기타 포터블 저장 장치에서 포터블 버전의 2FAGuard를 사용하는 경우 다른 Windows 사용자나 다른 장치에서 Windows Hello로 자동 로그인할 수 없습니다. 먼저 2FAGuard 설정의 다른 장치에서 Windows Hello를 활성화해야 합니다. 언제든지 비밀번호로 로그인할 수 있습니다.</system:String>
     <system:String x:Key="i.page.welcome">환영합니다</system:String>
@@ -188,9 +188,9 @@
     <system:String x:Key="i.import.notokens">가져오기 파일에서 토큰을 찾을 수 없습니다</system:String>
     <system:String x:Key="i.import.authpro">Stratum</system:String>
     <system:String x:Key="i.import.authpro.description">Stratum앱 에서 백업 파일 가져오기</system:String>
-    <system:String x:Key="i.import.gauthenticator">Google Authenticator</system:String>
-    <system:String x:Key="i.import.gauthenticator.description">Google Authenticator 앱에서 토큰 가져오기</system:String>
-    <system:String x:Key="i.import.gauthenticator.msgbox.content">Google Authenticator에서 토큰을 가져오려면 스마트폰이나 태블릿에서 앱을 열고 메뉴에서 &quot;계정 전송&quot;을 선택한 다음 &quot;계정 내보내기&quot;를 선택합니다.@n그런 다음 표시된 QR 코드의 스크린샷을 찍고 이미지 파일을 이 장치에 복사합니다.@n이 응용 프로램 상단에 있는 &quot;QR 코드 가져오기&quot;를 선택하여 이 파일을 가져옵니다.@n@n참고: QR 코드는 제한된 양의 정보만 저장할 수 있습니다. 내보내기를 위해 Google Authenticator 앱에서 최대 5개의 토큰을 동시에 선택하세요.</system:String>
+    <system:String x:Key="i.import.gauthenticator">Google 인증기</system:String>
+    <system:String x:Key="i.import.gauthenticator.description">Google 인증기 앱에서 토큰 가져오기</system:String>
+    <system:String x:Key="i.import.gauthenticator.msgbox.content">Google 인증기에서 토큰을 가져오려면 스마트폰이나 태블릿에서 앱을 열고 메뉴에서 &quot;계정 전송&quot;을 선택한 다음 &quot;계정 내보내기&quot;를 선택합니다.@n그런 다음 표시된 QR 코드의 스크린샷을 찍고 이미지 파일을 이 장치에 복사합니다.@n이 응용 프로램 상단에 있는 &quot;QR 코드 가져오기&quot;를 선택하여 이 파일을 가져옵니다.@n@n참고: QR 코드는 제한된 양의 정보만 저장할 수 있습니다. 내보내기를 위해 Google Authenticator 앱에서 최대 5개의 토큰을 동시에 선택하세요.</system:String>
     <system:String x:Key="i.import.authpro.invalid">선택한 파일은 Stratum 앱의 유효한 백업이 아닙니다.</system:String>
     <system:String x:Key="i.import.authpro.legacy">선택한 백업이 오래된 형식이므로 가져올 수 없습니다. 현재 버전의 Stratum 앱으로 백업을 생성해 주세요.</system:String>
     <system:String x:Key="i.import.password">백업 파일의 비밀번호를 입력해 주세요</system:String>
@@ -198,10 +198,10 @@
     <system:String x:Key="i.import.hotp.notsupported">카운터 기반 토큰 (HOTP)은 지원되지 않습니다</system:String>
     <system:String x:Key="i.import.twofas">2FAS</system:String>
     <system:String x:Key="i.import.twofas.description">2FAS 앱에서 백업 파일 가져오기</system:String>
-    <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
-    <system:String x:Key="i.import.aegis.description">Aegis Authenticator에서 가져오기</system:String>
-    <system:String x:Key="i.import.protonauthenticator">Proton Authenticator</system:String>
-    <system:String x:Key="i.import.protonauthenticator.description">Proton Authenticator 앱에서 토큰 가져오기</system:String>
+    <system:String x:Key="i.import.aegis">Aegis 인증기</system:String>
+    <system:String x:Key="i.import.aegis.description">Aegis 인증기에서 가져오기</system:String>
+    <system:String x:Key="i.import.protonauthenticator">Proton 인증기</system:String>
+    <system:String x:Key="i.import.protonauthenticator.description">Proton 인증기 앱에서 토큰 가져오기</system:String>
     <system:String x:Key="i.page.tokensettings">토큰</system:String>
     <system:String x:Key="i.page.tokensettings.add">토큰 추가</system:String>
     <system:String x:Key="i.page.tokensettings.edit">토큰 편집</system:String>
