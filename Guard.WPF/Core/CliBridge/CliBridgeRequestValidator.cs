@@ -1,8 +1,8 @@
+using System.IO;
 using Guard.Core;
 using Guard.Core.CliBridge;
 using Guard.Core.Security;
 using Guard.WPF.Core.Installation;
-using System.IO;
 
 namespace Guard.WPF.Core.CliBridge
 {
@@ -26,7 +26,7 @@ namespace Guard.WPF.Core.CliBridge
 
         private static bool IsTrustedBinary(string path)
         {
-            if(InstallationInfo.IsInDebugMode())
+            if (InstallationInfo.IsInDebugMode())
             {
                 return true;
             }

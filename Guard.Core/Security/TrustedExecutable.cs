@@ -4,7 +4,6 @@ namespace Guard.Core.Security
 {
     public class TrustedExecutable
     {
-
         private static readonly string[] AllowedPublisherNameParts =
         [
             "Timo Kössler",
@@ -14,7 +13,6 @@ namespace Guard.Core.Security
 
         public static bool IsFileTrusted(string path, bool strict)
         {
-
             if (!File.Exists(path))
             {
                 return false;
@@ -28,7 +26,8 @@ namespace Guard.Core.Security
                 return false;
             }
 
-            if (!strict) {
+            if (!strict)
+            {
                 return true;
             }
 
@@ -44,7 +43,6 @@ namespace Guard.Core.Security
             }
 
             return false;
-
         }
     }
 }
