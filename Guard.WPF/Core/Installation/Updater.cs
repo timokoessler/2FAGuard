@@ -4,8 +4,8 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Windows;
 using Guard.Core;
+using Guard.Core.Security;
 using Guard.WPF.Core.Models;
-using Microsoft.Security.Extensions;
 
 namespace Guard.WPF.Core.Installation
 {
@@ -77,14 +77,9 @@ namespace Guard.WPF.Core.Installation
             }
         }
 
-        // Checks if the file is signed with a valid code signing certificate
-        // https://stackoverflow.com/a/75291260/8425220
         internal static bool IsFileTrusted(string path)
         {
-            using FileStream fs = File.OpenRead(path);
-            FileSignatureInfo sigInfo = FileSignatureInfo.GetFromFileStream(fs);
-
-            return sigInfo.State == SignatureState.SignedAndTrusted;
+            return TrustedExecutable.IsFileTrusted(path, strict: false);
         }
 
         internal static async Task Update(UpdateInfo updateInfo)

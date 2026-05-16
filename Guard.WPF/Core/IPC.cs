@@ -2,6 +2,7 @@
 using System.Windows;
 using Guard.Core;
 using Guard.Core.Storage;
+using Guard.WPF.Core.CliBridge;
 
 namespace Guard.WPF.Core
 {
@@ -42,6 +43,11 @@ namespace Guard.WPF.Core
                 IsBackground = true,
             };
             pipeServerThread.Start();
+
+            if (RegistrySettings.IsCliDesktopBridgeEnabled())
+            {
+                CliBridgeServer.Init();
+            }
         }
 
         internal static bool SendToFront()

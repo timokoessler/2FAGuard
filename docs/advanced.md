@@ -48,6 +48,12 @@ Only disable automatic updates if you have an alternative update mechanism in pl
 
 Create a value named `DisableScreenRecordingProtection` in the path above. The value should be of type `DWORD`. If set to `1`, the screen recording protection feature is disabled and the user will not be able to modify this setting. The default is `0`. This setting might be helpful for usage in RDP environments.
 
+### Enable CLI desktop bridge
+
+Create a subkey named `CLI` in the path specified above. Create a value named `EnableDesktopBridge` in this subkey. The value should be of type `DWORD`. If set to `1`, the CLI can use the `--use-desktop` option to request codes from an already-unlocked desktop app session. The default is `0`. Restart the desktop app after changing this value.
+
+Only enable this if you understand that same-user local processes can request codes through the CLI while the desktop app is unlocked. The desktop app logs the requesting process path and request time, but it does not log generated codes.
+
 ### Modify setup UI
 
 Create a subkey named `Setup` in the path specified above. The following values can be set:
