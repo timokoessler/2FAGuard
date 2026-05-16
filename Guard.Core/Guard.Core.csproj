@@ -7,7 +7,7 @@
     <DebugType>embedded</DebugType>
     <Authors>Timo Kössler and Open Source Contributors</Authors>
     <Title>Guard.Core</Title>
-    <Version>1.7.2</Version>
+    <Version>1.8.0</Version>
     <Copyright>$(Authors)</Copyright>
     <PackageProjectUrl>https://2faguard.app</PackageProjectUrl>
     <FileVersion>$(Version)</FileVersion>

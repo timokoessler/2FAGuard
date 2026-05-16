@@ -46,7 +46,7 @@
                         Text="{DynamicResource i.welcome.hello}"
                         TextWrapping="WrapWithOverflow" />
                     <ui:TextBlock
-                        Appearance="Secondary"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                         Text="{DynamicResource i.welcome.hello.description}"
                         TextWrapping="WrapWithOverflow" />
                 </StackPanel>
@@ -65,7 +65,7 @@
                         Text="{DynamicResource i.welcome.pass}"
                         TextWrapping="WrapWithOverflow" />
                     <ui:TextBlock
-                        Appearance="Secondary"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                         Text="{DynamicResource i.welcome.pass.description}"
                         TextWrapping="WrapWithOverflow" />
                 </StackPanel>

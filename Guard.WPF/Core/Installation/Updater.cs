@@ -79,7 +79,7 @@ namespace Guard.WPF.Core.Installation
 
         internal static bool IsFileTrusted(string path)
         {
-            return TrustedExecutable.IsFileTrusted(path, strict: false);
+            return TrustedExecutable.IsFileTrusted(path, strict: true);
         }
 
         internal static async Task Update(UpdateInfo updateInfo)

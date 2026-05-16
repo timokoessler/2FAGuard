@@ -8,6 +8,7 @@ namespace Guard.Core.Security
         [
             "Timo Kössler",
             "Timo Koessler",
+            "Timo Kossler",
             "2FAGuard",
         ];
 

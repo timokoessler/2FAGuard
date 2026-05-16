@@ -378,7 +378,7 @@ namespace Guard.WPF.Views.Pages.Add
             {
                 OpenFileDialog openFileDialog = new()
                 {
-                    Filter = "Icon (*.jpg, *.jpeg, *.png, *.svg) | *.jpg; *.jpeg; *.png; *.svg",
+                    Filter = "Icon (*.jpg, *.jpeg, *.png, *.svg)|*.jpg;*.jpeg;*.png;*.svg",
                     Title = I18n.GetString("i.td.customicon.dialog.title"),
                 };
                 bool? result = openFileDialog.ShowDialog();
