@@ -99,6 +99,13 @@
       "contributions": ["translation"]
     },
     {
+      "login": "jmcrwd",
+      "name": "jmcrwd",
+      "avatar_url": "https://crowdin-static.cf-downloads.crowdin.com/avatar/14762140/large/38da0f132d352a8a55fca5bb1b5d81e6_default.png",
+      "profile": "https://crowdin.com/profile/jmcrwd",
+      "contributions": ["translation"]
+    },
+    {
       "login": "jdunham22",
       "name": "Jason Dunham",
       "avatar_url": "https://avatars.githubusercontent.com/u/723070?v=4",

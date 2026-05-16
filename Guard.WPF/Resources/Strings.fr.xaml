@@ -81,6 +81,13 @@
     <system:String x:Key="i.settings.hidetoken.never">Ne jamais masquer</system:String>
     <system:String x:Key="i.settings.hidetoken.showafterclick">Afficher après clic</system:String>
     <system:String x:Key="i.settings.hidetoken.always">Toujours masquer</system:String>
+    <system:String x:Key="i.settings.clearclipboard">Clear clipboard</system:String>
+    <system:String x:Key="i.settings.clearclipboard.description">Clear the clipboard after copying a token</system:String>
+    <system:String x:Key="i.settings.clearclipboard.disabled">Never</system:String>
+    <system:String x:Key="i.settings.clearclipboard.tenseconds">10 seconds</system:String>
+    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20 seconds</system:String>
+    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30 seconds</system:String>
+    <system:String x:Key="i.settings.clearclipboard.oneminute">1 minute</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Clé de sécurité (FIDO2)</system:String>

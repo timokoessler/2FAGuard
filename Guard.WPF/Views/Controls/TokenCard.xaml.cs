@@ -44,6 +44,7 @@ namespace Guard.WPF.Views.UIComponents
         internal readonly string SearchString;
         private TotpIcon? icon;
         private bool IsDarkMode = false;
+        private CancellationTokenSource? clearClipboardCts;
 
         internal TokenCard(TOTPTokenHelper token)
         {
@@ -95,6 +96,7 @@ namespace Guard.WPF.Views.UIComponents
                 Core.EventManager.AppThemeChanged -= OnAppThemeChanged;
                 TimeProgressRing.BeginAnimation(ProgressRing.ProgressProperty, null);
                 doubleAnimation = null;
+                clearClipboardCts?.Cancel();
             };
 
             SearchString = $"{token.dBToken.Issuer.ToLower()} {token.Username?.ToLower()}";
@@ -227,7 +229,11 @@ namespace Guard.WPF.Views.UIComponents
                     {
                         if (icon.Path.EndsWith(".svg", StringComparison.Ordinal))
                         {
-                            using var svgStream = new FileStream(icon.Path, FileMode.Open, FileAccess.Read);
+                            using var svgStream = new FileStream(
+                                icon.Path,
+                                FileMode.Open,
+                                FileAccess.Read
+                            );
                             SvgIconView.StreamSource = svgStream;
                         }
                         else
@@ -238,7 +244,11 @@ namespace Guard.WPF.Views.UIComponents
                             var bitmap = new BitmapImage();
                             bitmap.BeginInit();
                             bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                            using var stream = new FileStream(icon.Path, FileMode.Open, FileAccess.Read);
+                            using var stream = new FileStream(
+                                icon.Path,
+                                FileMode.Open,
+                                FileAccess.Read
+                            );
                             bitmap.StreamSource = stream;
                             bitmap.EndInit();
                             bitmap.Freeze();
@@ -276,16 +286,96 @@ namespace Guard.WPF.Views.UIComponents
         {
             try
             {
+                clearClipboardCts?.Cancel();
+                clearClipboardCts = new CancellationTokenSource();
+
                 TimeProgressRing.Visibility = Visibility.Collapsed;
                 SvgIconRingView.Visibility = Visibility.Visible;
-                Clipboard.SetText(token.GenerateToken());
+                var copiedToken = token.GenerateToken();
+                Clipboard.SetText(copiedToken);
                 await Task.Delay(1000);
                 SvgIconRingView.Visibility = Visibility.Collapsed;
                 TimeProgressRing.Visibility = Visibility.Visible;
+
+                var clearSetting = SettingsManager.Settings.ClearClipboard;
+                if (clearSetting != ClearClipboardSetting.Disabled)
+                {
+                    int totalMs = GetClearClipboardMs(clearSetting);
+                    _ = ClearClipboardAfterDelay(
+                        totalMs - 1000,
+                        copiedToken,
+                        clearClipboardCts.Token
+                    );
+                }
             }
             catch
             {
                 // Can happen if user makes really fast clicks
+            }
+        }
+
+        private static int GetClearClipboardMs(ClearClipboardSetting setting) =>
+            setting switch
+            {
+                ClearClipboardSetting.TenSeconds => 10_000,
+                ClearClipboardSetting.TwentySeconds => 20_000,
+                ClearClipboardSetting.ThirtySeconds => 30_000,
+                ClearClipboardSetting.OneMinute => 60_000,
+                _ => 0,
+            };
+
+        private async Task ClearClipboardAfterDelay(int ms, string copiedText, CancellationToken ct)
+        {
+            try
+            {
+                await Task.Delay(Math.Max(0, ms), ct);
+                Dispatcher.Invoke(() =>
+                {
+                    try
+                    {
+                        if (
+                            !ct.IsCancellationRequested
+                            && Clipboard.ContainsText()
+                            && Clipboard.GetText() == copiedText
+                        )
+                        {
+                            Clipboard.Clear();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Logger.Error("Failed to clear clipboard: {0}", ex.Message);
+                    }
+                });
+                await RemoveFromClipboardHistoryAsync(copiedText);
+            }
+            catch (TaskCanceledException) { }
+        }
+
+        private static async Task RemoveFromClipboardHistoryAsync(string copiedText)
+        {
+            try
+            {
+                var result = await Windows.ApplicationModel.DataTransfer.Clipboard.GetHistoryItemsAsync();
+                if (result.Status != Windows.ApplicationModel.DataTransfer.ClipboardHistoryItemsResultStatus.Success)
+                {
+                    return;
+                }
+                foreach (var item in result.Items)
+                {
+                    if (item.Content.Contains(Windows.ApplicationModel.DataTransfer.StandardDataFormats.Text))
+                    {
+                        string text = await item.Content.GetTextAsync();
+                        if (text == copiedText)
+                        {
+                            Windows.ApplicationModel.DataTransfer.Clipboard.DeleteItemFromHistory(item);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("Failed to remove token from clipboard history: {0}", ex.Message);
             }
         }
 

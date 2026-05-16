@@ -81,6 +81,13 @@
     <system:String x:Key="i.settings.hidetoken.never">總是顯示</system:String>
     <system:String x:Key="i.settings.hidetoken.showafterclick">點擊後顯示</system:String>
     <system:String x:Key="i.settings.hidetoken.always">總是隱藏</system:String>
+    <system:String x:Key="i.settings.clearclipboard">Clear clipboard</system:String>
+    <system:String x:Key="i.settings.clearclipboard.description">Clear the clipboard after copying a token</system:String>
+    <system:String x:Key="i.settings.clearclipboard.disabled">Never</system:String>
+    <system:String x:Key="i.settings.clearclipboard.tenseconds">10 seconds</system:String>
+    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20 seconds</system:String>
+    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30 seconds</system:String>
+    <system:String x:Key="i.settings.clearclipboard.oneminute">1 minute</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">安全金鑰 (FIDO2)</system:String>
@@ -192,7 +199,7 @@
     <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
     <system:String x:Key="i.import.aegis.description">匯入Aegis Authenticator匯出</system:String>
     <system:String x:Key="i.import.protonauthenticator">Proton Authenticator</system:String>
-    <system:String x:Key="i.import.protonauthenticator.description">Import tokens from the Proton Authenticator app</system:String>
+    <system:String x:Key="i.import.protonauthenticator.description">從Proton Authenticator匯入Token</system:String>
     <system:String x:Key="i.page.tokensettings">Token</system:String>
     <system:String x:Key="i.page.tokensettings.add">新增Token</system:String>
     <system:String x:Key="i.page.tokensettings.edit">編輯Token</system:String>
