@@ -321,6 +321,7 @@
           "GuerrillaNtp": "[3.1.0, )",
           "Konscious.Security.Cryptography.Argon2": "[1.3.1, )",
           "LiteDB": "[5.0.21, )",
+          "Microsoft.Security.Extensions": "[1.4.0, )",
           "NSec.Cryptography": "[26.4.0, )",
           "Otp.NET": "[1.4.1, )",
           "Serilog": "[4.3.1, )",

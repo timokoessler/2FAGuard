@@ -52,6 +52,11 @@
         "resolved": "5.0.21",
         "contentHash": "ykJ7ffFl7P9YQKR/PLci6zupiLrsSCNkOTiw6OtzntH7d2kCYp5L1+3a/pksKgTEHcJBoPXFtg7VZSGVBseN9w=="
       },
+      "Microsoft.Security.Extensions": {
+        "type": "Transitive",
+        "resolved": "1.4.0",
+        "contentHash": "MnHXttc0jHbRrGdTJ+yJBbGDoa4OXhtnKXHQw70foMyAooFtPScZX/dN+Nib47nuglc9Gt29Gfb5Zl+1lAuTeA=="
+      },
       "Namotion.Reflection": {
         "type": "Transitive",
         "resolved": "3.4.2",
@@ -130,6 +135,7 @@
           "GuerrillaNtp": "[3.1.0, )",
           "Konscious.Security.Cryptography.Argon2": "[1.3.1, )",
           "LiteDB": "[5.0.21, )",
+          "Microsoft.Security.Extensions": "[1.4.0, )",
           "NSec.Cryptography": "[26.4.0, )",
           "Otp.NET": "[1.4.1, )",
           "Serilog": "[4.3.1, )",
@@ -144,6 +150,11 @@
         "type": "Transitive",
         "resolved": "1.0.22",
         "contentHash": "KPD9SloJFclrsjnhABu7dzWrcyYkwPbvx5l1gRSPAX/0n+OBtSiVCKtGFv4n+ecWUHU0tCG9LSSwoZZx673zBQ=="
+      },
+      "Microsoft.Security.Extensions": {
+        "type": "Transitive",
+        "resolved": "1.4.0",
+        "contentHash": "MnHXttc0jHbRrGdTJ+yJBbGDoa4OXhtnKXHQw70foMyAooFtPScZX/dN+Nib47nuglc9Gt29Gfb5Zl+1lAuTeA=="
       }
     }
   }

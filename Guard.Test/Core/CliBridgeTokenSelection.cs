@@ -49,6 +49,19 @@ namespace Guard.Test.Core
         }
 
         [Fact]
+        public void UnknownIssuerReturnsTokenNotFound()
+        {
+            CliBridgeTokenSelectionResult result = CliBridgeTokenSelector.Select(
+                "GitHub",
+                _ => null,
+                _ => []
+            );
+
+            Assert.False(result.Success);
+            Assert.Equal(CliBridgeErrorCode.TokenNotFound, result.ErrorCode);
+        }
+
+        [Fact]
         public void DuplicateIssuerReturnsMultipleTokensFound()
         {
             CliBridgeTokenSelectionResult result = CliBridgeTokenSelector.Select(

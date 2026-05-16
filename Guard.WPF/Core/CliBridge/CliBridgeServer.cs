@@ -9,16 +9,12 @@ using Guard.Core.Models;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 
-namespace Guard.WPF.Core
+namespace Guard.WPF.Core.CliBridge
 {
     internal static class CliBridgeServer
     {
-        private const int MaxRequestBytes = 4096;
         private static readonly TimeSpan requestTimeout = TimeSpan.FromSeconds(2);
-        private static readonly CliBridgeRateLimiter rateLimiter = new(
-            5,
-            TimeSpan.FromSeconds(30)
-        );
+        private static readonly CliBridgeRateLimiter rateLimiter = new(5, TimeSpan.FromSeconds(30));
 
         internal static void Init()
         {
@@ -73,9 +69,10 @@ namespace Guard.WPF.Core
 
                 using var timeout = new CancellationTokenSource(requestTimeout);
                 string? requestJson = await ReadLine(pipeServer, timeout.Token);
-                request = requestJson == null
-                    ? null
-                    : CliBridgeSerializer.DeserializeRequest(requestJson);
+                request =
+                    requestJson == null
+                        ? null
+                        : CliBridgeSerializer.DeserializeRequest(requestJson);
 
                 response = HandleRequest(request, clientInfo);
             }
@@ -102,25 +99,13 @@ namespace Guard.WPF.Core
             }
         }
 
-        private static async Task<string?> ReadLine(Stream stream, CancellationToken cancellationToken)
+        private static async Task<string?> ReadLine(
+            Stream stream,
+            CancellationToken cancellationToken
+        )
         {
-            byte[] buffer = new byte[1];
-            using MemoryStream requestBytes = new();
-            while (requestBytes.Length < MaxRequestBytes)
-            {
-                int read = await stream.ReadAsync(buffer, cancellationToken);
-                if (read == 0)
-                {
-                    return null;
-                }
-                if (buffer[0] == '\n')
-                {
-                    return Encoding.UTF8.GetString(requestBytes.ToArray()).TrimEnd('\r');
-                }
-                requestBytes.WriteByte(buffer[0]);
-            }
-
-            return null;
+            using StreamReader reader = new(stream, Encoding.UTF8, leaveOpen: true);
+            return await reader.ReadLineAsync(cancellationToken);
         }
 
         private static async Task WriteResponse(
@@ -174,10 +159,7 @@ namespace Guard.WPF.Core
 
             if (!Auth.IsLoggedIn())
             {
-                return CliBridgeResponse.Error(
-                    CliBridgeErrorCode.Locked,
-                    "Desktop app is locked."
-                );
+                return CliBridgeResponse.Error(CliBridgeErrorCode.Locked, "Desktop app is locked.");
             }
 
             return GetCode(request.IssuerOrId ?? "");
@@ -192,11 +174,19 @@ namespace Guard.WPF.Core
 
             int processId = checked((int)clientProcessId);
             using Process process = Process.GetProcessById(processId);
-            return new CliBridgeClientInfo
+            string? processPath = process.MainModule?.FileName;
+
+            // Detect if the client process exited and a new process took its PID
+            // between the first PID call and the path lookup above.
+            if (
+                !GetNamedPipeClientProcessId(pipeServer.SafePipeHandle, out uint confirmedProcessId)
+                || confirmedProcessId != clientProcessId
+            )
             {
-                ProcessId = processId,
-                ProcessPath = process.MainModule?.FileName,
-            };
+                throw new IOException("CLI bridge client process changed during validation.");
+            }
+
+            return new CliBridgeClientInfo { ProcessId = processId, ProcessPath = processPath };
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]

@@ -1,8 +1,10 @@
-using System.IO;
+using Guard.Core;
 using Guard.Core.CliBridge;
+using Guard.Core.Security;
 using Guard.WPF.Core.Installation;
+using System.IO;
 
-namespace Guard.WPF.Core
+namespace Guard.WPF.Core.CliBridge
 {
     internal static class CliBridgeRequestValidator
     {
@@ -24,18 +26,12 @@ namespace Guard.WPF.Core
 
         private static bool IsTrustedBinary(string path)
         {
-#if DEBUG
-            return true;
-#else
-            try
+            if(InstallationInfo.IsInDebugMode())
             {
-                return File.Exists(path) && Updater.IsFileTrusted(path);
+                return true;
             }
-            catch
-            {
-                return false;
-            }
-#endif
+
+            return TrustedExecutable.IsFileTrusted(path, strict: true);
         }
     }
 }

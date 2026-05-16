@@ -2,6 +2,7 @@
 using System.Windows;
 using Guard.Core;
 using Guard.Core.Storage;
+using Guard.WPF.Core.CliBridge;
 
 namespace Guard.WPF.Core
 {

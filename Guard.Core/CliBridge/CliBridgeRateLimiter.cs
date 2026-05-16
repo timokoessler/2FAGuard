@@ -10,6 +10,21 @@ namespace Guard.Core.CliBridge
 
         public CliBridgeRateLimiter(int maxRequests, TimeSpan window, Func<DateTime>? getNow = null)
         {
+            if (maxRequests <= 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(maxRequests),
+                    "maxRequests must be greater than zero."
+                );
+            }
+            if (window <= TimeSpan.Zero)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(window),
+                    "window must be greater than zero."
+                );
+            }
+
             this.maxRequests = maxRequests;
             this.window = window;
             this.getNow = getNow ?? (() => DateTime.UtcNow);

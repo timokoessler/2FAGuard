@@ -89,9 +89,7 @@ namespace Guard.CLI.Commands
         {
             if (!RegistrySettings.IsCliDesktopBridgeEnabled())
             {
-                AnsiConsole.MarkupLine(
-                    "[red]Error:[/] Desktop bridge is disabled by policy."
-                );
+                AnsiConsole.MarkupLine("[red]Error:[/] Desktop bridge is disabled by policy.");
                 return 1;
             }
 
@@ -106,9 +104,15 @@ namespace Guard.CLI.Commands
                 return 1;
             }
 
-            if (response.Code == null || response.Issuer == null || response.RemainingSeconds == null)
+            if (
+                response.Code == null
+                || response.Issuer == null
+                || response.RemainingSeconds == null
+            )
             {
-                AnsiConsole.MarkupLine("[red]Error:[/] Desktop bridge returned an invalid response.");
+                AnsiConsole.MarkupLine(
+                    "[red]Error:[/] Desktop bridge returned an invalid response."
+                );
                 return 1;
             }
 
