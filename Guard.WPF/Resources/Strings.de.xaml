@@ -81,13 +81,13 @@
     <system:String x:Key="i.settings.hidetoken.never">Niemals verbergen</system:String>
     <system:String x:Key="i.settings.hidetoken.showafterclick">Nach Klick anzeigen</system:String>
     <system:String x:Key="i.settings.hidetoken.always">Immer verbergen</system:String>
-    <system:String x:Key="i.settings.clearclipboard">Clear clipboard</system:String>
-    <system:String x:Key="i.settings.clearclipboard.description">Clear the clipboard after copying a token</system:String>
-    <system:String x:Key="i.settings.clearclipboard.disabled">Never</system:String>
-    <system:String x:Key="i.settings.clearclipboard.tenseconds">10 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.oneminute">1 minute</system:String>
+    <system:String x:Key="i.settings.clearclipboard">Zwischenablage leeren</system:String>
+    <system:String x:Key="i.settings.clearclipboard.description">Leere die Zwischenablage nach dem Kopieren eines Tokens</system:String>
+    <system:String x:Key="i.settings.clearclipboard.disabled">Niemals</system:String>
+    <system:String x:Key="i.settings.clearclipboard.tenseconds">10 Sekunden</system:String>
+    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20 Sekunden</system:String>
+    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30 Sekunden</system:String>
+    <system:String x:Key="i.settings.clearclipboard.oneminute">1 Minute</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Sicherheitsschlüssel (FIDO2)</system:String>
