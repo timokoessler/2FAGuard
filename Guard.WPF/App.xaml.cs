@@ -190,6 +190,7 @@ namespace Guard.WPF
 
         protected override void OnExit(ExitEventArgs e)
         {
+            ClipboardClearService.ClearNow();
             singleInstanceMutex?.Dispose();
             base.OnExit(e);
         }
