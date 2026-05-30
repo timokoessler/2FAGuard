@@ -195,5 +195,24 @@ namespace Guard.Core
 
             return (LockTimeSetting)rawValue;
         }
+
+        public static ClearClipboardSetting? GetForcedClearClipboard()
+        {
+            int rawValue = GetValue(
+                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Settings",
+                "ForceClearClipboardSetting",
+                -1
+            );
+
+            if (
+                rawValue < (int)ClearClipboardSetting.Disabled
+                || rawValue > (int)ClearClipboardSetting.OneMinute
+            )
+            {
+                return null;
+            }
+
+            return (ClearClipboardSetting)rawValue;
+        }
     }
 }

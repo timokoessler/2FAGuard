@@ -289,7 +289,9 @@ namespace Guard.WPF.Views.UIComponents
                 var copiedToken = token.GenerateToken();
                 Clipboard.SetText(copiedToken);
 
-                var clearSetting = SettingsManager.Settings.ClearClipboard;
+                var clearSetting =
+                    RegistrySettings.GetForcedClearClipboard()
+                    ?? SettingsManager.Settings.ClearClipboard;
                 if (clearSetting != ClearClipboardSetting.Disabled)
                 {
                     int totalMs = GetClearClipboardMs(clearSetting);

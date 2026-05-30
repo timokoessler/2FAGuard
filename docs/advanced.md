@@ -73,6 +73,7 @@ Create a subkey named `Settings` in the path specified above. These keys can be 
 - `HideSecurityKey` (DWORD): If set to `1`, the settings page will not show the security key (WebAuthn / FIDO2) settings. The default is `0`.
 - `ForceLockOnScreenLock` (DWORD): If set to `1`, the application will always lock when the screen is locked. The default is `0`. The setting allows enforcing the automatic locking feature and prevents users from changing this setting. Available since v1.6.3.
 - `ForceLockTimeSetting` (DWORD): Enforce locking of the application after a specific time of inactivity. This setting overrides the user's setting. The value should be set to the number of the option available in the dropdown menu on the settings page starting with `0` for "Never". Invalid values will be ignored. Available since v1.6.3.
+- `ForceClearClipboardSetting` (DWORD): Enforce automatic clipboard clearing after copying a token. This setting overrides the user's setting and prevents users from changing it. The value maps to the dropdown options: `0` = Disabled, `1` = 10 seconds, `2` = 20 seconds, `3` = 30 seconds, `4` = 1 minute. Invalid values will be ignored. Available since v1.8.1.
 
 ## Installer Command Line Options
 

@@ -186,14 +186,19 @@ namespace Guard.WPF.Views.Pages
                     }
                 );
             }
+            ClearClipboardSetting? registryForcedClearClipboard =
+                RegistrySettings.GetForcedClearClipboard();
+            ClearClipboardSetting activeClearClipboardSetting =
+                registryForcedClearClipboard ?? SettingsManager.Settings.ClearClipboard;
             ClearClipboardComboBox.SelectedItem = ClearClipboardComboBox
                 .Items.OfType<ComboBoxItem>()
                 .FirstOrDefault(x =>
                     ((string)x.Tag).Equals(
-                        SettingsManager.Settings.ClearClipboard.ToString(),
+                        activeClearClipboardSetting.ToString(),
                         StringComparison.OrdinalIgnoreCase
                     )
                 );
+            ClearClipboardComboBox.IsEnabled = registryForcedClearClipboard == null;
             ClearClipboardComboBox.SelectionChanged += OnClearClipboardSelectionChanged;
 
             ApplyRegistrySettings();
