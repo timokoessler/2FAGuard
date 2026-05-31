@@ -28,6 +28,7 @@ namespace Guard.WPF.Core.Import.Importer
                         "Google Authenticator migration failed because no tokens were found."
                     );
                 }
+                int lastAddedId = 0;
                 foreach (OTPUri gOTPUri in otpUris)
                 {
                     DBTOTPToken gDBToken = OTPUriParser.ConvertToDBToken(gOTPUri);
@@ -35,8 +36,12 @@ namespace Guard.WPF.Core.Import.Importer
                     {
                         duplicateTokens++;
                     }
+                    else
+                    {
+                        lastAddedId = gDBToken.Id;
+                    }
                 }
-                return (otpUris.Count, duplicateTokens, 0);
+                return (otpUris.Count, duplicateTokens, otpUris.Count == 1 ? lastAddedId : 0);
             }
 
             OTPUri otpUri = OTPUriParser.Parse(text);
