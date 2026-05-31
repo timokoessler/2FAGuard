@@ -20,8 +20,8 @@
       },
       "Google.Protobuf": {
         "type": "Transitive",
-        "resolved": "3.33.5",
-        "contentHash": "XEzLpCTosZb5I6eGSPn7rAES0VfkJkn3Cqydh0W39POdZwkdhPhOmAROTFJF9g0ardst4ulNXRm/q/iXwNu+Qw==",
+        "resolved": "3.35.0",
+        "contentHash": "OrUZCUzBXqdSmsQSWp/EPeINjOBcMU+PrZEJegw0aLgOGFHZ9ZI37X/SFrIxo8C9ghKynaKpPr3BVPc4EujWYg==",
         "dependencies": {
           "System.Memory": "4.5.3",
           "System.Runtime.CompilerServices.Unsafe": "4.5.2"
@@ -572,7 +572,7 @@
       "2FAGuard": {
         "type": "Project",
         "dependencies": {
-          "Google.Protobuf": "[3.33.5, )",
+          "Google.Protobuf": "[3.35.0, )",
           "Guard.Core": "[1.8.0, )",
           "Konscious.Security.Cryptography.Argon2": "[1.3.1, )",
           "NSec.Cryptography": "[26.4.0, )",
