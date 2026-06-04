@@ -17,9 +17,10 @@ namespace Guard.WPF.Core.Export
             uri += $"?secret={token.DecryptedSecret}";
             uri += $"&issuer={Uri.EscapeDataString(dBToken.Issuer)}";
 
-            if (dBToken.Algorithm != null)
+            string? algo = dBToken.Algorithm?.ToString();
+            if (algo != null)
             {
-                uri += $"&algorithm={dBToken.Algorithm.ToString()!.ToLowerInvariant()}";
+                uri += $"&algorithm={algo.ToUpperInvariant()}";
             }
 
             if (dBToken.Digits != null)

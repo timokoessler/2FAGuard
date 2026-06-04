@@ -39,6 +39,9 @@ This app is only available for Windows 10 1809 and higher. It also requires the 
 **What can I do if I lost my login data?**
 If you lost your password and cannot use an additional login method like Windows Hello, you will no longer have access to your tokens. If you want to reset the app and start over, you can delete the app data. Note that this will delete all your tokens and settings. For the Windows Store version, you can delete the app data in the Windows settings under Apps -> 2FAGuard -> Advanced Options -> Reset. If you are using the classic installation, delete the directory `C:\Users\%username%\AppData\Local\2FAGuard`.
 
+**Are there advanced configuration options?**
+Yes. Advanced users and administrators can configure registry keys to enforce password policies, control app data paths, restrict exports, and more. See [docs/advanced.md](docs/advanced.md) for the full reference.
+
 ## Contributing
 
 Any contribution is greatly appreciated 🥳. Please take a look at [Contributing](https://github.com/timokoessler/2FAGuard/blob/main/CONTRIBUTING.md) for more information. Thanks to all existing [contributors](CONTRIBUTORS.md).
