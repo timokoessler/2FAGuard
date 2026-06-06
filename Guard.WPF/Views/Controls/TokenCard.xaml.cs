@@ -295,7 +295,7 @@ namespace Guard.WPF.Views.UIComponents
                 if (clearSetting != ClearClipboardSetting.Disabled)
                 {
                     int totalMs = GetClearClipboardMs(clearSetting);
-                    ClipboardClearService.Schedule(copiedToken, totalMs - 1000);
+                    ClipboardClearService.Schedule(copiedToken, totalMs);
                 }
 
                 await Task.Delay(1000);
