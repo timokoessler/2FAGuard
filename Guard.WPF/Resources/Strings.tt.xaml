@@ -81,13 +81,13 @@
     <system:String x:Key="i.settings.hidetoken.never">Беркайчан</system:String>
     <system:String x:Key="i.settings.hidetoken.showafterclick">Баскач күрсәтү</system:String>
     <system:String x:Key="i.settings.hidetoken.always">Һәрвакыт</system:String>
-    <system:String x:Key="i.settings.clearclipboard">Clear clipboard</system:String>
-    <system:String x:Key="i.settings.clearclipboard.description">Clear the clipboard after copying a token</system:String>
-    <system:String x:Key="i.settings.clearclipboard.disabled">Never</system:String>
-    <system:String x:Key="i.settings.clearclipboard.tenseconds">10 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.oneminute">1 minute</system:String>
+    <system:String x:Key="i.settings.clearclipboard">Алмашу буферын чистарту</system:String>
+    <system:String x:Key="i.settings.clearclipboard.description">Токенны күчермәләгәннән соң, буферны чистартыгыз</system:String>
+    <system:String x:Key="i.settings.clearclipboard.disabled">Беркайчан</system:String>
+    <system:String x:Key="i.settings.clearclipboard.tenseconds">10 секунд</system:String>
+    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20 секунд</system:String>
+    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30 секунд</system:String>
+    <system:String x:Key="i.settings.clearclipboard.oneminute">1 минут</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">Куркынычсызлык ачкычы (FIDO2)</system:String>
@@ -219,7 +219,7 @@
     <system:String x:Key="i.export.success.content">Сезнең токеннар уңышлы экспортланды.</system:String>
     <system:String x:Key="i.export.success.open">Бөгемне ачу</system:String>
     <system:String x:Key="i.export.notokens">Экспортлап була торган токеннар юк</system:String>
-    <system:String x:Key="i.export.authpro">Stratum</system:String>
+    <system:String x:Key="i.export.authpro">Аутинтикейтер</system:String>
     <system:String x:Key="i.export.authpro.description">Токеннарны Stratum бэкап файлы буларак экспортлау</system:String>
 
     <!--  Token Details  -->

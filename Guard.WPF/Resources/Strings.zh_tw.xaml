@@ -62,8 +62,8 @@
     <system:String x:Key="i.settings.reset.confirm.btn">重設</system:String>
     <system:String x:Key="i.settings.locktime">鎖定計時器</system:String>
     <system:String x:Key="i.settings.locktime.description">在一定時間的不活動後鎖定應用程式</system:String>
-    <system:String x:Key="i.settings.locktime.never">從不</system:String>
-    <system:String x:Key="i.settings.locktime.thirtyseconds">30秒</system:String>
+    <system:String x:Key="i.settings.locktime.never">永不</system:String>
+    <system:String x:Key="i.settings.locktime.thirtyseconds">30秒鐘</system:String>
     <system:String x:Key="i.settings.locktime.oneminute">1分鐘</system:String>
     <system:String x:Key="i.settings.locktime.fiveminutes">5分鐘</system:String>
     <system:String x:Key="i.settings.locktime.tenminutes">10分鐘</system:String>
@@ -81,13 +81,13 @@
     <system:String x:Key="i.settings.hidetoken.never">總是顯示</system:String>
     <system:String x:Key="i.settings.hidetoken.showafterclick">點擊後顯示</system:String>
     <system:String x:Key="i.settings.hidetoken.always">總是隱藏</system:String>
-    <system:String x:Key="i.settings.clearclipboard">Clear clipboard</system:String>
-    <system:String x:Key="i.settings.clearclipboard.description">Clear the clipboard after copying a token</system:String>
-    <system:String x:Key="i.settings.clearclipboard.disabled">Never</system:String>
-    <system:String x:Key="i.settings.clearclipboard.tenseconds">10 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.oneminute">1 minute</system:String>
+    <system:String x:Key="i.settings.clearclipboard">清除剪貼簿</system:String>
+    <system:String x:Key="i.settings.clearclipboard.description">在複製完Token後清除剪貼簿</system:String>
+    <system:String x:Key="i.settings.clearclipboard.disabled">永不</system:String>
+    <system:String x:Key="i.settings.clearclipboard.tenseconds">10秒鐘</system:String>
+    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20秒鐘</system:String>
+    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30秒鐘</system:String>
+    <system:String x:Key="i.settings.clearclipboard.oneminute">1分鐘</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">安全金鑰 (FIDO2)</system:String>
