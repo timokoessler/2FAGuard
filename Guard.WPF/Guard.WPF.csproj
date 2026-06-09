@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <Title>2FAGuard</Title>
-    <Version>1.8.1</Version>
+    <Version>1.8.2</Version>
     <Authors>Timo Kössler and Open Source Contributors</Authors>
     <Copyright>$(Authors)</Copyright>
     <RepositoryType>git</RepositoryType>
@@ -25,9 +25,7 @@
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <Platforms>x64</Platforms>
     <DebugType>embedded</DebugType>
-    <DefineConstants Condition=" '$(IsPortable)' == 'true' ">
-      $(DefineConstants);PORTABLE
-    </DefineConstants>
+    <DefineConstants Condition=" '$(IsPortable)' == 'true' ">$(DefineConstants);PORTABLE</DefineConstants>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <StartupObject>Guard.WPF.Program</StartupObject>
     <PackageProjectUrl>https://2faguard.app</PackageProjectUrl>
