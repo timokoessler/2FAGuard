@@ -1,0 +1,96 @@
+name: Build Windows Artifacts
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    name: Build Windows x64
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Run tests
+        run: dotnet test Guard.Test --configuration Release
+
+      - name: Publish WPF normal version
+        run: >
+          dotnet publish Guard.WPF
+          -r win-x64
+          -c Release
+          --self-contained true
+          -p:PublishSingleFile=true
+          -o artifacts/wpf-normal
+
+      - name: Publish WPF portable version
+        run: >
+          dotnet publish Guard.WPF
+          -r win-x64
+          -c Release
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:IsPortable=true
+          -o artifacts/wpf-portable
+
+      - name: Publish CLI version
+        run: >
+          dotnet publish Guard.CLI
+          -r win-x64
+          -c Release
+          --self-contained true
+          -p:PublishSingleFile=true
+          -o artifacts/cli
+
+      - name: Rename output files
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path artifacts/final | Out-Null
+
+          Copy-Item "artifacts/wpf-normal/2FAGuard.exe" "artifacts/final/2FAGuard.exe" -Force
+          Copy-Item "artifacts/wpf-portable/2FAGuard.exe" "artifacts/final/2FAGuard-Portable.exe" -Force
+          Copy-Item "artifacts/cli/2fa.exe" "artifacts/final/2fa.exe" -Force
+
+      - name: Create zip packages
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "artifacts/final/2FAGuard.exe" -DestinationPath "artifacts/2FAGuard-WPF.zip" -Force
+          Compress-Archive -Path "artifacts/final/2FAGuard-Portable.exe" -DestinationPath "artifacts/2FAGuard-Portable.zip" -Force
+          Compress-Archive -Path "artifacts/final/2fa.exe" -DestinationPath "artifacts/2FAGuard-CLI.zip" -Force
+          Compress-Archive -Path "artifacts/final/*" -DestinationPath "artifacts/2FAGuard-All.zip" -Force
+
+      - name: Upload WPF normal artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2FAGuard-WPF
+          path: artifacts/2FAGuard-WPF.zip
+
+      - name: Upload WPF portable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2FAGuard-Portable
+          path: artifacts/2FAGuard-Portable.zip
+
+      - name: Upload CLI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2FAGuard-CLI
+          path: artifacts/2FAGuard-CLI.zip
+
+      - name: Upload all artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2FAGuard-All
+          path: artifacts/2FAGuard-All.zip
