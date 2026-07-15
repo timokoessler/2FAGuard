@@ -42,6 +42,7 @@ DisableReadyPage=yes
 UsePreviousTasks=yes
 DisableFinishedPage=yes
 PrivilegesRequiredOverridesAllowed=dialog
+SetupArchitecture=x64
 ArchitecturesInstallIn64BitMode=x64compatible
 SignTool=mysigntool sign /sha1 43E9DD4D4A06853CBB521EA35E5F337EDB0DBCCD /t $qhttp://time.certum.pl/$q /fd sha256 /d $q2FAGuard Installer$q /du $qhttps://2faguard.app$q $f
 SignedUninstaller=yes
@@ -60,10 +61,10 @@ Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "slovenian"; MessagesFile: "compiler:Languages\Slovenian.isl"
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
-// Unofficial translations
-// Download: https://jrsoftware.org/files/istrans/
 Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
 Name: "chinesetraditional"; MessagesFile: "compiler:Languages\ChineseTraditional.isl"
+// Unofficial translations
+// Download: https://jrsoftware.org/files/istrans/
 Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
 Name: "tatar"; MessagesFile: "compiler:Languages\Tatar.isl"
 Name: "estonian"; MessagesFile: "compiler:Languages\Estonian.isl"
