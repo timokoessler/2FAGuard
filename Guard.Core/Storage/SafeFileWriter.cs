@@ -37,16 +37,20 @@ namespace Guard.Core.Storage
                 string tempFilePath = GetTempFilePath(targetFilePath);
                 try
                 {
-                    using FileStream stream = new(
-                        tempFilePath,
-                        FileMode.CreateNew,
-                        FileAccess.Write,
-                        FileShare.None,
-                        4096,
-                        FileOptions.WriteThrough
-                    );
-                    stream.Write(content);
-                    stream.Flush(true);
+                    using (
+                        FileStream stream = new(
+                            tempFilePath,
+                            FileMode.CreateNew,
+                            FileAccess.Write,
+                            FileShare.None,
+                            4096,
+                            FileOptions.WriteThrough
+                        )
+                    )
+                    {
+                        stream.Write(content);
+                        stream.Flush(true);
+                    }
                     ReplaceWithoutOverwritingBackup(tempFilePath, targetFilePath);
                 }
                 catch
