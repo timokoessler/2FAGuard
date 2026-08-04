@@ -60,6 +60,17 @@ namespace Guard.Test.Core
             );
         }
 
+        [Fact]
+        public async Task RejectsFileWritesOutsideAppDataFolder()
+        {
+            string outsidePath = Path.Combine(testDirectory, "..", "outside-settings");
+
+            await Assert.ThrowsAsync<ArgumentException>(() =>
+                SafeFileWriter.SaveFileAsync(outsidePath, [1, 2, 3])
+            );
+            Assert.False(File.Exists(Path.GetFullPath(outsidePath)));
+        }
+
         public void Dispose()
         {
             RestoreFile(settingsPath, originalSettings);
