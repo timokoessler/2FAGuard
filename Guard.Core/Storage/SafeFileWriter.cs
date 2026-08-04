@@ -27,43 +27,116 @@ namespace Guard.Core.Storage
             }
         }
 
+        internal static void RestoreFile(string targetFilePath, byte[] content)
+        {
+            var fileLock = _fileLocks.GetOrAdd(targetFilePath, _ => new SemaphoreSlim(1, 1));
+
+            fileLock.Wait();
+            try
+            {
+                string tempFilePath = GetTempFilePath(targetFilePath);
+                try
+                {
+                    using FileStream stream = new(
+                        tempFilePath,
+                        FileMode.CreateNew,
+                        FileAccess.Write,
+                        FileShare.None,
+                        4096,
+                        FileOptions.WriteThrough
+                    );
+                    stream.Write(content);
+                    stream.Flush(true);
+                    ReplaceWithoutOverwritingBackup(tempFilePath, targetFilePath);
+                }
+                catch
+                {
+                    DeleteIfExists(tempFilePath);
+                    throw;
+                }
+            }
+            finally
+            {
+                fileLock.Release();
+            }
+        }
+
         private static async Task SaveFileAsyncInternal(string targetFilePath, byte[] content)
         {
-            string directory =
-                Path.GetDirectoryName(targetFilePath)
-                ?? throw new ArgumentException("Invalid file path");
-            string fileName = Path.GetFileName(targetFilePath);
+            string tempFilePath = GetTempFilePath(targetFilePath);
 
-            string randomPart = Guid.NewGuid().ToString("N");
-            string tempFileName = $"{fileName}.{randomPart}.tmp";
-            string tempFilePath = Path.Combine(directory, tempFileName);
-
-            string backupFilePath = Path.Combine(directory, $"{fileName}.bak");
+            string backupFilePath = $"{targetFilePath}.bak";
 
             try
             {
-                // Write to temp file asynchronously
-                await File.WriteAllBytesAsync(tempFilePath, content);
+                await using (
+                    FileStream stream = new(
+                        tempFilePath,
+                        FileMode.CreateNew,
+                        FileAccess.Write,
+                        FileShare.None,
+                        4096,
+                        FileOptions.Asynchronous | FileOptions.WriteThrough
+                    )
+                )
+                {
+                    await stream.WriteAsync(content);
+                    await stream.FlushAsync();
+                    stream.Flush(true);
+                }
 
                 if (File.Exists(targetFilePath))
                 {
-                    // Replace original file atomically and create backup with .bak extension
                     File.Replace(tempFilePath, targetFilePath, backupFilePath);
                 }
                 else
                 {
-                    // No original file, just move temp to target
                     File.Move(tempFilePath, targetFilePath);
                 }
             }
             catch
             {
-                // Clean up temp file if something went wrong
-                if (File.Exists(tempFilePath))
-                {
-                    File.Delete(tempFilePath);
-                }
+                DeleteIfExists(tempFilePath);
                 throw;
+            }
+        }
+
+        private static string GetTempFilePath(string targetFilePath)
+        {
+            string directory =
+                Path.GetDirectoryName(targetFilePath)
+                ?? throw new ArgumentException("Invalid file path");
+            string fileName = Path.GetFileName(targetFilePath);
+            return Path.Combine(directory, $"{fileName}.{Guid.NewGuid():N}.tmp");
+        }
+
+        private static void ReplaceWithoutOverwritingBackup(
+            string tempFilePath,
+            string targetFilePath
+        )
+        {
+            if (!File.Exists(targetFilePath))
+            {
+                File.Move(tempFilePath, targetFilePath);
+                return;
+            }
+
+            string displacedFilePath = GetTempFilePath(targetFilePath);
+            try
+            {
+                File.Replace(tempFilePath, targetFilePath, displacedFilePath);
+            }
+            finally
+            {
+                DeleteIfExists(displacedFilePath);
+            }
+        }
+
+        private static void DeleteIfExists(string path)
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
             }
         }
     }
