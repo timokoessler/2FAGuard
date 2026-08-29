@@ -12,6 +12,7 @@ namespace Guard.WPF.Core.Security
         private static DateTime? lostFocusTime;
         private static System.Timers.Timer? timer;
         private static MainWindow? mainWindow;
+        private static LockTimeSetting? forcedLockTime;
 
         public static void OnFocusLost()
         {
@@ -30,6 +31,7 @@ namespace Guard.WPF.Core.Security
                 return;
             }
             mainWindow ??= (MainWindow)Application.Current.MainWindow;
+            forcedLockTime = RegistrySettings.GetForcedLockTime();
             timer = new System.Timers.Timer(3000);
             timer.Elapsed += TimerTick;
             timer.AutoReset = true;
@@ -97,7 +99,7 @@ namespace Guard.WPF.Core.Security
         private static TimeSpan? GetTimeUntilLock()
         {
             LockTimeSetting activeLockTimeSetting =
-                RegistrySettings.GetForcedLockTime() ?? SettingsManager.Settings.LockTime;
+                forcedLockTime ?? SettingsManager.Settings.LockTime;
             return activeLockTimeSetting switch
             {
                 LockTimeSetting.Never => null,
