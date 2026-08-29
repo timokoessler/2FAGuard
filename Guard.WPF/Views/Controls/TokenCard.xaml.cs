@@ -236,21 +236,34 @@ namespace Guard.WPF.Views.UIComponents
                         }
                         else
                         {
-                            ImageIconView.Visibility = Visibility.Visible;
-                            SvgIconView.Visibility = Visibility.Collapsed;
+                            try
+                            {
+                                var bitmap = new BitmapImage();
+                                bitmap.BeginInit();
+                                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                                using var stream = new FileStream(
+                                    icon.Path,
+                                    FileMode.Open,
+                                    FileAccess.Read
+                                );
+                                bitmap.StreamSource = stream;
+                                bitmap.EndInit();
+                                bitmap.Freeze();
 
-                            var bitmap = new BitmapImage();
-                            bitmap.BeginInit();
-                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                            using var stream = new FileStream(
-                                icon.Path,
-                                FileMode.Open,
-                                FileAccess.Read
-                            );
-                            bitmap.StreamSource = stream;
-                            bitmap.EndInit();
-                            bitmap.Freeze();
-                            ImageIconView.Source = bitmap;
+                                ImageIconView.Visibility = Visibility.Visible;
+                                SvgIconView.Visibility = Visibility.Collapsed;
+                                ImageIconView.Source = bitmap;
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Logger.Warning(
+                                    ex,
+                                    "Failed to decode custom icon: {Path}",
+                                    icon.Path
+                                );
+                                icon = IconManager.GetIcon("default", IconType.Default);
+                                SvgIconView.SvgSource = icon.Svg;
+                            }
                         }
                     }
                     else
