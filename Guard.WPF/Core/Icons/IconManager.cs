@@ -11,6 +11,14 @@ namespace Guard.WPF.Core.Icons
             "icons"
         );
 
+        private static readonly string[] allowedCustomIconExtensions =
+        [
+            ".svg",
+            ".png",
+            ".jpg",
+            ".jpeg",
+        ];
+
         public static string[] GetIconNames()
         {
             return SimpleIconsManager.GetIconNames();
@@ -83,8 +91,7 @@ namespace Guard.WPF.Core.Icons
             string ext =
                 Path.GetExtension(path)
                 ?? throw new Exception("The file extension could not be determined.");
-            string[] allowedExtensions = [".svg", ".png", ".jpg", ".jpeg"];
-            if (!allowedExtensions.Contains(ext))
+            if (!allowedCustomIconExtensions.Contains(ext, StringComparer.OrdinalIgnoreCase))
             {
                 throw new Exception("The file extension is not allowed.");
             }
@@ -119,12 +126,31 @@ namespace Guard.WPF.Core.Icons
 
         public static void ImportCustomIcon(string base64, string name)
         {
+            if (string.IsNullOrEmpty(name) || Path.GetFileName(name) != name)
+            {
+                throw new Exception("Invalid custom icon file name.");
+            }
+
+            string ext = Path.GetExtension(name);
+            if (!allowedCustomIconExtensions.Contains(ext, StringComparer.OrdinalIgnoreCase))
+            {
+                throw new Exception("The file extension is not allowed.");
+            }
+
             if (!Directory.Exists(customIconsPath))
             {
                 Directory.CreateDirectory(customIconsPath);
             }
 
-            string path = Path.Combine(customIconsPath, name);
+            string path = Path.GetFullPath(Path.Combine(customIconsPath, name));
+            string normalizedIconsPath = Path.GetFullPath(
+                customIconsPath + Path.DirectorySeparatorChar
+            );
+            if (!path.StartsWith(normalizedIconsPath, StringComparison.Ordinal))
+            {
+                throw new Exception("Invalid custom icon file name.");
+            }
+
             if (File.Exists(path))
             {
                 return;
