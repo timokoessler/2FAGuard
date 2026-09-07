@@ -14,16 +14,47 @@ namespace Guard.Core.Storage
 
         public static void Init()
         {
-            if (File.Exists(settingsFilePath))
+            string backupFilePath = $"{settingsFilePath}.bak";
+            if (!File.Exists(settingsFilePath))
             {
-                byte[] fileData = File.ReadAllBytes(settingsFilePath);
-                string fileContent = System.Text.Encoding.UTF8.GetString(fileData);
-                AppSettings? appSettings = JsonSerializer.Deserialize<AppSettings>(fileContent);
-                if (appSettings != null)
+                Settings = File.Exists(backupFilePath)
+                    ? RestoreBackup(settingsFilePath, backupFilePath)
+                    : new();
+                return;
+            }
+
+            try
+            {
+                Settings = ReadSettings(settingsFilePath);
+            }
+            catch (JsonException primaryException) when (File.Exists(backupFilePath))
+            {
+                try
                 {
-                    Settings = appSettings;
+                    Settings = RestoreBackup(settingsFilePath, backupFilePath);
+                }
+                catch (JsonException backupException)
+                {
+                    throw new JsonException(
+                        "Both the primary settings file and its backup are invalid.",
+                        new AggregateException(primaryException, backupException)
+                    );
                 }
             }
+        }
+
+        private static AppSettings ReadSettings(string filePath)
+        {
+            byte[] fileData = File.ReadAllBytes(filePath);
+            AppSettings? appSettings = JsonSerializer.Deserialize<AppSettings>(fileData);
+            return appSettings ?? throw new JsonException("The settings file contains null.");
+        }
+
+        private static AppSettings RestoreBackup(string filePath, string backupFilePath)
+        {
+            AppSettings appSettings = ReadSettings(backupFilePath);
+            SafeFileWriter.RestoreFile(filePath, File.ReadAllBytes(backupFilePath));
+            return appSettings;
         }
 
         public static async Task Save()
