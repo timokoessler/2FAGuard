@@ -49,11 +49,16 @@ namespace Guard.WPF.Core.Icons
 
             if (type == IconType.Custom)
             {
+                string? customPath = TryResolveCustomIconPath(name);
+                if (customPath == null)
+                {
+                    return defaultIcon;
+                }
                 return new TotpIcon
                 {
                     Type = IconType.Custom,
                     Name = name,
-                    Path = Path.Combine(customIconsPath, name),
+                    Path = customPath,
                 };
             }
 
@@ -103,10 +108,43 @@ namespace Guard.WPF.Core.Icons
             return $"{id}{ext}";
         }
 
+        /// <summary>
+        /// Returns the full path of a custom icon, or null if the name is not a plain file name
+        /// with an allowed extension located directly inside the custom icons directory.
+        /// </summary>
+        private static string? TryResolveCustomIconPath(string? name)
+        {
+            if (
+                string.IsNullOrEmpty(name)
+                || name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0
+                || !allowedCustomIconExtensions.Contains(
+                    Path.GetExtension(name),
+                    StringComparer.OrdinalIgnoreCase
+                )
+            )
+            {
+                return null;
+            }
+
+            // The name contains no separators, so the path must stay directly in the icons directory
+            string iconsDirectory = Path.GetFullPath(customIconsPath + Path.DirectorySeparatorChar);
+            string path = Path.GetFullPath(Path.Combine(iconsDirectory, name));
+            if (!path.StartsWith(iconsDirectory, StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+            return path;
+        }
+
+        public static bool IsValidCustomIconName(string? name)
+        {
+            return TryResolveCustomIconPath(name) != null;
+        }
+
         public static void RemoveCustomIcon(string name)
         {
-            string path = Path.Combine(customIconsPath, name);
-            if (File.Exists(path))
+            string? path = TryResolveCustomIconPath(name);
+            if (path != null && File.Exists(path))
             {
                 File.Delete(path);
             }
@@ -114,8 +152,8 @@ namespace Guard.WPF.Core.Icons
 
         public static async Task<string?> GetCustomIconAsBase64(string name)
         {
-            string path = Path.Combine(customIconsPath, name);
-            if (!File.Exists(path))
+            string? path = TryResolveCustomIconPath(name);
+            if (path == null || !File.Exists(path))
             {
                 return null;
             }
@@ -126,29 +164,13 @@ namespace Guard.WPF.Core.Icons
 
         public static void ImportCustomIcon(string base64, string name)
         {
-            if (string.IsNullOrEmpty(name) || Path.GetFileName(name) != name)
-            {
-                throw new Exception("Invalid custom icon file name.");
-            }
-
-            string ext = Path.GetExtension(name);
-            if (!allowedCustomIconExtensions.Contains(ext, StringComparer.OrdinalIgnoreCase))
-            {
-                throw new Exception("The file extension is not allowed.");
-            }
+            string path =
+                TryResolveCustomIconPath(name)
+                ?? throw new Exception("Invalid custom icon file name.");
 
             if (!Directory.Exists(customIconsPath))
             {
                 Directory.CreateDirectory(customIconsPath);
-            }
-
-            string path = Path.GetFullPath(Path.Combine(customIconsPath, name));
-            string normalizedIconsPath = Path.GetFullPath(
-                customIconsPath + Path.DirectorySeparatorChar
-            );
-            if (!path.StartsWith(normalizedIconsPath, StringComparison.Ordinal))
-            {
-                throw new Exception("Invalid custom icon file name.");
             }
 
             if (File.Exists(path))

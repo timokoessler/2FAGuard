@@ -8,18 +8,23 @@ namespace Guard.Core.Storage
 
         /// <summary>
         /// Saves the byte array content to the target file atomically using File.Replace asynchronously.
-        /// Uses a temp file named {originalFileName}.{random}.tmp and backup with .bak extension.
+        /// Uses a temp file named {originalFileName}.{random}.tmp and optionally a backup with .bak extension.
         /// </summary>
         /// <param name="targetFilePath">The path of the file to save.</param>
         /// <param name="content">The byte array content to write.</param>
-        public static async Task SaveFileAsync(string targetFilePath, byte[] content)
+        /// <param name="createBackup">If false, no backup is kept and a stale .bak is deleted.</param>
+        public static async Task SaveFileAsync(
+            string targetFilePath,
+            byte[] content,
+            bool createBackup = true
+        )
         {
             var fileLock = _fileLocks.GetOrAdd(targetFilePath, _ => new SemaphoreSlim(1, 1));
 
             await fileLock.WaitAsync();
             try
             {
-                await SaveFileAsyncInternal(targetFilePath, content);
+                await SaveFileAsyncInternal(targetFilePath, content, createBackup);
             }
             finally
             {
@@ -27,7 +32,11 @@ namespace Guard.Core.Storage
             }
         }
 
-        private static async Task SaveFileAsyncInternal(string targetFilePath, byte[] content)
+        private static async Task SaveFileAsyncInternal(
+            string targetFilePath,
+            byte[] content,
+            bool createBackup
+        )
         {
             string directory =
                 Path.GetDirectoryName(targetFilePath)
@@ -47,13 +56,26 @@ namespace Guard.Core.Storage
 
                 if (File.Exists(targetFilePath))
                 {
-                    // Replace original file atomically and create backup with .bak extension
-                    File.Replace(tempFilePath, targetFilePath, backupFilePath);
+                    // Replace original file atomically, optionally keeping a .bak backup
+                    File.Replace(
+                        tempFilePath,
+                        targetFilePath,
+                        createBackup ? backupFilePath : null
+                    );
                 }
                 else
                 {
                     // No original file, just move temp to target
                     File.Move(tempFilePath, targetFilePath);
+                }
+
+                if (!createBackup && File.Exists(backupFilePath))
+                {
+                    try
+                    {
+                        File.Delete(backupFilePath);
+                    }
+                    catch { }
                 }
             }
             catch

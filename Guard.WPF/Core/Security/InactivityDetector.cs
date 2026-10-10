@@ -26,12 +26,12 @@ namespace Guard.WPF.Core.Security
 
         public static void Start()
         {
-            if (SettingsManager.Settings.LockTime == LockTimeSetting.Never)
+            forcedLockTime = RegistrySettings.GetForcedLockTime();
+            if (GetTimeUntilLock() == null)
             {
                 return;
             }
             mainWindow ??= (MainWindow)Application.Current.MainWindow;
-            forcedLockTime = RegistrySettings.GetForcedLockTime();
             timer = new System.Timers.Timer(3000);
             timer.Elapsed += TimerTick;
             timer.AutoReset = true;

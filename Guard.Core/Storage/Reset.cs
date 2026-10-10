@@ -15,7 +15,15 @@ namespace Guard.Core.Storage
                 Auth.DeleteWindowsHelloProtectedKey();
             }
 
-            string[] files = ["auth-keys", "settings", "TokenDatabase.db", "TokenDatabase-log.db"];
+            string[] files =
+            [
+                "auth-keys",
+                "auth-keys.bak",
+                "settings",
+                "settings.bak",
+                "TokenDatabase.db",
+                "TokenDatabase-log.db",
+            ];
             string[] dirs = ["icons"];
 
             foreach (string file in files)

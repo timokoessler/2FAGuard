@@ -36,6 +36,7 @@ namespace Guard.Core.Security
             {
                 registrationFinished = true;
                 await LoadFile();
+                DeleteStaleBackup();
             }
             else
             {
@@ -50,6 +51,19 @@ namespace Guard.Core.Security
                 };
             }
             passwordVault = new();
+        }
+
+        private static void DeleteStaleBackup()
+        {
+            try
+            {
+                string backupPath = authFilePath + ".bak";
+                if (File.Exists(backupPath))
+                {
+                    File.Delete(backupPath);
+                }
+            }
+            catch { }
         }
 
         public static bool FileExists()
@@ -67,7 +81,7 @@ namespace Guard.Core.Security
         public static async Task SaveFile()
         {
             byte[] fileData = JsonSerializer.SerializeToUtf8Bytes(authData);
-            await SafeFileWriter.SaveFileAsync(authFilePath, fileData);
+            await SafeFileWriter.SaveFileAsync(authFilePath, fileData, createBackup: false);
         }
 
         /// <summary>

@@ -55,6 +55,17 @@ namespace Guard.WPF.Core.Import.Importer
 
             EncryptionHelper internalEncryption = Auth.GetMainEncryptionHelper();
 
+            foreach (var token in backup.Tokens)
+            {
+                if (
+                    token.IconType == IconType.Custom
+                    && !IconManager.IsValidCustomIconName(token.Icon)
+                )
+                {
+                    throw new Exception("The backup contains an invalid custom icon file name.");
+                }
+            }
+
             int duplicate = 0,
                 tokenID = 0;
 

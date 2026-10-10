@@ -139,8 +139,16 @@ namespace Guard.CLI.Commands
                     {
                         DataPackage package = new DataPackage();
                         package.SetText(code);
-                        Clipboard.SetContent(package);
-                        Thread.Sleep(60); // Not working without this :(
+                        Clipboard.SetContentWithOptions(
+                            package,
+                            new ClipboardContentOptions
+                            {
+                                IsAllowedInHistory = false,
+                                IsRoamable = false,
+                            }
+                        );
+                        Clipboard.Flush();
+                        Thread.Sleep(120); // Not working without this :(
                     });
                     thread.SetApartmentState(ApartmentState.STA); //Set the thread to STA
                     thread.Start();

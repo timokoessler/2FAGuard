@@ -17,12 +17,6 @@
           "Konscious.Security.Cryptography.Blake2": "1.1.1"
         }
       },
-      "Microsoft.NET.ILLink.Tasks": {
-        "type": "Direct",
-        "requested": "[10.0.11, )",
-        "resolved": "10.0.11",
-        "contentHash": "IBf7lbovvjGWVWXZX5cJ/cO0WXbId0Zq4BuSeT94mGZuOAP66oMeH9PTBZ9Jpp3Jb6jtK0qm/NyUbPRo1gC/wQ=="
-      },
       "NSec.Cryptography": {
         "type": "Direct",
         "requested": "[26.4.0, )",

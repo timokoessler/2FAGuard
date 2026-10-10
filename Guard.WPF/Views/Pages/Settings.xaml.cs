@@ -317,20 +317,9 @@ namespace Guard.WPF.Views.Pages
                 {
                     SettingsManager.Settings.LockTime = result;
                     _ = SettingsManager.Save();
-                    if (result == LockTimeSetting.Never)
-                    {
-                        if (InactivityDetector.IsRunning())
-                        {
-                            InactivityDetector.Stop();
-                        }
-                    }
-                    else
-                    {
-                        if (!InactivityDetector.IsRunning())
-                        {
-                            InactivityDetector.Start();
-                        }
-                    }
+                    // Start only runs the detector if the effective lock time is not "never"
+                    InactivityDetector.Stop();
+                    InactivityDetector.Start();
                 }
             }
         }
