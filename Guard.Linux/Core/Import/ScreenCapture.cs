@@ -36,6 +36,7 @@ namespace Guard.Linux.Core.Import
 
         private static async Task<byte[]> ReadAndDelete(string path)
         {
+            ValidateScreenshotPath(path);
             byte[] data = await File.ReadAllBytesAsync(path);
             try
             {
@@ -46,6 +47,25 @@ namespace Guard.Linux.Core.Import
                 Log.Logger.Warning("Could not delete screenshot file: {0}", ex.Message);
             }
             return data;
+        }
+
+        /// <summary>
+        /// The file is deleted after reading, so only plain PNG files are accepted.
+        /// </summary>
+        private static void ValidateScreenshotPath(string path)
+        {
+            if (
+                !Path.IsPathFullyQualified(path)
+                || !string.Equals(Path.GetFullPath(path), path, StringComparison.Ordinal)
+                || !string.Equals(Path.GetExtension(path), ".png", StringComparison.OrdinalIgnoreCase)
+            )
+            {
+                throw new IOException($"Unexpected screenshot path: {path}");
+            }
+            if (new FileInfo(path).LinkTarget != null)
+            {
+                throw new IOException($"Screenshot path is a symbolic link: {path}");
+            }
         }
 
         private static async Task<string?> CaptureWithPortal()
@@ -63,6 +83,7 @@ namespace Guard.Linux.Core.Import
                 new MatchRule
                 {
                     Type = MessageType.Signal,
+                    Sender = "org.freedesktop.portal.Desktop",
                     Interface = "org.freedesktop.portal.Request",
                     Member = "Response",
                     Path = requestPath,
@@ -126,11 +147,11 @@ namespace Guard.Linux.Core.Import
             {
                 throw new ScreenshotDeniedException("Screenshot was canceled or denied");
             }
-            if (uri == null)
+            if (uri == null || !Uri.TryCreate(uri, UriKind.Absolute, out Uri? fileUri) || !fileUri.IsFile)
             {
                 return null;
             }
-            return new Uri(uri).LocalPath;
+            return fileUri.LocalPath;
         }
 
         private static async Task<byte[]> CaptureWithTools()
