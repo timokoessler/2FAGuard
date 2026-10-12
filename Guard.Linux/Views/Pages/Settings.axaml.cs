@@ -35,6 +35,27 @@ namespace Guard.Linux.Views.Pages
             AppVersionText.Text =
                 $"Version {InstallationContext.GetVersionString()} ({InstallationContext.GetInstallationTypeString()})";
 
+            InitAppearanceSettings();
+            InitWindowSettings();
+            InitSecuritySettings();
+            InitTokenSettings();
+            ApplyRegistrySettings();
+
+            Loaded += (_, _) =>
+            {
+                WPF.Core.EventManager.AppThemeChanged += OnAppThemeChanged;
+                WPF.Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
+                OnWindowSizeChanged(this, (mainWindow.Bounds.Width, mainWindow.Bounds.Height));
+            };
+            Unloaded += (_, _) =>
+            {
+                WPF.Core.EventManager.AppThemeChanged -= OnAppThemeChanged;
+                WPF.Core.EventManager.WindowSizeChanged -= OnWindowSizeChanged;
+            };
+        }
+
+        private void InitAppearanceSettings()
+        {
             SelectByTag(ThemeComboBox, SettingsManager.Settings.Theme.ToString());
             ThemeComboBox.SelectionChanged += OnThemeSelectionChanged;
 
@@ -50,7 +71,10 @@ namespace Guard.Linux.Views.Pages
             }
             SelectByTag(LanguagesComboBox, SettingsManager.Settings.Language.ToString());
             LanguagesComboBox.SelectionChanged += OnLanguageSelectionChanged;
+        }
 
+        private void InitWindowSettings()
+        {
             if (InstallationContext.IsPortable())
             {
                 AutoStartSwitch.IsEnabled = false;
@@ -60,23 +84,6 @@ namespace Guard.Linux.Views.Pages
                 SetAutostartStatus();
                 AutoStartSwitch.IsCheckedChanged += OnAutoStartSwitchChanged;
             }
-
-            ignoreKeyringSwitchEvents = true;
-            KeyringSwitch.IsChecked = Auth.IsKeyringUnlockRegistered();
-            KeyringSwitch.IsEnabled = false;
-            ignoreKeyringSwitchEvents = false;
-            KeyringSwitch.IsCheckedChanged += OnKeyringSwitchChanged;
-            CheckKeyringAvailability();
-
-            bool forceLockOnScreenLock = RegistrySettings.ForceLockOnScreenLock();
-            ScreenLockSwitch.IsEnabled = !forceLockOnScreenLock;
-            ScreenLockSwitch.IsChecked =
-                SettingsManager.Settings.LockOnScreenLock || forceLockOnScreenLock;
-            ScreenLockSwitch.IsCheckedChanged += (_, _) =>
-            {
-                SettingsManager.Settings.LockOnScreenLock = ScreenLockSwitch.IsChecked == true;
-                _ = SettingsManager.Save();
-            };
 
             TraySwitch.IsChecked = SettingsManager.Settings.MinimizeToTray;
             TraySwitch.IsCheckedChanged += (_, _) =>
@@ -101,79 +108,86 @@ namespace Guard.Linux.Views.Pages
                     RestoreWindowPlacementSwitch.IsChecked == true;
                 _ = SettingsManager.Save();
             };
+        }
 
-            foreach (string time in Enum.GetNames<LockTimeSetting>())
+        private void InitSecuritySettings()
+        {
+            ignoreKeyringSwitchEvents = true;
+            KeyringSwitch.IsChecked = Auth.IsKeyringUnlockRegistered();
+            KeyringSwitch.IsEnabled = false;
+            ignoreKeyringSwitchEvents = false;
+            KeyringSwitch.IsCheckedChanged += OnKeyringSwitchChanged;
+            CheckKeyringAvailability();
+
+            bool forceLockOnScreenLock = RegistrySettings.ForceLockOnScreenLock();
+            ScreenLockSwitch.IsEnabled = !forceLockOnScreenLock;
+            ScreenLockSwitch.IsChecked =
+                SettingsManager.Settings.LockOnScreenLock || forceLockOnScreenLock;
+            ScreenLockSwitch.IsCheckedChanged += (_, _) =>
             {
-                LockTimeComboBox.Items.Add(
-                    new ComboBoxItem
-                    {
-                        Content = I18n.GetString($"i.settings.locktime.{time}"),
-                        Tag = time.ToLowerInvariant(),
-                    }
-                );
-            }
+                SettingsManager.Settings.LockOnScreenLock = ScreenLockSwitch.IsChecked == true;
+                _ = SettingsManager.Save();
+            };
+
+            AddEnumItems<LockTimeSetting>(LockTimeComboBox, "i.settings.locktime.");
             LockTimeSetting? forcedLockTime = RegistrySettings.GetForcedLockTime();
             SelectByTag(LockTimeComboBox, (forcedLockTime ?? SettingsManager.Settings.LockTime).ToString());
             LockTimeComboBox.IsEnabled = forcedLockTime == null;
             LockTimeComboBox.SelectionChanged += OnLockTimeSelectionChanged;
 
             WebAuthnBtn.IsEnabled = Auth.IsLoginEnabled();
+        }
 
+        private void InitTokenSettings()
+        {
             SelectByTag(HideTokenComboBox, SettingsManager.Settings.HideToken.ToString());
-            HideTokenComboBox.SelectionChanged += (_, _) =>
-            {
-                if (
-                    !ignoreSelectionEvents
-                    && GetSelectedTag(HideTokenComboBox) is string tag
-                    && Enum.TryParse(tag, true, out HideTokenSetting result)
-                )
-                {
-                    SettingsManager.Settings.HideToken = result;
-                    _ = SettingsManager.Save();
-                }
-            };
+            OnEnumSelectionChanged<HideTokenSetting>(
+                HideTokenComboBox,
+                value => SettingsManager.Settings.HideToken = value
+            );
 
-            foreach (string setting in Enum.GetNames<ClearClipboardSetting>())
-            {
-                ClearClipboardComboBox.Items.Add(
-                    new ComboBoxItem
-                    {
-                        Content = I18n.GetString($"i.settings.clearclipboard.{setting}"),
-                        Tag = setting.ToLowerInvariant(),
-                    }
-                );
-            }
+            AddEnumItems<ClearClipboardSetting>(ClearClipboardComboBox, "i.settings.clearclipboard.");
             ClearClipboardSetting? forcedClearClipboard = RegistrySettings.GetForcedClearClipboard();
             SelectByTag(
                 ClearClipboardComboBox,
                 (forcedClearClipboard ?? SettingsManager.Settings.ClearClipboard).ToString()
             );
             ClearClipboardComboBox.IsEnabled = forcedClearClipboard == null;
-            ClearClipboardComboBox.SelectionChanged += (_, _) =>
+            OnEnumSelectionChanged<ClearClipboardSetting>(
+                ClearClipboardComboBox,
+                value => SettingsManager.Settings.ClearClipboard = value
+            );
+        }
+
+        private static void AddEnumItems<T>(ComboBox comboBox, string keyPrefix)
+            where T : struct, Enum
+        {
+            foreach (string name in Enum.GetNames<T>())
+            {
+                comboBox.Items.Add(
+                    new ComboBoxItem
+                    {
+                        Content = I18n.GetString(keyPrefix + name),
+                        Tag = name.ToLowerInvariant(),
+                    }
+                );
+            }
+        }
+
+        private void OnEnumSelectionChanged<T>(ComboBox comboBox, Action<T> apply)
+            where T : struct, Enum
+        {
+            comboBox.SelectionChanged += (_, _) =>
             {
                 if (
                     !ignoreSelectionEvents
-                    && GetSelectedTag(ClearClipboardComboBox) is string tag
-                    && Enum.TryParse(tag, true, out ClearClipboardSetting result)
+                    && GetSelectedTag(comboBox) is string tag
+                    && Enum.TryParse(tag, true, out T result)
                 )
                 {
-                    SettingsManager.Settings.ClearClipboard = result;
+                    apply(result);
                     _ = SettingsManager.Save();
                 }
-            };
-
-            ApplyRegistrySettings();
-
-            Loaded += (_, _) =>
-            {
-                WPF.Core.EventManager.AppThemeChanged += OnAppThemeChanged;
-                WPF.Core.EventManager.WindowSizeChanged += OnWindowSizeChanged;
-                OnWindowSizeChanged(this, (mainWindow.Bounds.Width, mainWindow.Bounds.Height));
-            };
-            Unloaded += (_, _) =>
-            {
-                WPF.Core.EventManager.AppThemeChanged -= OnAppThemeChanged;
-                WPF.Core.EventManager.WindowSizeChanged -= OnWindowSizeChanged;
             };
         }
 

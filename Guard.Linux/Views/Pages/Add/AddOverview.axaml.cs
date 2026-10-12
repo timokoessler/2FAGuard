@@ -67,80 +67,11 @@ namespace Guard.Linux.Views.Pages.Add
             importRunning = true;
             try
             {
-                int total;
-                int duplicate;
-                int tokenID;
-                if (importer.Type == IImporter.ImportType.File)
+                var result = await RunImporter(importer);
+                if (result is (int total, int duplicate, int tokenID))
                 {
-                    string? path = await FileDialogs.OpenFile(importer.SupportedFileExtensions);
-                    if (path == null)
-                    {
-                        return;
-                    }
-                    byte[]? password = null;
-                    if (importer.RequiresPassword(path))
-                    {
-                        password = await Dialogs.PasswordDialog(I18n.GetString("import.password"));
-                        if (password == null)
-                        {
-                            return;
-                        }
-                        if (password.Length == 0)
-                        {
-                            throw new Exception(I18n.GetString("import.password.invalid"));
-                        }
-                    }
-                    (total, duplicate, tokenID) = importer.Parse(path, password);
+                    ShowImportResult(total, duplicate, tokenID);
                 }
-                else if (importer is ClipboardImporter clipboardImporter)
-                {
-                    await clipboardImporter.LoadClipboard();
-                    (total, duplicate, tokenID) = importer.Parse(null, null);
-                }
-                else if (importer is QRScreenCaptureImporter screenImporter)
-                {
-                    try
-                    {
-                        await screenImporter.Capture();
-                    }
-                    catch (ScreenCapture.ScreenshotDeniedException)
-                    {
-                        await Dialogs.MessageBox(
-                            I18n.GetString("import.failed.title"),
-                            I18n.GetString("linux.screenshot.denied")
-                        );
-                        return;
-                    }
-                    (total, duplicate, tokenID) = importer.Parse(null, null);
-                }
-                else
-                {
-                    throw new Exception("Invalid Importer Type");
-                }
-
-                if (total == 0)
-                {
-                    throw new Exception(I18n.GetString("import.notokens"));
-                }
-
-                if (total == 1)
-                {
-                    if (duplicate == 1)
-                    {
-                        throw new Exception(I18n.GetString("import.duplicate"));
-                    }
-                    NavigationContextManager.CurrentContext["type"] = "added";
-                    NavigationContextManager.CurrentContext["tokenID"] = tokenID;
-                }
-                else
-                {
-                    NavigationContextManager.CurrentContext["type"] = "added-multiple";
-                    NavigationContextManager.CurrentContext["tokenID"] = 0;
-                    NavigationContextManager.CurrentContext["count"] = total;
-                    NavigationContextManager.CurrentContext["duplicateCount"] = duplicate;
-                }
-
-                mainWindow.Navigate(typeof(TokenSuccessPage));
             }
             catch (Exception ex)
             {
@@ -160,6 +91,89 @@ namespace Guard.Linux.Views.Pages.Add
             {
                 importRunning = false;
             }
+        }
+
+        /// <summary>
+        /// Returns null if the user canceled the import.
+        /// </summary>
+        private static async Task<(int total, int duplicate, int tokenID)?> RunImporter(IImporter importer)
+        {
+            if (importer.Type == IImporter.ImportType.File)
+            {
+                return await RunFileImporter(importer);
+            }
+            if (importer is ClipboardImporter clipboardImporter)
+            {
+                await clipboardImporter.LoadClipboard();
+                return importer.Parse(null, null);
+            }
+            if (importer is QRScreenCaptureImporter screenImporter)
+            {
+                try
+                {
+                    await screenImporter.Capture();
+                }
+                catch (ScreenCapture.ScreenshotDeniedException)
+                {
+                    await Dialogs.MessageBox(
+                        I18n.GetString("import.failed.title"),
+                        I18n.GetString("linux.screenshot.denied")
+                    );
+                    return null;
+                }
+                return importer.Parse(null, null);
+            }
+            throw new Exception("Invalid Importer Type");
+        }
+
+        private static async Task<(int total, int duplicate, int tokenID)?> RunFileImporter(IImporter importer)
+        {
+            string? path = await FileDialogs.OpenFile(importer.SupportedFileExtensions);
+            if (path == null)
+            {
+                return null;
+            }
+            byte[]? password = null;
+            if (importer.RequiresPassword(path))
+            {
+                password = await Dialogs.PasswordDialog(I18n.GetString("import.password"));
+                if (password == null)
+                {
+                    return null;
+                }
+                if (password.Length == 0)
+                {
+                    throw new Exception(I18n.GetString("import.password.invalid"));
+                }
+            }
+            return importer.Parse(path, password);
+        }
+
+        private void ShowImportResult(int total, int duplicate, int tokenID)
+        {
+            if (total == 0)
+            {
+                throw new Exception(I18n.GetString("import.notokens"));
+            }
+
+            if (total == 1)
+            {
+                if (duplicate == 1)
+                {
+                    throw new Exception(I18n.GetString("import.duplicate"));
+                }
+                NavigationContextManager.CurrentContext["type"] = "added";
+                NavigationContextManager.CurrentContext["tokenID"] = tokenID;
+            }
+            else
+            {
+                NavigationContextManager.CurrentContext["type"] = "added-multiple";
+                NavigationContextManager.CurrentContext["tokenID"] = 0;
+                NavigationContextManager.CurrentContext["count"] = total;
+                NavigationContextManager.CurrentContext["duplicateCount"] = duplicate;
+            }
+
+            mainWindow.Navigate(typeof(TokenSuccessPage));
         }
     }
 }

@@ -53,10 +53,13 @@ namespace Guard.WPF.Core.Icons
         // https://www.w3.org/TR/WCAG20/#relativeluminancedef
         private static double CalculateLuminance(int r, int g, int b)
         {
-            static double Channel(int c) =>
-                (c / 255.0 <= 0.03928) ? c / 255.0 / 12.92 : Math.Pow((c / 255.0 + 0.055) / 1.055, 2.4);
+            static double Channel(int c)
+            {
+                double value = c / 255.0;
+                return (value <= 0.03928) ? (value / 12.92) : Math.Pow((value + 0.055) / 1.055, 2.4);
+            }
 
-            return 0.2126 * Channel(r) + 0.7152 * Channel(g) + 0.0722 * Channel(b);
+            return (0.2126 * Channel(r)) + (0.7152 * Channel(g)) + (0.0722 * Channel(b));
         }
     }
 }

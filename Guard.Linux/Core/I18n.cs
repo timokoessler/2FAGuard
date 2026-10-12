@@ -259,8 +259,9 @@ namespace Guard.WPF.Core
                 return result;
             }
 
-            XmlDocument doc = new();
-            doc.Load(stream);
+            XmlDocument doc = new() { XmlResolver = null };
+            using XmlReader reader = XmlReader.Create(stream, Guard.Linux.Core.NotesFormat.SafeReaderSettings);
+            doc.Load(reader);
             const string xamlNs = "http://schemas.microsoft.com/winfx/2006/xaml";
             foreach (XmlNode node in doc.DocumentElement!.ChildNodes)
             {

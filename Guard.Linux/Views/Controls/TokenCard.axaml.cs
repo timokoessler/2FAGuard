@@ -118,7 +118,7 @@ namespace Guard.Linux.Views.Controls
         {
             long periodMs = (token.dBToken.Period ?? 30) * 1000L;
             long nowMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            long remainingMs = periodMs - nowMs % periodMs;
+            long remainingMs = periodMs - (nowMs % periodMs);
             long counter = nowMs / periodMs;
 
             if (counter != lastCounter)

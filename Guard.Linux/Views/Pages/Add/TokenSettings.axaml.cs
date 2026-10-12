@@ -171,121 +171,157 @@ namespace Guard.Linux.Views.Pages.Add
         {
             InfoBar.IsOpen = false;
 
-            string issuer = Issuer.Text?.Trim() ?? "";
-            string secret = Secret.Text ?? "";
-
-            if (string.IsNullOrWhiteSpace(issuer))
+            string? error = ValidateInput(
+                out string issuer,
+                out string normalizedSecret,
+                out int digits,
+                out int period
+            );
+            if (error != null)
             {
-                ShowError(I18n.GetString("td.noissuer"));
+                ShowError(I18n.GetString(error));
                 return;
             }
-            if (string.IsNullOrWhiteSpace(secret) || secret.Length < 2)
-            {
-                ShowError(I18n.GetString("td.nosecret"));
-                return;
-            }
-
-            string normalizedSecret = OTPUriParser.NormalizeSecret(secret);
-            if (!OTPUriParser.IsValidSecret(normalizedSecret))
-            {
-                ShowError(I18n.GetString("td.invalidsecret"));
-                return;
-            }
-
-            if (double.IsNaN(DigitsBox.Value) || DigitsBox.Value < 4 || DigitsBox.Value > 9)
-            {
-                ShowError(I18n.GetString("td.invaliddigits"));
-                return;
-            }
-            int digits = (int)DigitsBox.Value;
-
-            if (double.IsNaN(PeriodBox.Value) || PeriodBox.Value < 1 || PeriodBox.Value > 3600)
-            {
-                ShowError(I18n.GetString("td.invalidperiod"));
-                return;
-            }
-            int period = (int)PeriodBox.Value;
 
             SaveButton.IsEnabled = false;
 
             try
             {
-                EncryptionHelper encryptionHelper = Auth.GetMainEncryptionHelper();
-                DBTOTPToken dbToken = new()
-                {
-                    Id = existingToken != null ? existingToken.dBToken.Id : TokenManager.GetNextId(),
-                    Issuer = issuer,
-                    EncryptedSecret = encryptionHelper.EncryptStringToBytes(normalizedSecret),
-                    CreationTime = DateTime.Now,
-                };
-
-                if (digits != 6)
-                {
-                    dbToken.Digits = digits;
-                }
-                TOTPAlgorithm algorithm = (TOTPAlgorithm)Math.Max(0, AlgorithmComboBox.SelectedIndex);
-                if (algorithm != TOTPAlgorithm.SHA1)
-                {
-                    dbToken.Algorithm = algorithm;
-                }
-                if (period != 30)
-                {
-                    dbToken.Period = period;
-                }
-
-                if (selectedIcon != null)
-                {
-                    dbToken.Icon = selectedIcon.Name;
-                    dbToken.IconType = selectedIcon.Type;
-                }
-
-                dbToken.EncryptedUsername = !string.IsNullOrWhiteSpace(Username.Text)
-                    ? encryptionHelper.EncryptStringToBytes(Username.Text)
-                    : null;
-
-                string notesText = Notes.Text ?? "";
-                if (originalNotes != null && notesText == originalNotesText)
-                {
-                    dbToken.EncryptedNotes = encryptionHelper.EncryptBytes(originalNotes);
-                }
-                else if (!string.IsNullOrWhiteSpace(notesText))
-                {
-                    dbToken.EncryptedNotes = encryptionHelper.EncryptBytes(NotesFormat.FromPlainText(notesText));
-                }
-                else
-                {
-                    dbToken.EncryptedNotes = null;
-                }
-
-                if (existingToken != null)
-                {
-                    TokenManager.DeleteTokenById(dbToken.Id);
-                    dbToken.CreationTime = existingToken.dBToken.CreationTime;
-                    dbToken.UpdatedTime = DateTime.Now;
-                    TokenManager.AddToken(dbToken);
-
-                    NavigationContextManager.CurrentContext["tokenID"] = dbToken.Id;
-                    NavigationContextManager.CurrentContext["type"] = "edited";
-                    mainWindow.Navigate(typeof(TokenSuccessPage));
-                    return;
-                }
-
-                dbToken.UpdatedTime = DateTime.Now;
-
-                if (!TokenManager.AddToken(dbToken))
-                {
-                    throw new Exception(I18n.GetString("import.duplicate"));
-                }
-
-                NavigationContextManager.CurrentContext["tokenID"] = dbToken.Id;
-                NavigationContextManager.CurrentContext["type"] = "added";
-                mainWindow.Navigate(typeof(TokenSuccessPage));
+                DBTOTPToken dbToken = CreateDbToken(issuer, normalizedSecret, digits, period);
+                SaveToken(dbToken);
             }
             catch (Exception ex)
             {
                 ShowError(ex.Message);
                 SaveButton.IsEnabled = true;
             }
+        }
+
+        /// <summary>
+        /// Returns the translation key of the validation error or null if the input is valid.
+        /// </summary>
+        private string? ValidateInput(
+            out string issuer,
+            out string normalizedSecret,
+            out int digits,
+            out int period
+        )
+        {
+            issuer = Issuer.Text?.Trim() ?? "";
+            string secret = Secret.Text ?? "";
+            normalizedSecret = "";
+            digits = 0;
+            period = 0;
+
+            if (string.IsNullOrWhiteSpace(issuer))
+            {
+                return "td.noissuer";
+            }
+            if (string.IsNullOrWhiteSpace(secret) || secret.Length < 2)
+            {
+                return "td.nosecret";
+            }
+
+            normalizedSecret = OTPUriParser.NormalizeSecret(secret);
+            if (!OTPUriParser.IsValidSecret(normalizedSecret))
+            {
+                return "td.invalidsecret";
+            }
+
+            if (!IsInRange(DigitsBox.Value, 4, 9))
+            {
+                return "td.invaliddigits";
+            }
+            digits = (int)DigitsBox.Value;
+
+            if (!IsInRange(PeriodBox.Value, 1, 3600))
+            {
+                return "td.invalidperiod";
+            }
+            period = (int)PeriodBox.Value;
+            return null;
+        }
+
+        private static bool IsInRange(double value, int min, int max) =>
+            !double.IsNaN(value) && value >= min && value <= max;
+
+        private DBTOTPToken CreateDbToken(string issuer, string normalizedSecret, int digits, int period)
+        {
+            EncryptionHelper encryptionHelper = Auth.GetMainEncryptionHelper();
+            DBTOTPToken dbToken = new()
+            {
+                Id = existingToken != null ? existingToken.dBToken.Id : TokenManager.GetNextId(),
+                Issuer = issuer,
+                EncryptedSecret = encryptionHelper.EncryptStringToBytes(normalizedSecret),
+                CreationTime = DateTime.Now,
+            };
+
+            if (digits != 6)
+            {
+                dbToken.Digits = digits;
+            }
+            TOTPAlgorithm algorithm = (TOTPAlgorithm)Math.Max(0, AlgorithmComboBox.SelectedIndex);
+            if (algorithm != TOTPAlgorithm.SHA1)
+            {
+                dbToken.Algorithm = algorithm;
+            }
+            if (period != 30)
+            {
+                dbToken.Period = period;
+            }
+
+            if (selectedIcon != null)
+            {
+                dbToken.Icon = selectedIcon.Name;
+                dbToken.IconType = selectedIcon.Type;
+            }
+
+            dbToken.EncryptedUsername = !string.IsNullOrWhiteSpace(Username.Text)
+                ? encryptionHelper.EncryptStringToBytes(Username.Text)
+                : null;
+            dbToken.EncryptedNotes = EncryptNotes(encryptionHelper);
+            return dbToken;
+        }
+
+        private byte[]? EncryptNotes(EncryptionHelper encryptionHelper)
+        {
+            string notesText = Notes.Text ?? "";
+            if (originalNotes != null && notesText == originalNotesText)
+            {
+                return encryptionHelper.EncryptBytes(originalNotes);
+            }
+            if (!string.IsNullOrWhiteSpace(notesText))
+            {
+                return encryptionHelper.EncryptBytes(NotesFormat.FromPlainText(notesText));
+            }
+            return null;
+        }
+
+        private void SaveToken(DBTOTPToken dbToken)
+        {
+            if (existingToken != null)
+            {
+                TokenManager.DeleteTokenById(dbToken.Id);
+                dbToken.CreationTime = existingToken.dBToken.CreationTime;
+                dbToken.UpdatedTime = DateTime.Now;
+                TokenManager.AddToken(dbToken);
+
+                NavigationContextManager.CurrentContext["tokenID"] = dbToken.Id;
+                NavigationContextManager.CurrentContext["type"] = "edited";
+                mainWindow.Navigate(typeof(TokenSuccessPage));
+                return;
+            }
+
+            dbToken.UpdatedTime = DateTime.Now;
+
+            if (!TokenManager.AddToken(dbToken))
+            {
+                throw new Exception(I18n.GetString("import.duplicate"));
+            }
+
+            NavigationContextManager.CurrentContext["tokenID"] = dbToken.Id;
+            NavigationContextManager.CurrentContext["type"] = "added";
+            mainWindow.Navigate(typeof(TokenSuccessPage));
         }
 
         private void ShowError(string message)

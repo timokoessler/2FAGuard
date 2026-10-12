@@ -22,6 +22,13 @@ namespace Guard.Linux.Core
             "Table",
         ];
 
+        // Notes can come from imported files, so DTDs (entity expansion) are rejected
+        internal static readonly XmlReaderSettings SafeReaderSettings = new()
+        {
+            DtdProcessing = DtdProcessing.Prohibit,
+            XmlResolver = null,
+        };
+
         internal static (string text, bool hasFormatting) ToPlainText(byte[] data)
         {
             string content = Encoding.UTF8.GetString(data).TrimStart('\uFEFF');
@@ -30,10 +37,12 @@ namespace Guard.Linux.Core
                 return (content, false);
             }
 
-            XmlDocument doc = new() { PreserveWhitespace = true };
+            XmlDocument doc = new() { PreserveWhitespace = true, XmlResolver = null };
             try
             {
-                doc.LoadXml(content);
+                using StringReader stringReader = new(content);
+                using XmlReader reader = XmlReader.Create(stringReader, SafeReaderSettings);
+                doc.Load(reader);
             }
             catch (XmlException)
             {

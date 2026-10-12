@@ -43,9 +43,15 @@ namespace Guard.Linux.Core
         /// </summary>
         internal static Socket Listen(string path)
         {
-            if (File.Exists(path))
+            ValidateSocketPath(path);
+            FileInfo existing = new(path);
+            if (existing.Exists)
             {
-                File.Delete(path);
+                if (existing.LinkTarget != null)
+                {
+                    throw new IOException($"Refusing to replace symbolic link at {path}");
+                }
+                existing.Delete();
             }
             Socket socket = new(AddressFamily.Unix, SocketType.Stream, ProtocolType.Unspecified);
             try
@@ -59,6 +65,23 @@ namespace Guard.Linux.Core
             {
                 socket.Dispose();
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// Only sockets created by InstallationContext.GetPipeName may be replaced.
+        /// </summary>
+        private static void ValidateSocketPath(string path)
+        {
+            string fileName = Path.GetFileName(path);
+            if (
+                !Path.IsPathFullyQualified(path)
+                || !string.Equals(Path.GetFullPath(path), path, StringComparison.Ordinal)
+                || !fileName.StartsWith("2fa-guard-", StringComparison.Ordinal)
+                || !fileName.EndsWith(".sock", StringComparison.Ordinal)
+            )
+            {
+                throw new ArgumentException($"Invalid socket path: {path}", nameof(path));
             }
         }
 

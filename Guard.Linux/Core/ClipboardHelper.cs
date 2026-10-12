@@ -44,7 +44,9 @@ namespace Guard.Linux.Core
 
         internal static Task<string?> GetText()
         {
+#pragma warning disable CS0618
             return GetClipboard().GetTextAsync();
+#pragma warning restore CS0618
         }
 
         internal static Task Clear()
@@ -54,7 +56,10 @@ namespace Guard.Linux.Core
 
         internal static async Task<string[]> GetFormats()
         {
+            // The raw format names are needed for GetBytes
+#pragma warning disable CS0618
             return await GetClipboard().GetFormatsAsync();
+#pragma warning restore CS0618
         }
 
         internal static async Task<byte[]?> GetBytes(string format)

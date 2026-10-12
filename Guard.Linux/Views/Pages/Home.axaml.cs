@@ -89,9 +89,9 @@ namespace Guard.Linux.Views.Pages
                 if (!Auth.IsLoggedIn())
                 {
                     mainWindow.Logout();
-                    return;
                 }
-                throw new Exception("Failed to load tokens (tokenHelpers is null)");
+                // Otherwise the app was locked and unlocked while loading, the new page loads again
+                return;
             }
 
             if (tokenHelpers.Count == 0)
