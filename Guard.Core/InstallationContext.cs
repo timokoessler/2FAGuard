@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using Guard.Core.Security;
+using Guard.Core.Platform;
 
 namespace Guard.Core
 {
@@ -22,36 +22,8 @@ namespace Guard.Core
             InstallationContext.installationType = installationType;
             InstallationContext.version = version;
 
-            if (IsPortable())
-            {
-                appDataFolderPath = Path.Combine(
-                    AppContext.BaseDirectory
-                        ?? throw new Exception("Could not get process directory"),
-                    "2FAGuard-Data"
-                );
-            }
-            else if (installationType == InstallationType.MICROSOFT_STORE)
-            {
-                appDataFolderPath = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "2FAGuardStoreApp"
-                );
-            }
-            else
-            {
-                // Check if the app data path is set in the registry
-                string? registryAppDataPath = RegistrySettings.GetAppDataPath();
-                if (registryAppDataPath != null)
-                {
-                    appDataFolderPath = registryAppDataPath;
-                    return;
-                }
-
-                appDataFolderPath = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "2FAGuard"
-                );
-            }
+            PlatformService.Instance.IsPortable = IsPortable();
+            appDataFolderPath = PlatformService.Instance.GetAppDataPath();
         }
 
         public static string GetAppDataFolderPath()
@@ -102,11 +74,7 @@ namespace Guard.Core
 
         public static string GetOsVersionString()
         {
-            if (Environment.OSVersion.Version.Build >= 22000)
-            {
-                return $"Windows 11 {Environment.OSVersion.Version.Build}";
-            }
-            return $"Windows 10 {Environment.OSVersion.Version.Build}";
+            return PlatformService.Instance.GetOsVersionString();
         }
 
         public static string GetAppEditionString()

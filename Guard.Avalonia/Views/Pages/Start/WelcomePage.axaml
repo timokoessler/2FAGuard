@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+             x:Class="Guard.Avalonia.Views.Pages.Start.WelcomePage">
+    
+    <StackPanel Spacing="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Image Source="/Assets/logo-256.png" Width="128" Height="128" />
+        <TextBlock Text="Welcome to 2FAGuard" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" />
+        <TextBlock Text="Your offline, encrypted authenticator app" FontSize="16" HorizontalAlignment="Center" Foreground="Gray" />
+        
+        <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button Content="Create New Vault" Classes="accent" MinWidth="180" Click="OnCreateNewClick" />
+            <Button Content="Import Existing" MinWidth="180" Click="OnImportClick" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+             x:Class="Guard.Avalonia.Views.Pages.Start.ImportPage">
+    
+    <StackPanel Spacing="20" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
+        <TextBlock Text="Import Vault" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" />
+        <TextBlock Text="Select the type of vault to import" FontSize="14" HorizontalAlignment="Center" Foreground="Gray" TextWrapping="Wrap" />
+        
+        <StackPanel Spacing="12">
+            <Button Content="Aegis Export (.json)" Classes="accent" MinWidth="300" Click="OnAegisImportClick" />
+            <Button Content="Bitwarden Export (.json)" MinWidth="300" Click="OnBitwardenImportClick" />
+            <Button Content="2FAS Backup (.enc)" MinWidth="300" Click="OnTwoFASImportClick" />
+            <Button Content="Authenticator Pro Backup" MinWidth="300" Click="OnAuthenticatorProImportClick" />
+            <Button Content="Proton Authenticator Export" MinWidth="300" Click="OnProtonImportClick" />
+            <Button Content="OTP Auth URI List" MinWidth="300" Click="OnUriListImportClick" />
+            <Button Content="QR Code from Screen" MinWidth="300" Click="OnQrScreenClick" />
+        </StackPanel>
+        
+        <Button Content="Back" MinWidth="100" HorizontalAlignment="Center" Margin="0,20,0,0" Click="OnBackClick" />
+    </StackPanel>
+</UserControl>

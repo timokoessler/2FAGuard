@@ -1,9 +1,11 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Guard.Core.Models;
 using Guard.Core.Security.WebAuthn;
 using Guard.Core.Storage;
-using Windows.Security.Credentials;
+using Guard.Core.Platform;
 
 namespace Guard.Core.Security
 {
@@ -18,20 +20,18 @@ namespace Guard.Core.Security
         private static EncryptionHelper? mainEncryptionHelper;
         private static readonly int currentVersion = 1;
         private static bool registrationFinished = false;
-
-        /// <summary>
-        /// The password vault is used to store a encrypted version of the main encryption key that is decrypted by signing a payload with Windows Hello.
-        /// So if an malicious actor gets access to the Windows Credential Manager, they can not access the main encryption key.
-        /// </summary>
-        private static PasswordVault? passwordVault;
+        
+        private static ISecureStorage? _secureStorage;
 
         public static async Task Init()
         {
             if (authData != null)
             {
-                // Already initialized
                 return;
             }
+            
+            _secureStorage = PlatformService.Instance.GetSecureStorage();
+            
             if (FileExists())
             {
                 registrationFinished = true;
@@ -49,7 +49,6 @@ namespace Guard.Core.Security
                     Version = currentVersion,
                 };
             }
-            passwordVault = new();
         }
 
         public static bool FileExists()
@@ -70,13 +69,7 @@ namespace Guard.Core.Security
             await SafeFileWriter.SaveFileAsync(authFilePath, fileData);
         }
 
-        /// <summary>
-        /// Create a new encryption key and encrypt it with the password
-        /// Also generate a salt
-        /// </summary>
-        /// <param name="password">The user chosen password to encrypt the key with</param>
-        /// <param name="enableWindowsHello">If Windows Hello should be enabled</param>
-        public static async Task Register(byte[] password, bool enableWindowsHello)
+        public static async Task Register(byte[] password, bool enableBiometrics)
         {
             if (authData == null)
             {
@@ -96,72 +89,43 @@ namespace Guard.Core.Security
             );
             authData.PasswordProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
 
-            if (enableWindowsHello)
+            if (enableBiometrics)
             {
-                await RegisterWindowsHello();
+                await RegisterBiometrics();
             }
             await SaveFile();
             registrationFinished = true;
         }
 
-        public static async Task RegisterWindowsHello()
+        public static async Task RegisterBiometrics()
         {
             if (authData == null || mainEncryptionKey == null || authData.LoginSalt == null)
             {
                 throw new Exception("Auth data not initialized");
             }
-            if (IsWindowsHelloRegistered())
+            if (IsBiometricsRegistered())
             {
-                throw new Exception("Windows Hello already registered");
+                throw new Exception("Biometrics already registered");
             }
-            authData.WindowsHelloChallenge ??= EncryptionHelper.GetRandomBase64String(128);
-            var windowsHelloResult = await WindowsHello.Register();
-            if (
-                windowsHelloResult.Status
-                    != Windows.Security.Credentials.KeyCredentialStatus.Success
-                && windowsHelloResult.Status
-                    != Windows.Security.Credentials.KeyCredentialStatus.CredentialAlreadyExists
-            )
+            authData.BiometricChallenge ??= EncryptionHelper.GetRandomBase64String(128);
+            
+            var registered = await BiometricAuth.RegisterAsync();
+            if (!registered)
             {
-                throw new Exception(
-                    $"Failed to register Windows Hello: {windowsHelloResult.Status}"
-                );
+                throw new Exception("Failed to register biometrics");
             }
 
-            // If registration failed before this can happen
-            if (
-                windowsHelloResult.Status
-                == Windows.Security.Credentials.KeyCredentialStatus.CredentialAlreadyExists
-            )
+            string? signedChallenge = await BiometricAuth.GetSignedChallengeAsync();
+            if (string.IsNullOrEmpty(signedChallenge))
             {
-                await WindowsHello.Unregister();
-                windowsHelloResult = await WindowsHello.Register();
-                if (
-                    windowsHelloResult.Status
-                    != Windows.Security.Credentials.KeyCredentialStatus.Success
-                )
-                {
-                    throw new Exception(
-                        $"Failed to register Windows Hello: {windowsHelloResult.Status}"
-                    );
-                }
+                throw new Exception("Failed to register with biometrics because the signed challenge is empty");
             }
-
-            string? signedChallenge = await WindowsHello.SignChallenge(
-                windowsHelloResult.Credential,
-                authData.WindowsHelloChallenge
-            );
-            if (signedChallenge == null || signedChallenge.Length == 0)
-            {
-                throw new Exception(
-                    "Failed to register with Windows Hello because the signed challenge is empty"
-                );
-            }
-            EncryptionHelper encryptionHelper = new(
+            
+            var encryptionHelper = new EncryptionHelper(
                 Encoding.UTF8.GetBytes(signedChallenge),
                 Convert.FromBase64String(authData.LoginSalt)
             );
-            SetWindowsHelloProtectedKey(encryptionHelper.EncryptString(mainEncryptionKey));
+            SetBiometricProtectedKey(encryptionHelper.EncryptString(mainEncryptionKey));
         }
 
         public static async Task RegisterInsecure()
@@ -191,11 +155,11 @@ namespace Guard.Core.Security
             return authData?.InsecureMainKey == null;
         }
 
-        public static bool IsWindowsHelloRegistered()
+        public static bool IsBiometricsRegistered()
         {
             try
             {
-                _ = GetWindowsHelloProtectedKey();
+                _ = GetBiometricProtectedKey();
                 return true;
             }
             catch
@@ -204,55 +168,53 @@ namespace Guard.Core.Security
             }
         }
 
-        public static string GetWindowsHelloProtectedKey()
+        public static string GetBiometricProtectedKey()
         {
             ArgumentNullException.ThrowIfNull(authData);
-            ArgumentNullException.ThrowIfNull(passwordVault);
+            ArgumentNullException.ThrowIfNull(_secureStorage);
 
-            PasswordCredential cred = passwordVault.Retrieve("2FAGuard", authData.InstallationID);
-            cred.RetrievePassword();
-            return cred.Password;
+            return _secureStorage.Get("2FAGuard", authData.InstallationID) 
+                ?? throw new Exception("Biometrics not enabled");
         }
 
-        public static void SetWindowsHelloProtectedKey(string key)
+        public static void SetBiometricProtectedKey(string key)
         {
             ArgumentNullException.ThrowIfNull(authData);
-            ArgumentNullException.ThrowIfNull(passwordVault);
+            ArgumentNullException.ThrowIfNull(_secureStorage);
 
-            PasswordCredential cred = new("2FAGuard", authData.InstallationID, key);
-            passwordVault.Add(cred);
+            _secureStorage.Set("2FAGuard", authData.InstallationID, key);
         }
 
-        public static void DeleteWindowsHelloProtectedKey()
+        public static void DeleteBiometricProtectedKey()
         {
             ArgumentNullException.ThrowIfNull(authData);
-            ArgumentNullException.ThrowIfNull(passwordVault);
+            ArgumentNullException.ThrowIfNull(_secureStorage);
 
-            PasswordCredential cred = passwordVault.Retrieve("2FAGuard", authData.InstallationID);
-            passwordVault.Remove(cred);
+            _secureStorage.Delete("2FAGuard", authData.InstallationID);
         }
 
-        public static async Task LoginWithWindowsHello()
+        public static async Task LoginWithBiometrics()
         {
             if (authData == null || authData.LoginSalt == null)
             {
                 throw new Exception("Auth data not initialized");
             }
-            string windowsHelloProtectedKey =
-                GetWindowsHelloProtectedKey() ?? throw new Exception("Windows Hello not enabled");
+            string biometricProtectedKey =
+                GetBiometricProtectedKey() ?? throw new Exception("Biometrics not enabled");
 
-            string signedChallenge = await WindowsHello.GetSignedChallenge();
-            if (signedChallenge == null || signedChallenge.Length == 0)
+            string signedChallenge = await BiometricAuth.GetSignedChallengeAsync() 
+                ?? throw new Exception("Failed to login with biometrics because the signed challenge is empty");
+            
+            if (signedChallenge.Length == 0)
             {
-                throw new Exception(
-                    "Failed to login with Windows Hello because the signed challenge is empty"
-                );
+                throw new Exception("Failed to login with biometrics because the signed challenge is empty");
             }
-            EncryptionHelper encryptionHelper = new(
+            
+            var encryptionHelper = new EncryptionHelper(
                 Encoding.UTF8.GetBytes(signedChallenge),
                 Convert.FromBase64String(authData.LoginSalt)
             );
-            mainEncryptionKey = encryptionHelper.DecryptString(windowsHelloProtectedKey);
+            mainEncryptionKey = encryptionHelper.DecryptString(biometricProtectedKey);
 
             if (mainEncryptionKey == null)
             {
@@ -272,7 +234,7 @@ namespace Guard.Core.Security
             }
             try
             {
-                EncryptionHelper encryptionHelper = new(
+                var encryptionHelper = new EncryptionHelper(
                     password,
                     Convert.FromBase64String(authData.LoginSalt)
                 );
@@ -318,13 +280,13 @@ namespace Guard.Core.Security
             return mainEncryptionHelper;
         }
 
-        public static string GetWindowsHelloChallenge()
+        public static string GetBiometricChallenge()
         {
-            if (authData == null || authData.WindowsHelloChallenge == null)
+            if (authData == null || authData.BiometricChallenge == null)
             {
-                throw new Exception("Windows Hello challenge not set");
+                throw new Exception("Biometric challenge not set");
             }
-            return authData.WindowsHelloChallenge;
+            return authData.BiometricChallenge;
         }
 
         public static void Logout()
@@ -333,18 +295,18 @@ namespace Guard.Core.Security
             mainEncryptionHelper = null;
         }
 
-        public static async void UnregisterWindowsHello()
+        public static async Task UnregisterBiometrics()
         {
             if (authData == null)
             {
                 throw new Exception("Auth data not initialized");
             }
-            if (!IsWindowsHelloRegistered())
+            if (!IsBiometricsRegistered())
             {
-                throw new Exception("Windows Hello not enabled");
+                throw new Exception("Biometrics not enabled");
             }
-            DeleteWindowsHelloProtectedKey();
-            await WindowsHello.Unregister();
+            DeleteBiometricProtectedKey();
+            await BiometricAuth.UnregisterAsync();
         }
 
         public static bool CheckPassword(byte[] password)
@@ -359,7 +321,7 @@ namespace Guard.Core.Security
             }
             try
             {
-                EncryptionHelper encryptionHelper = new(
+                var encryptionHelper = new EncryptionHelper(
                     password,
                     Convert.FromBase64String(authData.LoginSalt)
                 );
@@ -384,7 +346,7 @@ namespace Guard.Core.Security
             {
                 throw new Exception("Main encryption key not set");
             }
-            EncryptionHelper encryptionHelper = new(
+            var encryptionHelper = new EncryptionHelper(
                 newPassword,
                 Convert.FromBase64String(authData.LoginSalt)
             );
@@ -413,7 +375,7 @@ namespace Guard.Core.Security
 
             authData.WebAuthn ??= [];
 
-            EncryptionHelper encryptionHelper = new(
+            var encryptionHelper = new EncryptionHelper(
                 result.HmacSecret,
                 Convert.FromBase64String(authData.LoginSalt)
             );
@@ -460,7 +422,7 @@ namespace Guard.Core.Security
                     )
                 ) ?? throw new Exception("Can not find webauthn device in auth file");
 
-            EncryptionHelper encryptionHelper = new(
+            var encryptionHelper = new EncryptionHelper(
                 result.result.HmacSecret,
                 Convert.FromBase64String(authData.LoginSalt)
             );

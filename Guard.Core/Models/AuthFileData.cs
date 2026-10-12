@@ -16,10 +16,16 @@
         public required string InstallationID { get; set; }
 
         /// <summary>
-        /// A challange to sign with Windows Hello to get a secret key.
+        /// A challenge to sign with Windows Hello to get a secret key.
         /// Inspired by Bitwarden's Windows Hello implementation.
         /// </summary>
         public string? WindowsHelloChallenge { get; set; }
+        
+        /// <summary>
+        /// A challenge to sign with system biometrics to get a secret key.
+        /// </summary>
+        public string? BiometricChallenge { get; set; }
+        
         public string? PasswordProtectedKey { get; set; }
         public string? LoginSalt { get; set; }
         public string? KeySalt { get; set; }

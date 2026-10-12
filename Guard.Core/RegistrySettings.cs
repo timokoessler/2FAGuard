@@ -1,70 +1,49 @@
 ﻿using Guard.Core.Models;
-using Microsoft.Win32;
+using Guard.Core.Platform;
 
 namespace Guard.Core
 {
-    public class RegistrySettings
+    public static class RegistrySettings
     {
-        private static T? GetValue<T>(string keyPath, string value, T? defaultValue)
+        private static ISettingsProvider? _provider;
+        private static readonly object _lock = new();
+        
+        private static ISettingsProvider Provider
         {
-            try
+            get
             {
-                return (T?)Registry.GetValue(keyPath, value, defaultValue);
-            }
-            catch
-            {
-                return defaultValue;
+                if (_provider == null)
+                {
+                    lock (_lock)
+                    {
+                        _provider ??= new JsonSettingsProvider(
+                            Path.Combine(InstallationContext.GetAppDataFolderPath(), "settings.json"));
+                    }
+                }
+                return _provider;
             }
         }
 
-        private static bool GetValue(string keyPath, string value, bool defaultValue)
+        private static T? GetValue<T>(string key, T? defaultValue)
         {
-            try
-            {
-                int? val = (int?)Registry.GetValue(keyPath, value, defaultValue ? 1 : 0);
-                if (val == null)
-                {
-                    return defaultValue;
-                }
-                return val != 0;
-            }
-            catch
-            {
-                return defaultValue;
-            }
+            return Provider.GetValue(key, defaultValue);
+        }
+
+        private static bool GetValue(string key, bool defaultValue)
+        {
+            return Provider.GetValue(key, defaultValue);
         }
 
         public static string? GetAppDataPath()
         {
-            string? path = GetValue<string>(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard",
-                "AppDataPath",
-                null
-            );
-            if (path != null)
-            {
-                path = Environment.ExpandEnvironmentVariables(path);
-            }
-            return path;
+            return GetValue<string>("AppDataPath", null);
         }
 
         public static (bool hideSkip, bool hideWinHello, bool hidePassword) GetSetupHideOptions()
         {
-            bool hideSkip = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Setup",
-                "HideSkip",
-                false
-            );
-            bool hideWinHello = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Setup",
-                "HideWinHello",
-                false
-            );
-            bool hidePassword = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Setup",
-                "HidePassword",
-                false
-            );
+            bool hideSkip = GetValue("Setup.HideSkip", false);
+            bool hideWinHello = GetValue("Setup.HideWinHello", false);
+            bool hidePassword = GetValue("Setup.HidePassword", false);
 
             // If all options are hidden, show them all
             if (hideSkip && hideWinHello && hidePassword)
@@ -81,21 +60,9 @@ namespace Guard.Core
             bool hideSecurityKey
         ) GetSettingsPageOptions()
         {
-            bool hideWinHello = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Settings",
-                "HideWinHello",
-                false
-            );
-            bool hidePreventRecording = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Settings",
-                "HidePreventRecording",
-                false
-            );
-            bool hideSecurityKey = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Settings",
-                "HideSecurityKey",
-                false
-            );
+            bool hideWinHello = GetValue("Settings.HideWinHello", false);
+            bool hidePreventRecording = GetValue("Settings.HidePreventRecording", false);
+            bool hideSecurityKey = GetValue("Settings.HideSecurityKey", false);
 
             return (hideWinHello, hidePreventRecording, hideSecurityKey);
         }
@@ -107,86 +74,46 @@ namespace Guard.Core
             int minLength
         ) GetPasswordOptions()
         {
-            bool requireLowerAndUpperCase = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Password",
-                "RequireLowerAndUpperCase",
-                false
-            );
-            bool requireDigits = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Password",
-                "RequireDigits",
-                false
-            );
-            bool requireSpecialChars = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Password",
-                "RequireSpecialChars",
-                false
-            );
-            int minLength = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Password",
-                "MinLength",
-                8
-            );
+            bool requireLowerAndUpperCase = GetValue("Password.RequireLowerAndUpperCase", false);
+            bool requireDigits = GetValue("Password.RequireDigits", false);
+            bool requireSpecialChars = GetValue("Password.RequireSpecialChars", false);
+            int minLength = GetValue("Password.MinLength", 8);
             return (requireLowerAndUpperCase, requireDigits, requireSpecialChars, minLength);
         }
 
         public static bool PreventUnencryptedExports()
         {
-            return GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard",
-                "PreventUnencryptedExports",
-                false
-            );
+            return GetValue("PreventUnencryptedExports", false);
         }
 
         public static bool DisableAutoUpdate()
         {
-            return GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard",
-                "DisableAutoUpdate",
-                false
-            );
+            return GetValue("DisableAutoUpdate", false);
         }
 
         public static bool DisableStats()
         {
-            return GetValue(@"HKEY_CURRENT_USER\Software\Policies\2FAGuard", "DisableStats", false);
+            return GetValue("DisableStats", false);
         }
 
         public static bool IsCliDesktopBridgeEnabled()
         {
-            return GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\CLI",
-                "EnableDesktopBridge",
-                false
-            );
+            return GetValue("CLI.EnableDesktopBridge", false);
         }
 
         public static bool DisableScreenRecordingProtection()
         {
-            return GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard",
-                "DisableScreenRecordingProtection",
-                false
-            );
+            return GetValue("DisableScreenRecordingProtection", false);
         }
 
         public static bool ForceLockOnScreenLock()
         {
-            return GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Settings",
-                "ForceLockOnScreenLock",
-                false
-            );
+            return GetValue("Settings.ForceLockOnScreenLock", false);
         }
 
         public static LockTimeSetting? GetForcedLockTime()
         {
-            int rawValue = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Settings",
-                "ForceLockTimeSetting",
-                -1
-            );
+            int rawValue = GetValue("Settings.ForceLockTimeSetting", -1);
 
             if (rawValue < (int)LockTimeSetting.Never || rawValue > (int)LockTimeSetting.OneHour)
             {
@@ -198,11 +125,7 @@ namespace Guard.Core
 
         public static ClearClipboardSetting? GetForcedClearClipboard()
         {
-            int rawValue = GetValue(
-                @"HKEY_CURRENT_USER\Software\Policies\2FAGuard\Settings",
-                "ForceClearClipboardSetting",
-                -1
-            );
+            int rawValue = GetValue("Settings.ForceClearClipboardSetting", -1);
 
             if (
                 rawValue < (int)ClearClipboardSetting.Disabled

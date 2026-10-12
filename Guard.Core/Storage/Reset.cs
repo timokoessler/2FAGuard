@@ -4,15 +4,15 @@ namespace Guard.Core.Storage
 {
     public class Reset
     {
-        public static void DeleteEverything()
+        public static async Task DeleteEverything()
         {
             string path = InstallationContext.GetAppDataFolderPath();
             Database.Deinit();
 
-            if (Auth.IsWindowsHelloRegistered())
+            if (Auth.IsBiometricsRegistered())
             {
-                _ = WindowsHello.Unregister();
-                Auth.DeleteWindowsHelloProtectedKey();
+                await BiometricAuth.UnregisterAsync();
+                Auth.DeleteBiometricProtectedKey();
             }
 
             string[] files = ["auth-keys", "settings", "TokenDatabase.db", "TokenDatabase-log.db"];

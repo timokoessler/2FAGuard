@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Guard.Avalonia.Views.Controls"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="100"
+             x:Class="Guard.Avalonia.Views.Controls.TokenCard"
+             x:DataType="vm:TokenViewModel">
+    
+    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,4">
+        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto">
+            <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Width="48" Height="48" Margin="0,0,16,0" Source="{Binding Icon}" />
+            
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Issuer}" FontSize="12" Foreground="Gray" VerticalAlignment="Center" />
+            
+            <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                <TextBlock Name="CodeText" Text="{Binding CurrentCode}" FontSize="24" FontFamily="monospace" FontWeight="Bold" VerticalAlignment="Center" />
+                <ProgressBar Name="ProgressBar" Width="60" Height="6" Minimum="0" Maximum="30" Value="{Binding TimeRemaining}" VerticalAlignment="Center" />
+                <Button Content="Copy" Click="OnCopyClick" Padding="12,6" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>
