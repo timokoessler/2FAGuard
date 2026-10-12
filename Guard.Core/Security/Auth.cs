@@ -167,7 +167,9 @@ namespace Guard.Core.Security
 
         public static EncryptionHelper GetMainEncryptionHelper()
         {
-            if (mainEncryptionKey == null)
+            // Local copies, as Logout() can run concurrently on the UI thread
+            string? key = mainEncryptionKey;
+            if (key == null)
             {
                 throw new Exception("Main encryption key not set");
             }
@@ -175,11 +177,16 @@ namespace Guard.Core.Security
             {
                 throw new Exception("Key salt not set");
             }
-            mainEncryptionHelper ??= new EncryptionHelper(
-                Encoding.UTF8.GetBytes(mainEncryptionKey),
-                Convert.FromBase64String(authData.KeySalt)
-            );
-            return mainEncryptionHelper;
+            EncryptionHelper? helper = mainEncryptionHelper;
+            if (helper == null)
+            {
+                helper = new EncryptionHelper(
+                    Encoding.UTF8.GetBytes(key),
+                    Convert.FromBase64String(authData.KeySalt)
+                );
+                mainEncryptionHelper = helper;
+            }
+            return helper;
         }
 
         public static void Logout()
