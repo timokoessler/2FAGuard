@@ -6,7 +6,9 @@ using Guard.Core.Models;
 using Guard.Core.Storage;
 using Spectre.Console;
 using Spectre.Console.Cli;
+#if WINDOWS
 using Windows.ApplicationModel.DataTransfer;
+#endif
 
 namespace Guard.CLI.Commands
 {
@@ -135,6 +137,7 @@ namespace Guard.CLI.Commands
             {
                 try
                 {
+#if WINDOWS
                     Thread thread = new Thread(() =>
                     {
                         DataPackage package = new DataPackage();
@@ -145,6 +148,9 @@ namespace Guard.CLI.Commands
                     thread.SetApartmentState(ApartmentState.STA); //Set the thread to STA
                     thread.Start();
                     thread.Join();
+#else
+                    LinuxClipboard.SetText(code);
+#endif
 
                     AnsiConsole.MarkupLine(
                         $"Code for {issuer} copied to clipboard. It's still valid for {remainingSeconds} seconds."

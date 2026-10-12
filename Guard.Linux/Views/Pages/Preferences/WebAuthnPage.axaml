@@ -1,0 +1,36 @@
+<UserControl
+    x:Class="Guard.Linux.Views.Pages.Preferences.WebAuthnPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+    <StackPanel Margin="0,0,15,15">
+        <WrapPanel Margin="0,30,0,15" Orientation="Horizontal">
+            <ui:SettingsExpander
+                x:Name="AddCard"
+                Classes="card"
+                Click="Add_Click"
+                Description="{DynamicResource i.webauthn.add.description}"
+                Header="{DynamicResource i.webauthn.add.title}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.AddSquare}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+        </WrapPanel>
+        <ui:InfoBar
+            x:Name="InfoBar"
+            MaxWidth="500"
+            Margin="0,0,0,15"
+            HorizontalAlignment="Left"
+            IsClosable="False"
+            IsOpen="False" />
+        <ProgressBar
+            x:Name="ProgressBar"
+            Width="350"
+            Margin="0,0,0,15"
+            HorizontalAlignment="Left"
+            IsIndeterminate="True"
+            IsVisible="False" />
+        <TextBlock Classes="sectionTitle" Text="{DynamicResource i.webauthn.existing}" />
+        <WrapPanel x:Name="KeysContainer" Orientation="Horizontal" />
+    </StackPanel>
+</UserControl>

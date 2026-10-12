@@ -3,11 +3,10 @@ using System.Text.Json;
 using Guard.Core.Models;
 using Guard.Core.Security.WebAuthn;
 using Guard.Core.Storage;
-using Windows.Security.Credentials;
 
 namespace Guard.Core.Security
 {
-    public class Auth
+    public partial class Auth
     {
         private static readonly string authFilePath = Path.Combine(
             InstallationContext.GetAppDataFolderPath(),
@@ -18,12 +17,6 @@ namespace Guard.Core.Security
         private static EncryptionHelper? mainEncryptionHelper;
         private static readonly int currentVersion = 1;
         private static bool registrationFinished = false;
-
-        /// <summary>
-        /// The password vault is used to store a encrypted version of the main encryption key that is decrypted by signing a payload with Windows Hello.
-        /// So if an malicious actor gets access to the Windows Credential Manager, they can not access the main encryption key.
-        /// </summary>
-        private static PasswordVault? passwordVault;
 
         public static async Task Init()
         {
@@ -49,7 +42,7 @@ namespace Guard.Core.Security
                     Version = currentVersion,
                 };
             }
-            passwordVault = new();
+            InitPlatform();
         }
 
         public static bool FileExists()
@@ -75,7 +68,7 @@ namespace Guard.Core.Security
         /// Also generate a salt
         /// </summary>
         /// <param name="password">The user chosen password to encrypt the key with</param>
-        /// <param name="enableWindowsHello">If Windows Hello should be enabled</param>
+        /// <param name="enableWindowsHello">If Windows Hello (on Linux: the system keyring) should be enabled</param>
         public static async Task Register(byte[] password, bool enableWindowsHello)
         {
             if (authData == null)
@@ -98,70 +91,10 @@ namespace Guard.Core.Security
 
             if (enableWindowsHello)
             {
-                await RegisterWindowsHello();
+                await RegisterQuickUnlock();
             }
             await SaveFile();
             registrationFinished = true;
-        }
-
-        public static async Task RegisterWindowsHello()
-        {
-            if (authData == null || mainEncryptionKey == null || authData.LoginSalt == null)
-            {
-                throw new Exception("Auth data not initialized");
-            }
-            if (IsWindowsHelloRegistered())
-            {
-                throw new Exception("Windows Hello already registered");
-            }
-            authData.WindowsHelloChallenge ??= EncryptionHelper.GetRandomBase64String(128);
-            var windowsHelloResult = await WindowsHello.Register();
-            if (
-                windowsHelloResult.Status
-                    != Windows.Security.Credentials.KeyCredentialStatus.Success
-                && windowsHelloResult.Status
-                    != Windows.Security.Credentials.KeyCredentialStatus.CredentialAlreadyExists
-            )
-            {
-                throw new Exception(
-                    $"Failed to register Windows Hello: {windowsHelloResult.Status}"
-                );
-            }
-
-            // If registration failed before this can happen
-            if (
-                windowsHelloResult.Status
-                == Windows.Security.Credentials.KeyCredentialStatus.CredentialAlreadyExists
-            )
-            {
-                await WindowsHello.Unregister();
-                windowsHelloResult = await WindowsHello.Register();
-                if (
-                    windowsHelloResult.Status
-                    != Windows.Security.Credentials.KeyCredentialStatus.Success
-                )
-                {
-                    throw new Exception(
-                        $"Failed to register Windows Hello: {windowsHelloResult.Status}"
-                    );
-                }
-            }
-
-            string? signedChallenge = await WindowsHello.SignChallenge(
-                windowsHelloResult.Credential,
-                authData.WindowsHelloChallenge
-            );
-            if (signedChallenge == null || signedChallenge.Length == 0)
-            {
-                throw new Exception(
-                    "Failed to register with Windows Hello because the signed challenge is empty"
-                );
-            }
-            EncryptionHelper encryptionHelper = new(
-                Encoding.UTF8.GetBytes(signedChallenge),
-                Convert.FromBase64String(authData.LoginSalt)
-            );
-            SetWindowsHelloProtectedKey(encryptionHelper.EncryptString(mainEncryptionKey));
         }
 
         public static async Task RegisterInsecure()
@@ -189,75 +122,6 @@ namespace Guard.Core.Security
         public static bool IsLoginEnabled()
         {
             return authData?.InsecureMainKey == null;
-        }
-
-        public static bool IsWindowsHelloRegistered()
-        {
-            try
-            {
-                _ = GetWindowsHelloProtectedKey();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public static string GetWindowsHelloProtectedKey()
-        {
-            ArgumentNullException.ThrowIfNull(authData);
-            ArgumentNullException.ThrowIfNull(passwordVault);
-
-            PasswordCredential cred = passwordVault.Retrieve("2FAGuard", authData.InstallationID);
-            cred.RetrievePassword();
-            return cred.Password;
-        }
-
-        public static void SetWindowsHelloProtectedKey(string key)
-        {
-            ArgumentNullException.ThrowIfNull(authData);
-            ArgumentNullException.ThrowIfNull(passwordVault);
-
-            PasswordCredential cred = new("2FAGuard", authData.InstallationID, key);
-            passwordVault.Add(cred);
-        }
-
-        public static void DeleteWindowsHelloProtectedKey()
-        {
-            ArgumentNullException.ThrowIfNull(authData);
-            ArgumentNullException.ThrowIfNull(passwordVault);
-
-            PasswordCredential cred = passwordVault.Retrieve("2FAGuard", authData.InstallationID);
-            passwordVault.Remove(cred);
-        }
-
-        public static async Task LoginWithWindowsHello()
-        {
-            if (authData == null || authData.LoginSalt == null)
-            {
-                throw new Exception("Auth data not initialized");
-            }
-            string windowsHelloProtectedKey =
-                GetWindowsHelloProtectedKey() ?? throw new Exception("Windows Hello not enabled");
-
-            string signedChallenge = await WindowsHello.GetSignedChallenge();
-            if (signedChallenge == null || signedChallenge.Length == 0)
-            {
-                throw new Exception(
-                    "Failed to login with Windows Hello because the signed challenge is empty"
-                );
-            }
-            EncryptionHelper encryptionHelper = new(
-                Encoding.UTF8.GetBytes(signedChallenge),
-                Convert.FromBase64String(authData.LoginSalt)
-            );
-            mainEncryptionKey = encryptionHelper.DecryptString(windowsHelloProtectedKey);
-
-            if (mainEncryptionKey == null)
-            {
-                throw new Exception("Failed to decrypt encryption keys");
-            }
         }
 
         public static void LoginWithPassword(byte[] password)
@@ -325,33 +189,10 @@ namespace Guard.Core.Security
             return helper;
         }
 
-        public static string GetWindowsHelloChallenge()
-        {
-            if (authData == null || authData.WindowsHelloChallenge == null)
-            {
-                throw new Exception("Windows Hello challenge not set");
-            }
-            return authData.WindowsHelloChallenge;
-        }
-
         public static void Logout()
         {
             mainEncryptionKey = null;
             mainEncryptionHelper = null;
-        }
-
-        public static async void UnregisterWindowsHello()
-        {
-            if (authData == null)
-            {
-                throw new Exception("Auth data not initialized");
-            }
-            if (!IsWindowsHelloRegistered())
-            {
-                throw new Exception("Windows Hello not enabled");
-            }
-            DeleteWindowsHelloProtectedKey();
-            await WindowsHello.Unregister();
         }
 
         public static bool CheckPassword(byte[] password)
@@ -441,34 +282,20 @@ namespace Guard.Core.Security
             await SaveFile();
         }
 
-        public static async Task LoginWithWebAuthn(IntPtr windowHandle)
+        private static void UnlockWithAssertion(AssertionResult assertion)
         {
-            if (authData == null || authData.LoginSalt == null)
-            {
-                throw new Exception("Auth data not initialized");
-            }
-
-            var result = await WebAuthnHelper.Assert(windowHandle, GetWebAuthnDevices());
-
-            if (!result.success)
-            {
-                throw new Exception("WebAuthn assertion failed: " + result.error);
-            }
-
-            if (result.result == null)
-            {
-                throw new Exception("Assertion result is null");
-            }
+            ArgumentNullException.ThrowIfNull(authData);
+            ArgumentNullException.ThrowIfNull(authData.LoginSalt);
 
             var device =
                 (
                     authData.WebAuthn?.Find(d =>
-                        d.Id == Convert.ToBase64String(result.result.CredentialId)
+                        d.Id == Convert.ToBase64String(assertion.CredentialId)
                     )
                 ) ?? throw new Exception("Can not find webauthn device in auth file");
 
             EncryptionHelper encryptionHelper = new(
-                result.result.HmacSecret,
+                assertion.HmacSecret,
                 Convert.FromBase64String(authData.LoginSalt)
             );
             mainEncryptionKey = encryptionHelper.DecryptString(

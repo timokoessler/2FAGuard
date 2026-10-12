@@ -1,0 +1,36 @@
+<UserControl
+    x:Class="Guard.Linux.Views.Pages.ExportPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:svg="using:Avalonia.Svg.Skia"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+    <WrapPanel Margin="0,30" Orientation="Horizontal">
+        <ui:SettingsExpander
+            Classes="card"
+            Click="Backup_Click"
+            Description="{DynamicResource i.export.backup.description}"
+            Header="{DynamicResource i.export.backup}">
+            <ui:SettingsExpander.IconSource>
+                <ui:PathIconSource Data="{StaticResource Icon.History}" />
+            </ui:SettingsExpander.IconSource>
+        </ui:SettingsExpander>
+        <ui:SettingsExpander
+            Classes="card"
+            Click="UriList_Click"
+            Description="{DynamicResource i.export.uri.description}"
+            Header="{DynamicResource i.export.uri}">
+            <ui:SettingsExpander.IconSource>
+                <ui:PathIconSource Data="{StaticResource Icon.AppsList}" />
+            </ui:SettingsExpander.IconSource>
+        </ui:SettingsExpander>
+        <ui:SettingsExpander
+            Classes="card"
+            Click="AuthenticatorPro_Click"
+            Description="{DynamicResource i.export.authpro.description}"
+            Header="{DynamicResource i.export.authpro}">
+            <ui:SettingsExpander.IconSource>
+                <ui:ImageIconSource Source="{svg:SvgImage /Assets/authenticatorpro.svg}" />
+            </ui:SettingsExpander.IconSource>
+        </ui:SettingsExpander>
+    </WrapPanel>
+</UserControl>

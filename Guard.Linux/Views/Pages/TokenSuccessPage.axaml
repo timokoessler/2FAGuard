@@ -1,0 +1,27 @@
+<UserControl
+    x:Class="Guard.Linux.Views.Pages.TokenSuccessPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:svg="using:Avalonia.Svg.Skia">
+    <StackPanel x:Name="TokenCardContainer" HorizontalAlignment="Center">
+        <svg:Svg
+            Width="200"
+            Height="200"
+            Margin="0,45,0,40"
+            Path="/Assets/check.svg" />
+        <Button
+            x:Name="HomeButton"
+            Margin="0,40,0,0"
+            HorizontalAlignment="Center"
+            Classes="accent"
+            Click="HomeButton_Click">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <PathIcon
+                    Width="16"
+                    Height="16"
+                    Data="{StaticResource Icon.Key}" />
+                <TextBlock Text="{DynamicResource i.stp.home}" />
+            </StackPanel>
+        </Button>
+    </StackPanel>
+</UserControl>

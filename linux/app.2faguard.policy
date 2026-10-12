@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+  <vendor>2FAGuard</vendor>
+  <vendor_url>https://2faguard.app</vendor_url>
+  <icon_name>2fa-guard</icon_name>
+
+  <action id="app.2faguard.unlock">
+    <description>Unlock 2FAGuard</description>
+    <message>Authentication is required to unlock your 2FAGuard tokens</message>
+    <defaults>
+      <allow_any>auth_self</allow_any>
+      <allow_inactive>auth_self</allow_inactive>
+      <allow_active>auth_self</allow_active>
+    </defaults>
+  </action>
+</policyconfig>
