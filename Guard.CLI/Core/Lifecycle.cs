@@ -9,6 +9,7 @@ namespace Guard.CLI.Core
     internal static class Lifecycle
     {
         private static Mutex? singleInstanceMutex;
+        private static FileStream? singleInstanceLock;
 
         public static async Task Init()
         {
@@ -23,7 +24,17 @@ namespace Guard.CLI.Core
                 mutexName += "Store";
             }
 
-            singleInstanceMutex = new Mutex(true, mutexName, out bool createdNewMutex);
+            bool createdNewMutex;
+            if (OperatingSystem.IsWindows())
+            {
+                singleInstanceMutex = new Mutex(true, mutexName, out createdNewMutex);
+            }
+            else
+            {
+                // Named mutexes are scoped to the terminal session on Linux, so the
+                // lock file of the desktop app is used instead
+                createdNewMutex = AcquireLinuxInstanceLock();
+            }
 
             Console.CancelKeyPress += (sender, args) =>
             {
@@ -43,7 +54,7 @@ namespace Guard.CLI.Core
                 Environment.Exit(1);
             }
 
-            if (Environment.OSVersion.Version.Build < 18362)
+            if (OperatingSystem.IsWindows() && Environment.OSVersion.Version.Build < 18362)
             {
                 AnsiConsole.MarkupLine(
                     "[red]Error:[/] 2FAGuard requires Windows 10 version 1903 (build 18362) or later. Please update your system and try again."
@@ -55,6 +66,14 @@ namespace Guard.CLI.Core
             {
                 AnsiConsole.MarkupLine(
                     "[red]Error:[/] 2FAGuard requires a 64-bit processor architecture and operating system."
+                );
+                Environment.Exit(1);
+            }
+
+            if (!EncryptionHelper.IsSupported() && !OperatingSystem.IsWindows())
+            {
+                AnsiConsole.MarkupLine(
+                    "[red]Error:[/] The bundled libsodium library could not be loaded. Please reinstall 2FAGuard."
                 );
                 Environment.Exit(1);
             }
@@ -120,9 +139,28 @@ namespace Guard.CLI.Core
             Database.Init();
         }
 
+        private static bool AcquireLinuxInstanceLock()
+        {
+            try
+            {
+                singleInstanceLock = new FileStream(
+                    InstallationContext.GetPipeName("Instance") + ".lock",
+                    FileMode.OpenOrCreate,
+                    FileAccess.ReadWrite,
+                    FileShare.None
+                );
+                return true;
+            }
+            catch (IOException)
+            {
+                return false;
+            }
+        }
+
         private static void OnExit()
         {
             singleInstanceMutex?.Dispose();
+            singleInstanceLock?.Dispose();
         }
     }
 }

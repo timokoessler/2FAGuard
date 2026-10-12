@@ -10,7 +10,7 @@ namespace Guard.Core.CliBridge
 
         public static string GetPipeName()
         {
-            return $"{InstallationContext.GetMutexName()}-CliBridge-Pipe";
+            return InstallationContext.GetPipeName("CliBridge-Pipe");
         }
     }
 

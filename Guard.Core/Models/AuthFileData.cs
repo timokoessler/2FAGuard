@@ -16,16 +16,10 @@
         public required string InstallationID { get; set; }
 
         /// <summary>
-        /// A challenge to sign with Windows Hello to get a secret key.
+        /// A challange to sign with Windows Hello to get a secret key.
         /// Inspired by Bitwarden's Windows Hello implementation.
         /// </summary>
         public string? WindowsHelloChallenge { get; set; }
-        
-        /// <summary>
-        /// A challenge to sign with system biometrics to get a secret key.
-        /// </summary>
-        public string? BiometricChallenge { get; set; }
-        
         public string? PasswordProtectedKey { get; set; }
         public string? LoginSalt { get; set; }
         public string? KeySalt { get; set; }
@@ -41,5 +35,10 @@
         /// Stores a list of WebAuthn devices (external FIDO2 security keys, e.g. YubiKey).
         /// </summary>
         public List<WebauthnDevice>? WebAuthn { get; set; }
+
+        /// <summary>
+        /// Linux only: the main key encrypted with a random secret stored in the Secret Service keyring.
+        /// </summary>
+        public string? KeyringProtectedKey { get; set; }
     }
 }

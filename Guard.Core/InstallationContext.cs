@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using Guard.Core.Platform;
+using Guard.Core.Security;
 
 namespace Guard.Core
 {
@@ -22,8 +22,36 @@ namespace Guard.Core
             InstallationContext.installationType = installationType;
             InstallationContext.version = version;
 
-            PlatformService.Instance.IsPortable = IsPortable();
-            appDataFolderPath = PlatformService.Instance.GetAppDataPath();
+            if (IsPortable())
+            {
+                appDataFolderPath = Path.Combine(
+                    AppContext.BaseDirectory
+                        ?? throw new Exception("Could not get process directory"),
+                    "2FAGuard-Data"
+                );
+            }
+            else if (installationType == InstallationType.MICROSOFT_STORE)
+            {
+                appDataFolderPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "2FAGuardStoreApp"
+                );
+            }
+            else
+            {
+                // Check if the app data path is set in the registry
+                string? registryAppDataPath = RegistrySettings.GetAppDataPath();
+                if (registryAppDataPath != null)
+                {
+                    appDataFolderPath = registryAppDataPath;
+                    return;
+                }
+
+                appDataFolderPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "2FAGuard"
+                );
+            }
         }
 
         public static string GetAppDataFolderPath()
@@ -74,7 +102,15 @@ namespace Guard.Core
 
         public static string GetOsVersionString()
         {
-            return PlatformService.Instance.GetOsVersionString();
+            if (!OperatingSystem.IsWindows())
+            {
+                return System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+            }
+            if (Environment.OSVersion.Version.Build >= 22000)
+            {
+                return $"Windows 11 {Environment.OSVersion.Version.Build}";
+            }
+            return $"Windows 10 {Environment.OSVersion.Version.Build}";
         }
 
         public static string GetAppEditionString()
@@ -106,6 +142,26 @@ namespace Guard.Core
 
             return prefix
                 + Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(hashContent)));
+        }
+
+        /// <summary>
+        /// Returns the name of a named pipe that is unique for this user and installation.
+        /// On Linux named pipes are Unix domain sockets whose path is limited to 108 bytes,
+        /// so a short absolute path inside the user-private runtime directory is used instead.
+        /// </summary>
+        public static string GetPipeName(string suffix)
+        {
+            if (OperatingSystem.IsWindows())
+            {
+                return $"{GetMutexName()}-{suffix}";
+            }
+            string? runtimeDir = Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR");
+            if (string.IsNullOrEmpty(runtimeDir) || !Directory.Exists(runtimeDir))
+            {
+                runtimeDir = Path.GetTempPath();
+            }
+            string id = GetMutexName()[^16..].ToLowerInvariant();
+            return Path.Combine(runtimeDir, $"2fa-guard-{id}-{suffix.ToLowerInvariant()}.sock");
         }
 
         public static (bool, string?) CheckAppDataFolder()

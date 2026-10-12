@@ -4,16 +4,12 @@ namespace Guard.Core.Storage
 {
     public class Reset
     {
-        public static async Task DeleteEverything()
+        public static void DeleteEverything()
         {
             string path = InstallationContext.GetAppDataFolderPath();
             Database.Deinit();
 
-            if (Auth.IsBiometricsRegistered())
-            {
-                await BiometricAuth.UnregisterAsync();
-                Auth.DeleteBiometricProtectedKey();
-            }
+            Auth.DeletePlatformCredentials();
 
             string[] files = ["auth-keys", "settings", "TokenDatabase.db", "TokenDatabase-log.db"];
             string[] dirs = ["icons"];

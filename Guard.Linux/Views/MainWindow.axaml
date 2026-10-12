@@ -1,0 +1,105 @@
+<Window
+    x:Class="Guard.Linux.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="2FAGuard"
+    Width="1200"
+    Height="725"
+    MinWidth="460"
+    MinHeight="290"
+    Icon="/Assets/logo-256.png"
+    WindowStartupLocation="CenterScreen">
+    <Panel>
+        <Grid x:Name="RootNavigation" IsVisible="False" RowDefinitions="Auto,*">
+            <Grid
+                Grid.Row="0"
+                Margin="40,18,40,8"
+                ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button
+                        x:Name="BackButton"
+                        Margin="0,0,10,0"
+                        VerticalAlignment="Center"
+                        Classes="nav"
+                        Click="BackButton_Click"
+                        IsVisible="False">
+                        <PathIcon Data="{StaticResource Icon.ArrowLeft}" />
+                    </Button>
+                    <TextBlock
+                        x:Name="PageTitle"
+                        VerticalAlignment="Center"
+                        Classes="pageTitle"
+                        TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="HomeNavigationItem"
+                        Classes="nav"
+                        Click="NavHome_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <PathIcon Data="{StaticResource Icon.Key}" />
+                            <TextBlock x:Name="HomeNavigationText" Text="{DynamicResource i.page.home}" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        x:Name="AddNavigationItem"
+                        Classes="nav"
+                        Click="NavAdd_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <PathIcon Data="{StaticResource Icon.Add}" />
+                            <TextBlock x:Name="AddNavigationText" Text="{DynamicResource i.nav.add}" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        x:Name="ExportNavigationItem"
+                        Classes="nav"
+                        Click="NavExport_Click"
+                        ToolTip.Tip="{DynamicResource i.page.exportpage}">
+                        <PathIcon Data="{StaticResource Icon.ArrowExportUp}" />
+                    </Button>
+                    <Separator
+                        Width="1"
+                        Height="24"
+                        Margin="6,0"
+                        Background="{DynamicResource DividerStrokeColorDefaultBrush}" />
+                    <Button
+                        x:Name="NavLock"
+                        Classes="nav"
+                        Click="NavLock_Click"
+                        ToolTip.Tip="{DynamicResource i.tray.lock}">
+                        <PathIcon Data="{StaticResource Icon.LockClosed}" />
+                    </Button>
+                    <Button Classes="nav" Click="ToggleTheme_Click">
+                        <PathIcon Data="{StaticResource Icon.DarkTheme}" />
+                    </Button>
+                    <Button
+                        x:Name="SettingsNavigationItem"
+                        Classes="nav"
+                        Click="NavSettings_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <PathIcon Data="{StaticResource Icon.Settings}" />
+                            <TextBlock x:Name="SettingsNavigationText" Text="{DynamicResource i.page.settings}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <ScrollViewer
+                x:Name="PageScrollViewer"
+                Grid.Row="1"
+                Padding="40,0,40,0"
+                HorizontalScrollBarVisibility="Disabled">
+                <ContentControl x:Name="PageHost" />
+            </ScrollViewer>
+        </Grid>
+        <ScrollViewer
+            x:Name="FullContentFrame"
+            Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+            HorizontalScrollBarVisibility="Disabled"
+            IsVisible="True">
+            <ContentControl x:Name="FullContentHost" Padding="20,0,20,30" />
+        </ScrollViewer>
+    </Panel>
+</Window>

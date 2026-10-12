@@ -1,0 +1,164 @@
+<UserControl
+    x:Class="Guard.Linux.Views.Pages.Add.TokenSettings"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:svg="using:Avalonia.Svg.Skia"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+    <WrapPanel Margin="0,20" HorizontalAlignment="Center">
+        <StackPanel
+            x:Name="LeftStackPanel"
+            Width="200"
+            Margin="0,0,25,0">
+            <Panel
+                Width="60"
+                Height="60"
+                Margin="0,80,0,25"
+                HorizontalAlignment="Center">
+                <svg:Svg x:Name="IconSvgView" />
+                <Image x:Name="ImageIconView" IsVisible="False" />
+            </Panel>
+            <TextBlock
+                x:Name="NoIconText"
+                Opacity="0.7"
+                Text="{DynamicResource i.td.icon.text}"
+                TextWrapping="Wrap" />
+            <TextBlock
+                x:Name="ImageLicense"
+                Opacity="0.7"
+                TextWrapping="Wrap" />
+            <Button
+                Margin="0,15,0,0"
+                HorizontalAlignment="Center"
+                Click="CustomIcon_Click">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <PathIcon
+                        Width="16"
+                        Height="16"
+                        Data="{StaticResource Icon.ImageAdd}" />
+                    <TextBlock Text="{DynamicResource i.td.customicon.btn}" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <StackPanel
+            x:Name="CenterStackPanel"
+            Width="320"
+            Margin="50,0,50,0">
+            <TextBlock
+                Margin="0,24,0,0"
+                Classes="sectionTitle"
+                Text="{DynamicResource i.td.general}" />
+            <TextBlock Margin="0,20,0,0" Text="{DynamicResource i.td.issuer}" />
+            <AutoCompleteBox
+                x:Name="Issuer"
+                Margin="0,4,0,0"
+                FilterMode="ContainsOrdinal"
+                MaxDropDownHeight="300"
+                MinimumPrefixLength="1"
+                Watermark="{DynamicResource i.td.issuer.placeholder}" />
+            <TextBlock Margin="0,15,0,0" Text="{DynamicResource i.td.username}" />
+            <TextBox
+                x:Name="Username"
+                Margin="0,4,0,0"
+                Watermark="{DynamicResource i.td.username.placeholder}" />
+            <TextBlock Margin="0,15,0,0" Text="{DynamicResource i.td.secret}" />
+            <TextBox
+                x:Name="Secret"
+                Margin="0,4,0,0"
+                Classes="revealPasswordButton"
+                PasswordChar="●"
+                Watermark="{DynamicResource i.td.secret.placeholder}" />
+            <TextBlock Margin="0,15,0,0" Text="{DynamicResource i.td.note}" />
+            <TextBox
+                x:Name="Notes"
+                Height="90"
+                Margin="0,4,0,0"
+                AcceptsReturn="True"
+                TextWrapping="Wrap" />
+            <TextBlock
+                x:Name="NotesFormattedHint"
+                Margin="0,4,0,0"
+                Classes="secondary"
+                IsVisible="False"
+                Text="{DynamicResource i.linux.notes.formatted}"
+                TextWrapping="Wrap" />
+            <Button
+                x:Name="SaveButton"
+                Margin="0,20,0,0"
+                HorizontalAlignment="Center"
+                Classes="accent"
+                Click="SaveButton_Click"
+                IsDefault="True">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <PathIcon
+                        Width="16"
+                        Height="16"
+                        Data="{StaticResource Icon.ArrowCircleRight}" />
+                    <TextBlock Text="{DynamicResource i.save}" />
+                </StackPanel>
+            </Button>
+            <ui:InfoBar
+                x:Name="InfoBar"
+                Margin="0,20,0,0"
+                IsOpen="False" />
+        </StackPanel>
+        <StackPanel x:Name="RightStackPanel" Margin="50,0,0,0">
+            <TextBlock
+                Width="320"
+                Margin="0,24,0,0"
+                Classes="sectionTitle"
+                Text="{DynamicResource i.td.expert}" />
+            <ui:InfoBar
+                x:Name="ExpertWarningBar"
+                Title="{DynamicResource i.td.expert.warning.title}"
+                Width="320"
+                Margin="0,20,0,0"
+                IsClosable="False"
+                IsOpen="True"
+                Message="{DynamicResource i.td.expert.warning.text}"
+                Severity="Warning" />
+            <Button
+                x:Name="ExpertButton"
+                Margin="0,15,0,0"
+                Click="ExpertSettings_Button_Click">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <PathIcon
+                        Width="16"
+                        Height="16"
+                        Data="{StaticResource Icon.Warning}" />
+                    <TextBlock Text="{DynamicResource i.td.expert.warning.button}" />
+                </StackPanel>
+            </Button>
+            <TextBlock Margin="0,20,0,0" Text="{DynamicResource i.td.expert.algorithm}" />
+            <ComboBox
+                x:Name="AlgorithmComboBox"
+                Width="320"
+                Margin="0,4,0,0"
+                IsEnabled="False"
+                SelectedIndex="0">
+                <ComboBoxItem Content="SHA1" />
+                <ComboBoxItem Content="SHA256" />
+                <ComboBoxItem Content="SHA512" />
+            </ComboBox>
+            <TextBlock Margin="0,15,0,0" Text="{DynamicResource i.td.expert.digits}" />
+            <ui:NumberBox
+                x:Name="DigitsBox"
+                Margin="0,4,0,0"
+                IsEnabled="False"
+                Maximum="9"
+                Minimum="4"
+                PlaceholderText="{DynamicResource i.td.expert.digits.placeholder}"
+                SpinButtonPlacementMode="Inline"
+                Value="6" />
+            <TextBlock Margin="0,15,0,0" Text="{DynamicResource i.td.expert.period}" />
+            <ui:NumberBox
+                x:Name="PeriodBox"
+                Margin="0,4,0,0"
+                IsEnabled="False"
+                Maximum="3600"
+                Minimum="1"
+                PlaceholderText="{DynamicResource i.td.expert.period.placeholder}"
+                SpinButtonPlacementMode="Inline"
+                Value="30" />
+        </StackPanel>
+    </WrapPanel>
+</UserControl>

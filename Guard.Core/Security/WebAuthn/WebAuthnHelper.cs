@@ -66,6 +66,8 @@ namespace Guard.Core.Security.WebAuthn
                 excludeCredentials.Add(new Credential(id));
             }
 
+            WindowsHello.FocusSecurityPrompt();
+
             return await Task.Run<(bool success, string? error)>(async () =>
             {
                 /*
@@ -177,6 +179,8 @@ namespace Guard.Core.Security.WebAuthn
                 new HmacSecretAssertionExtension() { SaltsByCredential = saltMap },
             };
 
+            WindowsHello.FocusSecurityPrompt();
+
             return await Task.Run<(bool success, string? error, AssertionResult? result)>(() =>
             {
                 var res = WebAuthnInterop.GetAssertion(
@@ -248,11 +252,5 @@ namespace Guard.Core.Security.WebAuthn
                 );
             });
         }
-    }
-
-    public class AssertionResult
-    {
-        public required byte[] CredentialId { get; set; }
-        public required byte[] HmacSecret { get; set; }
     }
 }

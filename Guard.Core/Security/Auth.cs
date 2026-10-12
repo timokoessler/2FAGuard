@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using Guard.Core.Models;
 using Guard.Core.Security.WebAuthn;
 using Guard.Core.Storage;
-using Guard.Core.Platform;
 
 namespace Guard.Core.Security
 {
-    public class Auth
+    public partial class Auth
     {
         private static readonly string authFilePath = Path.Combine(
             InstallationContext.GetAppDataFolderPath(),
@@ -20,18 +17,14 @@ namespace Guard.Core.Security
         private static EncryptionHelper? mainEncryptionHelper;
         private static readonly int currentVersion = 1;
         private static bool registrationFinished = false;
-        
-        private static ISecureStorage? _secureStorage;
 
         public static async Task Init()
         {
             if (authData != null)
             {
+                // Already initialized
                 return;
             }
-            
-            _secureStorage = PlatformService.Instance.GetSecureStorage();
-            
             if (FileExists())
             {
                 registrationFinished = true;
@@ -49,6 +42,7 @@ namespace Guard.Core.Security
                     Version = currentVersion,
                 };
             }
+            InitPlatform();
         }
 
         public static bool FileExists()
@@ -69,7 +63,13 @@ namespace Guard.Core.Security
             await SafeFileWriter.SaveFileAsync(authFilePath, fileData);
         }
 
-        public static async Task Register(byte[] password, bool enableBiometrics)
+        /// <summary>
+        /// Create a new encryption key and encrypt it with the password
+        /// Also generate a salt
+        /// </summary>
+        /// <param name="password">The user chosen password to encrypt the key with</param>
+        /// <param name="enableWindowsHello">If Windows Hello (on Linux: the system keyring) should be enabled</param>
+        public static async Task Register(byte[] password, bool enableWindowsHello)
         {
             if (authData == null)
             {
@@ -89,43 +89,12 @@ namespace Guard.Core.Security
             );
             authData.PasswordProtectedKey = encryptionHelper.EncryptString(mainEncryptionKey);
 
-            if (enableBiometrics)
+            if (enableWindowsHello)
             {
-                await RegisterBiometrics();
+                await RegisterQuickUnlock();
             }
             await SaveFile();
             registrationFinished = true;
-        }
-
-        public static async Task RegisterBiometrics()
-        {
-            if (authData == null || mainEncryptionKey == null || authData.LoginSalt == null)
-            {
-                throw new Exception("Auth data not initialized");
-            }
-            if (IsBiometricsRegistered())
-            {
-                throw new Exception("Biometrics already registered");
-            }
-            authData.BiometricChallenge ??= EncryptionHelper.GetRandomBase64String(128);
-            
-            var registered = await BiometricAuth.RegisterAsync();
-            if (!registered)
-            {
-                throw new Exception("Failed to register biometrics");
-            }
-
-            string? signedChallenge = await BiometricAuth.GetSignedChallengeAsync();
-            if (string.IsNullOrEmpty(signedChallenge))
-            {
-                throw new Exception("Failed to register with biometrics because the signed challenge is empty");
-            }
-            
-            var encryptionHelper = new EncryptionHelper(
-                Encoding.UTF8.GetBytes(signedChallenge),
-                Convert.FromBase64String(authData.LoginSalt)
-            );
-            SetBiometricProtectedKey(encryptionHelper.EncryptString(mainEncryptionKey));
         }
 
         public static async Task RegisterInsecure()
@@ -155,73 +124,6 @@ namespace Guard.Core.Security
             return authData?.InsecureMainKey == null;
         }
 
-        public static bool IsBiometricsRegistered()
-        {
-            try
-            {
-                _ = GetBiometricProtectedKey();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public static string GetBiometricProtectedKey()
-        {
-            ArgumentNullException.ThrowIfNull(authData);
-            ArgumentNullException.ThrowIfNull(_secureStorage);
-
-            return _secureStorage.Get("2FAGuard", authData.InstallationID) 
-                ?? throw new Exception("Biometrics not enabled");
-        }
-
-        public static void SetBiometricProtectedKey(string key)
-        {
-            ArgumentNullException.ThrowIfNull(authData);
-            ArgumentNullException.ThrowIfNull(_secureStorage);
-
-            _secureStorage.Set("2FAGuard", authData.InstallationID, key);
-        }
-
-        public static void DeleteBiometricProtectedKey()
-        {
-            ArgumentNullException.ThrowIfNull(authData);
-            ArgumentNullException.ThrowIfNull(_secureStorage);
-
-            _secureStorage.Delete("2FAGuard", authData.InstallationID);
-        }
-
-        public static async Task LoginWithBiometrics()
-        {
-            if (authData == null || authData.LoginSalt == null)
-            {
-                throw new Exception("Auth data not initialized");
-            }
-            string biometricProtectedKey =
-                GetBiometricProtectedKey() ?? throw new Exception("Biometrics not enabled");
-
-            string signedChallenge = await BiometricAuth.GetSignedChallengeAsync() 
-                ?? throw new Exception("Failed to login with biometrics because the signed challenge is empty");
-            
-            if (signedChallenge.Length == 0)
-            {
-                throw new Exception("Failed to login with biometrics because the signed challenge is empty");
-            }
-            
-            var encryptionHelper = new EncryptionHelper(
-                Encoding.UTF8.GetBytes(signedChallenge),
-                Convert.FromBase64String(authData.LoginSalt)
-            );
-            mainEncryptionKey = encryptionHelper.DecryptString(biometricProtectedKey);
-
-            if (mainEncryptionKey == null)
-            {
-                throw new Exception("Failed to decrypt encryption keys");
-            }
-        }
-
         public static void LoginWithPassword(byte[] password)
         {
             if (authData == null || authData.LoginSalt == null)
@@ -234,7 +136,7 @@ namespace Guard.Core.Security
             }
             try
             {
-                var encryptionHelper = new EncryptionHelper(
+                EncryptionHelper encryptionHelper = new(
                     password,
                     Convert.FromBase64String(authData.LoginSalt)
                 );
@@ -280,33 +182,10 @@ namespace Guard.Core.Security
             return mainEncryptionHelper;
         }
 
-        public static string GetBiometricChallenge()
-        {
-            if (authData == null || authData.BiometricChallenge == null)
-            {
-                throw new Exception("Biometric challenge not set");
-            }
-            return authData.BiometricChallenge;
-        }
-
         public static void Logout()
         {
             mainEncryptionKey = null;
             mainEncryptionHelper = null;
-        }
-
-        public static async Task UnregisterBiometrics()
-        {
-            if (authData == null)
-            {
-                throw new Exception("Auth data not initialized");
-            }
-            if (!IsBiometricsRegistered())
-            {
-                throw new Exception("Biometrics not enabled");
-            }
-            DeleteBiometricProtectedKey();
-            await BiometricAuth.UnregisterAsync();
         }
 
         public static bool CheckPassword(byte[] password)
@@ -321,7 +200,7 @@ namespace Guard.Core.Security
             }
             try
             {
-                var encryptionHelper = new EncryptionHelper(
+                EncryptionHelper encryptionHelper = new(
                     password,
                     Convert.FromBase64String(authData.LoginSalt)
                 );
@@ -346,7 +225,7 @@ namespace Guard.Core.Security
             {
                 throw new Exception("Main encryption key not set");
             }
-            var encryptionHelper = new EncryptionHelper(
+            EncryptionHelper encryptionHelper = new(
                 newPassword,
                 Convert.FromBase64String(authData.LoginSalt)
             );
@@ -375,7 +254,7 @@ namespace Guard.Core.Security
 
             authData.WebAuthn ??= [];
 
-            var encryptionHelper = new EncryptionHelper(
+            EncryptionHelper encryptionHelper = new(
                 result.HmacSecret,
                 Convert.FromBase64String(authData.LoginSalt)
             );
@@ -396,34 +275,20 @@ namespace Guard.Core.Security
             await SaveFile();
         }
 
-        public static async Task LoginWithWebAuthn(IntPtr windowHandle)
+        private static void UnlockWithAssertion(AssertionResult assertion)
         {
-            if (authData == null || authData.LoginSalt == null)
-            {
-                throw new Exception("Auth data not initialized");
-            }
-
-            var result = await WebAuthnHelper.Assert(windowHandle, GetWebAuthnDevices());
-
-            if (!result.success)
-            {
-                throw new Exception("WebAuthn assertion failed: " + result.error);
-            }
-
-            if (result.result == null)
-            {
-                throw new Exception("Assertion result is null");
-            }
+            ArgumentNullException.ThrowIfNull(authData);
+            ArgumentNullException.ThrowIfNull(authData.LoginSalt);
 
             var device =
                 (
                     authData.WebAuthn?.Find(d =>
-                        d.Id == Convert.ToBase64String(result.result.CredentialId)
+                        d.Id == Convert.ToBase64String(assertion.CredentialId)
                     )
                 ) ?? throw new Exception("Can not find webauthn device in auth file");
 
-            var encryptionHelper = new EncryptionHelper(
-                result.result.HmacSecret,
+            EncryptionHelper encryptionHelper = new(
+                assertion.HmacSecret,
                 Convert.FromBase64String(authData.LoginSalt)
             );
             mainEncryptionKey = encryptionHelper.DecryptString(
