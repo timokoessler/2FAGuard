@@ -22,12 +22,22 @@ namespace Guard.WPF.Core
                         return;
                     }
                     List<DBTOTPToken> dbTokens = Database.GetAllTokens();
-                    tokenHelpers = dbTokens
+                    List<TOTPTokenHelper> helpers = dbTokens
                         .Select(dbToken => new TOTPTokenHelper(dbToken))
                         .ToList();
+                    // Discard the result if the app was locked while loading
+                    if (Auth.IsLoggedIn())
+                    {
+                        tokenHelpers = helpers;
+                    }
                 }
                 catch (Exception e)
                 {
+                    // Locked while loading, the login page takes over
+                    if (!Auth.IsLoggedIn())
+                    {
+                        return;
+                    }
                     Log.Logger.Error("Error loading tokens: {0} {1}", e.Message, e.StackTrace);
                     throw new Exception($"Error loading tokens: {e.Message} {e.StackTrace}");
                 }
