@@ -9,11 +9,7 @@ namespace Guard.Core.Storage
             string path = InstallationContext.GetAppDataFolderPath();
             Database.Deinit();
 
-            if (Auth.IsWindowsHelloRegistered())
-            {
-                _ = WindowsHello.Unregister();
-                Auth.DeleteWindowsHelloProtectedKey();
-            }
+            Auth.DeletePlatformCredentials();
 
             string[] files =
             [

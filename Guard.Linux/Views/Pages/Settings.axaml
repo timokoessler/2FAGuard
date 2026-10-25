@@ -1,0 +1,299 @@
+<UserControl
+    x:Class="Guard.Linux.Views.Pages.Settings"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:svg="using:Avalonia.Svg.Skia"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+    <UserControl.Styles>
+        <Style Selector="ui|SettingsExpander.setting">
+            <Setter Property="Margin" Value="0,0,0,15" />
+        </Style>
+        <Style Selector="ComboBox.setting">
+            <Setter Property="MinWidth" Value="140" />
+        </Style>
+    </UserControl.Styles>
+    <StackPanel Margin="0,15,15,15">
+        <TextBlock
+            Margin="0,24,0,0"
+            Classes="sectionTitle"
+            Text="{DynamicResource i.settings.personalisation}" />
+        <UniformGrid
+            x:Name="PersonalisationSettingsGrid"
+            Margin="0,20,0,0"
+            Columns="2">
+            <ui:SettingsExpander
+                Classes="setting"
+                Description="{DynamicResource i.settings.theme.description}"
+                Header="{DynamicResource i.settings.theme}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.DarkTheme}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <ComboBox x:Name="ThemeComboBox" Classes="setting">
+                        <ComboBoxItem Content="{DynamicResource i.settings.theme.system}" Tag="System" />
+                        <ComboBoxItem Content="{DynamicResource i.settings.theme.light}" Tag="Light" />
+                        <ComboBoxItem Content="{DynamicResource i.settings.theme.dark}" Tag="Dark" />
+                    </ComboBox>
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="setting"
+                Description="{DynamicResource i.settings.language.description}"
+                Header="{DynamicResource i.settings.language}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.LocalLanguage}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <ComboBox x:Name="LanguagesComboBox" Classes="setting" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="setting"
+                Description="{DynamicResource i.settings.autostart.description}"
+                Header="{DynamicResource i.settings.autostart}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.WindowNew}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <ToggleSwitch
+                        x:Name="AutoStartSwitch"
+                        OffContent=""
+                        OnContent="" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="setting"
+                Description="{DynamicResource i.settings.tray.description}"
+                Header="{DynamicResource i.settings.tray}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.ShareCloseTray}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <ToggleSwitch
+                        x:Name="TraySwitch"
+                        OffContent=""
+                        OnContent="" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="setting"
+                Description="{DynamicResource i.settings.restorewindow.description}"
+                Header="{DynamicResource i.settings.restorewindow}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.WindowLocationTarget}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <ToggleSwitch
+                        x:Name="RestoreWindowPlacementSwitch"
+                        OffContent=""
+                        OnContent="" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="setting"
+                Description="{DynamicResource i.settings.hidetoken.description}"
+                Header="{DynamicResource i.settings.hidetoken}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.EyeOff}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <ComboBox x:Name="HideTokenComboBox" Classes="setting">
+                        <ComboBoxItem Content="{DynamicResource i.settings.hidetoken.never}" Tag="Never" />
+                        <ComboBoxItem Content="{DynamicResource i.settings.hidetoken.showafterclick}" Tag="ShowAfterClick" />
+                        <ComboBoxItem Content="{DynamicResource i.settings.hidetoken.always}" Tag="Always" />
+                    </ComboBox>
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+        </UniformGrid>
+
+        <TextBlock Classes="sectionTitle" Text="{DynamicResource i.settings.security}" />
+
+        <UniformGrid
+            x:Name="SecuritySettingsGrid"
+            Margin="0,20,0,0"
+            Columns="2">
+            <ui:SettingsExpander
+                x:Name="KeyringCard"
+                Classes="setting"
+                Description="{DynamicResource i.settings.winhello.description}"
+                Header="{DynamicResource i.settings.winhello}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.Fingerprint}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <ToggleSwitch
+                        x:Name="KeyringSwitch"
+                        OffContent=""
+                        OnContent="" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="setting"
+                Description="{DynamicResource i.settings.password.description}"
+                Header="{DynamicResource i.settings.password}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.Password}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <Button x:Name="ChangePassBtn" Click="Change_Pass_Button_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <PathIcon
+                                Width="16"
+                                Height="16"
+                                Data="{StaticResource Icon.Pen}" />
+                            <TextBlock Text="{DynamicResource i.settings.password.button}" />
+                        </StackPanel>
+                    </Button>
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="setting"
+                Description="{DynamicResource i.settings.autolock.description}"
+                Header="{DynamicResource i.settings.autolock}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.LockClosed}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <ToggleSwitch
+                        x:Name="ScreenLockSwitch"
+                        OffContent=""
+                        OnContent="" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="setting"
+                Description="{DynamicResource i.settings.locktime.description}"
+                Header="{DynamicResource i.settings.locktime}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.ClockLock}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <ComboBox x:Name="LockTimeComboBox" Classes="setting" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="setting"
+                Description="{DynamicResource i.settings.clearclipboard.description}"
+                Header="{DynamicResource i.settings.clearclipboard}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.ClipboardClock}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <ComboBox x:Name="ClearClipboardComboBox" Classes="setting" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                x:Name="SecurityKeyCard"
+                Classes="setting"
+                Description="{DynamicResource i.settings.webauthn.description}"
+                Header="{DynamicResource i.settings.webauthn}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.UsbStick}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <Button x:Name="WebAuthnBtn" Click="WebAuthn_Button_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <PathIcon
+                                Width="16"
+                                Height="16"
+                                Data="{StaticResource Icon.Settings}" />
+                            <TextBlock Text="{DynamicResource i.settings.webauthn.button}" />
+                        </StackPanel>
+                    </Button>
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="setting"
+                Description="{DynamicResource i.settings.reset.description}"
+                Header="{DynamicResource i.settings.reset}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.Delete}" />
+                </ui:SettingsExpander.IconSource>
+                <ui:SettingsExpander.Footer>
+                    <Button Click="Reset_Button_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <PathIcon
+                                Width="16"
+                                Height="16"
+                                Data="{StaticResource Icon.ArrowReset}" />
+                            <TextBlock Text="{DynamicResource i.settings.reset.button}" />
+                        </StackPanel>
+                    </Button>
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+        </UniformGrid>
+
+        <TextBlock Classes="sectionTitle" Text="{DynamicResource i.settings.about}" />
+
+        <Border
+            Margin="0,20,0,0"
+            Padding="16"
+            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="6">
+            <StackPanel>
+                <Grid x:Name="AboutHeaderGrid" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                    <StackPanel
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <svg:Svg
+                            Width="34"
+                            Height="34"
+                            Margin="5,0,15,0"
+                            Path="/Assets/logo.svg" />
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="2FAGuard - TOTP Authenticator" />
+                            <TextBlock x:Name="AppCopyrightText" Classes="secondary" />
+                        </StackPanel>
+                    </StackPanel>
+                    <TextBlock
+                        x:Name="AppVersionText"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Classes="secondary" />
+                </Grid>
+                <WrapPanel x:Name="LinksPanel" Margin="0,15,0,0">
+                    <HyperlinkButton Click="Link_Click" Tag="https://2faguard.app">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Width="14" Height="14" Data="{StaticResource Icon.Link}" />
+                            <TextBlock Text="Website" />
+                        </StackPanel>
+                    </HyperlinkButton>
+                    <HyperlinkButton Click="License_Button_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Width="14" Height="14" Data="{StaticResource Icon.ClipboardTextLtr}" />
+                            <TextBlock Text="{DynamicResource i.settings.license}" />
+                        </StackPanel>
+                    </HyperlinkButton>
+                    <HyperlinkButton Click="OSS_Button_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Width="14" Height="14" Data="{StaticResource Icon.AppsListDetail}" />
+                            <TextBlock Text="{DynamicResource i.settings.oss}" />
+                        </StackPanel>
+                    </HyperlinkButton>
+                    <HyperlinkButton Click="Link_Click" Tag="https://github.com/timokoessler/2FAGuard/issues/new/choose">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Width="14" Height="14" Data="{StaticResource Icon.Link}" />
+                            <TextBlock Text="{DynamicResource i.settings.issue}" />
+                        </StackPanel>
+                    </HyperlinkButton>
+                    <HyperlinkButton Click="Link_Click" Tag="https://2faguard.app/privacy">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Width="14" Height="14" Data="{StaticResource Icon.Link}" />
+                            <TextBlock Text="{DynamicResource i.settings.privacy}" />
+                        </StackPanel>
+                    </HyperlinkButton>
+                    <HyperlinkButton Click="Link_Click" Tag="https://2faguard.app/imprint">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Width="14" Height="14" Data="{StaticResource Icon.Link}" />
+                            <TextBlock Text="{DynamicResource i.settings.imprint}" />
+                        </StackPanel>
+                    </HyperlinkButton>
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

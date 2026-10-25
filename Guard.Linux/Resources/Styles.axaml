@@ -1,0 +1,67 @@
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+    <Style Selector="TextBlock.pageTitle">
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="TextBlock.headerTitle">
+        <Setter Property="FontSize" Value="32" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="TextBlock.headerSubtitle">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="MaxWidth" Value="400" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="TextBlock.sectionTitle">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontWeight" Value="Medium" />
+    </Style>
+    <Style Selector="TextBlock.secondary">
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+    </Style>
+
+    <!--  Navigation buttons in the header  -->
+    <Style Selector="Button.nav">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="10,6" />
+        <Setter Property="Margin" Value="2,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.nav.active">
+        <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+    </Style>
+    <Style Selector="Button.nav PathIcon">
+        <Setter Property="Width" Value="18" />
+        <Setter Property="Height" Value="18" />
+    </Style>
+
+    <!--  Cards (wrap layout) on the add, export and setup pages  -->
+    <Style Selector="ui|SettingsExpander.card">
+        <Setter Property="Width" Value="350" />
+        <Setter Property="Margin" Value="0,15,15,0" />
+        <Setter Property="IsClickEnabled" Value="True" />
+    </Style>
+    <Style Selector="ui|SettingsExpander.card /template/ Expander#Expander /template/ ToggleButton#ToggleButton">
+        <Setter Property="MinHeight" Value="95" />
+    </Style>
+    <Style Selector="ui|SettingsExpander.setupCard">
+        <Setter Property="Width" Value="420" />
+        <Setter Property="Margin" Value="0,10,0,0" />
+        <Setter Property="IsClickEnabled" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style Selector="Button.danger">
+        <Setter Property="Background" Value="#C42B1C" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+</Styles>

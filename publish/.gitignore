@@ -1,2 +1,4 @@
 *.exe
 *.zip
+*.tar.gz
+bin/linux-x64/

@@ -1,0 +1,98 @@
+<UserControl
+    x:Class="Guard.Linux.Views.Pages.Home"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:svg="using:Avalonia.Svg.Skia">
+    <Grid RowDefinitions="Auto,Auto">
+        <StackPanel x:Name="LoadingInfo" HorizontalAlignment="Center">
+            <svg:Svg
+                x:Name="LoadingInfoImage"
+                Width="150"
+                Height="150"
+                Margin="0,50,0,0"
+                Path="/Assets/padlock-gradient.svg" />
+            <TextBlock
+                Margin="0,30,0,0"
+                FontSize="26"
+                FontWeight="SemiBold"
+                Opacity="0.75"
+                Text="{DynamicResource i.home.loading}"
+                TextAlignment="Center" />
+            <ProgressBar Margin="0,40,0,0" IsIndeterminate="True" />
+        </StackPanel>
+        <StackPanel
+            x:Name="NoTokensInfo"
+            HorizontalAlignment="Center"
+            IsVisible="False">
+            <svg:Svg
+                x:Name="NoTokensInfoImage"
+                Width="150"
+                Height="150"
+                Margin="0,50,0,0"
+                Path="/Assets/padlock-gradient.svg" />
+            <TextBlock
+                Margin="0,30,0,0"
+                FontSize="18"
+                Opacity="0.75"
+                Text="{DynamicResource i.home.notokens}"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+            <Button
+                Margin="0,22,0,0"
+                HorizontalAlignment="Center"
+                Click="NoTokens_Button_Click">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <PathIcon
+                        Width="16"
+                        Height="16"
+                        Data="{StaticResource Icon.Add}" />
+                    <TextBlock Text="{DynamicResource i.home.notokens.button}" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <StackPanel
+            x:Name="SearchPanel"
+            Grid.Row="0"
+            IsVisible="False"
+            Orientation="Horizontal">
+            <TextBox
+                x:Name="SearchBox"
+                Width="360"
+                Margin="5,20,5,0"
+                Watermark="{DynamicResource i.home.search.placeholder}">
+                <TextBox.InnerLeftContent>
+                    <PathIcon
+                        Width="16"
+                        Height="16"
+                        Margin="10,0,0,0"
+                        Data="{StaticResource Icon.Search}"
+                        Opacity="0.7" />
+                </TextBox.InnerLeftContent>
+            </TextBox>
+            <DropDownButton x:Name="SortDropDown" Margin="5,20,5,0">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <PathIcon
+                        Width="16"
+                        Height="16"
+                        Data="{StaticResource Icon.ArrowSortDownLines}" />
+                    <TextBlock Text="{DynamicResource i.home.sort}" />
+                </StackPanel>
+                <DropDownButton.Flyout>
+                    <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                        <MenuItem Click="Sort_Issuer_ASC" Header="{DynamicResource i.home.sort.issuer.asc}" />
+                        <MenuItem Click="Sort_Issuer_DESC" Header="{DynamicResource i.home.sort.issuer.desc}" />
+                        <MenuItem Click="Sort_CreatedAt_ASC" Header="{DynamicResource i.home.sort.createdat.asc}" />
+                        <MenuItem Click="Sort_CreatedAt_DESC" Header="{DynamicResource i.home.sort.createdat.desc}" />
+                    </MenuFlyout>
+                </DropDownButton.Flyout>
+            </DropDownButton>
+        </StackPanel>
+        <WrapPanel
+            x:Name="TOTPTokenContainer"
+            Grid.Row="1"
+            Margin="0,15,0,15"
+            VerticalAlignment="Top"
+            IsVisible="False"
+            Orientation="Horizontal" />
+    </Grid>
+</UserControl>

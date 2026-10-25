@@ -75,6 +75,23 @@ Create a subkey named `Settings` in the path specified above. These keys can be 
 - `ForceLockTimeSetting` (DWORD): Enforce locking of the application after a specific time of inactivity. This setting overrides the user's setting. The value should be set to the number of the option available in the dropdown menu on the settings page starting with `0` for "Never". Invalid values will be ignored. Available since v1.6.3.
 - `ForceClearClipboardSetting` (DWORD): Enforce automatic clipboard clearing after copying a token. This setting overrides the user's setting and prevents users from changing it. The value maps to the dropdown options: `0` = Disabled, `1` = 10 seconds, `2` = 20 seconds, `3` = 30 seconds, `4` = 1 minute. Invalid values will be ignored. This setting only applies to the desktop app. Codes copied with the CLI (`--copy`) are not cleared automatically, but they are excluded from the Windows clipboard history and cloud clipboard. Available since v1.8.1.
 
+## Linux Policies
+
+On Linux, the same options are read from the JSON file `/etc/2fa-guard/policies.json`. Make sure that only root can write to this file. Values become JSON properties and subkeys become nested objects. `DWORD` values can be written as numbers or as `true` / `false`. The Windows Hello options (`HideWinHello`) apply to the system keyring unlock on Linux, and `DisableScreenRecordingProtection` / `HidePreventRecording` have no effect because Linux has no screen recording protection.
+
+```json
+{
+  "AppDataPath": "/srv/2fa-guard/%USER%",
+  "PreventUnencryptedExports": true,
+  "CLI": { "EnableDesktopBridge": true },
+  "Password": { "MinLength": 12, "RequireDigits": true },
+  "Setup": { "HideSkip": true },
+  "Settings": { "ForceLockOnScreenLock": true, "ForceLockTimeSetting": 2 }
+}
+```
+
+The default data paths on Linux are `~/.local/share/2FAGuard` for the installed version and `./2FAGuard-Data` next to the executable for the portable version. The portable mode is also enabled when a `2FAGuard-Data` folder exists next to the executable.
+
 ## Installer Command Line Options
 
 The installer supports the following command line options. These can **not** be used with the Portable version or the Microsoft Store app.

@@ -14,6 +14,7 @@ namespace Guard.CLI.Core
                 {
                     Auth.LoginInsecure();
                 }
+#if WINDOWS
                 else if (promptWinHello && Auth.IsWindowsHelloRegistered())
                 {
                     await AnsiConsole
@@ -26,6 +27,20 @@ namespace Guard.CLI.Core
                             }
                         );
                 }
+#else
+                else if (promptWinHello && Auth.IsKeyringUnlockRegistered())
+                {
+                    await AnsiConsole
+                        .Status()
+                        .StartAsync(
+                            "Unlocking with the system keyring...",
+                            async ctx =>
+                            {
+                                await Auth.LoginWithKeyring();
+                            }
+                        );
+                }
+#endif
                 else
                 {
                     byte[] pass = Encoding.UTF8.GetBytes(

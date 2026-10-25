@@ -1,0 +1,43 @@
+<UserControl
+    x:Class="Guard.Linux.Views.Pages.Start.SetupCompleted"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:svg="using:Avalonia.Svg.Skia"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+    <StackPanel HorizontalAlignment="Center">
+        <svg:Svg
+            x:Name="HeaderLogo"
+            Width="200"
+            Height="200"
+            Margin="0,45,0,0"
+            Path="/Assets/check.svg" />
+        <TextBlock
+            x:Name="HeaderTitle"
+            Margin="0,20,0,0"
+            Classes="headerTitle"
+            Text="{DynamicResource i.setup.finished.title}" />
+        <TextBlock
+            x:Name="HeaderSubtitle"
+            Margin="0,20,0,30"
+            Classes="headerSubtitle"
+            Text="{DynamicResource i.setup.finished.subtext}" />
+        <ui:SettingsExpander
+            Classes="setupCard"
+            Click="CardAction_AddToken_Click"
+            Description="{DynamicResource i.setup.finished.action.token.description}"
+            Header="{DynamicResource i.setup.finished.action.token}">
+            <ui:SettingsExpander.IconSource>
+                <ui:PathIconSource Data="{StaticResource Icon.Key}" />
+            </ui:SettingsExpander.IconSource>
+        </ui:SettingsExpander>
+        <ui:SettingsExpander
+            Classes="setupCard"
+            Click="CardAction_Settings_Click"
+            Description="{DynamicResource i.setup.finished.action.settings.description}"
+            Header="{DynamicResource i.setup.finished.action.settings}">
+            <ui:SettingsExpander.IconSource>
+                <ui:PathIconSource Data="{StaticResource Icon.Settings}" />
+            </ui:SettingsExpander.IconSource>
+        </ui:SettingsExpander>
+    </StackPanel>
+</UserControl>

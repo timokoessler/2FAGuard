@@ -1,0 +1,122 @@
+<UserControl
+    x:Class="Guard.Linux.Views.Pages.Add.AddOverview"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:svg="using:Avalonia.Svg.Skia"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+    <StackPanel Margin="0,0,15,15">
+        <WrapPanel Margin="0,30" Orientation="Horizontal">
+            <ui:SettingsExpander
+                Classes="card"
+                Click="Manual_Click"
+                Description="{DynamicResource i.add.manual.description}"
+                Header="{DynamicResource i.add.manual}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.Password}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="card"
+                Click="QR_ScreenCapture_Click"
+                Description="{DynamicResource i.add.qrscreen.description}"
+                Header="{DynamicResource i.add.qrscreen}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.Desktop}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="card"
+                Click="Clipboard_Click"
+                Description="{DynamicResource i.add.clipboard.description}"
+                Header="{DynamicResource i.add.clipboard}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.ClipboardTextLtr}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="card"
+                Click="Qr_Import_Click"
+                Description="{DynamicResource i.add.qr.description}"
+                Header="{DynamicResource i.add.qr}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.QrCode}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+        </WrapPanel>
+        <TextBlock Classes="sectionTitle" Text="{DynamicResource i.add.import}" />
+        <WrapPanel Orientation="Horizontal">
+            <ui:SettingsExpander
+                Classes="card"
+                Click="Backup_Click"
+                Description="{DynamicResource i.import.backup.description}"
+                Header="{DynamicResource i.import.backup}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.History}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="card"
+                Click="UriList_Click"
+                Description="{DynamicResource i.import.uri.description}"
+                Header="{DynamicResource i.import.uri}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:PathIconSource Data="{StaticResource Icon.AppsList}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="card"
+                Click="TwoFas_Click"
+                Description="{DynamicResource i.import.twofas.description}"
+                Header="{DynamicResource i.import.twofas}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:ImageIconSource Source="{svg:SvgImage /Assets/twofas.svg}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="card"
+                Click="Aegis_Click"
+                Description="{DynamicResource i.import.aegis.description}"
+                Header="{DynamicResource i.import.aegis}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:ImageIconSource Source="/Assets/aegis.png" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="card"
+                Click="AuthenticatorPro_Click"
+                Description="{DynamicResource i.import.authpro.description}"
+                Header="{DynamicResource i.import.authpro}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:ImageIconSource Source="{svg:SvgImage /Assets/authenticatorpro.svg}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="card"
+                Click="Bitwarden_Click"
+                Description="{DynamicResource i.import.bitwarden.description}"
+                Header="{DynamicResource i.import.bitwarden}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:ImageIconSource Source="{svg:SvgImage /Assets/bitwarden.svg}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="card"
+                Click="GAuthenticator_Click"
+                Description="{DynamicResource i.import.gauthenticator.description}"
+                Header="{DynamicResource i.import.gauthenticator}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:ImageIconSource Source="{svg:SvgImage /Assets/gauthenticator.svg}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+            <ui:SettingsExpander
+                Classes="card"
+                Click="ProtonAuthenticator_Click"
+                Description="{DynamicResource i.import.protonauthenticator.description}"
+                Header="{DynamicResource i.import.protonauthenticator}">
+                <ui:SettingsExpander.IconSource>
+                    <ui:ImageIconSource Source="{svg:SvgImage /Assets/protonauthenticator.svg}" />
+                </ui:SettingsExpander.IconSource>
+            </ui:SettingsExpander>
+        </WrapPanel>
+    </StackPanel>
+</UserControl>

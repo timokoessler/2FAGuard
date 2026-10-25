@@ -35,5 +35,10 @@
         /// Stores a list of WebAuthn devices (external FIDO2 security keys, e.g. YubiKey).
         /// </summary>
         public List<WebauthnDevice>? WebAuthn { get; set; }
+
+        /// <summary>
+        /// Linux only: the main key encrypted with a random secret stored in the Secret Service keyring.
+        /// </summary>
+        public string? KeyringProtectedKey { get; set; }
     }
 }

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=2FAGuard
+GenericName=Authenticator
+Comment=Secure TOTP two-factor authentication app
+Exec=2fa-guard
+Icon=2fa-guard
+Terminal=false
+Categories=Utility;Security;
+Keywords=2FA;TOTP;OTP;Authenticator;MFA;
+StartupNotify=true
+StartupWMClass=2fa-guard

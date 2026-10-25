@@ -22,6 +22,20 @@ You can download the latest version of 2FAGuard [from the official website](http
 winget install timokoessler.2FAGuard
 ```
 
+### Linux
+
+A Linux version (x64) is available as well. It was tested on Ubuntu 24.04 and should work on other modern distributions with X11 or Wayland. Extract `2FAGuard-linux-x64.tar.gz` and run `./install.sh` to install the app and the `2fa` CLI for the current user (`sudo ./install.sh --system` installs it for all users). The portable archive can be run directly without installation.
+
+Optional dependencies:
+
+- A Secret Service keyring (GNOME Keyring or KWallet) to unlock the app without a password.
+- The polkit policy `app.2faguard.policy` (installed by `install.sh --system`) to require your system password or fingerprint before the keyring unlock is used.
+- `libfido2` (`sudo apt install libfido2-1`) for FIDO2 security keys.
+- `wl-clipboard` or `xclip` for `2fa get --copy`.
+- On GNOME, the AppIndicator extension for the tray icon (preinstalled on Ubuntu).
+
+To build the Linux version yourself, run `publish/publish-linux.sh` with the .NET 10 SDK installed.
+
 ## FAQ
 
 **How can I add a token?**
@@ -34,10 +48,10 @@ The secret keys, the account names and your notes are encrypted using the AEGIS-
 Yes, you can export your tokens at any time. Currently you have three options: encrypted 2FAGuard backup, generic TOTP Uri list or Stratum backup. But it is also possible to export single tokens as QR codes or view the secret key.
 
 **Which devices are supported?**
-This app is only available for Windows 10 1809 and higher. It also requires the C++ Redistributable Runtimes by Microsoft to be installed, but they are usually already installed on most systems. If not, the installer will take care of it.
+This app is only available for Windows 10 1809 and higher. It also requires the C++ Redistributable Runtimes by Microsoft to be installed, but they are usually already installed on most systems. If not, the installer will take care of it. A Linux version for x64 is available as well, see [Linux](#linux).
 
 **What can I do if I lost my login data?**
-If you lost your password and cannot use an additional login method like Windows Hello, you will no longer have access to your tokens. If you want to reset the app and start over, you can delete the app data. Note that this will delete all your tokens and settings. For the Windows Store version, you can delete the app data in the Windows settings under Apps -> 2FAGuard -> Advanced Options -> Reset. If you are using the classic installation, delete the directory `C:\Users\%username%\AppData\Local\2FAGuard`.
+If you lost your password and cannot use an additional login method like Windows Hello, you will no longer have access to your tokens. If you want to reset the app and start over, you can delete the app data. Note that this will delete all your tokens and settings. For the Windows Store version, you can delete the app data in the Windows settings under Apps -> 2FAGuard -> Advanced Options -> Reset. If you are using the classic installation, delete the directory `C:\Users\%username%\AppData\Local\2FAGuard`. On Linux, delete `~/.local/share/2FAGuard`.
 
 **Are there advanced configuration options?**
 Yes. Advanced users and administrators can configure registry keys to enforce password policies, control app data paths, restrict exports, and more. See [docs/advanced.md](docs/advanced.md) for the full reference.

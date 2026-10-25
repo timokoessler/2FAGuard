@@ -7,7 +7,6 @@ using Guard.Core.Security;
 using Guard.WPF.Core.Icons;
 using Guard.WPF.Core.Models;
 using NSec.Cryptography;
-using Windows.Security.Cryptography.Certificates;
 
 namespace Guard.WPF.Core.Import.Importer
 {
