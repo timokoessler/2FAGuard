@@ -53,7 +53,7 @@ namespace Guard.WPF.Core.Installation
             {
                 var httpClient = HTTP.GetHttpClient();
                 string url =
-                    $"{updateApiUrl}?current={currentVersionString}&isPortable={isPortable}";
+                    $"{updateApiUrl}?current={currentVersionString}&isPortable={isPortable}&arch={InstallationContext.GetArchitectureName()}";
                 UpdateInfo updateInfo =
                     await httpClient.GetFromJsonAsync<UpdateInfo>(url, jsonSerializerOptions)
                     ?? throw new Exception("Failed to get update info (is null)");

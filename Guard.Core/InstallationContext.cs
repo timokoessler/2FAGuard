@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using Guard.Core.Security;
 
@@ -93,6 +94,24 @@ namespace Guard.Core
         public static int GetOsBuildVersion()
         {
             return Environment.OSVersion.Version.Build;
+        }
+
+        public static bool IsSupportedArchitecture()
+        {
+            return RuntimeInformation.ProcessArchitecture
+                is Architecture.X64
+                    or Architecture.Arm64;
+        }
+
+        // Architecture of the process (not the OS): "x64" or "arm64"
+        public static string GetArchitectureName()
+        {
+            return RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "arm64" : "x64";
+        }
+
+        public static string GetVcRedistUrl()
+        {
+            return $"https://aka.ms/vs/17/release/vc_redist.{GetArchitectureName()}.exe";
         }
 
         public static string GetLocaleCode()

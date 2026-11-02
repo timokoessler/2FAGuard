@@ -17,6 +17,12 @@
           "Konscious.Security.Cryptography.Blake2": "1.1.1"
         }
       },
+      "Microsoft.NET.ILLink.Tasks": {
+        "type": "Direct",
+        "requested": "[10.0.14, )",
+        "resolved": "10.0.14",
+        "contentHash": "YlTamXppEQls6DYWt7RdUuwWDb0lyw/vXCaGeQpLCpsLmfwGuCkOz/vIGgMTV7ECsJcavkCOkxZXv9s8rdAHkQ=="
+      },
       "NSec.Cryptography": {
         "type": "Direct",
         "requested": "[26.4.0, )",
@@ -34,9 +40,9 @@
       },
       "SharpVectors.Wpf": {
         "type": "Direct",
-        "requested": "[1.8.5, )",
-        "resolved": "1.8.5",
-        "contentHash": "WURdBDq5AE8RjKV9pFS7lNkJe81gxja9SaMGE4URq9GJUZ6M+5DGUL0Lm3B0iYW2/Meyowaz4ffGsyW+RBSTtg=="
+        "requested": "[1.8.6, )",
+        "resolved": "1.8.6",
+        "contentHash": "FjD8w5D+nBHBLlVOxr4tZpmqN6XOHhMllKKI9PZDeqjet4wS4PUDdpV/7p71SPQoeowvMivYFoKXsszFUmPpfg=="
       },
       "WPF-UI": {
         "type": "Direct",
@@ -64,9 +70,9 @@
       },
       "ZXing.Net.Bindings.Windows.Compatibility": {
         "type": "Direct",
-        "requested": "[0.16.14, )",
-        "resolved": "0.16.14",
-        "contentHash": "bJw1qjpNJ8JmDP55UBAvA5bCU+vSEGua4z43nukJqMlrpkKu6mTw6NZGJZntM8KbNQ3RNLu8DJMJBSWUd0ifYg==",
+        "requested": "[0.16.17, )",
+        "resolved": "0.16.17",
+        "contentHash": "8YGMdacn45y279yUH5h/JEuE/axLsAxWNbChyoDQZnHMJeCGZ+lM6MlLXq9QjfFDhPnP/IMpLuT0QLMU9JcWqA==",
         "dependencies": {
           "ZXing.Net": "0.16.11"
         }
@@ -98,8 +104,8 @@
       },
       "Serilog": {
         "type": "Transitive",
-        "resolved": "4.3.1",
-        "contentHash": "savYe7h5yRlkqBVOwP8cIRDOdqKiPmYCU4W87JH38sBmcKD5EBoXvQIw6bNEvZ/pTe1gsiye3VFCzBsoppGkXQ=="
+        "resolved": "4.4.0",
+        "contentHash": "ZC6Le3rr4TVJJjS4KsQAesxeF1EhW9qcZmmG7eP5Y2G3+gTGkJEUXkq4+tZNPtyp05I0wWOxnIjwtxFweJsObw=="
       },
       "Serilog.Sinks.Debug": {
         "type": "Transitive",
@@ -136,11 +142,23 @@
           "Microsoft.Security.Extensions": "[1.4.0, )",
           "NSec.Cryptography": "[26.4.0, )",
           "Otp.NET": "[1.4.1, )",
-          "Serilog": "[4.3.1, )",
+          "Serilog": "[4.4.0, )",
           "Serilog.Sinks.Debug": "[3.0.0, )",
           "Serilog.Sinks.File": "[7.0.0, )",
           "UrlBase64": "[2.0.0, )"
         }
+      }
+    },
+    "net10.0-windows10.0.22621/win-arm64": {
+      "libsodium": {
+        "type": "Transitive",
+        "resolved": "1.0.22",
+        "contentHash": "KPD9SloJFclrsjnhABu7dzWrcyYkwPbvx5l1gRSPAX/0n+OBtSiVCKtGFv4n+ecWUHU0tCG9LSSwoZZx673zBQ=="
+      },
+      "Microsoft.Security.Extensions": {
+        "type": "Transitive",
+        "resolved": "1.4.0",
+        "contentHash": "MnHXttc0jHbRrGdTJ+yJBbGDoa4OXhtnKXHQw70foMyAooFtPScZX/dN+Nib47nuglc9Gt29Gfb5Zl+1lAuTeA=="
       }
     },
     "net10.0-windows10.0.22621/win-x64": {

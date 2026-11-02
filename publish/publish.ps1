@@ -2,7 +2,9 @@
 
 Param (
     [switch]$dev,
-    [switch]$preview
+    [switch]$preview,
+    [ValidateSet("x64", "arm64")]
+    [string[]]$arch = @("x64", "arm64")
 )
 
 if ($preview) {
@@ -10,7 +12,7 @@ if ($preview) {
     $PortableExeName = "2FAGuard-Portable-Preview.exe"
     $CliExeName = "2fa-Preview.exe"
 
-    $env:PREVIEW = "1"    
+    $env:PREVIEW = "1"
 }
 else {
     $WpfExeName = "2FAGuard.exe"
@@ -45,34 +47,56 @@ function Confirm-Requirements {
     }
 }
 
+function Assert-Success($step, $exitCode) {
+    if ($exitCode -ne 0) {
+        Write-Host "$step failed (exit code $exitCode)" -ForegroundColor Red
+        Exit 1
+    }
+}
+
 function Invoke-Tests {
     Set-Location ../Guard.Test
     dotnet test
+    Assert-Success "Tests" $LASTEXITCODE
     Set-Location ../publish
 }
 
-function Build-WPF-App {
+function Build-WPF-App($a) {
+    $outDir = "..\publish\bin\$a"
+    New-Item -ItemType Directory -Path $outDir -Force | Out-Null
     Set-Location ../Guard.WPF
-    dotnet publish -r win-x64 -c Release --p:PublishSingleFile=true --self-contained true -o bin\publish
-    Move-Item bin\publish\2FAGuard.exe "..\publish\bin\$WpfExeName" -Force
-    dotnet publish -r win-x64 -c Release --p:PublishSingleFile=true --self-contained true -p:IsPortable=true -o bin\portable
-    Move-Item bin\portable\2FAGuard.exe "..\publish\bin\$PortableExeName" -Force
+    dotnet publish -r "win-$a" -c Release --p:PublishSingleFile=true --self-contained true -o "bin\publish-$a"
+    Assert-Success "WPF publish ($a)" $LASTEXITCODE
+    Move-Item "bin\publish-$a\2FAGuard.exe" "$outDir\$WpfExeName" -Force
+    dotnet publish -r "win-$a" -c Release --p:PublishSingleFile=true --self-contained true -p:IsPortable=true -o "bin\portable-$a"
+    Assert-Success "WPF portable publish ($a)" $LASTEXITCODE
+    Move-Item "bin\portable-$a\2FAGuard.exe" "$outDir\$PortableExeName" -Force
     Set-Location ../publish
 }
 
-function Build-CLI-App {
+function Build-CLI-App($a) {
+    $outDir = "..\publish\bin\$a"
+    New-Item -ItemType Directory -Path $outDir -Force | Out-Null
     Set-Location ../Guard.CLI
-    dotnet publish -r win-x64 -c Release --p:PublishSingleFile=true --self-contained true -o bin\publish
-    Move-Item bin\publish\2fa.exe "..\publish\bin\$CliExeName" -Force
+    dotnet publish -r "win-$a" -c Release --p:PublishSingleFile=true --self-contained true -o "bin\publish-$a"
+    Assert-Success "CLI publish ($a)" $LASTEXITCODE
+    Move-Item "bin\publish-$a\2fa.exe" "$outDir\$CliExeName" -Force
     Set-Location ../publish
 }
 
 function Invoke-Code-Signing {
-    signtool.exe sign /sha1 43E9DD4D4A06853CBB521EA35E5F337EDB0DBCCD /t "http://time.certum.pl/" /fd sha256 /d "2FAGuard" /du "https://2faguard.app" ".\bin\$WpfExeName" ".\bin\$PortableExeName" ".\bin\$CliExeName"
+    $files = foreach ($a in $arch) {
+        ".\bin\$a\$WpfExeName"
+        ".\bin\$a\$PortableExeName"
+        ".\bin\$a\$CliExeName"
+    }
+    signtool.exe sign /sha1 43E9DD4D4A06853CBB521EA35E5F337EDB0DBCCD /t "http://time.certum.pl/" /fd sha256 /d "2FAGuard" /du "https://2faguard.app" $files
+    Assert-Success "Code signing" $LASTEXITCODE
 }
 
-function Build-Installer {
-    Start-Process -NoNewWindow -FilePath "C:\Program Files\Inno Setup 7\ISCC.exe" -ArgumentList "./installer.iss"
+function Build-Installer($a) {
+    $p = Start-Process -NoNewWindow -Wait -PassThru -FilePath "C:\Program Files\Inno Setup 7\ISCC.exe" -ArgumentList "/DArch=$a", "./installer.iss"
+    Assert-Success "Installer build ($a)" $p.ExitCode
 }
 
 
@@ -82,11 +106,13 @@ Confirm-Requirements
 Write-Host "Running Tests"
 Invoke-Tests
 
-Write-Host "Building WPF App"
-Build-WPF-App
+foreach ($a in $arch) {
+    Write-Host "Building WPF App ($a)"
+    Build-WPF-App $a
 
-Write-Host "Building CLI App"
-Build-CLI-App
+    Write-Host "Building CLI App ($a)"
+    Build-CLI-App $a
+}
 
 if ($dev) {
     Write-Host "Dev mode enabled, skipping signing and installer"
@@ -96,15 +122,17 @@ if ($dev) {
 Write-Host "Signing Code"
 Invoke-Code-Signing
 
-Write-Host "Building Installer"
-Build-Installer
+foreach ($a in $arch) {
+    Write-Host "Building Installer ($a)"
+    Build-Installer $a
+}
 Write-Host "Done"
 
 # SIG # Begin signature block
-# MIIoggYJKoZIhvcNAQcCoIIoczCCKG8CAQExDzANBglghkgBZQMEAgEFADB5Bgor
+# MIIoeQYJKoZIhvcNAQcCoIIoajCCKGYCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCD58Vbh+6MurkF
-# V7LNnaFL0I8KUhYY6n73S3dYHk07kaCCILYwggXJMIIEsaADAgECAhAbtY8lKt8j
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDt+50RwTsANy/l
+# 8DTPelzshc3RRACLfapkwOGEjJJCrKCCILYwggXJMIIEsaADAgECAhAbtY8lKt8j
 # AEkoya49fu0nMA0GCSqGSIb3DQEBDAUAMH4xCzAJBgNVBAYTAlBMMSIwIAYDVQQK
 # ExlVbml6ZXRvIFRlY2hub2xvZ2llcyBTLkEuMScwJQYDVQQLEx5DZXJ0dW0gQ2Vy
 # dGlmaWNhdGlvbiBBdXRob3JpdHkxIjAgBgNVBAMTGUNlcnR1bSBUcnVzdGVkIE5l
@@ -279,43 +307,42 @@ Write-Host "Done"
 # axadq1LAoM1ZTT6w4Of3YjFqg7vbqsDvwuTY7H/eBsINoLqKPgpHmc2DcGQZwT+U
 # Y/wy1l7+GPwtZZhsoXLeOUAcRju4YXUqUUly46PejIZgd2Je+FGjePkDCOJeYdlq
 # NOgE4XJNl/pbQtw2QEHqz99OVDB6sJFJdUxWz7TEASL5+deNHD2X9d6T6yWMbtDm
-# MYIHIjCCBx4CAQEwajBWMQswCQYDVQQGEwJQTDEhMB8GA1UEChMYQXNzZWNvIERh
+# MYIHGTCCBxUCAQEwajBWMQswCQYDVQQGEwJQTDEhMB8GA1UEChMYQXNzZWNvIERh
 # dGEgU3lzdGVtcyBTLkEuMSQwIgYDVQQDExtDZXJ0dW0gQ29kZSBTaWduaW5nIDIw
-# MjEgQ0ECEEMiutwJdzYa7wf8NlVHjZQwDQYJYIZIAWUDBAIBBQCggYQwGAYKKwYB
-# BAGCNwIBDDEKMAigAoAAoQKAADAZBgkqhkiG9w0BCQMxDAYKKwYBBAGCNwIBBDAc
-# BgorBgEEAYI3AgELMQ4wDAYKKwYBBAGCNwIBFTAvBgkqhkiG9w0BCQQxIgQgJRM0
-# Ho8pyJq8+DJH2OPKKtic7gKoFmliwB49D02Hzw4wDQYJKoZIhvcNAQEBBQAEggIA
-# kOKFnZnzpF4PWytot0gfCGKnsLhZ01BqCyX4z2BFIpJ1xALtyF1LtsqNkJZARHtJ
-# QndBVzKLyXugkChj4+X0F6Qs4wSkmFkNNUKyWsF7CMrRPj3/+zRm2Zb6Wb0l9HBw
-# JzAV2UyQjB8LZT93PQTFd1vSIOf7tg1Cwme/OFOVTF20vNkrDhSbVh+xvwj5zr14
-# cD3w7UBFb62PRbjIgw6lsnXmD/5SdRQ/Az+okfwrcwMiGS0rd1fy+23UxwG+yxbJ
-# bQXdJHEN/wQiNKkN67MOiGR4esXE3wD3UpaERUEgKUm4tIBUKH45zu3n/+2lvAMp
-# EPA96IPyPx0gXj9j3BVndI67hmpOp1EoLS3orxn0Wl6U3DCAbbRQcLFPsVINGIMV
-# tzAfTrKUStUW/DYeOSLRyhd61ACBxb9YeA/M/fXaGTE8irD1CpM29j422UzYKQ+i
-# wDH9Qa9BO/eanc+rA0hR3N4cvx//envQgrMNvX15lgwipxKcXQHJbIKUyNQn0jyI
-# flqyWKYXxDAcj/e/sR1KrjxpQ1hz3Neic0dUr99eLC5TN0a3WcyOfLFpfMyUMYpv
-# R2WMLxj4Ii9FD70qF7YFjlOOHs9xsxuzoXd0up0OflDIxf9CbFT7/x0t2jdj9Dof
-# rGYIDJFqwhIwO+lozWFP58QA/6URGWsWzAc9aeaizAqhggQCMIID/gYJKoZIhvcN
-# AQkGMYID7zCCA+sCAQEwajBWMQswCQYDVQQGEwJQTDEhMB8GA1UEChMYQXNzZWNv
-# IERhdGEgU3lzdGVtcyBTLkEuMSQwIgYDVQQDExtDZXJ0dW0gVGltZXN0YW1waW5n
-# IDIwMjEgQ0ECECjwd8EcNr3+X3QyR3AnLgMwDQYJYIZIAWUDBAICBQCgggFWMBoG
-# CSqGSIb3DQEJAzENBgsqhkiG9w0BCRABBDAcBgkqhkiG9w0BCQUxDxcNMjYwNzE1
-# MTAyOTE2WjA3BgsqhkiG9w0BCRACLzEoMCYwJDAiBCCFvpDhCtJDjXzJKLavSLCa
-# sggXfOz4sBJsWNORBSXEPDA/BgkqhkiG9w0BCQQxMgQwreOe048mB004TkUnAdhe
-# pMc8wmOeybZ5itpQ02Y3hXe54rx8AZ/nriU9q0OZgdASMIGfBgsqhkiG9w0BCRAC
-# DDGBjzCBjDCBiTCBhgQUVxRoQQyoWvNCTvkWSlE2EPTTjZgwbjBapFgwVjELMAkG
-# A1UEBhMCUEwxITAfBgNVBAoTGEFzc2VjbyBEYXRhIFN5c3RlbXMgUy5BLjEkMCIG
-# A1UEAxMbQ2VydHVtIFRpbWVzdGFtcGluZyAyMDIxIENBAhAo8HfBHDa9/l90Mkdw
-# Jy4DMA0GCSqGSIb3DQEBAQUABIICAApfYJDp9Gt5HzTDAf2In0GVzBzpm/1gB4uh
-# rLSzP6hkSeK21jUSq7h2UiXzPFh42iMWUs7Xlt0lRDlCFKQRNolm7Nz8XKpl5kTO
-# z2AsUoSkW7y3ejldtin3i14w1cy4FdZMO9wl0y2ER0ZJiVKQmDKqGeoYpYs+hWWD
-# 5ITuYtoHj5T0fADSpPlZDsJ7jzeRwLxCQZvUoQMkDkKeNVtWIIW99Blr+DfH+Kgd
-# HsAbwV6iZO56Nc3UUFm54kMfXa5N1XLg3Wp9IuRLjwPTVjFvVXajM4Gmh2NgBSSm
-# Zx8PICzKm9byu1D9ozTlsJU/5Q7Qs7O4VbtPn4Hzm74f9gY0eSYUmb4ngAaveT9G
-# Ce9pfp4BWooEgHhuv0Z2qUzZ85MEwDuU0mtArfzRvcUcnVbilOl6Lrmke2Vhal8/
-# na1TsZswGToXQBgsWQEaLu9PwDM6pI9Hr0OUrC5qF6Drvbs+e97pCKWxWxSUxHUU
-# Xkg+BJGHxT9dlX+NW3E20vVNF5RNTKsyDM0ek5+f1bvuiTKid9xdBIzvgc47d4cn
-# YYPy91hpBgNFxU030ouBvk9Vazps1+SjcO0La2/HqAEGOBsH7C1o6oGzKRJzT3EW
-# gi/9w9u+XPGbEsOT4k7m49e6i0CkBvbIoqlUeEJm6PuP2vW0ufiWM1uQSf9noh7G
-# yTfq+c70
+# MjEgQ0ECEEMiutwJdzYa7wf8NlVHjZQwDQYJYIZIAWUDBAIBBQCgfDAQBgorBgEE
+# AYI3AgEMMQIwADAZBgkqhkiG9w0BCQMxDAYKKwYBBAGCNwIBBDAcBgorBgEEAYI3
+# AgELMQ4wDAYKKwYBBAGCNwIBFTAvBgkqhkiG9w0BCQQxIgQgfjA3Kcgo98hmQdEI
+# rHiSSFcJNTF90uOANKyjTTXZmgwwDQYJKoZIhvcNAQEBBQAEggIAg8FhFeLva6BG
+# j1AumexLs5KccZnadfSvdFztr/ouLBr6fzPuAEZKjs5DzgKIqP8bMnmYXl7+Dccn
+# syyqrtM3JAIdSWZZyA1GKMEK0YIkn84G4j1ceHmZcVnV+iy8cAw09zSMYr+XjmRO
+# t47uDpiU48UNL6yLyGx+oUgy2xcsvQFvmA/NWmPKoGsg3/sVTyqjD8kVg2bhvoea
+# ZY5ePA3zE9nk3a2VtvZILpFo4j8yQ6CkbMeaIT6Cs1lk6+NnyxdDQnr9zHpfGLnY
+# G6X7rqQ5YsfKWbyr/uUbBIoqCNuya7PUxQgB2pStMeQX0xeZBfvszu4TJI4QD//j
+# s1O2NUfiN3S8mFyVrTQQhtgb4HMPsa3jmS3vVNTCcqS598mjKBLSjD7AwDJSO44y
+# 92ym8Orb3oGX2gwJoRjUQqh5vDzzBJhnjDH6gliEReJcsX1Gu70zntaSW9vsNfKq
+# c5YpHae8gEkrqh4nLkQTeu+9wU3mg6MWAEspodhcXqiNIV4eFuB6f12QKvGch2Lg
+# UzpBmDICAKyxOf2x3f6rXZukurdtF7URdQc8H55u0qEcMGkgMnVJHE9aInSQIN2m
+# i4dKto8Pvb5w4CqkZ7xXyKy9K8OQdgMKAFQ43ZIugNx+COFHWhrZmjWVB8vZ2uOi
+# zhPxkO9yfh+CECdKkvQYPmrAzzcQSbmhggQCMIID/gYJKoZIhvcNAQkGMYID7zCC
+# A+sCAQEwajBWMQswCQYDVQQGEwJQTDEhMB8GA1UEChMYQXNzZWNvIERhdGEgU3lz
+# dGVtcyBTLkEuMSQwIgYDVQQDExtDZXJ0dW0gVGltZXN0YW1waW5nIDIwMjEgQ0EC
+# ECjwd8EcNr3+X3QyR3AnLgMwDQYJYIZIAWUDBAICBQCgggFWMBoGCSqGSIb3DQEJ
+# AzENBgsqhkiG9w0BCRABBDAcBgkqhkiG9w0BCQUxDxcNMjYxMTAyMTgyNzMzWjA3
+# BgsqhkiG9w0BCRACLzEoMCYwJDAiBCCFvpDhCtJDjXzJKLavSLCasggXfOz4sBJs
+# WNORBSXEPDA/BgkqhkiG9w0BCQQxMgQwT9golyfKqSlspSURXymOEJi88NxyoWnf
+# 2jlOaP187xqnFweoJkL5s+k2KP9kK0yAMIGfBgsqhkiG9w0BCRACDDGBjzCBjDCB
+# iTCBhgQUVxRoQQyoWvNCTvkWSlE2EPTTjZgwbjBapFgwVjELMAkGA1UEBhMCUEwx
+# ITAfBgNVBAoTGEFzc2VjbyBEYXRhIFN5c3RlbXMgUy5BLjEkMCIGA1UEAxMbQ2Vy
+# dHVtIFRpbWVzdGFtcGluZyAyMDIxIENBAhAo8HfBHDa9/l90MkdwJy4DMA0GCSqG
+# SIb3DQEBAQUABIICALVCXt5fIkx5a0vFbPRJq1IbHpSF1OM+nfcTdZze9FwONN/P
+# n26NJu1SPbZfKoK8zDOrnR6lkFZm4UUydCFN1yHa4YH19I42gZLa0fqLKvxwi1q9
+# FgoazqODzRMnpY4ElSfpKuhQm1PU5pJDy1gNCwsdf8WJcyi/e/DnqpRGOiCE1MBz
+# 5VmvTz/YPoi977pejz10X/jfh2KFpBTFsFX748bXa1Fbn1IhJGOxWj0t8jQ+BuRQ
+# gRbdAPFkhRcaKw+QoCEqd3mg1ztNFkbYe2rUpICmZ4zZs0QTB6dloPPCyn+PHBAE
+# kHRS80T+oY4c18mAT9GzwCuCc6ezya8VrCZyDdzSIk6/OF9CiNA3QKvETx82oSbC
+# 6ILVSui5xrkODYcYiTu04r8XJfuUFhopfyqRlK+1jXLWebSTlyx8N2KaLM5a/mrd
+# nzRM3dUZ7X72mH8DoV35t88FR5d4+9+BJFgLFzj569PxZ4/TGH1zKAUZXbql6qH8
+# CFmLsp2PZH0Y0xQZh0t6GbYrZoDjvvF6Z28hY3YlygjYo0dkSncLS5Oh/63MCEWY
+# v7WxbfxDAx92NIGKjWqMhEbj15FTAIECMOB+44EjCWFUkKCz7FO0fSZdELb7kKaV
+# rQi9bruHnOQMUNmdrXAAIgpGxrO8I+u8IHeyCaVXDhvgV7lWB4PI8DHXoHr3
 # SIG # End signature block
