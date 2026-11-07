@@ -11,18 +11,11 @@ namespace Guard.CLI.Core
 
         public static async Task Init()
         {
-            InstallationType installationType = InstallationContext.GetInstallationType();
-            string mutexName = "2FAGuard";
-            if (installationType == InstallationType.CLASSIC_PORTABLE)
-            {
-                mutexName += "Portable";
-            }
-            else if (installationType == InstallationType.MICROSOFT_STORE)
-            {
-                mutexName += "Store";
-            }
-
-            singleInstanceMutex = new Mutex(true, mutexName, out bool createdNewMutex);
+            singleInstanceMutex = new Mutex(
+                true,
+                InstallationContext.GetMutexName(),
+                out bool createdNewMutex
+            );
 
             Console.CancelKeyPress += (sender, args) =>
             {
