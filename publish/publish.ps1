@@ -1,21 +1,37 @@
 # Script to build the WPF and CLI app, sign the executables and build the installer
 
 Param (
-    [switch]$dev,
-    [switch]$preview
+    [switch]$preview,
+    [switch]$force,
+    [ValidateSet("x64", "arm64")]
+    [string[]]$arch = @("x64", "arm64")
 )
 
-if ($preview) {
-    $WpfExeName = "2FAGuard-Preview.exe"
-    $PortableExeName = "2FAGuard-Portable-Preview.exe"
-    $CliExeName = "2fa-Preview.exe"
+$WpfExeName = "2FAGuard.exe"
+$PortableExeName = "2FAGuard-Portable.exe"
+$CliExeName = "2fa.exe"
 
-    $env:PREVIEW = "1"    
+function Get-ProjectVersion($csproj) {
+    $match = Select-String -Path $csproj -Pattern "<Version>([^<]+)</Version>" | Select-Object -First 1
+    if (-not $match) {
+        Write-Host "No <Version> found in $csproj" -ForegroundColor Red
+        Exit 1
+    }
+    return $match.Matches[0].Groups[1].Value
 }
-else {
-    $WpfExeName = "2FAGuard.exe"
-    $PortableExeName = "2FAGuard-Portable.exe"
-    $CliExeName = "2fa.exe"
+
+function Get-ArchSuffix($a) {
+    if ($a -eq "arm64") { return "-arm64" }
+    return ""
+}
+
+function Get-ReleaseFileNames($a) {
+    $suffix = Get-ArchSuffix $a
+    return @{
+        Installer   = "2FAGuard-Installer-$Version$suffix.exe"
+        PortableZip = "2FAGuard-Portable-$Version$suffix.zip"
+        CliZip      = "2fa-CLI-$Version$suffix.zip"
+    }
 }
 
 function Confirm-Requirements {
@@ -45,66 +61,187 @@ function Confirm-Requirements {
     }
 }
 
+function Assert-Success($step, $exitCode) {
+    if ($exitCode -ne 0) {
+        Write-Host "$step failed (exit code $exitCode)" -ForegroundColor Red
+        Exit 1
+    }
+}
+
 function Invoke-Tests {
     Set-Location ../Guard.Test
     dotnet test
+    Assert-Success "Tests" $LASTEXITCODE
     Set-Location ../publish
 }
 
-function Build-WPF-App {
+function Resolve-Version {
+    $v = Get-ProjectVersion "..\Guard.WPF\Guard.WPF.csproj"
+    foreach ($other in "..\Guard.Core\Guard.Core.csproj", "..\Guard.CLI\Guard.CLI.csproj") {
+        if ((Get-ProjectVersion $other) -ne $v) {
+            Write-Host "Version in $other does not match Guard.WPF ($v)" -ForegroundColor Red
+            Exit 1
+        }
+    }
+    return $v
+}
+
+function Assert-NoExistingRelease {
+    if ($preview -or $force) {
+        return
+    }
+    $existing = foreach ($a in $arch) {
+        $names = Get-ReleaseFileNames $a
+        foreach ($name in $names.Values) {
+            $path = Join-Path ".\bin\$Version" $name
+            if (Test-Path $path) { $path }
+        }
+    }
+    if ($existing) {
+        Write-Host "Release files for version $Version already exist:" -ForegroundColor Red
+        $existing | ForEach-Object { Write-Host "  $_" }
+        Write-Host "Bump the version or use -force to overwrite them." -ForegroundColor Red
+        Exit 1
+    }
+}
+
+function Confirm-Build {
+    Write-Host ""
+    Write-Host "Version:      $Version"
+    if ($preview) {
+        Write-Host "Build type:   Preview (build only, no signing, zips or installer)"
+        Write-Host "Output:       .\bin\_build"
+    }
+    else {
+        Write-Host "Build type:   Release (signed, zips and installer)"
+        Write-Host "Output:       .\bin\$Version"
+    }
+    Write-Host "Architecture: $($arch -join ', ')"
+    if ($force) {
+        Write-Host "Force:        existing release files will be overwritten" -ForegroundColor Yellow
+    }
+    if (-not $preview) {
+        Write-Host "Files:"
+        foreach ($a in $arch) {
+            $names = Get-ReleaseFileNames $a
+            foreach ($name in $names.Values) {
+                Write-Host "  $name"
+            }
+        }
+    }
+    Write-Host ""
+    $answer = Read-Host "Continue? (y/N)"
+    if ($answer -notmatch "^(y|yes)$") {
+        Write-Host "Aborted"
+        Exit 0
+    }
+}
+
+function Build-WPF-App($a) {
+    $outDir = "..\publish\bin\_build\$a"
+    New-Item -ItemType Directory -Path $outDir -Force | Out-Null
     Set-Location ../Guard.WPF
-    dotnet publish -r win-x64 -c Release --p:PublishSingleFile=true --self-contained true -o bin\publish
-    Move-Item bin\publish\2FAGuard.exe "..\publish\bin\$WpfExeName" -Force
-    dotnet publish -r win-x64 -c Release --p:PublishSingleFile=true --self-contained true -p:IsPortable=true -o bin\portable
-    Move-Item bin\portable\2FAGuard.exe "..\publish\bin\$PortableExeName" -Force
+    dotnet publish -r "win-$a" -c Release --p:PublishSingleFile=true --self-contained true -o "bin\publish-$a"
+    Assert-Success "WPF publish ($a)" $LASTEXITCODE
+    Move-Item "bin\publish-$a\2FAGuard.exe" "$outDir\$WpfExeName" -Force
+    dotnet publish -r "win-$a" -c Release --p:PublishSingleFile=true --self-contained true -p:IsPortable=true -o "bin\portable-$a"
+    Assert-Success "WPF portable publish ($a)" $LASTEXITCODE
+    Move-Item "bin\portable-$a\2FAGuard.exe" "$outDir\$PortableExeName" -Force
     Set-Location ../publish
 }
 
-function Build-CLI-App {
+function Build-CLI-App($a) {
+    $outDir = "..\publish\bin\_build\$a"
+    New-Item -ItemType Directory -Path $outDir -Force | Out-Null
     Set-Location ../Guard.CLI
-    dotnet publish -r win-x64 -c Release --p:PublishSingleFile=true --self-contained true -o bin\publish
-    Move-Item bin\publish\2fa.exe "..\publish\bin\$CliExeName" -Force
+    dotnet publish -r "win-$a" -c Release --p:PublishSingleFile=true --self-contained true -o "bin\publish-$a"
+    Assert-Success "CLI publish ($a)" $LASTEXITCODE
+    Move-Item "bin\publish-$a\2fa.exe" "$outDir\$CliExeName" -Force
     Set-Location ../publish
 }
 
 function Invoke-Code-Signing {
-    signtool.exe sign /sha1 43E9DD4D4A06853CBB521EA35E5F337EDB0DBCCD /t "http://time.certum.pl/" /fd sha256 /d "2FAGuard" /du "https://2faguard.app" ".\bin\$WpfExeName" ".\bin\$PortableExeName" ".\bin\$CliExeName"
+    $files = foreach ($a in $arch) {
+        ".\bin\_build\$a\$WpfExeName"
+        ".\bin\_build\$a\$PortableExeName"
+        ".\bin\_build\$a\$CliExeName"
+    }
+    signtool.exe sign /sha1 43E9DD4D4A06853CBB521EA35E5F337EDB0DBCCD /t "http://time.certum.pl/" /fd sha256 /d "2FAGuard" /du "https://2faguard.app" $files
+    Assert-Success "Code signing" $LASTEXITCODE
 }
 
-function Build-Installer {
-    Start-Process -NoNewWindow -FilePath "C:\Program Files\Inno Setup 7\ISCC.exe" -ArgumentList "./installer.iss"
+function New-ReleaseZips($a) {
+    $names = Get-ReleaseFileNames $a
+    $buildDir = ".\bin\_build\$a"
+    Compress-Archive -Path "$buildDir\$PortableExeName" -DestinationPath "$buildDir\$($names.PortableZip)" -Force
+    Compress-Archive -Path "$buildDir\$CliExeName" -DestinationPath "$buildDir\$($names.CliZip)" -Force
 }
 
+function Build-Installer($a) {
+    $names = Get-ReleaseFileNames $a
+    $p = Start-Process -NoNewWindow -Wait -PassThru -FilePath "C:\Program Files\Inno Setup 7\ISCC.exe" -ArgumentList "/DArch=$a", "/DMyAppVersion=$Version", "./installer.iss"
+    Assert-Success "Installer build ($a)" $p.ExitCode
+    if (-not (Test-Path ".\bin\_build\$a\installer\$($names.Installer)")) {
+        Write-Host "Installer build ($a) did not produce $($names.Installer)" -ForegroundColor Red
+        Exit 1
+    }
+}
+
+function Publish-Release($a) {
+    $names = Get-ReleaseFileNames $a
+    $releaseDir = ".\bin\$Version"
+    New-Item -ItemType Directory -Path $releaseDir -Force | Out-Null
+    Move-Item ".\bin\_build\$a\installer\$($names.Installer)" $releaseDir -Force:$force
+    Move-Item ".\bin\_build\$a\$($names.PortableZip)" $releaseDir -Force:$force
+    Move-Item ".\bin\_build\$a\$($names.CliZip)" $releaseDir -Force:$force
+}
 
 Write-Host "Checking Requirements"
 Confirm-Requirements
 
+$Version = Resolve-Version
+Assert-NoExistingRelease
+Confirm-Build
+
 Write-Host "Running Tests"
 Invoke-Tests
 
-Write-Host "Building WPF App"
-Build-WPF-App
+foreach ($a in $arch) {
+    Write-Host "Building WPF App ($a)"
+    Build-WPF-App $a
 
-Write-Host "Building CLI App"
-Build-CLI-App
+    Write-Host "Building CLI App ($a)"
+    Build-CLI-App $a
+}
 
-if ($dev) {
-    Write-Host "Dev mode enabled, skipping signing and installer"
+if ($preview) {
+    Write-Host "Preview mode enabled, skipping signing, zips and installer"
+    Write-Host "Output: $(Resolve-Path .\bin\_build)"
     Exit 0
 }
 
 Write-Host "Signing Code"
 Invoke-Code-Signing
 
-Write-Host "Building Installer"
-Build-Installer
-Write-Host "Done"
+foreach ($a in $arch) {
+    Write-Host "Creating Zips ($a)"
+    New-ReleaseZips $a
+
+    Write-Host "Building Installer ($a)"
+    Build-Installer $a
+}
+
+foreach ($a in $arch) {
+    Publish-Release $a
+}
+Write-Host "Done: $(Resolve-Path ".\bin\$Version")"
+
 
 # SIG # Begin signature block
-# MIIoggYJKoZIhvcNAQcCoIIoczCCKG8CAQExDzANBglghkgBZQMEAgEFADB5Bgor
+# MIIoeQYJKoZIhvcNAQcCoIIoajCCKGYCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCD58Vbh+6MurkF
-# V7LNnaFL0I8KUhYY6n73S3dYHk07kaCCILYwggXJMIIEsaADAgECAhAbtY8lKt8j
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCP6z7mgskw+WeC
+# 4XxeTQE+2AH8Pu3A/XXhg/nBZrwfKKCCILYwggXJMIIEsaADAgECAhAbtY8lKt8j
 # AEkoya49fu0nMA0GCSqGSIb3DQEBDAUAMH4xCzAJBgNVBAYTAlBMMSIwIAYDVQQK
 # ExlVbml6ZXRvIFRlY2hub2xvZ2llcyBTLkEuMScwJQYDVQQLEx5DZXJ0dW0gQ2Vy
 # dGlmaWNhdGlvbiBBdXRob3JpdHkxIjAgBgNVBAMTGUNlcnR1bSBUcnVzdGVkIE5l
@@ -279,43 +416,42 @@ Write-Host "Done"
 # axadq1LAoM1ZTT6w4Of3YjFqg7vbqsDvwuTY7H/eBsINoLqKPgpHmc2DcGQZwT+U
 # Y/wy1l7+GPwtZZhsoXLeOUAcRju4YXUqUUly46PejIZgd2Je+FGjePkDCOJeYdlq
 # NOgE4XJNl/pbQtw2QEHqz99OVDB6sJFJdUxWz7TEASL5+deNHD2X9d6T6yWMbtDm
-# MYIHIjCCBx4CAQEwajBWMQswCQYDVQQGEwJQTDEhMB8GA1UEChMYQXNzZWNvIERh
+# MYIHGTCCBxUCAQEwajBWMQswCQYDVQQGEwJQTDEhMB8GA1UEChMYQXNzZWNvIERh
 # dGEgU3lzdGVtcyBTLkEuMSQwIgYDVQQDExtDZXJ0dW0gQ29kZSBTaWduaW5nIDIw
-# MjEgQ0ECEEMiutwJdzYa7wf8NlVHjZQwDQYJYIZIAWUDBAIBBQCggYQwGAYKKwYB
-# BAGCNwIBDDEKMAigAoAAoQKAADAZBgkqhkiG9w0BCQMxDAYKKwYBBAGCNwIBBDAc
-# BgorBgEEAYI3AgELMQ4wDAYKKwYBBAGCNwIBFTAvBgkqhkiG9w0BCQQxIgQgJRM0
-# Ho8pyJq8+DJH2OPKKtic7gKoFmliwB49D02Hzw4wDQYJKoZIhvcNAQEBBQAEggIA
-# kOKFnZnzpF4PWytot0gfCGKnsLhZ01BqCyX4z2BFIpJ1xALtyF1LtsqNkJZARHtJ
-# QndBVzKLyXugkChj4+X0F6Qs4wSkmFkNNUKyWsF7CMrRPj3/+zRm2Zb6Wb0l9HBw
-# JzAV2UyQjB8LZT93PQTFd1vSIOf7tg1Cwme/OFOVTF20vNkrDhSbVh+xvwj5zr14
-# cD3w7UBFb62PRbjIgw6lsnXmD/5SdRQ/Az+okfwrcwMiGS0rd1fy+23UxwG+yxbJ
-# bQXdJHEN/wQiNKkN67MOiGR4esXE3wD3UpaERUEgKUm4tIBUKH45zu3n/+2lvAMp
-# EPA96IPyPx0gXj9j3BVndI67hmpOp1EoLS3orxn0Wl6U3DCAbbRQcLFPsVINGIMV
-# tzAfTrKUStUW/DYeOSLRyhd61ACBxb9YeA/M/fXaGTE8irD1CpM29j422UzYKQ+i
-# wDH9Qa9BO/eanc+rA0hR3N4cvx//envQgrMNvX15lgwipxKcXQHJbIKUyNQn0jyI
-# flqyWKYXxDAcj/e/sR1KrjxpQ1hz3Neic0dUr99eLC5TN0a3WcyOfLFpfMyUMYpv
-# R2WMLxj4Ii9FD70qF7YFjlOOHs9xsxuzoXd0up0OflDIxf9CbFT7/x0t2jdj9Dof
-# rGYIDJFqwhIwO+lozWFP58QA/6URGWsWzAc9aeaizAqhggQCMIID/gYJKoZIhvcN
-# AQkGMYID7zCCA+sCAQEwajBWMQswCQYDVQQGEwJQTDEhMB8GA1UEChMYQXNzZWNv
-# IERhdGEgU3lzdGVtcyBTLkEuMSQwIgYDVQQDExtDZXJ0dW0gVGltZXN0YW1waW5n
-# IDIwMjEgQ0ECECjwd8EcNr3+X3QyR3AnLgMwDQYJYIZIAWUDBAICBQCgggFWMBoG
-# CSqGSIb3DQEJAzENBgsqhkiG9w0BCRABBDAcBgkqhkiG9w0BCQUxDxcNMjYwNzE1
-# MTAyOTE2WjA3BgsqhkiG9w0BCRACLzEoMCYwJDAiBCCFvpDhCtJDjXzJKLavSLCa
-# sggXfOz4sBJsWNORBSXEPDA/BgkqhkiG9w0BCQQxMgQwreOe048mB004TkUnAdhe
-# pMc8wmOeybZ5itpQ02Y3hXe54rx8AZ/nriU9q0OZgdASMIGfBgsqhkiG9w0BCRAC
-# DDGBjzCBjDCBiTCBhgQUVxRoQQyoWvNCTvkWSlE2EPTTjZgwbjBapFgwVjELMAkG
-# A1UEBhMCUEwxITAfBgNVBAoTGEFzc2VjbyBEYXRhIFN5c3RlbXMgUy5BLjEkMCIG
-# A1UEAxMbQ2VydHVtIFRpbWVzdGFtcGluZyAyMDIxIENBAhAo8HfBHDa9/l90Mkdw
-# Jy4DMA0GCSqGSIb3DQEBAQUABIICAApfYJDp9Gt5HzTDAf2In0GVzBzpm/1gB4uh
-# rLSzP6hkSeK21jUSq7h2UiXzPFh42iMWUs7Xlt0lRDlCFKQRNolm7Nz8XKpl5kTO
-# z2AsUoSkW7y3ejldtin3i14w1cy4FdZMO9wl0y2ER0ZJiVKQmDKqGeoYpYs+hWWD
-# 5ITuYtoHj5T0fADSpPlZDsJ7jzeRwLxCQZvUoQMkDkKeNVtWIIW99Blr+DfH+Kgd
-# HsAbwV6iZO56Nc3UUFm54kMfXa5N1XLg3Wp9IuRLjwPTVjFvVXajM4Gmh2NgBSSm
-# Zx8PICzKm9byu1D9ozTlsJU/5Q7Qs7O4VbtPn4Hzm74f9gY0eSYUmb4ngAaveT9G
-# Ce9pfp4BWooEgHhuv0Z2qUzZ85MEwDuU0mtArfzRvcUcnVbilOl6Lrmke2Vhal8/
-# na1TsZswGToXQBgsWQEaLu9PwDM6pI9Hr0OUrC5qF6Drvbs+e97pCKWxWxSUxHUU
-# Xkg+BJGHxT9dlX+NW3E20vVNF5RNTKsyDM0ek5+f1bvuiTKid9xdBIzvgc47d4cn
-# YYPy91hpBgNFxU030ouBvk9Vazps1+SjcO0La2/HqAEGOBsH7C1o6oGzKRJzT3EW
-# gi/9w9u+XPGbEsOT4k7m49e6i0CkBvbIoqlUeEJm6PuP2vW0ufiWM1uQSf9noh7G
-# yTfq+c70
+# MjEgQ0ECEEMiutwJdzYa7wf8NlVHjZQwDQYJYIZIAWUDBAIBBQCgfDAQBgorBgEE
+# AYI3AgEMMQIwADAZBgkqhkiG9w0BCQMxDAYKKwYBBAGCNwIBBDAcBgorBgEEAYI3
+# AgELMQ4wDAYKKwYBBAGCNwIBFTAvBgkqhkiG9w0BCQQxIgQg7M4bdQM1R2v7ap3+
+# 22dydZ0mFvGTbjsV8SAP2cfemP4wDQYJKoZIhvcNAQEBBQAEggIAYjE1RSWgyg8z
+# RdHuWfw5t6Jk2dAxq4SbVcFwntT61X2OUnargx52o6xDX99M6E8lU+P0Vrjb7b/K
+# HceL70uA4xfRb0VXMRcL+NI4lm2PUMECmmt0/TD63Mv0HMIkCqdwUD/bCSmyPKSd
+# qEE/Sfb+XDiQ/RXmxJ3pjcRpGRMqMQQB3JoHXzPvpTFfcg2+YEw+6fmmi01ajKiM
+# l2G/rx59RNVknvgl5jXD8jLi90uEpuhzj+VXZAdNJlqGrEUcDKkHYlojdoimVSpw
+# x83YmEBuILUzaCZUwyNMouj/yYYXI8PFimi6AFZ+T/HHf0nB4htZOd212iXRNftQ
+# zpLccSZtpp9GgQeNEsR3e4NoNK3CqjvKIhgmpqYB53yf9EKFTkA2K7vIBphuhhhI
+# Cts809EyY8Kkjhu8TqpptaZGVLVln+YaphFVo7/9E1EUvGVd0xtUAEtutcTzabmZ
+# gD8JrKnyC02flN9lHJE5ePleCModNpJVBnu7uSZKRxjXrJJIKqGqmn5KW9bqrebB
+# 7XeF7O5FwephplXWKFUgKUtmkSY0N6vPKhKR6JMRVIp2Vo83LTqfT5bhS9aUmirr
+# 81HO8rr0IJYA2oy2nLi3kXksls2Yff74th5qIR2hTBlDS0pQKuJj2xKIReGvmbDC
+# FbgCGCQ5h9r54Cc6Ew5HwttP3+JpdxyhggQCMIID/gYJKoZIhvcNAQkGMYID7zCC
+# A+sCAQEwajBWMQswCQYDVQQGEwJQTDEhMB8GA1UEChMYQXNzZWNvIERhdGEgU3lz
+# dGVtcyBTLkEuMSQwIgYDVQQDExtDZXJ0dW0gVGltZXN0YW1waW5nIDIwMjEgQ0EC
+# ECjwd8EcNr3+X3QyR3AnLgMwDQYJYIZIAWUDBAICBQCgggFWMBoGCSqGSIb3DQEJ
+# AzENBgsqhkiG9w0BCRABBDAcBgkqhkiG9w0BCQUxDxcNMjYxMTA3MTQzODM2WjA3
+# BgsqhkiG9w0BCRACLzEoMCYwJDAiBCCFvpDhCtJDjXzJKLavSLCasggXfOz4sBJs
+# WNORBSXEPDA/BgkqhkiG9w0BCQQxMgQw8NNjucTrEm+2r8LlFYGGayOXDRo2vrJQ
+# RtCyPM6GjKSXpsHtc/g5uJTjNhD9LjTZMIGfBgsqhkiG9w0BCRACDDGBjzCBjDCB
+# iTCBhgQUVxRoQQyoWvNCTvkWSlE2EPTTjZgwbjBapFgwVjELMAkGA1UEBhMCUEwx
+# ITAfBgNVBAoTGEFzc2VjbyBEYXRhIFN5c3RlbXMgUy5BLjEkMCIGA1UEAxMbQ2Vy
+# dHVtIFRpbWVzdGFtcGluZyAyMDIxIENBAhAo8HfBHDa9/l90MkdwJy4DMA0GCSqG
+# SIb3DQEBAQUABIICAHzv3dLThjfGm+MCnHuMF1+IgtDRH+wADiAqArH4KD+OJJF3
+# zvUyg3h1zJ2o/eaC/gqCYvp9lx+WCa9+09Je71WsYzevJYbzqmrtJ2PBj7Rlr8SI
+# tdwac05ZWvmYzZj30pKsyeANEavba3OpSugctIHchAU+uZiPm9v30b95UMKQO332
+# rrTJtY/JL1te+LTO00y1Rd3JaR7UH/KPfnXjd9NczXAIESX8GlIr8AL63qrLbthI
+# quqWzKmb6Ojyc8V1LRzlsWYsbwFHgdXIROC6pBTvP+Ce7+1Ttb0Bcf/KcIxRmDA9
+# nGfuXY2+eSlz9b0u6apIpHTz7PCWNN/A3gkcseP7QC3NmfN+rnPPOmNMQjh/1SpD
+# GCnFZar3Q8hUASaAe7uMH7FhO9HhJjQk3GuZAkGclwHkdmSMXP7F1oqY1Ogmoqta
+# IM62XnxRIXA75WuBC6SxUvGaN+CtJ0npTkHxWvgshSwKTulVAk/gzwsfhyrC3K7V
+# /Q7HrIgxXoEDhRx3+j/6GzUd+NL6gg5BnyFlVA+cbbRQAZnAos23xo9+gp0zbgUW
+# 3f6FQYwHn/1u2BBMgFu5m71HcVG/pQHbV3xdjC11Sy7zB74tOQ2V5UsdxbUfKPpU
+# EUk41M6OeicFa0FPYe95IC+3sC3cNaFSaeD5ah15G7bB8JibfkZlo2zAGouK
 # SIG # End signature block

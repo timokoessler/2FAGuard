@@ -137,8 +137,8 @@
       },
       "Microsoft.Win32.SystemEvents": {
         "type": "Transitive",
-        "resolved": "9.0.10",
-        "contentHash": "P1CEtsxar/RhfoH3r1vc9ra28LLVYphpcFBxyRIEMM/jP3qh4j9TU4sWH2RUhMZX+GbFxZ+zz1oSP2n9MwjshA=="
+        "resolved": "10.0.14",
+        "contentHash": "axfieK5mj+uS/wLYl0dhlRFWdNP1iKHhx/M6DZNXPCSve7q4TCogw//W6BWGsYhnWuSw55aqheHE0a8l8s1oTw=="
       },
       "Newtonsoft.Json": {
         "type": "Transitive",
@@ -160,8 +160,8 @@
       },
       "Serilog": {
         "type": "Transitive",
-        "resolved": "4.3.1",
-        "contentHash": "savYe7h5yRlkqBVOwP8cIRDOdqKiPmYCU4W87JH38sBmcKD5EBoXvQIw6bNEvZ/pTe1gsiye3VFCzBsoppGkXQ=="
+        "resolved": "4.4.0",
+        "contentHash": "ZC6Le3rr4TVJJjS4KsQAesxeF1EhW9qcZmmG7eP5Y2G3+gTGkJEUXkq4+tZNPtyp05I0wWOxnIjwtxFweJsObw=="
       },
       "Serilog.Sinks.Debug": {
         "type": "Transitive",
@@ -181,15 +181,15 @@
       },
       "SharpVectors.Wpf": {
         "type": "Transitive",
-        "resolved": "1.8.5",
-        "contentHash": "WURdBDq5AE8RjKV9pFS7lNkJe81gxja9SaMGE4URq9GJUZ6M+5DGUL0Lm3B0iYW2/Meyowaz4ffGsyW+RBSTtg=="
+        "resolved": "1.8.6",
+        "contentHash": "FjD8w5D+nBHBLlVOxr4tZpmqN6XOHhMllKKI9PZDeqjet4wS4PUDdpV/7p71SPQoeowvMivYFoKXsszFUmPpfg=="
       },
       "System.Drawing.Common": {
         "type": "Transitive",
-        "resolved": "9.0.10",
-        "contentHash": "FDakPhIcxHnhslLiz4ZQ+ALpHRpCU3zOep9Mcq+4hL23XwQrzmgJNYvf1tH4kJ/V36wO/ZhRr8nOfiz26P3wKg==",
+        "resolved": "10.0.14",
+        "contentHash": "kBe75KgVcm8soY0BPd5vTSLfC5vjd0O1YN6ApsL4qWnQiLUsOQ2k+PjWwraOI7JEp36mksavW/qz/r0NoSzYuQ==",
         "dependencies": {
-          "Microsoft.Win32.SystemEvents": "9.0.10"
+          "Microsoft.Win32.SystemEvents": "10.0.14"
         }
       },
       "UrlBase64": {
@@ -292,10 +292,10 @@
       },
       "ZXing.Net.Bindings.Windows.Compatibility": {
         "type": "Transitive",
-        "resolved": "0.16.14",
-        "contentHash": "bJw1qjpNJ8JmDP55UBAvA5bCU+vSEGua4z43nukJqMlrpkKu6mTw6NZGJZntM8KbNQ3RNLu8DJMJBSWUd0ifYg==",
+        "resolved": "0.16.17",
+        "contentHash": "8YGMdacn45y279yUH5h/JEuE/axLsAxWNbChyoDQZnHMJeCGZ+lM6MlLXq9QjfFDhPnP/IMpLuT0QLMU9JcWqA==",
         "dependencies": {
-          "System.Drawing.Common": "9.0.10",
+          "System.Drawing.Common": "10.0.14",
           "ZXing.Net": "0.16.11"
         }
       },
@@ -303,15 +303,15 @@
         "type": "Project",
         "dependencies": {
           "Google.Protobuf": "[3.35.0, )",
-          "Guard.Core": "[1.8.2, )",
+          "Guard.Core": "[1.8.4, )",
           "Konscious.Security.Cryptography.Argon2": "[1.3.1, )",
           "NSec.Cryptography": "[26.4.0, )",
           "Otp.NET": "[1.4.1, )",
-          "SharpVectors.Wpf": "[1.8.5, )",
+          "SharpVectors.Wpf": "[1.8.6, )",
           "WPF-UI": "[4.3.0, )",
           "WPF-UI.Tray": "[4.3.0, )",
           "ZXing.Net": "[0.16.11, )",
-          "ZXing.Net.Bindings.Windows.Compatibility": "[0.16.14, )"
+          "ZXing.Net.Bindings.Windows.Compatibility": "[0.16.17, )"
         }
       },
       "guard.core": {
@@ -323,7 +323,7 @@
           "Microsoft.Security.Extensions": "[1.4.0, )",
           "NSec.Cryptography": "[26.4.0, )",
           "Otp.NET": "[1.4.1, )",
-          "Serilog": "[4.3.1, )",
+          "Serilog": "[4.4.0, )",
           "Serilog.Sinks.Debug": "[3.0.0, )",
           "Serilog.Sinks.File": "[7.0.0, )",
           "UrlBase64": "[2.0.0, )"

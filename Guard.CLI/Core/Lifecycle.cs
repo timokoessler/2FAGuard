@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using Guard.Core;
+﻿using Guard.Core;
 using Guard.Core.Security;
 using Guard.Core.Storage;
 using Spectre.Console;
@@ -51,7 +50,7 @@ namespace Guard.CLI.Core
                 Environment.Exit(1);
             }
 
-            if (RuntimeInformation.ProcessArchitecture != Architecture.X64)
+            if (!InstallationContext.IsSupportedArchitecture())
             {
                 AnsiConsole.MarkupLine(
                     "[red]Error:[/] 2FAGuard requires a 64-bit processor architecture and operating system."
@@ -62,7 +61,7 @@ namespace Guard.CLI.Core
             if (!EncryptionHelper.IsSupported())
             {
                 AnsiConsole.MarkupLine(
-                    "[red]Error:[/] The Microsoft Visual C++ Redistributable 2015-2022 is required to run 2FAGuard. Please install the package to be able to use 2FAGuard. If you have used the 2FAGuard installer or have just installed the package, you may need to restart your device. You can download the redistributable [link=https://aka.ms/vs/17/release/vc_redist.x64.exe]here[/]."
+                    $"[red]Error:[/] The Microsoft Visual C++ Redistributable 2015-2022 is required to run 2FAGuard. Please install the package to be able to use 2FAGuard. If you have used the 2FAGuard installer or have just installed the package, you may need to restart your device. You can download the redistributable [link={InstallationContext.GetVcRedistUrl()}]here[/]."
                 );
                 Environment.Exit(1);
             }

@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Windows;
 using Guard.Core;
 using Guard.Core.Security;
@@ -138,7 +137,7 @@ namespace Guard.WPF
                 return;
             }
 
-            if (RuntimeInformation.ProcessArchitecture != Architecture.X64)
+            if (!InstallationContext.IsSupportedArchitecture())
             {
                 var uiMessageBox = new Wpf.Ui.Controls.MessageBox
                 {
@@ -164,7 +163,7 @@ namespace Guard.WPF
                 if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
                 {
                     Process.Start(
-                        new ProcessStartInfo($"https://aka.ms/vs/17/release/vc_redist.x64.exe")
+                        new ProcessStartInfo(InstallationContext.GetVcRedistUrl())
                         {
                             UseShellExecute = true,
                         }

@@ -7,9 +7,17 @@ on:
 
 jobs:
   test:
-    name: Test
-    runs-on: "windows-latest"
-    timeout-minutes: 10
+    name: Test (${{ matrix.arch }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x64
+            os: windows-latest
+          - arch: arm64
+            os: windows-11-arm
     permissions:
       contents: read
     steps:
@@ -27,7 +35,7 @@ jobs:
         run: dotnet test Guard.Test
 
       - name: Build CLI
-        run: dotnet build Guard.CLI --configuration Release
+        run: dotnet build Guard.CLI --configuration Release -r win-${{ matrix.arch }}
 
       - name: Build WPF
-        run: dotnet build Guard.WPF --configuration Release
+        run: dotnet build Guard.WPF --configuration Release -r win-${{ matrix.arch }}

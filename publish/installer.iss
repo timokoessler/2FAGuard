@@ -1,16 +1,24 @@
 ﻿#define MyAppName "2FAGuard"
-#define MyAppVersion "1.8.4"
 #define MyAppPublisher "Timo Kössler"
 #define MyAppURL "https://2faguard.app"
 
-#define PreviewEnv GetEnv("PREVIEW")
-#if PreviewEnv != ""
-  #define MyAppExeName "2FAGuard-Preview.exe"
-  #define OutputFileName "2FAGuard-Installer-Preview"
-#else
-  #define MyAppExeName "2FAGuard.exe"
-  #define OutputFileName "2FAGuard-Installer"
+#ifndef MyAppVersion
+  #error MyAppVersion is not defined, build with /DMyAppVersion=x.y.z
 #endif
+
+; Build with /DArch=arm64 for the ARM64 installer (default: x64)
+#ifndef Arch
+  #define Arch "x64"
+#endif
+
+#if Arch == "arm64"
+  #define ArchSuffix "-arm64"
+#else
+  #define ArchSuffix ""
+#endif
+
+#define MyAppExeName "2FAGuard.exe"
+#define OutputFileName "2FAGuard-Installer-" + MyAppVersion + ArchSuffix
 
 #include "CodeDependencies.iss"
 
@@ -27,13 +35,20 @@ DefaultDirName={autopf}\{#MyAppName}
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
-OutputDir=.\bin\installer
+OutputDir=.\bin\_build\{#Arch}\installer
 OutputBaseFilename={#OutputFileName}
 SetupIconFile=..\Guard.WPF\totp.ico
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern dynamic windows11
+SetupArchitecture=x64
+#if Arch == "arm64"
+ArchitecturesAllowed=arm64
+ArchitecturesInstallIn64BitMode=arm64
+#else
 ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+#endif
 UninstallDisplayIcon={app}\{#MyAppExeName}
 AppCopyright=Timo Kössler and Open Source Contributors
 MinVersion=10.0.17763
@@ -42,8 +57,6 @@ DisableReadyPage=yes
 UsePreviousTasks=yes
 DisableFinishedPage=yes
 PrivilegesRequiredOverridesAllowed=dialog
-SetupArchitecture=x64
-ArchitecturesInstallIn64BitMode=x64compatible
 SignTool=mysigntool sign /sha1 43E9DD4D4A06853CBB521EA35E5F337EDB0DBCCD /t $qhttp://time.certum.pl/$q /fd sha256 /d $q2FAGuard Installer$q /du $qhttps://2faguard.app$q $f
 SignedUninstaller=yes
 SignToolRetryCount=0
@@ -73,7 +86,7 @@ Name: "estonian"; MessagesFile: "compiler:Languages\Estonian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: ".\bin\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\bin\_build\{#Arch}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
