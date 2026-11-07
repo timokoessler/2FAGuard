@@ -1,7 +1,10 @@
 ﻿#define MyAppName "2FAGuard"
-#define MyAppVersion "1.8.4"
 #define MyAppPublisher "Timo Kössler"
 #define MyAppURL "https://2faguard.app"
+
+#ifndef MyAppVersion
+  #error MyAppVersion is not defined, build with /DMyAppVersion=x.y.z
+#endif
 
 ; Build with /DArch=arm64 for the ARM64 installer (default: x64)
 #ifndef Arch
@@ -14,14 +17,8 @@
   #define ArchSuffix ""
 #endif
 
-#define PreviewEnv GetEnv("PREVIEW")
-#if PreviewEnv != ""
-  #define MyAppExeName "2FAGuard-Preview.exe"
-  #define OutputFileName "2FAGuard-Installer-Preview" + ArchSuffix
-#else
-  #define MyAppExeName "2FAGuard.exe"
-  #define OutputFileName "2FAGuard-Installer" + ArchSuffix
-#endif
+#define MyAppExeName "2FAGuard.exe"
+#define OutputFileName "2FAGuard-Installer-" + MyAppVersion + ArchSuffix
 
 #include "CodeDependencies.iss"
 
@@ -38,7 +35,7 @@ DefaultDirName={autopf}\{#MyAppName}
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
-OutputDir=.\bin\{#Arch}\installer
+OutputDir=.\bin\_build\{#Arch}\installer
 OutputBaseFilename={#OutputFileName}
 SetupIconFile=..\Guard.WPF\totp.ico
 Compression=lzma2/max
@@ -89,7 +86,7 @@ Name: "estonian"; MessagesFile: "compiler:Languages\Estonian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: ".\bin\{#Arch}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\bin\_build\{#Arch}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
