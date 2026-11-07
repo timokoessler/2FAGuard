@@ -12,6 +12,8 @@ namespace Guard.Core.Storage
 
         public static AppSettings Settings = new();
 
+        private static volatile bool initialized;
+
         public static void Init()
         {
             if (File.Exists(settingsFilePath))
@@ -24,9 +26,22 @@ namespace Guard.Core.Storage
                     Settings = appSettings;
                 }
             }
+            initialized = true;
         }
 
-        public static async Task Save()
+        // Not async, so the exception is thrown synchronously even for fire-and-forget callers
+        public static Task Save()
+        {
+            if (!initialized)
+            {
+                throw new InvalidOperationException(
+                    "SettingsManager.Init() must be called before saving settings."
+                );
+            }
+            return SaveInternal();
+        }
+
+        private static async Task SaveInternal()
         {
             string fileContent = JsonSerializer.Serialize(Settings);
             byte[] fileData = System.Text.Encoding.UTF8.GetBytes(fileContent);

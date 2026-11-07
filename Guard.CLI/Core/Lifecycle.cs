@@ -42,6 +42,8 @@ namespace Guard.CLI.Core
                 Environment.Exit(1);
             }
 
+            SettingsManager.Init();
+
             if (Environment.OSVersion.Version.Build < 18362)
             {
                 AnsiConsole.MarkupLine(
@@ -108,7 +110,6 @@ namespace Guard.CLI.Core
                 }
             });
 
-            SettingsManager.Init();
             await Auth.Init();
 
             await CLIAuth.Login();
