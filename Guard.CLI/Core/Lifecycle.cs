@@ -70,29 +70,8 @@ namespace Guard.CLI.Core
 
             Version currentVersion = InstallationContext.GetVersion();
 
-            if (
-                SettingsManager.Settings.LastUsedAppVersion.Major == 0
-                && SettingsManager.Settings.LastUsedAppVersion.Minor == 0
-            )
+            if (!await VersionCompatibility.Check(currentVersion))
             {
-                SettingsManager.Settings.LastUsedAppVersion = currentVersion;
-                await SettingsManager.Save();
-            }
-            int versionCompare = SettingsManager.Settings.LastUsedAppVersion.CompareTo(
-                currentVersion
-            );
-            if (versionCompare < 0)
-            {
-                SettingsManager.Settings.LastUsedAppVersion = currentVersion;
-                await SettingsManager.Save();
-            }
-            else if (versionCompare > 0)
-            {
-                Log.Logger.Error(
-                    "Preventing app start: Current version is older than last used version: {0} < {1}",
-                    currentVersion,
-                    SettingsManager.Settings.LastUsedAppVersion
-                );
                 AnsiConsole.MarkupLine(
                     "[red]Error:[/] 2FAGuard cannot start because the app data was opened with a newer version of 2FAGuard. Please update 2FAGuard to the latest version and try again."
                 );
