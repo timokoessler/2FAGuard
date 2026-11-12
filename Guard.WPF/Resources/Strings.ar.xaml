@@ -142,7 +142,7 @@
     <!--  Login  -->
     <system:String x:Key="i.login.subtext">يرجى إثبات هويتك للوصول إلى رموزك</system:String>
     <system:String x:Key="i.login.passbox">أدخل كلمة المرور الخاصة بك</system:String>
-    <system:String x:Key="i.login.button">قم بتسجيل الدخول بواسطة كلمة المرور</system:String>
+    <system:String x:Key="i.login.button">سجل الدخول بواسطة كلمة المرور</system:String>
     <system:String x:Key="i.login.pass.error">كلمة المرور التي أدخلتها خاطئة</system:String>
     <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
     <system:String x:Key="i.login.warning.capslock.title">تحذير</system:String>
