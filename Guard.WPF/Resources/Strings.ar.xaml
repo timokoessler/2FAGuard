@@ -47,7 +47,7 @@
     <system:String x:Key="i.settings.record.description">منع تسجيل أو التقاط شاشة التطبيق</system:String>
     <system:String x:Key="i.settings.autolock">قفل تلقائي</system:String>
     <system:String x:Key="i.settings.autolock.description">قفل التطبيق عند قفل النظام</system:String>
-    <system:String x:Key="i.settings.oss">استخدم البرمجيات مفتوحة المصدر</system:String>
+    <system:String x:Key="i.settings.oss">البرمجيات مفتوحة المصدر المستخدمة</system:String>
     <system:String x:Key="i.settings.autostart">التشغيل التلقائي</system:String>
     <system:String x:Key="i.settings.autostart.description">تشغيل التطبيق تلقائيًا عند بدء تشغيل النظام</system:String>
     <system:String x:Key="i.settings.autostart.error.title">حدث خطأ</system:String>
@@ -57,7 +57,7 @@
     <system:String x:Key="i.settings.autostart.error.notenabled">لا يمكن إيقاف التشغيل التلقائي للتطبيق لأنه متوقف بالفعل</system:String>
     <system:String x:Key="i.settings.tray">التصغير والإغلاق إلى علبة النظام</system:String>
     <system:String x:Key="i.settings.tray.description">نقل التطبيق إلى علبة النظام عند التصغير أو الإغلاق</system:String>
-    <system:String x:Key="i.settings.imprint">طباعة</system:String>
+    <system:String x:Key="i.settings.imprint">الطبع</system:String>
     <system:String x:Key="i.settings.privacy">الخصوصية</system:String>
     <system:String x:Key="i.settings.reset">إعادة ضبط التطبيق</system:String>
     <system:String x:Key="i.settings.reset.description">حذف جميع الرموز المميزة والإعدادات</system:String>
@@ -65,7 +65,7 @@
     <system:String x:Key="i.settings.reset.confirm.title">هل أنت متأكد؟</system:String>
     <system:String x:Key="i.settings.reset.confirm.content">هل أنت متأكد أنك تريد حذف جميع الرموز المميزة والإعدادات؟ هذا الإجراء غير قابل للتراجع.</system:String>
     <system:String x:Key="i.settings.reset.confirm.btn">إعادة الضبط</system:String>
-    <system:String x:Key="i.settings.locktime">قفل المؤقت</system:String>
+    <system:String x:Key="i.settings.locktime">مهلة القفل</system:String>
     <system:String x:Key="i.settings.locktime.description">قفل التطبيق بعد زمن محدد من عدم النشاط</system:String>
     <system:String x:Key="i.settings.locktime.never">مطلقًا</system:String>
     <system:String x:Key="i.settings.locktime.thirtyseconds">30 ثانية</system:String>
@@ -79,20 +79,20 @@
     <system:String x:Key="i.settings.webauthn.description">تسجيل الدخول بواسطة مفتاح أمان مادي</system:String>
     <system:String x:Key="i.settings.webauthn.button">تكوين</system:String>
     <system:String x:Key="i.settings.webauthn.notsupported">يبدو أن النظام الخاص بك لا يدعم WebAuthn</system:String>
-    <system:String x:Key="i.settings.restorewindow">Remember window position</system:String>
-    <system:String x:Key="i.settings.restorewindow.description">Open the app in the same position as it was closed</system:String>
-    <system:String x:Key="i.settings.hidetoken">Hide the generated tokens</system:String>
-    <system:String x:Key="i.settings.hidetoken.description">Do not display the tokens on the screen</system:String>
-    <system:String x:Key="i.settings.hidetoken.never">Never hide</system:String>
-    <system:String x:Key="i.settings.hidetoken.showafterclick">Show after click</system:String>
-    <system:String x:Key="i.settings.hidetoken.always">Always hide</system:String>
-    <system:String x:Key="i.settings.clearclipboard">Clear clipboard</system:String>
-    <system:String x:Key="i.settings.clearclipboard.description">Clear the clipboard after copying a token</system:String>
-    <system:String x:Key="i.settings.clearclipboard.disabled">Never</system:String>
-    <system:String x:Key="i.settings.clearclipboard.tenseconds">10 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30 seconds</system:String>
-    <system:String x:Key="i.settings.clearclipboard.oneminute">1 minute</system:String>
+    <system:String x:Key="i.settings.restorewindow">تذكّر موضع النافذة</system:String>
+    <system:String x:Key="i.settings.restorewindow.description">فتح التطبيق في نفس الموضع الذي أُغلق فيه</system:String>
+    <system:String x:Key="i.settings.hidetoken">إخفاء الرموز المولّدة</system:String>
+    <system:String x:Key="i.settings.hidetoken.description">عدم عرض الرموز على الشاشة</system:String>
+    <system:String x:Key="i.settings.hidetoken.never">عدم الإخفاء مطلقًا</system:String>
+    <system:String x:Key="i.settings.hidetoken.showafterclick">الإظهار بعد النقر</system:String>
+    <system:String x:Key="i.settings.hidetoken.always">الإخفاء دائمًا</system:String>
+    <system:String x:Key="i.settings.clearclipboard">مسح الحافظة</system:String>
+    <system:String x:Key="i.settings.clearclipboard.description">مسح الحافظة بعد نسخ الرمز المميز</system:String>
+    <system:String x:Key="i.settings.clearclipboard.disabled">مطلقًا</system:String>
+    <system:String x:Key="i.settings.clearclipboard.tenseconds">10 ثوانٍ</system:String>
+    <system:String x:Key="i.settings.clearclipboard.twentyseconds">20 ثانية</system:String>
+    <system:String x:Key="i.settings.clearclipboard.thirtyseconds">30 ثانية</system:String>
+    <system:String x:Key="i.settings.clearclipboard.oneminute">دقيقة واحدة</system:String>
 
     <!--  WebAuthn  -->
     <system:String x:Key="i.page.webauthnpage">مفتاح أمان (FIDO2)</system:String>
@@ -103,7 +103,7 @@
     <system:String x:Key="i.webauthn.dialog1.title">إضافة مفتاح أمان</system:String>
     <system:String x:Key="i.webauthn.dialog1.content">يرجى تسمية مفتاح الأمان الذي ترغب بإضافته</system:String>
     <system:String x:Key="i.webauthn.dialog1.input">الاسم المميز للمفتاح</system:String>
-    <system:String x:Key="i.webauthn.dialog1.content2">إتمام التسجيل، قم بإكمال خطوة المصادقة مباشرة بعد ظهور النافذة المنبثقة للنظام التي تخبرك أن بإمكانك تسجيل الدخول باستخدام مفتاح الأمان</system:String>
+    <system:String x:Key="i.webauthn.dialog1.content2">لإتمام التسجيل، قم بإكمال خطوة المصادقة مباشرة بعد ظهور النافذة المنبثقة للنظام التي تخبرك أن بإمكانك تسجيل الدخول باستخدام مفتاح الأمان</system:String>
     <system:String x:Key="i.webauthn.dialog1.namerequired">يتعين عليك تخصيص اسم لمفتاح الأمان</system:String>
     <system:String x:Key="i.webauthn.dialog.nameexists">يوجد بالفعل مفتاح أمان بهذا الاسم</system:String>
     <system:String x:Key="i.webauthn.delete.title">حذف مفتاح الأمان</system:String>
@@ -120,7 +120,7 @@
     <system:String x:Key="i.welcome.pass.description">تأمين رموزك بكلمة مرور</system:String>
     <system:String x:Key="i.welcome.skip">تخطي</system:String>
     <system:String x:Key="i.welcome.pass.title">تعيين كلمة مرور</system:String>
-    <system:String x:Key="i.welcome.pass.subtext">فضلًا، قم بتعيين كلمة مرور آمنة لتشفير رموزك. إذا نسيت كلمة المرور هذه فلن تستطيع الوصول إلى رموزك مرة أخرى بأي حال..</system:String>
+    <system:String x:Key="i.welcome.pass.subtext">فضلًا، قم بتعيين كلمة مرور آمنة لتشفير رموزك. إذا نسيت كلمة المرور هذه فلن تستطيع الوصول إلى رموزك مرة أخرى بأي حال.</system:String>
     <system:String x:Key="i.welcome.pass.box">أدخل كلمة مرور آمنة</system:String>
     <system:String x:Key="i.welcome.pass.box.repeat">أعد كلمة المرور</system:String>
     <system:String x:Key="i.welcome.pass.notempty">لا يمكن أن يكون حقل كلمة المرور فارغًا</system:String>
@@ -142,7 +142,7 @@
     <!--  Login  -->
     <system:String x:Key="i.login.subtext">يرجى إثبات هويتك للوصول إلى رموزك</system:String>
     <system:String x:Key="i.login.passbox">أدخل كلمة المرور الخاصة بك</system:String>
-    <system:String x:Key="i.login.button">تسجيل الدخول بواسطة كلمة المرور</system:String>
+    <system:String x:Key="i.login.button">قم بتسجيل الدخول بواسطة كلمة المرور</system:String>
     <system:String x:Key="i.login.pass.error">كلمة المرور التي أدخلتها خاطئة</system:String>
     <system:String x:Key="i.login.winhellobutton">Windows Hello</system:String>
     <system:String x:Key="i.login.warning.capslock.title">تحذير</system:String>
@@ -204,7 +204,7 @@
     <system:String x:Key="i.import.aegis">Aegis Authenticator</system:String>
     <system:String x:Key="i.import.aegis.description">استيراد من ملف تصدير Aegis Authenticator</system:String>
     <system:String x:Key="i.import.protonauthenticator">Proton Authenticator</system:String>
-    <system:String x:Key="i.import.protonauthenticator.description">Import tokens from the Proton Authenticator app</system:String>
+    <system:String x:Key="i.import.protonauthenticator.description">استيراد الرموز المميزة من تطبيق Proton Authenticator</system:String>
     <system:String x:Key="i.page.tokensettings">الرمز المميز</system:String>
     <system:String x:Key="i.page.tokensettings.add">إضافة رمز</system:String>
     <system:String x:Key="i.page.tokensettings.edit">تعديل الرمز المميز</system:String>
@@ -213,10 +213,10 @@
     <system:String x:Key="i.page.exportpage">تصدير الرموز</system:String>
     <system:String x:Key="i.export.failed.title">فشل التصدير</system:String>
     <system:String x:Key="i.export.failed.content">حدث خطأ أثناء التصدير:</system:String>
-    <system:String x:Key="i.export.failed.unencrypted">Unencrypted backups are blocked by your administrator</system:String>
+    <system:String x:Key="i.export.failed.unencrypted">قام المسؤول بحظر النسخ الاحتياطية غير المشفّرة</system:String>
     <system:String x:Key="i.export.password">الرجاء إدخال كلمة المرور لملف النسخ الاحتياطي</system:String>
     <system:String x:Key="i.export.password.invalid">الرجاء إدخال كلمة مرور صالحة</system:String>
-    <system:String x:Key="i.export.backup">نسح احتياطي</system:String>
+    <system:String x:Key="i.export.backup">نسخ احتياطي</system:String>
     <system:String x:Key="i.export.backup.description">ملف النسخ الاحتياطي الكامل، متوافق فقط مع 2FAGuard</system:String>
     <system:String x:Key="i.export.uri">قائمة URI</system:String>
     <system:String x:Key="i.export.uri.description">تصدير قائمة عناوين URI الخاصة بـ TOTP بدون ملاحظات أو تشفير</system:String>
@@ -235,7 +235,7 @@
     <system:String x:Key="i.td.username.placeholder">عادةً ما يكون عنوان بريدك الإلكتروني</system:String>
     <system:String x:Key="i.td.secret">المفتاح السري</system:String>
     <system:String x:Key="i.td.secret.placeholder">الصق او أدخل المفتاح السري</system:String>
-    <system:String x:Key="i.td.expert">تصدير الإعدادات</system:String>
+    <system:String x:Key="i.td.expert">إعدادات متقدمة</system:String>
     <system:String x:Key="i.td.expert.warning.title">تنويه</system:String>
     <system:String x:Key="i.td.expert.warning.text">قم بتغيير هذه الإعدادات فقط إذا كنت تعرف ما تفعله</system:String>
     <system:String x:Key="i.td.expert.warning.button">الاستمرار على أية حال</system:String>
@@ -247,7 +247,7 @@
     <system:String x:Key="i.td.icon.text">أدخل اسم جهة الإصدار للحصول على أيقونة مطابقة</system:String>
     <system:String x:Key="i.td.note">ملاحظة (اختياري)</system:String>
     <system:String x:Key="i.td.format">تنسيق</system:String>
-    <system:String x:Key="i.td.noissuer">اسم جهة الإصدار</system:String>
+    <system:String x:Key="i.td.noissuer">أدخل اسم جهة الإصدار</system:String>
     <system:String x:Key="i.td.nosecret">أدخل المفتاح السري</system:String>
     <system:String x:Key="i.td.invalidsecret">المفتاح السري غير صالح</system:String>
     <system:String x:Key="i.td.invaliddigits">عدد الأرقام غير صالح</system:String>
@@ -259,7 +259,7 @@
 
     <!--  Token Success Page  -->
     <system:String x:Key="i.page.tokensuccesspage">الرمز المميز</system:String>
-    <system:String x:Key="i.stp.added">إضافة رمز مميز</system:String>
+    <system:String x:Key="i.stp.added">تمت إضافة الرمز المميز</system:String>
     <system:String x:Key="i.stp.home">عرض كل الرموز</system:String>
     <system:String x:Key="i.stp.edited">تم تعديل الرمز</system:String>
     <system:String x:Key="i.stp.added.multiple">الرموز المضافة</system:String>
@@ -297,11 +297,11 @@
 
 
     <!--  Password  -->
-    <system:String x:Key="i.pass.invalid.minlength">The password must be at least @Length characters long</system:String>
-    <system:String x:Key="i.pass.invalid.maxlength">The password must not be longer than 128 characters</system:String>
-    <system:String x:Key="i.pass.invalid.case">The password must contain at least one lowercase and one uppercase letter</system:String>
-    <system:String x:Key="i.pass.invalid.digit">The password must contain at least one digit</system:String>
-    <system:String x:Key="i.pass.invalid.special">The password must contain at least one special character</system:String>
+    <system:String x:Key="i.pass.invalid.minlength">يجب ألا تقل كلمة المرور عن @Length أحرف</system:String>
+    <system:String x:Key="i.pass.invalid.maxlength">يجب ألا تزيد كلمة المرور عن 128 حرفًا</system:String>
+    <system:String x:Key="i.pass.invalid.case">يجب أن تحتوي كلمة المرور على حرف صغير وحرف كبير واحد على الأقل</system:String>
+    <system:String x:Key="i.pass.invalid.digit">يجب أن تحتوي كلمة المرور على رقم واحد على الأقل</system:String>
+    <system:String x:Key="i.pass.invalid.special">يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل</system:String>
 
     <!--  Other  -->
     <system:String x:Key="i.win.hello.request">يريد تطبيق 2FAGuard إثبات هويتك</system:String>
@@ -323,7 +323,7 @@
 
     <system:String x:Key="i.unsupported.os.title">نظام التشغيل غير مدعوم</system:String>
     <system:String x:Key="i.unsupported.os.content">يرجى التحديث إلى Windows 10 1903 (18362) أو أعلى لاستخدام 2FAGuard.</system:String>
-    <system:String x:Key="i.unsupported.exit">Exit</system:String>
+    <system:String x:Key="i.unsupported.exit">الخروج</system:String>
     <system:String x:Key="i.unsupported.arch.title">بنية نظام التشغيل غير مدعومة</system:String>
     <system:String x:Key="i.unsupported.arch.content">لا يتم دعم بنية النظام لديك. يدعم 2FAGuard أنظمة 64 بت فقط.</system:String>
     <system:String x:Key="i.unsupported.vcpp.title">Visual C++ Redistributable غير مثبت</system:String>
