@@ -9,21 +9,34 @@ namespace Guard.WPF.Core
 {
     internal class QRCode
     {
+        private static readonly double[] RetryScales = [1.5, 3];
+        private const int MaxRetryWidth = 4000;
+
         public static string? ParseQRBitmap(Bitmap bitmap)
         {
             BarcodeReader reader = new()
             {
                 AutoRotate = true,
-                Options = { PossibleFormats = [BarcodeFormat.QR_CODE] },
+                Options = { PossibleFormats = [BarcodeFormat.QR_CODE], TryHarder = true },
             };
 
             var result = reader.Decode(bitmap);
 
-            if (result != null)
+            foreach (double scale in RetryScales)
             {
-                return result.Text;
+                if (result != null || bitmap.Width * scale > MaxRetryWidth)
+                {
+                    break;
+                }
+                using Bitmap scaled = new(
+                    bitmap,
+                    (int)(bitmap.Width * scale),
+                    (int)(bitmap.Height * scale)
+                );
+                result = reader.Decode(scaled);
             }
-            return null;
+
+            return result?.Text;
         }
 
         public static string? ParseQRFile(string filePath)

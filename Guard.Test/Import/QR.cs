@@ -19,5 +19,17 @@ namespace Guard.Test.Import
             string? result = QRCode.ParseQRFile(path);
             Assert.Equal(uri, result);
         }
+
+        // Downscaled dense QR codes that ZXing cannot decode at their original size (#116)
+        [Theory]
+        [InlineData("QRDownscaled4.png")]
+        [InlineData("QRDownscaled10.png")]
+        public void ParseDownscaledDenseQR(string fileName)
+        {
+            string path = Path.Combine(AppContext.BaseDirectory, "Assets", fileName);
+
+            string? result = QRCode.ParseQRFile(path);
+            Assert.StartsWith("otpauth-migration://offline?data=", result);
+        }
     }
 }
