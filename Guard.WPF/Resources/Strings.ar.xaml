@@ -235,7 +235,7 @@
     <system:String x:Key="i.td.username.placeholder">عادةً ما يكون عنوان بريدك الإلكتروني</system:String>
     <system:String x:Key="i.td.secret">المفتاح السري</system:String>
     <system:String x:Key="i.td.secret.placeholder">الصق او أدخل المفتاح السري</system:String>
-    <system:String x:Key="i.td.expert">إعدادات متقدمة</system:String>
+    <system:String x:Key="i.td.expert">الإعدادات المتقدمة</system:String>
     <system:String x:Key="i.td.expert.warning.title">تنويه</system:String>
     <system:String x:Key="i.td.expert.warning.text">قم بتغيير هذه الإعدادات فقط إذا كنت تعرف ما تفعله</system:String>
     <system:String x:Key="i.td.expert.warning.button">الاستمرار على أية حال</system:String>
@@ -283,7 +283,7 @@
 
     <!--  Update  -->
     <system:String x:Key="i.update.title">التحديث متاح</system:String>
-    <system:String x:Key="i.update.content">يتوفر إصدار جديد من 2FAGuard. هل تريد تثبيته الآن؟</system:String>
+    <system:String x:Key="i.update.content">هناك إصدار جديد من البرنامج. هل تريد التحديث؟</system:String>
     <system:String x:Key="i.update.install">تثبيت التحديث</system:String>
     <system:String x:Key="i.update.skip">تخطي</system:String>
     <system:String x:Key="i.update.loading">تنزيل التحديث...</system:String>
