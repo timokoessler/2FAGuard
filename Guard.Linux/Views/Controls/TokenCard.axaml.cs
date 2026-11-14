@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
@@ -72,18 +73,29 @@ namespace Guard.Linux.Views.Controls
 
             SearchString = $"{token.dBToken.Issuer.ToLower()} {token.Username?.ToLower()}";
 
-            Card.PointerReleased += (_, e) =>
-            {
-                if (e.InitialPressMouseButton != MouseButton.Left)
+            AddHandler(
+                PointerReleasedEvent,
+                (_, e) =>
                 {
-                    return;
-                }
-                if (SettingsManager.Settings.HideToken == HideTokenSetting.ShowAfterClick)
-                {
-                    UpdateTokenText(true);
-                }
-                CopyToken();
-            };
+                    if (e.InitialPressMouseButton == MouseButton.Right)
+                    {
+                        ShowTokenMenu();
+                        e.Handled = true;
+                        return;
+                    }
+                    if (e.InitialPressMouseButton != MouseButton.Left)
+                    {
+                        return;
+                    }
+                    if (SettingsManager.Settings.HideToken == HideTokenSetting.ShowAfterClick)
+                    {
+                        UpdateTokenText(true);
+                    }
+                    CopyToken();
+                },
+                RoutingStrategies.Bubble,
+                handledEventsToo: true
+            );
 
             KeyDown += (_, e) =>
             {
@@ -224,6 +236,15 @@ namespace Guard.Linux.Views.Controls
                 SvgIconRingView.IsVisible = false;
                 TimeProgressRing.IsVisible = true;
             }
+        }
+
+        private void ShowTokenMenu()
+        {
+            if (ContextFlyout is not PopupFlyoutBase flyout || flyout.IsOpen)
+            {
+                return;
+            }
+            flyout.ShowAt(this, true);
         }
 
         private void MenuItem_Copy_Click(object? sender, RoutedEventArgs e) => CopyToken();

@@ -7,8 +7,17 @@
     Width="360"
     Height="120"
     Margin="5"
+    Background="Transparent"
     Cursor="Hand"
     Focusable="True">
+    <UserControl.ContextFlyout>
+        <MenuFlyout Placement="Pointer">
+            <MenuItem Click="MenuItem_Copy_Click" Header="{DynamicResource i.tokencard.copy}" />
+            <MenuItem Click="MenuItem_Edit_Click" Header="{DynamicResource i.tokencard.edit}" />
+            <MenuItem Click="MenuItem_Qr_Click" Header="{DynamicResource i.tokencard.qr}" />
+            <MenuItem Click="MenuItem_Delete_Click" Header="{DynamicResource i.tokencard.delete}" />
+        </MenuFlyout>
+    </UserControl.ContextFlyout>
     <UserControl.Styles>
         <Style Selector="Border#Card">
             <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
@@ -25,16 +34,9 @@
     </UserControl.Styles>
     <Border
         x:Name="Card"
+        Background="Transparent"
         BorderThickness="1"
         CornerRadius="10">
-        <Border.ContextMenu>
-            <ContextMenu>
-                <MenuItem Click="MenuItem_Copy_Click" Header="{DynamicResource i.tokencard.copy}" />
-                <MenuItem Click="MenuItem_Edit_Click" Header="{DynamicResource i.tokencard.edit}" />
-                <MenuItem Click="MenuItem_Qr_Click" Header="{DynamicResource i.tokencard.qr}" />
-                <MenuItem Click="MenuItem_Delete_Click" Header="{DynamicResource i.tokencard.delete}" />
-            </ContextMenu>
-        </Border.ContextMenu>
         <Grid ColumnDefinitions="Auto,*,Auto">
             <Panel
                 Grid.Column="0"
